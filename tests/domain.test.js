@@ -9,14 +9,14 @@ const previous = { modelId:1, modelSnapshot:model, sn:' SN ', productSku:'', sou
 
 test('refurbishment completion rejects failed initial checks and waiting outcomes cannot complete', async () => {
   const {validateRecord} = await load(); assert.equal(typeof validateRecord,'function');
-  assert.throws(() => validateRecord({outcome:'like_new',action:'complete',checks:{initial:{ac:'fail'},final:{ac:'pass'}}},previous,catalog), /initial/i);
+  assert.throws(() => validateRecord({outcome:'like_new',action:'complete',checks:{initial:{ac:'fail'},final:{ac:'pass'}}},previous,catalog), /inspection/i);
   assert.throws(() => validateRecord({outcome:'awp',action:'complete'},previous,catalog), /outcome|waiting/i);
   const saved = validateRecord({outcome:'awp',action:'save'},previous,catalog);
   assert.equal(saved.status,'wfr'); assert.equal(saved.sn,'SN');
 });
-test('repair requires final pass, scrap a reason and no_defect is exclusive', async () => {
+test('repair requires an assessed inspection, scrap a reason and no_defect is exclusive', async () => {
   const {validateRecord} = await load(); assert.equal(typeof validateRecord,'function');
-  assert.throws(() => validateRecord({outcome:'rok',action:'complete'},previous,catalog), /final/i);
+  assert.throws(() => validateRecord({outcome:'rok',action:'complete'},previous,catalog), /inspection/i);
   assert.throws(() => validateRecord({outcome:'scrap',action:'complete'},previous,catalog), /reason/i);
   assert.throws(() => validateRecord({appearanceCodes:['no_defect','scratches']},previous,catalog), /appearance|exclusive/i);
   assert.equal(validateRecord({outcome:'scrap',scrapReason:'Unsafe',action:'complete'},previous,catalog).status,'completed');

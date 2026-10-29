@@ -10,11 +10,19 @@ This is the binding frontend/backend interface. New internal API: no prior consu
 
 `AppearanceOption = {code,labelEn,labelZh,active}`. `BomItem = {id,modelId,sku,descriptionEn,descriptionZh,unit,active}`.
 
-`Record = {id,workOrder,sn,modelId,modelSnapshot:Model,productSku,ownerId,ownerName,sourcePallet,storagePallet,workDate,status:'draft'|'wfr'|'completed',outcome:null|'like_new'|'good'|'acceptable'|'rok'|'scrap'|'awp'|'needs_analysis',outcomeGroup:null|'refurbishment'|'repair'|'wfr',appearanceCodes:string[],appearanceSnapshot:AppearanceOption[],appearanceNotes,issueNotes,scrapReason,checks:{initial:{[checkCode]:'not_tested'|'pass'|'fail'},final:{[checkCode]:same}},materials:{bomId,sku,descriptionEn,descriptionZh,unit,quantity}[],photos:Photo[],version:number,createdAt,updatedAt,completedAt:null|string}`.
+`Record = {id,workOrder,sn,modelId,modelSnapshot:Model,productSku,ownerId,ownerName,sourcePallet,storagePallet,workDate,status:'draft'|'wfr'|'completed',outcome:null|'like_new'|'good'|'acceptable'|'rok'|'scrap'|'awp'|'needs_analysis',outcomeGroup:null|'refurbishment'|'repair'|'wfr',appearanceCodes:string[],appearanceSnapshot:AppearanceOption[],appearanceNotes,issueNotes,scrapReason,checks:{initial:{[checkCode]:'not_tested'|'pass'|'fail'},final?:{[checkCode]:same}},materials:{bomId,sku,descriptionEn,descriptionZh,unit,quantity}[],photos:Photo[],version:number,createdAt,updatedAt,completedAt:null|string}`.
 
 `Photo = {id,recordId,filename,mime,size,width,height,url,uploadedAt,uploadedBy}`; URL relative `/api/photos/:id`. Append `?sn=<exact SN>` to photo URLs when viewing someone else's exact-SN history.
 
 `RecordInput = {version,sn,modelId,productSku,sourcePallet,storagePallet,workDate,outcome,appearanceCodes,appearanceNotes,issueNotes,scrapReason,checks,materials:{bomId,quantity}[],action:'save'|'complete'}`. Ignore/reject attempts to alter server-owned owner/ID/snapshot/label fields; NEVER trust client snapshots or descriptions. `action=save` yields status wfr for waiting outcomes, otherwise draft. `complete` requires final eligible outcome and validates before committing. A completed record is not unlocked by a normal save.
+
+## Single-inspection revision — 2026-10-30
+
+- `checks.initial` is the one canonical inspection (neutral UI label Inspection Result). New records and UI writes contain only `initial`. Every item uses not_tested/pass/fail radio choices.
+- `checks.final` is optional legacy archival evidence only. Existing stored values remain unchanged, even if an old client sends different final values; new final values are ignored. Never create a final map for new records. No destructive database migration. Bundled UI and API validation change together; no external consumers identified.
+- Refurbishment completion requires every inspection item pass. ROK requires every item assessed (pass or fail), retaining originally observed failures without a second test. SCRAP reason and WFR incompletion unchanged.
+- Previously completed ROK with legacy final data can receive admin corrections if their single inspection and model are unchanged; this preserves historical completion without fabricating results. Changed inspections must satisfy the current ROK rule. Admin authorization, correction reason, optimistic version and audit remain mandatory.
+- Functional Checks exports exactly one `stage=inspection` row per function for every outcome. Legacy final evidence appears separately as Legacy Post-work Checks JSON in Work Summary.
 
 ## Session
 

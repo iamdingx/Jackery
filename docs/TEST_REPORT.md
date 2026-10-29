@@ -1,17 +1,17 @@
 # V1 自测与交付验证报告
 
-验证日期：2026-10-29。平台：Windows，Node.js 24.22.1，Playwright 1.62.1＋隔离无头 Microsoft Edge。
+验证日期：2026-10-30。平台：Windows，Node.js 24.22.1，Playwright 1.62.1＋隔离无头 Microsoft Edge。
 
 ## 当前全量结果
 
-- 单元／API／独立需求验收：74 项通过，0 失败、0 取消、0 跳过。
-- 真实浏览器：7 个场景通过，0 失败、0 取消、0 跳过。
+- 单元／API／独立需求验收：81 项通过，0 失败、0 取消、0 跳过。
+- 真实浏览器：8 个场景通过，0 失败、0 取消、0 跳过。
 - 原始 AC-01～AC-18 全部由 tests/acceptance.test.js 覆盖；其他账号、导入、图片、数值、会话和包装测试补充边界。
 - XLSX 经过独立 openpyxl 3.1.5 打开验证，四表完整；公式形式的备注仍是文字单元格。
 - Helper workbook 对外部读取器验证样式、冻结首行、筛选、数字、超链接、XML 转义和 ZIP CRC；13 种 Pillow 图片样例通过。
 - 命令：node scripts/verify.mjs；所有阶段必须通过且源代码指纹不变才能打包。
 
-当前候选指纹：`4ff6879258b1daef0a7c60ef94545454a50e51cf02083a18e24f12e9f67d28bf`。
+当前候选指纹：`439cfece9c7e5bce0e5ccbe3dee5f3a3ffac7011dc69a866b2fdffb1ad6ab0c0`。
 
 ## 原始需求覆盖
 
@@ -61,3 +61,12 @@
 - 源码包不附带 Node／浏览器安装程序；当前电脑兼容 Node 已存在，其他电脑需 Node 24。
 
 原始证据：artifacts/verification/{core.log,browser-e2e.log,summary.json}，artifacts/acceptance/external-xlsx-reader.json，artifacts/helpers/openpyxl-result.json。交付包随附本报告、验证摘要和实际界面截图。
+
+## 单次功能检验修正（2026-10-30）
+
+- 按最新用户要求取消作业后复测，只记录一次功能检验，三选一单选点，英文 Not tested / Pass / Fail，中文 未检查／正常／异常。新建记录没有 final 检验字段。
+- ROK 不再依赖复测；异常保留，每项需完成检验。翻新仍要求全部正常。WFR、SCRAP、锁定、权限、照片、BOM 等回归通过。
+- 新增 7 项核心测试和 1 个真实浏览器场景；旧两阶段断言按用户修正规则调整，原有其他测试保留。先复现 6 个失败，再修复为通过。
+- 导出每个功能项一行 inspection；独立 openpyxl 验证两条记录对应两行检查，旧复测 JSON 单独保留。
+- 独立审查无 Critical／Important 功能缺陷。当前本机演示已重启，中英文布局实际检查通过；现有 4 条记录与重启前在线备份逐字一致。
+- 新证据：tests/single-inspection.test.js、tests/single-inspection.test.mjs、artifacts/acceptance/single-inspection-reader.json、artifacts/live-single-inspection-proof.json。

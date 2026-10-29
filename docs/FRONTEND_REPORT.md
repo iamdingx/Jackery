@@ -1,5 +1,7 @@
 # Frontend implementation and evidence
 
+Historical implementation report. The single-inspection revision dated 2026-10-30 supersedes any two-stage testing rules below; current behavior and verification are in PRODUCT_CONTRACT.md, API_CONTRACT.md and TEST_REPORT.md.
+
 2026-10-29. Scope: `public/`, `tests/frontend.test.js`, `tests/e2e.test.mjs`. Native HTML/CSS/ES-module application; no bundler, CDN, framework, or production npm dependency. UI follows the approved EN2 same-page editor, two-column checks/material layout, three grouped outcome columns with seven globally exclusive radios, and wide BOM drawer.
 
 ## Delivered behavior

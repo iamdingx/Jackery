@@ -1,0 +1,12 @@
+{
+  "passed": true,
+  "reader": "openpyxl",
+  "sheets": [
+    "Work Summary",
+    "Functional Checks",
+    "Material Usage",
+    "Photo Index"
+  ],
+  "inspectionRows": 2,
+  "legacyEvidencePreserved": true
+}

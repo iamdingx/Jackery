@@ -1,5 +1,7 @@
 # Final independent review closure
 
+Historical implementation report. The single-inspection revision dated 2026-10-30 supersedes any two-stage testing rules below; current behavior and verification are in PRODUCT_CONTRACT.md, API_CONTRACT.md and TEST_REPORT.md.
+
 Reviewed initial full implementation commit a9f0a63 against the approved V1 contract and visual. No Critical finding; three Important findings reproduced and fixed by root with new regression cases:
 
 1. History images: one exact SN parameter, authenticated bytes return 200 and image renders.

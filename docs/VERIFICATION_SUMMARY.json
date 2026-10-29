@@ -1,14 +1,14 @@
 {
-  "startedAt": "2026-10-29T15:13:05.823Z",
+  "startedAt": "2026-10-29T16:02:18.523Z",
   "node": "v24.22.1",
-  "candidate": "4ff6879258b1daef0a7c60ef94545454a50e51cf02083a18e24f12e9f67d28bf",
+  "candidate": "439cfece9c7e5bce0e5ccbe3dee5f3a3ffac7011dc69a866b2fdffb1ad6ab0c0",
   "passed": true,
   "stages": [
     {
       "name": "core",
       "code": 0,
-      "tests": 74,
-      "pass": 74,
+      "tests": 81,
+      "pass": 81,
       "fail": 0,
       "cancelled": 0,
       "skipped": 0,
@@ -17,13 +17,13 @@
     {
       "name": "browser-e2e",
       "code": 0,
-      "tests": 7,
-      "pass": 7,
+      "tests": 8,
+      "pass": 8,
       "fail": 0,
       "cancelled": 0,
       "skipped": 0,
       "log": "artifacts/verification/browser-e2e.log"
     }
   ],
-  "finishedAt": "2026-10-29T15:13:16.385Z"
+  "finishedAt": "2026-10-29T16:02:29.180Z"
 }

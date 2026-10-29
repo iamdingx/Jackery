@@ -29,3 +29,11 @@ Track root cause, reproduction, fix round 1..5, focused check, previous green-su
 - Online SQLite backup and preserved-photo copy verified. Windows launcher succeeds. Clean extracted package startup/login/frontend/create/restart-persistence succeeds without runtime npm installation.
 - Evidence: docs/TEST_REPORT.md, docs/VERIFICATION_SUMMARY.json, docs/PACKAGE_VERIFICATION.md, artifacts/verification/*.log and clean extraction artifacts. Final ZIP excludes all business databases and bootstrap passwords.
 - Remaining operational data preparation is explicit V1 administration: import real bilingual BOM/models/checklists and create users. No inventory/integration/translation/migration scope added.
+
+## Single-inspection revision — 2026-10-30
+
+- User removed post-work testing and requested one inspection with radios. Reproduced RED: six failures across domain/client/payload/browser, including six dropdowns and final-test completion dependency.
+- Canonical initial map now records the only inspection; new records have no final map. Existing final evidence is immutable and exported separately. ROK keeps observed failures, requiring all items assessed; refurbishment all-pass, SCRAP and WFR unchanged.
+- Targeted domain/client/browser tests passed after implementation. Full regression before export-specific addition: 80 core + 8 browser passed. Added explicit export row-count and legacy-evidence coverage; final counts and fingerprint in TEST_REPORT.md and VERIFICATION_SUMMARY.json.
+- Independent read-only review found no critical or important functional issues. No root cause reached five failed repairs.
+- Existing demo backed up online before restart; no record migration or deletion.

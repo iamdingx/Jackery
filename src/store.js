@@ -43,7 +43,7 @@ export function openStore(dataDir,demo){
         const now=new Date().toISOString(),workDate=now.slice(0,10);
         for(const [id,sn,ownerId,ownerName,status,outcome] of [[1,'DEMO-HISTORY-001',3,'Blair Operator','completed','rok'],[2,'DEMO-WFR-001',2,'Alex Operator','wfr','awp']]){
           const checked=Object.fromEntries(checkItems.map(i=>[i.code,status==='completed'?'pass':'not_tested']));
-          put('records',{id,workOrder:`HB-${workDate.replaceAll('-','')}-${String(id).padStart(6,'0')}`,sn,modelId:1,modelSnapshot:get('models',1),productSku:'DEMO-PRODUCT-1',ownerId,ownerName,sourcePallet:'',storagePallet:'',workDate,status,outcome,outcomeGroup:status==='completed'?'repair':'wfr',appearanceCodes:[],appearanceSnapshot:[],appearanceNotes:'',issueNotes:'Fictitious demonstration record / 虚构演示记录',scrapReason:'',checks:{initial:structuredClone(checked),final:structuredClone(checked)},materials:[],photos:[],version:1,createdAt:now,updatedAt:now,completedAt:status==='completed'?now:null});
+          put('records',{id,workOrder:`HB-${workDate.replaceAll('-','')}-${String(id).padStart(6,'0')}`,sn,modelId:1,modelSnapshot:get('models',1),productSku:'DEMO-PRODUCT-1',ownerId,ownerName,sourcePallet:'',storagePallet:'',workDate,status,outcome,outcomeGroup:status==='completed'?'repair':'wfr',appearanceCodes:[],appearanceSnapshot:[],appearanceNotes:'',issueNotes:'Fictitious demonstration record / 虚构演示记录',scrapReason:'',checks:{initial:structuredClone(checked)},materials:[],photos:[],version:1,createdAt:now,updatedAt:now,completedAt:status==='completed'?now:null});
         }
       }else{
         const password=randomBytes(24).toString('base64url');add('admin','Administrator','admin',password);

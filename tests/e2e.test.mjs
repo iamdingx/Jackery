@@ -34,7 +34,8 @@ test('real browser operator, BOM, WFR, checks, photo, history and admin workflow
     await byId('bom-add').click();assert.equal(await page.locator('#material-rows tr').count(),2);assert.ok(await byId('material-rows').textContent().then(s=>s.includes(firstSku)));
     await byId('open-bom').click();await byId('bom-cancel').click();assert.equal(await page.locator('#material-rows tr').count(),2);
     await page.locator('input[name=outcome][value=rok]').check();
-    for(const select of await page.locator('[data-check-phase=final]').all()) await select.selectOption('pass');
+    for(const radio of await page.locator('[data-functional-check][value=pass]').all()) await radio.check();
+    await page.locator('[data-functional-check=ac_output][value=fail]').check();
     await byId('language').click();assert.equal(await byId('issueNotes').inputValue(),'AC failure');await byId('language').click();
     await byId('save-record').click();await page.getByText('Saved successfully',{exact:true}).waitFor();
     await byId('photo-file').setInputFiles({name:'tiny.png',mimeType:'image/png',buffer:Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAIAAAADCAIAAAA2iEnWAAAAEUlEQVR4nGP8zwACTGASRgEAFEABBVDVLjgAAAAASUVORK5CYII=','base64')});
@@ -47,8 +48,8 @@ test('real browser operator, BOM, WFR, checks, photo, history and admin workflow
     await page.locator('input[name=outcome][value=scrap]').check();await byId('complete-record').click();assert.match(await byId('form-error').textContent(),/Scrap reason/);
     await byId('scrapReason').fill('Damaged beyond repair');await byId('complete-record').click();await page.getByText('Completed · Read only',{exact:true}).waitFor();
     await byId('records-nav').click();await byId('new-record').click();await byId('sn').fill('E2E-REFURB-003');await page.locator('input[name=outcome][value=like_new]').check();
-    assert.equal(await page.locator('[data-check-phase=final]').count(),0);await byId('complete-record').click();assert.match(await byId('form-error').textContent(),/initial checks/);
-    for(const select of await page.locator('[data-check-phase=initial]').all())await select.selectOption('pass');
+    assert.equal(await page.locator('.checks select').count(),0);await byId('complete-record').click();assert.match(await byId('form-error').textContent(),/inspection items/);
+    for(const radio of await page.locator('[data-functional-check][value=pass]').all())await radio.check();
     await page.locator('[data-appearance=no_defect]').check();await page.locator('[data-appearance=scratches]').check();assert.equal(await page.locator('[data-appearance=no_defect]').isChecked(),false);
     await byId('complete-record').click();await page.getByText('Completed · Read only',{exact:true}).waitFor();
     await byId('history-nav').click();await byId('history-sn').fill('DEMO-HISTORY-001');await byId('history-form').getByRole('button',{name:'Search',exact:true}).click();await page.locator('[data-history-record]').first().click();

@@ -117,7 +117,7 @@ test('AC-04 WFR resume retains notes, checks and same work order', async t => {
   const waiting = await c.req(`/api/records/${r.id}`, 'PUT', input(r, { outcome: 'awp', issueNotes: 'Waiting for specific board' }));
   assert.equal(waiting.status, 200);
   assert.equal(waiting.data.record.status, 'wfr');
-  const final = await c.req(`/api/records/${r.id}`, 'PUT', input(waiting.data.record, { outcome: 'rok', checks: { initial: r.checks.initial, final: passes(r) }, action: 'complete' }));
+  const final = await c.req(`/api/records/${r.id}`, 'PUT', input(waiting.data.record, { outcome: 'rok', checks: { initial: passes(r) }, action: 'complete' }));
   assert.equal(final.status, 200, final.bytes.toString());
   assert.equal(final.data.record.id, r.id);
   assert.equal(final.data.record.workOrder, r.workOrder);
@@ -147,7 +147,7 @@ test('AC-06 and AC-07 packaging is ordinary BOM, precise quantity and no duplica
 
 test('AC-08 no material or photo is required for valid refurbishment', async t => {
   const app = await fixture(t), c = await client(app), r = await create(c);
-  const done = await c.req(`/api/records/${r.id}`, 'PUT', input(r, { outcome: 'acceptable', checks: { initial: passes(r), final: r.checks.final }, action: 'complete' }));
+  const done = await c.req(`/api/records/${r.id}`, 'PUT', input(r, { outcome: 'acceptable', checks: { initial: passes(r) }, action: 'complete' }));
   assert.equal(done.status, 200, done.bytes.toString());
   assert.equal(done.data.record.status, 'completed');
   assert.equal(done.data.record.materials.length, 0);
@@ -159,20 +159,20 @@ test('AC-09 incomplete or failed refurbishment checks block completion', async t
   const bad = await c.req(`/api/records/${r.id}`, 'PUT', input(r, { outcome: 'like_new', action: 'complete' }));
   assert.equal(bad.status, 422);
   const checks = passes(r); checks.ac_output = 'fail';
-  assert.equal((await c.req(`/api/records/${r.id}`, 'PUT', input(r, { outcome: 'good', checks: { initial: checks, final: passes(r) }, action: 'complete' }))).status, 422);
+  assert.equal((await c.req(`/api/records/${r.id}`, 'PUT', input(r, { outcome: 'good', checks: { initial: checks }, action: 'complete' }))).status, 422);
   assert.equal((await c.req(`/api/records/${r.id}`)).data.record.version, r.version, 'Rejected mutation is atomic');
 });
 
 test('AC-10 failed initial test survives successful ROK completion', async t => {
   const app = await fixture(t), c = await client(app), r = await create(c);
   const initial = passes(r); initial.ac_output = 'fail';
-  const done = await c.req(`/api/records/${r.id}`, 'PUT', input(r, { outcome: 'rok', checks: { initial, final: passes(r) }, action: 'complete' }));
+  const done = await c.req(`/api/records/${r.id}`, 'PUT', input(r, { outcome: 'rok', checks: { initial }, action: 'complete' }));
   assert.equal(done.status, 200, done.bytes.toString());
   assert.equal(done.data.record.checks.initial.ac_output, 'fail');
-  assert.equal(done.data.record.checks.final.ac_output, 'pass');
+  assert.equal(Object.hasOwn(done.data.record.checks,'final'), false);
 });
 
-test('AC-11 ROK cannot complete without all final checks passing', async t => {
+test('AC-11 ROK cannot complete without every inspection assessed', async t => {
   const app = await fixture(t), c = await client(app), r = await create(c);
   const bad = await c.req(`/api/records/${r.id}`, 'PUT', input(r, { outcome: 'rok', action: 'complete' }));
   assert.equal(bad.status, 422);
