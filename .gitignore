@@ -1,0 +1,11 @@
+data/
+data-demo/
+backups/
+node_modules/
+runtime/
+artifacts/
+tests/.tmp/
+.superpowers/
+*.log
+*.sqlite*
+.env
