@@ -29,7 +29,7 @@ function run(name, files) {
 const core = readdirSync(path.join(root, 'tests')).filter(n => n.endsWith('.test.js')).sort().map(n => 'tests/' + n);
 console.log('Running V1 full regression on candidate ' + summary.candidate.slice(0, 16));
 let ok = await run('core', core);
-if (ok) ok = await run('browser-e2e', ['tests/e2e.test.mjs']);
+if (ok) ok = await run('browser-e2e', readdirSync(path.join(root, 'tests')).filter(n => n.endsWith('.test.mjs')).sort().map(n => 'tests/' + n));
 summary.finishedAt = new Date().toISOString();
 summary.passed = ok && summary.candidate === candidateFingerprint();
 writeFileSync(path.join(output, 'summary.json'), JSON.stringify(summary, null, 2) + '\n');

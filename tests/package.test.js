@@ -40,3 +40,28 @@ test('delivery writes a complete ZIP and digest for the exact verified candidate
   assert.match(result.sha256, /^[a-f0-9]{64}$/);
   assert.ok(result.files >= 6);
 });
+
+test('review regression: delivery source allowlist excludes custom data and backup locations', () => {
+  const folder=fixture();
+  for(const name of ['live-business/photos','private-export/photos','docs/old-backup/photos'])mkdirSync(path.join(folder,name),{recursive:true});
+  writeFileSync(path.join(folder,'live-business/photos/business.png'),'private customer evidence');
+  writeFileSync(path.join(folder,'private-export/photos/business.png'),'private backup');
+  writeFileSync(path.join(folder,'private-export/backup-manifest.json'),'{}');
+  writeFileSync(path.join(folder,'docs/old-backup/photos/business.png'),'nested private backup');
+  writeFileSync(path.join(folder,'docs/old-backup/backup-manifest.json'),'{}');
+  const names=collectPackageFiles(folder).map(x=>x.relative);
+  assert.ok(!names.includes('live-business/photos/business.png'),'Custom business evidence must not be packaged');
+  assert.ok(!names.some(n=>n.startsWith('private-export/')),'Custom backups must not be packaged');
+  assert.ok(!names.some(n=>n.startsWith('docs/old-backup/')),'Nested backup markers exclude their entire directory');
+});
+
+test('review regression: launcher and operational script changes invalidate verification', () => {
+  const folder=fixture();mkdirSync(path.join(folder,'scripts'),{recursive:true});
+  writeFileSync(path.join(folder,'scripts/backup.mjs'),'// original operation');
+  writeFileSync(path.join(folder,'Start.cmd'),'@echo original');
+  const first=candidateFingerprint(folder);
+  writeFileSync(path.join(folder,'scripts/backup.mjs'),'// changed operation');
+  const second=candidateFingerprint(folder);assert.notEqual(first,second,'Operational script changes must invalidate proof');
+  writeFileSync(path.join(folder,'Start.cmd'),'@echo changed');
+  assert.notEqual(second,candidateFingerprint(folder),'Launcher changes must invalidate proof');
+});

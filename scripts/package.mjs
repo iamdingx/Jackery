@@ -1,4 +1,4 @@
-import { mkdirSync, readdirSync, readFileSync, writeFileSync } from 'node:fs';
+import { mkdirSync, readdirSync, readFileSync, writeFileSync, existsSync } from 'node:fs';
 import { createHash } from 'node:crypto';
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
@@ -6,17 +6,21 @@ import { makeZip } from '../src/zip.js';
 import { candidateFingerprint, root } from './project.mjs';
 
 const ignored = new Set(['.git','.superpowers','.codex','node_modules','runtime','data','data-demo','backups','artifacts','.tmp','release']);
+const sourceDirectories = new Set(['src','public','tests','docs','scripts']);
+const sourceRootFiles = new Set(['.gitignore','server.js','package.json','package-lock.json','README.md','PRODUCT_CONTRACT.md','Start.cmd','Start-Demo.cmd','start.sh']);
 export function collectPackageFiles(projectRoot = root) {
-  const result = [];
+  const result = [], resolvedRoot=path.resolve(projectRoot);
   function scan(folder) {
+    if (existsSync(path.join(folder,'huabao.sqlite')) || existsSync(path.join(folder,'backup-manifest.json'))) return;
     for (const entry of readdirSync(folder, { withFileTypes: true })) {
+      if (folder===resolvedRoot && !(entry.isDirectory()?sourceDirectories.has(entry.name):sourceRootFiles.has(entry.name))) continue;
       if (ignored.has(entry.name) || entry.isSymbolicLink() || entry.name === '.env' || entry.name.startsWith('.env.') || /first-run-(accounts|credentials)/i.test(entry.name) || /\.(sqlite(?:-(?:wal|shm))?|log)$/i.test(entry.name)) continue;
       const absolute = path.join(folder, entry.name);
       if (entry.isDirectory()) scan(absolute);
       else if (entry.isFile()) result.push({ absolute, relative: path.relative(projectRoot, absolute).replaceAll('\\', '/') });
     }
   }
-  scan(path.resolve(projectRoot));
+  scan(resolvedRoot);
   return result.sort((a,b) => a.relative.localeCompare(b.relative));
 }
 
@@ -27,6 +31,7 @@ export function buildDelivery({ projectRoot = root, outputDir = path.join(root, 
   const candidate = candidateFingerprint(projectRoot);
   if (proof.candidate !== candidate) throw new Error('Verified candidate is stale: source changed after verification');
   const files = collectPackageFiles(projectRoot);
+  for(const required of ['server.js','package.json','public/index.html'])if(!files.some(file=>file.relative===required))throw new Error('Required source missing from package: '+required);
   const bytes = makeZip(files.map(f => ({ name: 'Huabao-Service-V1/' + f.relative, data: readFileSync(f.absolute) })));
   const sha256 = createHash('sha256').update(bytes).digest('hex');
   mkdirSync(outputDir, { recursive: true });

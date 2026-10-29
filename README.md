@@ -105,7 +105,7 @@ node scripts/backup.mjs
 
 核心单元／API／验收：`node --test tests/*.test.js`。
 
-浏览器：开发环境安装 Playwright 1.62.1（仅测试依赖）并具备 Chromium／Edge 后执行 `node --test tests/e2e.test.mjs`。Windows 默认检测已安装 Edge；测试使用新临时配置，不使用日常登录配置。
+浏览器：开发环境安装 Playwright 1.62.1（仅测试依赖）并具备 Chromium／Edge 后执行 `node --test tests/*.test.mjs`。本次脚本使用 Windows 已安装 Edge 的标准路径；其他浏览器或平台需相应调整测试 launch 配置。测试使用新临时配置，不使用日常登录配置。
 
 完整回归：`node scripts/verify.mjs`。日志与结果 JSON 写到 artifacts/verification/，按当前源代码指纹验证，失败不打包。实际结果见 docs/TEST_REPORT.md。
 

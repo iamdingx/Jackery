@@ -1,0 +1,18 @@
+{
+  "reader": "openpyxl",
+  "version": "3.1.5",
+  "sheets": [
+    "Work Summary",
+    "Functional Checks",
+    "Material Usage",
+    "Photo Index"
+  ],
+  "rows": {
+    "Work Summary": 3,
+    "Functional Checks": 13,
+    "Material Usage": 1,
+    "Photo Index": 1
+  },
+  "formulaLikeNotesRemainStrings": true,
+  "ok": true
+}

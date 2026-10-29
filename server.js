@@ -8,6 +8,7 @@ import {ApiError,invalid,outcomes,textValue,isoDate,positiveId,validateModel,val
 import {validateImage} from './src/images.js';
 import {parseBomCsv} from './src/csv.js';
 import {exportRecords} from './src/export.js';
+import {listenForBrowser} from './src/ports.js';
 
 const root=path.dirname(fileURLToPath(import.meta.url));
 const MAX_BODY=12*1024*1024;
@@ -217,7 +218,7 @@ export async function startServer({dataDir=path.join(root,'data'),demo=false,por
     }
   });
   server.requestTimeout=30000;server.headersTimeout=15000;
-  try{await new Promise((resolve,reject)=>{server.once('error',reject);server.listen(port,host,()=>{server.off('error',reject);resolve();});});}catch(e){db.close();throw e;}
+  try{await listenForBrowser(server,port,host);}catch(e){db.close();throw e;}
   const address=server.address(),baseUrl=`http://${host.includes(':')?'['+host+']':host}:${address.port}`;
   let closed=false;
   return {server,baseUrl,close:async()=>{if(closed)return;closed=true;await new Promise((resolve,reject)=>server.close(e=>e?reject(e):resolve()));db.close();}};
