@@ -12,6 +12,7 @@ import {exportRecords} from './src/export.js';
 import {listenForBrowser} from './src/ports.js';
 import {importJackeryCatalog} from './src/catalog-import.js';
 import {loadBomTranslations,translateBom} from './src/bom-translations.js';
+import {loadSourceTranslations,translateModel,translateKnowledge} from './src/source-translations.js';
 
 const root=path.dirname(fileURLToPath(import.meta.url));
 const MAX_BODY=12*1024*1024;
@@ -40,12 +41,14 @@ async function body(req){
   try{const result=JSON.parse(Buffer.concat(parts).toString('utf8')||'{}');if(!isObject(result))throw new Error();return result;}catch{throw new ApiError(400,'INVALID_JSON','Body must be a JSON object');}
 }
 
-export async function startServer({dataDir=path.join(root,'data'),demo=false,port=0,host='127.0.0.1',publicBaseUrl,catalogPath,translationsPath}={}){
+export async function startServer({dataDir=path.join(root,'data'),demo=false,port=0,host='127.0.0.1',publicBaseUrl,catalogPath,translationsPath,sourceTranslationsPath}={}){
   const bundledTranslations=path.join(root,'catalogs','jackery-bom-translations.json');
   const bomTranslations=await loadBomTranslations(translationsPath??(existsSync(bundledTranslations)?bundledTranslations:undefined));
+  const bundledSourceTranslations=path.join(root,'catalogs','jackery-guidance-translations.json');
+  const sourceTranslations=await loadSourceTranslations(sourceTranslationsPath??(existsSync(bundledSourceTranslations)?bundledSourceTranslations:undefined));
   if(publicBaseUrl){const parsed=new URL(publicBaseUrl);if(!['http:','https:'].includes(parsed.protocol)||parsed.username||parsed.password||parsed.pathname!=='/'||parsed.search||parsed.hash)throw new Error('PUBLIC_BASE_URL must be an HTTP(S) origin');publicBaseUrl=parsed.origin;}
   const store=openStore(path.resolve(dataDir),demo),{db}=store;
-  const recordCatalog=()=>{const c=store.catalog();return {...c,bom:c.bom.map(b=>translateBom(b,bomTranslations))};};
+  const recordCatalog=()=>{const c=store.catalog();return {...c,models:c.models.map(m=>translateModel(m,sourceTranslations)),bom:c.bom.map(b=>translateBom(b,bomTranslations)),knowledge:c.knowledge.map(k=>translateKnowledge(k,sourceTranslations))};};
   if(catalogPath){try{importJackeryCatalog(store,JSON.parse(await readFile(path.resolve(catalogPath),'utf8')),{deactivateSamples:true});}catch(error){db.close();throw error;}}
   const throttles=new Map();
   const dummyHash=passwordHash(randomBytes(24).toString('hex'));
@@ -112,12 +115,12 @@ export async function startServer({dataDir=path.join(root,'data'),demo=false,por
       }
       if(method==='GET'&&route==='/api/catalog'){
         const inactive=params.get('includeInactive')==='1';if(inactive&&user.role!=='admin')forbidden();
-        const c=store.catalog();return send(200,{models:c.models.filter(m=>inactive||m.active),appearanceOptions:c.appearanceOptions.filter(m=>inactive||m.active),outcomes,bomTranslations});
+        const c=store.catalog();return send(200,{models:c.models.filter(m=>inactive||m.active).map(m=>translateModel(m,sourceTranslations)),appearanceOptions:c.appearanceOptions.filter(m=>inactive||m.active),outcomes,bomTranslations,sourceTranslations});
       }
       let match=route.match(/^\/api\/models\/(\d+)\/knowledge$/);
       if(method==='GET'&&match){
         const id=Number(match[1]);if(!store.get('models',id))absent('Model not found');
-        const knowledge=store.get('model_knowledge',id);return send(200,knowledge?{faultCodes:knowledge.faultCodes??[],repairGuides:knowledge.repairGuides??[],notices:knowledge.notices??[]}:{faultCodes:[],repairGuides:[],notices:[]});
+        const knowledge=translateKnowledge(store.get('model_knowledge',id),sourceTranslations);return send(200,{faultCodes:knowledge.faultCodes,repairGuides:knowledge.repairGuides,notices:knowledge.notices});
       }
       match=route.match(/^\/api\/models\/(\d+)\/bom$/);
       if(method==='GET'&&match){
@@ -135,7 +138,7 @@ export async function startServer({dataDir=path.join(root,'data'),demo=false,por
       if(method==='POST'&&route==='/api/records'){
         const input=await body(req);
         const record=store.tx(()=>{
-          const model=store.get('models',positiveId(input.modelId,'Model ID'));if(!model?.active||!model.checkItems.length)invalid('Select an active model with a check list');
+          const model=translateModel(store.get('models',positiveId(input.modelId,'Model ID')),sourceTranslations);if(!model?.active||!model.checkItems.length)invalid('Select an active model with a check list');
           const id=store.next('records'),now=new Date().toISOString();
           const validated=validateRecord({...input,outcome:null,appearanceCodes:[],checks:{},materials:[],action:'save'},{modelId:model.id,modelSnapshot:model,productSku:model.productSku},recordCatalog());
           const r={...validated,id,workOrder:`HB-${now.slice(0,10).replaceAll('-','')}-${String(id).padStart(6,'0')}`,ownerId:user.id,ownerName:user.displayName,photos:[],version:1,createdAt:now,updatedAt:now,completedAt:null};return persistRecord(r,user,'create','',null);
@@ -186,7 +189,7 @@ export async function startServer({dataDir=path.join(root,'data'),demo=false,por
       }
       if(method==='GET'&&route==='/api/export'){
         const language=params.get('language')??'en';if(!['en','zh'].includes(language))invalid('Language must be en or zh');
-        const records=filteredRecords(store,user,params);const bytes=exportRecords(records,publicBaseUrl??baseUrl,language);return send(200,bytes,{'Content-Type':'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet','Content-Disposition':`attachment; filename="jackery-${new Date().toISOString().slice(0,10)}.xlsx"`});
+        const records=filteredRecords(store,user,params);const bytes=exportRecords(records,publicBaseUrl??baseUrl,language,{sourceTranslations,bomTranslations});return send(200,bytes,{'Content-Type':'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet','Content-Disposition':`attachment; filename="jackery-${new Date().toISOString().slice(0,10)}.xlsx"`});
       }
       if(method==='GET'&&route==='/api/admin/users')return send(200,{items:db.prepare('SELECT * FROM users ORDER BY id').all().map(userDto)});
       if(method==='POST'&&route==='/api/admin/users'){

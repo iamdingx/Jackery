@@ -1,0 +1,266 @@
+{
+  "schemaVersion": 1,
+  "version": "jackery-guidance-en-20261030",
+  "entries": [
+    {
+      "textZh": "DC输入",
+      "textEn": "DC Input"
+    },
+    {
+      "textZh": "AC输入",
+      "textEn": "AC Input"
+    },
+    {
+      "textZh": "USB口输出",
+      "textEn": "USB Port Output"
+    },
+    {
+      "textZh": "车充输出",
+      "textEn": "Car Charging Port Output"
+    },
+    {
+      "textZh": "AC输出\nAC频率",
+      "textEn": "AC Output\nAC Frequency"
+    },
+    {
+      "textZh": "显示屏",
+      "textEn": "Display"
+    },
+    {
+      "textZh": "LED测试",
+      "textEn": "LED Test"
+    },
+    {
+      "textZh": "BMS通讯故障",
+      "textEn": "BMS Communication Fault"
+    },
+    {
+      "textZh": "BMS与主板之间通讯故障",
+      "textEn": "Communication fault between the BMS and the mainboard"
+    },
+    {
+      "textZh": "逆变器通信故障",
+      "textEn": "Inverter Communication Fault"
+    },
+    {
+      "textZh": "逆变器与主板之间通信故障",
+      "textEn": "Communication fault between the inverter and the mainboard"
+    },
+    {
+      "textZh": "充电模块通信故障",
+      "textEn": "Charging Module Communication Fault"
+    },
+    {
+      "textZh": "DC充电模块与BMS通信故障",
+      "textEn": "Communication fault between the DC charging module and the BMS"
+    },
+    {
+      "textZh": "电池故障",
+      "textEn": "Battery Fault"
+    },
+    {
+      "textZh": "BMS内部故障或电池故障",
+      "textEn": "Internal BMS fault or battery fault"
+    },
+    {
+      "textZh": "电池过压",
+      "textEn": "Battery Overvoltage"
+    },
+    {
+      "textZh": "电池单体过压",
+      "textEn": "Battery cell overvoltage"
+    },
+    {
+      "textZh": "电池欠压",
+      "textEn": "Battery Undervoltage"
+    },
+    {
+      "textZh": "电池单体欠压",
+      "textEn": "Battery cell undervoltage"
+    },
+    {
+      "textZh": "逆变器异常",
+      "textEn": "Inverter Abnormality"
+    },
+    {
+      "textZh": "交流输出过流/过载/短路；市电输入过/欠，过\n/欠频；逆变器过温保护",
+      "textEn": "AC output overcurrent/overload/short circuit; mains input over/under, over\n/underfrequency; inverter overtemperature protection"
+    },
+    {
+      "textZh": "充电模块异常",
+      "textEn": "Charging Module Abnormality"
+    },
+    {
+      "textZh": "光伏输入过压；DC充电模块过温保护；DC充电\n模块输出过流保护",
+      "textEn": "Photovoltaic input overvoltage; DC charging module overtemperature protection; DC charging\nmodule output overcurrent protection"
+    },
+    {
+      "textZh": "电池充放电过流/短路",
+      "textEn": "Battery Charging/Discharging Overcurrent/Short Circuit"
+    },
+    {
+      "textZh": "BMS过流/短路保护",
+      "textEn": "BMS overcurrent/short-circuit protection"
+    },
+    {
+      "textZh": "DC输出过流/短路",
+      "textEn": "DC Output Overcurrent/Short Circuit"
+    },
+    {
+      "textZh": "DC、USB输出过流/短路",
+      "textEn": "DC, USB output overcurrent/short circuit"
+    },
+    {
+      "textZh": "故障判断（DC、AC输入类）",
+      "textEn": "Fault Diagnosis (DC, AC Input)"
+    },
+    {
+      "textZh": "不良现象 | 故障排查方法 | 原因排查 | 更换部件 | 测试工具\nDC输入不良 | 用DC可调电源给储能充电，并观察DC可调电源输出功率 | 检查储能DC输入口是否松动或损坏，可用万用表测量DC转接板的正负极是否有电压输出\n检查充电板是否有输出电压，如无输出，则替换充电板进行故障排查\n检查电池保护板电池正负极电压是否正常，如正常则测试电池保护板输入输出端电压是否正常，不正常则替换电池保护板进行故障排查 | 充电接口 | DC可调电源\n万用表\n | 充电板 | 更换充电板 | 充电板 | \n | 电池保护板 | 更换电池保护板 | 电池保护板 | \n | 太阳能板 | 用万用表测量太阳能板输出电压是否正常\n接入测试设备，测试是否有功率输出 | 太阳能板 | 万用表\n储能\nAC输入不良 | 接AC测试仪给储能充电，观察AC测试仪上面输出功率 | 用万用表测量用户退回的AC线，确认AC是否正常 | AC线 | AC测试仪\n万用表\n | 品字输入接口 | 观察储能AC输入口是否松动或损坏，可用万用表测量品字接口尾端是否有电压输出 | 品字输入接口 | \n | 过流保护器 | 检查AC输入过流保护器插头是否连接良好，可用万用表蜂鸣档测量过流保护器是否OK | 过流保护器 | \n | 双向逆变器 | 在未接入AC输入的前提下，启动AC控制键，观察AC输出是否正常，如输出不正常则替换双向逆变器进行问题验证 | 双向逆变器 | \n | 电池保护板 | 检查电池保护板电池正负极电压是否正常，如正常则测试电池保护板输入输出端电压是否正常，不正常则替换电池保护板进行故障排查 | 电池保护板 | \n电量无法充满 | 将储能进行系统复位 | 长按数显键和USB控制按键进行复位，确认是否通过重置系统可以解决 | 系统错误 | \n |  | 检查电池保护板电池正负极电压是否正常，如正常则测试电池保护板输出电压是否正常，不正常则替换电池保护板进行故障排查 | 电池保护板损坏 | 万用表\n |  | 测量单组电芯电压，是否在标准范围值内， | 电池组 | 万用表",
+      "textEn": "Fault Symptom | Troubleshooting Method | Cause Investigation | Replacement Part | Test Equipment\nDC input fault | Charge the power station with a DC adjustable power supply and observe the output power of the DC adjustable power supply | Check whether the power station's DC input port is loose or damaged; use a multimeter to check for voltage output across the positive and negative terminals of the DC adapter board\nCheck the charging board for output voltage; if there is no output, substitute the charging board to troubleshoot\nCheck whether the voltage across the battery positive and negative terminals on the battery protection board is normal; if normal, test whether the voltages at the battery protection board's input and output terminals are normal; if abnormal, substitute the battery protection board to troubleshoot | Charging connector | DC adjustable power supply\nMultimeter\n | Charging board | Replace the charging board | Charging board | \n | Battery protection board | Replace the battery protection board | Battery protection board | \n | Solar panel | Use a multimeter to check whether the solar panel output voltage is normal\nConnect the test equipment and test for power output | Solar panel | Multimeter\nPower station\nAC input fault | Connect an AC tester to charge the power station and observe the output power on the AC tester | Use a multimeter to test the AC cable returned by the user and confirm whether AC is normal | AC cable | AC tester\nMultimeter\n | Three-pin input connector | Check whether the power station's AC input port is loose or damaged; use a multimeter to check for voltage output at the rear of the three-pin connector | Three-pin input connector | \n | Overcurrent protector | Check whether the AC input overcurrent protector plug is connected properly; use the multimeter's continuity buzzer mode to check whether the overcurrent protector is OK | Overcurrent protector | \n | Bidirectional inverter | With no AC input connected, activate the AC control button and check whether AC output is normal; if the output is abnormal, substitute the bidirectional inverter to verify the issue | Bidirectional inverter | \n | Battery protection board | Check whether the voltage across the battery positive and negative terminals on the battery protection board is normal; if normal, test whether the voltages at the battery protection board's input and output terminals are normal; if abnormal, substitute the battery protection board to troubleshoot | Battery protection board | \nBattery cannot be fully charged | Reset the power station's system | Press and hold the display button and USB control button to reset; check whether resetting the system resolves the issue | System error | \n |  | Check whether the voltage across the battery positive and negative terminals on the battery protection board is normal; if normal, test whether the battery protection board's output voltage is normal; if abnormal, substitute the battery protection board to troubleshoot | Battery protection board damaged | Multimeter\n |  | Measure the voltage of an individual cell group to check whether it is within the standard range, | Battery pack | Multimeter"
+    },
+    {
+      "textZh": "故障判断（AC输出类）",
+      "textEn": "Fault Diagnosis (AC Output)"
+    },
+    {
+      "textZh": "不良现象 | 故障排查方法 | 原因排查 | 更换部件 | 测试工具\nAC不能启动 | 确认产品电量是否充足 | 电量不足，需给产品补电 | 补电 | \n |  | 电量正常，但AC无法启动，测试AC控制是否OK，如不良则更换主板，如OK则替换 | 逆变器 | \n |  | 电量正常，但AC无法启动，测试AC控制是否OK，如不良则更换主板，如OK则替换 | 主板 | \n |  | 检查电池保护板电池正负极电压是否正常，如正常则测试电池保护板输出电压是否正常，不正常则替换电池保护板进行故障排查 | 电池保护板 | \nAC可启动，但无输出 | 开启USB/DC/AC开关 | 将AC负载调到储能输出最大功率（参考机身规格信息标贴）进行验证测试 | 设备功率过大，产品输出保护 | AC负载\n |  | 目测AC插座是否异常，用万用表进行验证测试 | AC插座 | 万用表\n |  | USB输出测试正常，AC无输出，可替换逆变器进行验证测试 | 逆变器 | \n |  | USB、AC均无输出，判断主板不良，可替换主板进行验证测试 | 主板 | \nAC放电自动关闭输出 | 开启AC，用AC负载放电 | 设备功率过大，产品自我保护 | 超过输出功率 | AC负载\n |  | USB充放电功能正常，仅AC会自动关闭输出 | 逆变器 | AC负载\n |  | / |  | \n |  | / |  | ",
+      "textEn": "Fault Symptom | Troubleshooting Method | Cause Investigation | Replacement Part | Test Equipment\nAC cannot be activated | Confirm whether the product has sufficient battery charge | Insufficient battery charge; recharge the product | Recharge | \n |  | Battery charge is normal, but AC cannot be activated; test whether AC control is OK; if faulty, replace the mainboard; if OK, substitute | Inverter | \n |  | Battery charge is normal, but AC cannot be activated; test whether AC control is OK; if faulty, replace the mainboard; if OK, substitute | Mainboard | \n |  | Check whether the voltage across the battery positive and negative terminals on the battery protection board is normal; if normal, test whether the battery protection board's output voltage is normal; if abnormal, substitute the battery protection board to troubleshoot | Battery protection board | \nAC can be activated, but there is no output | Turn on the USB/DC/AC switches | Adjust the AC load to the power station's maximum output power (refer to the specification label on the unit) to perform a verification test | Equipment power is too high; product output protection | AC load\n |  | Visually inspect the AC socket for abnormalities and use a multimeter to verify | AC socket | Multimeter\n |  | USB output tests normal, but AC has no output; substitute the inverter for verification testing | Inverter | \n |  | Neither USB nor AC has output, indicating a faulty mainboard; substitute the mainboard for verification testing | Mainboard | \nAC output shuts off automatically during discharge | Turn on AC and discharge with an AC load | Equipment power is too high; product self-protection | Output power exceeded | AC load\n |  | USB charging and discharging functions are normal; only AC output shuts off automatically | Inverter | AC load\n |  | / |  | \n |  | / |  | "
+    },
+    {
+      "textZh": "故障判断（USB、车充口）",
+      "textEn": "Fault Diagnosis (USB, Car Charging Port)"
+    },
+    {
+      "textZh": "不良现象 | 故障排查方法 | 原因排查 | 更换部件 | 测试工具\nUSB无输出 | 确保产品电量充足的情况下，测试AC、USB是否输出正常 | AC输出正常。 4个USB端口中某USB输出异常，判断USB口损坏，更换主板 | 主板 | DC负载仪\n |  | AC输出正常。 4个USB端口输出都异常，判断主板损坏，更换主板 | 主板 | DC负载仪\n车充无输出 | 确认AC、USB输出正常，按车充口输出按键让车充口启动输出 | 车充指示灯亮，但车充口无输出，测量主板上的车充供电口，如无电压，则主板不良 | 主板 | 万用表\n |  | 车充指示灯亮，但车充口无输出，测量主板上的车充供电口，如电压正常，则车充板不良 | 车充板 | 万用表\n |  | 车充指示灯不亮，AC、USB输出正常，可测量车充控制按键是否OK，不良则按键损坏 | 灯板 | 万用表\n |  | / |  | \n |  | / |  | \n |  | / |  | \n |  | / |  | \n |  | / |  | \n |  | / |  | \n |  | / |  | ",
+      "textEn": "Fault Symptom | Troubleshooting Method | Cause Investigation | Replacement Part | Test Equipment\nNo USB output | With sufficient product battery charge ensured, test whether AC and USB outputs are normal | AC output is normal. One USB output among the 4 USB ports is abnormal, indicating a damaged USB port; replace the mainboard | Mainboard | DC load tester\n |  | AC output is normal. Outputs from all 4 USB ports are abnormal, indicating a damaged mainboard; replace the mainboard | Mainboard | DC load tester\nNo car charging port output | Confirm that AC and USB outputs are normal; press the car charging port output button to activate its output | The car charging indicator is lit, but the car charging port has no output; measure the car charging power supply port on the mainboard; if there is no voltage, the mainboard is faulty | Mainboard | Multimeter\n |  | The car charging indicator is lit, but the car charging port has no output; measure the car charging power supply port on the mainboard; if the voltage is normal, the car charging board is faulty | Car charging board | Multimeter\n |  | The car charging indicator is not lit, while AC and USB outputs are normal; test whether the car charging control button is OK; if faulty, the button is damaged | Light board | Multimeter\n |  | / |  | \n |  | / |  | \n |  | / |  | \n |  | / |  | \n |  | / |  | \n |  | / |  | \n |  | / |  | "
+    },
+    {
+      "textZh": "故障判断（显示类）",
+      "textEn": "Fault Diagnosis (Display)"
+    },
+    {
+      "textZh": "不良现象 | 故障排查方法 | 原因排查 | 更换部件 | 测试工具\n显示屏缺划或模糊\n显示屏白屏或闪烁 | 确认产品是否正常工作 | 产品充放电功能正常，仅显示异常，可替换显示屏判断故障 | 显示屏 | \n | 显示屏排线 | 排线断线或松动，重插排线或更换排线判断故障 | 显示屏排线 | \n | 主板 | 显示屏和排线无异常时可替换主板判断故障 | 主板 | \n显示屏无显示 | 给储能充电约10分钟后，观察AC测试仪或DC可调电源输出功率 | 电池组电压过低，无法显示，给储能充电10分钟左右，在判断其故障 | 储能无电 | AC线\nDC可调电源\n | 电池保护板损坏 | 检查电池保护板电池正负极电压是否正常，如正常则测试电池保护板输出电压是否正常，不正常则替换电池保护板进行故障排查 | 电池保护板损坏 | 万用表\n | 电池组 | 测量单组电芯电压，是否在标准范围值内 | 电池组 | 万用表\n | 数显按键 | 数显控制按键损坏，USB和AC输出正常，显示屏无法激活显示，用万用表测量数显控制按键通断，判断是否其不良 | 数显按键 | 万用表\n | 显示屏 | 产品充放电功能正常，仅显示异常，可替换显示屏判断故障 | 显示屏 | \n | 显示屏排线 | 排线断线或松动，重插排线或更换排线判断故障 | 显示屏排线 | \n | 主板 | 显示屏和排线无异常时可替换主板判断故障 | 主板 | \n |  | / |  | \n |  | / |  | ",
+      "textEn": "Fault Symptom | Troubleshooting Method | Cause Investigation | Replacement Part | Test Equipment\nMissing display segments or blurred display\nWhite screen or flickering display | Confirm whether the product operates normally | The product's charging and discharging functions are normal, with only the display abnormal; substitute the display to diagnose the fault | Display | \n | Display ribbon cable | The ribbon cable is broken or loose; reconnect or replace the ribbon cable to diagnose the fault | Display ribbon cable | \n | Mainboard | If the display and ribbon cable have no abnormalities, substitute the mainboard to diagnose the fault | Mainboard | \nNo display | After charging the power station for approximately 10 minutes, observe the output power of the AC tester or DC adjustable power supply | The battery pack voltage is too low for the display to operate; charge the power station for approximately 10 minutes, then diagnose the fault | Power station battery depleted | AC cable\nDC adjustable power supply\n | Battery protection board damaged | Check whether the voltage across the battery positive and negative terminals on the battery protection board is normal; if normal, test whether the battery protection board's output voltage is normal; if abnormal, substitute the battery protection board to troubleshoot | Battery protection board damaged | Multimeter\n | Battery pack | Measure the voltage of an individual cell group to check whether it is within the standard range | Battery pack | Multimeter\n | Display button | The display control button is damaged; USB and AC outputs are normal, but the display cannot be activated; use a multimeter to test the display control button's continuity to determine whether it is faulty | Display button | Multimeter\n | Display | The product's charging and discharging functions are normal, with only the display abnormal; substitute the display to diagnose the fault | Display | \n | Display ribbon cable | The ribbon cable is broken or loose; reconnect or replace the ribbon cable to diagnose the fault | Display ribbon cable | \n | Mainboard | If the display and ribbon cable have no abnormalities, substitute the mainboard to diagnose the fault | Mainboard | \n |  | / |  | \n |  | / |  | "
+    },
+    {
+      "textZh": "故障判断（风扇类、LED照明）",
+      "textEn": "Fault Diagnosis (Fan, LED Lighting)"
+    },
+    {
+      "textZh": "不良现象 | 故障排查方法 | 原因排查 | 更换部件 | 测试工具\n风扇不能启动 | 用AC负载仪放电风扇不转 | 风扇不良，用万用表测量风扇正负极 | 风扇 | 万用表\n |  | 连接线松动导致，重新插拔连接 | 重插连接器 | \n |  | 逆变器不良，导致风扇接口无法正常供电，风扇无法工作，会导致逆变器工作一段时间后，高温报警，储能不能正常工作，用万用表测量逆变器风扇接口是否有电压输出 | 逆变器 | 万用表\nLED照明灯不亮 | 确认产品是否正常工作 | 检查主板USB输出是否正常，如不正常则考虑主板损坏 | 主板 | DC负载仪\n |  | LED不亮，测量LED两端电压，电压正常，LED不亮，则LED损坏 | 灯板 | 万用表\n |  | LED按键不良，导致控制信号无法输出，用万用表测量控制按键导通 | LED控制按键 | 万用表\n |  | / |  | \n |  | / |  | \n |  | / |  | \n |  | / |  | \n |  | / |  | \n |  | / |  | ",
+      "textEn": "Fault Symptom | Troubleshooting Method | Cause Investigation | Replacement Part | Test Equipment\nFan cannot start | The fan does not rotate when discharging with an AC load tester | The fan is faulty; use a multimeter to measure across the fan's positive and negative terminals | Fan | Multimeter\n |  | Caused by a loose connecting cable; disconnect and reconnect it | Reconnect the connector | \n |  | A faulty inverter prevents the fan connector from supplying power normally, so the fan cannot operate; after the inverter operates for a period, this causes a high-temperature alarm and prevents the power station from operating normally; use a multimeter to check for voltage output at the inverter's fan connector | Inverter | Multimeter\nLED light does not illuminate | Confirm whether the product operates normally | Check whether the mainboard's USB output is normal; if abnormal, consider possible mainboard damage | Mainboard | DC load tester\n |  | If the LED does not illuminate, measure the voltage across the LED; if the voltage is normal but the LED does not illuminate, the LED is damaged | Light board | Multimeter\n |  | A faulty LED button prevents the control signal from being output; use a multimeter to test the control button's continuity | LED control button | Multimeter\n |  | / |  | \n |  | / |  | \n |  | / |  | \n |  | / |  | \n |  | / |  | \n |  | / |  | "
+    },
+    {
+      "textZh": "充放电高温",
+      "textEn": "High Temperature During Charging/Discharging"
+    },
+    {
+      "textZh": "电芯温度过高，高温保护",
+      "textEn": "Cell temperature too high; high-temperature protection"
+    },
+    {
+      "textZh": "充放电低温",
+      "textEn": "Low Temperature During Charging/Discharging"
+    },
+    {
+      "textZh": "电芯温度过低，低温保护",
+      "textEn": "Cell temperature too low; low-temperature protection"
+    },
+    {
+      "textZh": "AC输出测试",
+      "textEn": "AC Output Test"
+    },
+    {
+      "textZh": "1、DC输入",
+      "textEn": "1. DC Input"
+    },
+    {
+      "textZh": "2、AC输入",
+      "textEn": "2. AC Input"
+    },
+    {
+      "textZh": "1、USB口输出",
+      "textEn": "1. USB Port Output"
+    },
+    {
+      "textZh": "2、车充口输出",
+      "textEn": "2. Car Charging Port Output"
+    },
+    {
+      "textZh": "3、AC交流输出",
+      "textEn": "3. AC Output"
+    },
+    {
+      "textZh": "AC频率",
+      "textEn": "AC Frequency"
+    },
+    {
+      "textZh": "LED照明",
+      "textEn": "LED Lighting"
+    },
+    {
+      "textZh": "故障代码.pptx",
+      "textEn": "Fault Codes.pptx"
+    },
+    {
+      "textZh": "常见故障及解决方案.pptx",
+      "textEn": "Common Faults and Solutions.pptx"
+    },
+    {
+      "textZh": "功能测试标准.xlsx",
+      "textEn": "Functional Test Standards.xlsx"
+    },
+    {
+      "textZh": "功能测试SOP.xlsx",
+      "textEn": "Functional Test SOP.xlsx"
+    },
+    {
+      "textZh": "功能测试.pptx",
+      "textEn": "Functional Test.pptx"
+    },
+    {
+      "textZh": "欧盟-E1000pro-70-1000-DEOR01黑橙色BOM.xlsx",
+      "textEn": "EU-E1000pro-70-1000-DEOR01 Black and Orange BOM.xlsx"
+    },
+    {
+      "textZh": "欧盟-E1000V2-21-0001-000221原始版本BOM.xlsx",
+      "textEn": "EU-E1000V2-21-0001-000221 Original Version BOM.xlsx"
+    },
+    {
+      "textZh": "欧盟-E1000V2-21-0001-000221降本版本BOM.xlsx",
+      "textEn": "EU-E1000V2-21-0001-000221 Cost-Reduced Version BOM.xlsx"
+    },
+    {
+      "textZh": "欧盟-E1000-70-1000-EUO001黑橙色BOM.xlsx",
+      "textEn": "EU-E1000-70-1000-EUO001 Black and Orange BOM.xlsx"
+    },
+    {
+      "textZh": "欧盟-E2000plus-A版本-21-0001-00037黑橙色BOM.xlsx",
+      "textEn": "EU-E2000plus-A Version-21-0001-00037 Black and Orange BOM.xlsx"
+    },
+    {
+      "textZh": "欧盟-E2000plus-B版本-21-0001-000184BOM.xlsx",
+      "textEn": "EU-E2000plus-B Version-21-0001-000184 BOM.xlsx"
+    },
+    {
+      "textZh": "欧盟-E2000pro-70-2000-EUOR01黑橙色BOM.xlsx",
+      "textEn": "EU-E2000pro-70-2000-EUOR01 Black and Orange BOM.xlsx"
+    },
+    {
+      "textZh": "欧盟-E2000V2-21-0001-000267原始版本BOM.xlsx",
+      "textEn": "EU-E2000V2-21-0001-000267 Original Version BOM.xlsx"
+    },
+    {
+      "textZh": "欧盟-E2000V2-21-0001-000267降本版本BOM.xlsx",
+      "textEn": "EU-E2000V2-21-0001-000267 Cost-Reduced Version BOM.xlsx"
+    },
+    {
+      "textZh": "功能测试",
+      "textEn": "Functional Test"
+    },
+    {
+      "textZh": "树形单据体",
+      "textEn": "Tree-Structured Document Body"
+    }
+  ]
+}

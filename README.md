@@ -137,3 +137,7 @@ V1 不包含库存、价格结算、飞书历史迁移、自动翻译、ERP/WMS/
 ## BOM双语与批量仿真（当前改版）
 
 `catalogs/jackery-bom-translations.json`按完整原文精确匹配242个描述，覆盖404行。SKU、数字、标准量、启用状态及旧工单原文不变。人工英文优先；未知原文有明确缺英文提示。当前规则、103行用例表、API/浏览器逐笔日志、风险、Python requests脚本运行步骤见`docs/batch-simulation/REPORT.md`。每轮使用`node scripts/start-simulation.mjs`建立新隔离测试库，禁止对4310业务库仿真。
+
+## 完整来源指导双语（当前更新）
+
+除BOM译文外，功能检查、故障码说明、常见故障表和提示也由本地catalogs/jackery-guidance-translations.json补充英文，英文在上、中文原文在下。371处来源字段已覆盖，原文空的90处解决方案仍空，不编写新的维修建议。来源文件/工作表显示名提供英文别名并保留原名与页行。原始文件、代码、SKU、用量、旧作业及自由备注不改。校验命令：python scripts/build-guidance-translations.py --check；报告见docs/guidance-translation/。

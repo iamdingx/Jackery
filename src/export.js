@@ -1,5 +1,7 @@
 import {buildWorkbook} from './xlsx.js';
 import {ApiError,outcomes} from './domain.js';
+import {translateSourceFields} from './source-translations.js';
+import {translateBom} from './bom-translations.js';
 
 const chineseHeaders={
   'Work Order':'作业单号','Record ID':'记录 ID','SN':'SN','Model ID':'型号 ID','Model (English)':'型号（英文）','Model (Chinese)':'型号（中文）','Product SKU':'整机 SKU','Owner ID':'作业员 ID','Owner':'作业员','Source Pallet':'机器挑货栈板编码','Storage Pallet':'存放栈板码','Receiving SKU':'入库 SKU','Post-Sort SKU':'分拣后 SKU','Receiving Order No.':'入库单号','Receiving Status':'入库单状态','Product Name Verification':'产品名称校验（华宝）','SKU Verification':'SKU 校验（华宝确认）','Parent Record':'父记录','Unspecified Text Field':'文本 9','Work Date':'作业日期','Status':'完成状态','Outcome Group':'结果类别','Outcome Code':'结果代码','Outcome (English)':'作业结果（英文）','Outcome (Chinese)':'作业结果（中文）','Appearance Codes':'外观选项代码','Appearance (English)':'外观（英文）','Appearance (Chinese)':'外观（中文）','Appearance Notes':'外观描述','Issue Notes':'问题描述','Translated Appearance Notes':'外观描述-翻译','Translated Issue Notes':'问题描述-翻译','Scrap Reason':'报废原因','Version':'版本','Photo Count':'图片数量','Material Lines':'物料行数','Created (UTC)':'创建时间（UTC）','Updated (UTC)':'更新时间（UTC）','Completed (UTC)':'完成时间（UTC）','Model Snapshot JSON':'型号快照 JSON','Appearance Snapshot JSON':'外观快照 JSON','Legacy Post-work Checks JSON':'旧版复测存档 JSON','Stage':'检查阶段','Check Code':'检查项目代码','Check (English)':'检查项目（英文）','Check (Chinese)':'检查项目（中文）','Result':'检查结果','BOM ID':'BOM ID','Part SKU':'物料 SKU','Description (English)':'物料描述（英文）','Description (Chinese)':'物料描述（中文）','Unit':'单位','Quantity':'实际耗用数量','Photo ID':'图片 ID','Original Filename':'原始文件名','MIME':'MIME','Bytes':'字节数','Width':'宽度','Height':'高度','Authenticated Photo URL':'需登录的图片链接','Uploaded (UTC)':'上传时间（UTC）','Uploader ID':'上传者 ID'
@@ -10,7 +12,7 @@ const displayLabels={
   zh:{status:{draft:'未完成',wfr:'未完成',completed:'已完成'},stage:{inspection:'检验结果'},result:{pass:'正常',fail:'异常',not_tested:'未检查'}}
 };
 const stagesFor=()=>['inspection'];
-export function exportRecords(records,baseUrl='',language='en'){
+export function exportRecords(records,baseUrl='',language='en',{sourceTranslations={},bomTranslations={}}={}){
   if(!['en','zh'].includes(language))throw new ApiError(422,'VALIDATION','Language must be en or zh');
   const labels=displayLabels[language];
   const columns=labels=>labels.map(([key,label,width])=>({key,label:language==='zh'?chineseHeaders[label]:label,width:width??22}));
@@ -21,11 +23,12 @@ export function exportRecords(records,baseUrl='',language='en'){
   for(const r of records){
     const outcome=outcomes.find(o=>o.code===r.outcome);
     summary.push({...r,faultCodes:(r.faultCodes??[]).join('; '),faultSnapshot:JSON.stringify(r.faultSnapshot??[]),statusLabel:labels.status[r.status]??r.status,finalChecks:r.checks.final?JSON.stringify(r.checks.final):'',modelNameEn:r.modelSnapshot.nameEn,modelNameZh:r.modelSnapshot.nameZh,outcomeLabelEn:outcome?.labelEn??'',outcomeLabelZh:outcome?.labelZh??'',appearanceCodes:r.appearanceCodes.join('; '),appearanceLabelsEn:r.appearanceSnapshot.map(a=>a.labelEn).join('; '),appearanceLabelsZh:r.appearanceSnapshot.map(a=>a.labelZh).join('; '),modelSnapshot:JSON.stringify(r.modelSnapshot),appearanceSnapshot:JSON.stringify(r.appearanceSnapshot),photoCount:r.photos.length,materialLineCount:r.materials.length});
-    for(const stage of stagesFor(r))for(const item of r.modelSnapshot.checkItems){
+    for(const stage of stagesFor(r))for(const original of r.modelSnapshot.checkItems){
+      const item=translateSourceFields(original,sourceTranslations);
       const state=r.checks.initial?.[item.code]??'not_tested';
       checks.push({workOrder:r.workOrder,sn:r.sn,modelId:r.modelId,stage,stageLabel:labels.stage[stage],code:item.code,labelEn:item.labelEn,labelZh:item.labelZh,state,stateLabel:labels.result[state]??state});
     }
-    for(const m of r.materials)materials.push({workOrder:r.workOrder,sn:r.sn,modelId:r.modelId,...m});
+    for(const m of r.materials)materials.push({workOrder:r.workOrder,sn:r.sn,modelId:r.modelId,...translateBom(m,bomTranslations)});
     for(const p of r.photos){const url=baseUrl+p.url;photos.push({workOrder:r.workOrder,sn:r.sn,...p,url});hyperlinks.push({row:photos.length,column:'url',url});}
   }
   if(summary.some(row=>Object.values(row).some(value=>typeof value==='string'&&value.length>32767)))throw new ApiError(413,'EXPORT_LIMIT','A snapshot exceeds the Excel cell text limit of 32,767 characters');
