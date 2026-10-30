@@ -1,0 +1,16 @@
+{
+  "checkedAt": "2026-10-30T21:21:08.955722+08:00",
+  "publicUrl": "http://221.224.86.238:800/",
+  "checks": [
+    {
+      "origin": "http://221.224.86.238:800",
+      "status": 401,
+      "code": "INVALID_LOGIN"
+    },
+    {
+      "origin": "http://221.224.86.238",
+      "status": 403,
+      "code": "CSRF"
+    }
+  ]
+}

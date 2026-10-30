@@ -1,0 +1,16 @@
+{
+  "status": "FIXED",
+  "configurationOnly": true,
+  "publicBaseUrlBefore": "http://221.224.86.238",
+  "publicBaseUrlAfter": "http://221.224.86.238:800",
+  "backup": "/var/backups/jackery/origin-20261030T132012Z-2796191",
+  "verifiedAt": "2026-10-30T13:20:13.417426+00:00",
+  "onlyPublicBaseUrlChanged": true,
+  "allBusinessAndConfigurationTablesUnchanged": true,
+  "noGeographicRestrictionAdded": true,
+  "credentialsChanged": false,
+  "productionWorkRecordsWrittenByTests": 0,
+  "authenticatedProductionLoginTest": "Not attempted; nonexistent diagnostic account reached INVALID_LOGIN after origin validation; successful account login and save covered in isolated tests",
+  "csrfProtectionPreserved": true,
+  "applicationRelease": "/opt/jackery/releases/eecb156-plus-a-20261030"
+}

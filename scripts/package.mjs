@@ -21,6 +21,8 @@ export function collectPackageFiles(projectRoot = root) {
     }
   }
   scan(resolvedRoot);
+  const environmentTemplate='deployment/221.224.86.238/service-environment.template';
+  if(existsSync(path.join(resolvedRoot,environmentTemplate)))result.push({absolute:path.join(resolvedRoot,environmentTemplate),relative:environmentTemplate});
   return result.sort((a,b) => a.relative.localeCompare(b.relative));
 }
 
