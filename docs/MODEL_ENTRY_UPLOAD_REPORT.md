@@ -10,8 +10,16 @@
 
 生产原文件上传问题仍需真实重试后读取新增诊断确认；不能以本地有效PNG上传成功替代原文件验证。当前不要求用户另找错误提示或再次提供页面截图。
 
-完整回归与实际部署结果补录在本报告下方。
+完整回归与实际部署结果如下。
 
 ## 全量回归
 
 129/129单元/API + 31/31浏览器，合计160/160通过，0失败/跳过/取消。指纹 `16d1dabf299234fa07bf52bceacac01d374210cba40f2c3dc1e7ef482ace2fab`，证据见model-entry/VERIFICATION_SUMMARY.json。首轮多浏览器并行导致本机Zone内存不足与超时；执行器将浏览器并行数限制为2后全量重跑通过，没有删减用例。旧用例明确补上手动选择型号的步骤，原业务断言保留。
+
+## 生产发布
+
+2026-10-30 14:13（中国时间）切换到 `/opt/jackery/releases/70bd7b1-manual-model-20261030`，应用提交 `70bd7b175af9d958659ccf36291fd5b6722e052f`。运行包SHA256 `8eb423c2ac086675a0f782883835493f974c3142e2f4f2ed3a4d6f5868bc009d`，逐文件校验通过。服务器Ubuntu/Node24.22.2隔离核心回归129/129通过，无失败/跳过/取消；日志 `/home/sagacity/jackery-entry-linux-core.log`。
+
+更新前备份 `/var/backups/jackery/guidance-update-20261030T061314Z-2771751`。原发布 `d0fa49c-guidance-en-20261030` 保留以便回退。更新前后records/photos/users/models/bom/model_knowledge/meta/audits八表行数及哈希完全一致，分别3/0/2/9/404/9/2/13行。没有向正式库写测试工单、上传模拟证据或修改账号密码。
+
+公网health200、production模式；登录页实测Jackery字标。app.js/state.js/styles.css哈希与160项通过版本一致。真实来源目录的隔离中文页面已截图并验证空型号及选型开放状态，无确认弹窗。证据 `model-entry/PUBLIC_SMOKE.json`。没有当前生产账号密码，因此未宣称已完成生产登录后的图片操作；原图片失败需用户正常重试后按新增诊断定位。

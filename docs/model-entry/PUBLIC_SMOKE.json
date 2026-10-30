@@ -1,0 +1,38 @@
+{
+  "verifiedAt": "2026-10-30T06:14:08.483Z",
+  "production": {
+    "assets": [
+      {
+        "file": "app.js",
+        "matchesVerifiedSource": true,
+        "sha256": "741ef278004781bf1b8a2876fa7f5e95b39c3edf6ca1fceced90545504b0c7cc"
+      },
+      {
+        "file": "state.js",
+        "matchesVerifiedSource": true,
+        "sha256": "6f4c702fc44bc299f6547027253f9477ec2eebfcea8cacf087e36f465aa92994"
+      },
+      {
+        "file": "styles.css",
+        "matchesVerifiedSource": true,
+        "sha256": "0492a434437773b66dcc30e4ae0111987efeedf9db2ec32d314bacf7120bd039"
+      }
+    ],
+    "health": {
+      "ok": true,
+      "version": "1.0.0",
+      "demo": false
+    },
+    "loginWordmark": "Jackery",
+    "authenticatedWorkRecordTest": "Not attempted; no current production password, no credential reset"
+  },
+  "isolated": {
+    "passed": true,
+    "actualSourceCatalog": true,
+    "emptyModelInitially": true,
+    "workDisabledBeforeSelection": true,
+    "enabledAfterSelection": true,
+    "noModelConfirmation": true
+  },
+  "productionWorkRecordsWritten": 0
+}
