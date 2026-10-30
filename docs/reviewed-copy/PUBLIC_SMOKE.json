@@ -1,0 +1,28 @@
+{
+  "checkedAt": "2026-10-30T20:44:55.813940+08:00",
+  "baseUrl": "http://221.224.86.238:800",
+  "assets": {
+    "app.js": {
+      "status": 200,
+      "sha256": "7c08532dc655c885e2e2430100064484c8c99e456582391ed8de7a87f3d11ddf",
+      "matchesVerifiedLocal": true
+    },
+    "styles.css": {
+      "status": 200,
+      "sha256": "a61480ecef86426d38729568670d0f5cb449617d802834fc78cf037fa91c750b",
+      "matchesVerifiedLocal": true
+    },
+    "state.js": {
+      "status": 200,
+      "sha256": "6f4c702fc44bc299f6547027253f9477ec2eebfcea8cacf087e36f465aa92994",
+      "matchesVerifiedLocal": true
+    }
+  },
+  "healthStatus": 200,
+  "health": {
+    "ok": true,
+    "version": "1.0.0",
+    "demo": false
+  },
+  "homepageStatus": 200
+}
