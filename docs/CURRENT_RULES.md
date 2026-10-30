@@ -52,3 +52,9 @@
 - 功能检查下方固定Defect remark单文本框；右侧并列Condition & Notes，保留Appearance Notes及预设缺陷、取消Issue Notes显示标签。Defect remark沿用内部issueNotes存储及原报表字段；不会把旧译文冒充缺陷原文。
 - 原Manual translations区及两个译文输入取消；已有translatedAppearanceNotes/translatedIssueNotes继续存储、保存及四表导出，语言切换不覆盖或丢失。
 - Evidence Photos为独立常驻面板，非折叠下拉。缩略图、待选状态及替代文本不显示文件名；源文件名仍作为内部照片元数据和报表证据保留。照片选填、JPEG兼容修复、上传重试、权限及原字节保存不变。
+
+## 后续确认：备注和照片限定在功能检查列
+
+- 桌面布局：Functional Checks左列，Material Usage右列。Defect remark与Condition & Notes紧接功能检查下方并排，两者合计宽度不得超出Functional Checks；Evidence Photos在这两个备注区下方，左右边界同样限定在Functional Checks内。取消上一版照片独占第三列、外观备注延伸到物料列的布局。
+- 三个备注/照片面板仍固定展开，照片缩略图横向排列；结果三栏及底部操作保持常驻。1366×768、1536×864、2048×1000无横向溢出、外观输入完整可见。
+- 本轮另提供中英文人工核对Excel，保留当前原文、来源和适用范围，建议栏留空；收到用户填回的修订之前不更改系统译文。
