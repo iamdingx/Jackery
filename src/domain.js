@@ -9,7 +9,7 @@ export const outcomes = [
   {code:'acceptable',group:'refurbishment',labelEn:'Acceptable',labelZh:'可接受'},
   {code:'rok',group:'repair',labelEn:'ROK',labelZh:'维修完成 ROK'},
   {code:'scrap',group:'repair',labelEn:'SCRAP',labelZh:'报废'},
-  {code:'awp',group:'wfr',labelEn:'AWP',labelZh:'AWP'},
+  {code:'awp',group:'wfr',labelEn:'AWP',labelZh:'待料'},
   {code:'needs_analysis',group:'wfr',labelEn:'Needs Analysis',labelZh:'待分析'}
 ];
 export function textValue(value,name,max=2000,required=false){

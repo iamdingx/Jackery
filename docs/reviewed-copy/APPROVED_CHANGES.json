@@ -1,0 +1,64 @@
+{
+  "sourceFile": "Jackery_中英文文案人工核对表_20261030.xlsx",
+  "sourceSha256": "c9631aa9e4562d67d064c413c43267f56577ed86a331e06dc470e48d6147f5e9",
+  "baselineRows": 950,
+  "reviewedChanges": [
+    {
+      "sheet": "界面文案",
+      "id": "UI-C3AB669B6F",
+      "english": "AWP",
+      "chineseBefore": "AWP",
+      "chineseAfter": "待料",
+      "englishAfter": "AWP"
+    },
+    {
+      "sheet": "界面文案",
+      "id": "UI-266D102D88",
+      "english": "My Records",
+      "chineseBefore": "我的作业",
+      "chineseAfter": "我的记录",
+      "englishAfter": "My Records"
+    },
+    {
+      "sheet": "界面文案",
+      "id": "UI-C23B60C0E1",
+      "english": "All Records",
+      "chineseBefore": "全部作业",
+      "chineseAfter": "所有记录",
+      "englishAfter": "All Records"
+    },
+    {
+      "sheet": "界面文案",
+      "id": "UI-6E2F446EC0",
+      "english": "Atomic import: all rows must be valid; existing or duplicate SKUs are rejected.",
+      "chineseBefore": "原子导入：全部行通过才导入，拒绝已有或重复 SKU。",
+      "chineseAfter": "全部通过才导入，拒绝已有或重复 SKU。",
+      "englishAfter": "Atomic import: all rows must be valid; existing or duplicate SKUs are rejected."
+    },
+    {
+      "sheet": "界面文案",
+      "id": "UI-BF33914AF2",
+      "english": "Work Order",
+      "chineseBefore": "作业单号",
+      "chineseAfter": "工单号",
+      "englishAfter": "Work Order"
+    },
+    {
+      "sheet": "界面文案",
+      "id": "UI-DB1B65F8B5",
+      "english": "Work Record",
+      "chineseBefore": "作业单",
+      "chineseAfter": "工单记录",
+      "englishAfter": "Work Record"
+    },
+    {
+      "sheet": "检验与选项",
+      "id": "OPT-EFD8CAB291",
+      "english": "AWP",
+      "chineseBefore": "AWP",
+      "chineseAfter": "待料",
+      "englishAfter": "AWP"
+    }
+  ],
+  "originalTextsUnchanged": true
+}
