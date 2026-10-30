@@ -29,7 +29,7 @@ test('v03 Module4 UI: admin corrects foreign WFR without completion and owner re
 });
 
 test('v03 Module5 UI: failed upload precise copy, retained file retry, size/format validation',{timeout:60000},async t=>{
-  const {page,client,login}=await fixture(t),alex=await client();await login();await page.locator('#new-record').click();await page.locator('#sn').fill('DEEP-V03-PHOTO-RETRY');await page.locator('#issueNotes').fill('Original English issue');
+  const {page,client,login}=await fixture(t),alex=await client();await login();await page.locator('#new-record').click();await page.locator('#modelId').selectOption('1');await page.locator('#sn').fill('DEEP-V03-PHOTO-RETRY');await page.locator('#issueNotes').fill('Original English issue');
   await page.locator('.evidence-section summary').click();
   await page.route('**/api/records/*/photos',route=>route.fulfill({status:503,json:{error:{code:'TEST_UPLOAD_FAILURE',message:'Injected failure'}}}));
   await page.locator('#photo-file').setInputFiles({name:'evidence.png',mimeType:'image/png',buffer:png});await page.locator('#upload-photo').click();await page.getByText('Upload failed. Your photo has not been saved. Please try again.',{exact:true}).waitFor();

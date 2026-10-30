@@ -16,7 +16,7 @@ async function fixture(t,demo=true){
 }
 
 test('review regression: password change is blocked while a work record is unsaved', {timeout:60000},async t=>{
-  const {page,login}=await fixture(t);await login('alex','JackeryAlex!2026');await page.locator('#new-record').click();
+  const {page,login}=await fixture(t);await login('alex','JackeryAlex!2026');await page.locator('#new-record').click();await page.locator('#modelId').selectOption('1');
   await page.locator('#sn').fill('PASSWORD-DIRTY-001');await page.locator('#issueNotes').fill('Unsaved owner work must survive');
   await page.locator('#account').click();
   assert.equal(await page.locator('#password-dialog[open]').count(),0,'Do not revoke a session needed by dirty work');

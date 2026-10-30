@@ -18,7 +18,7 @@ test('real browser operator, BOM, WFR, checks, photo, history and admin workflow
   try {
     await page.goto(app.baseUrl);await login('alex','JackeryAlex!2026');
     assert.equal(await page.getByText('DEMO-HISTORY-001',{exact:true}).count(),0,'ordinary list must not expose Blair history');
-    await byId('new-record').click();await byId('sn').fill('E2E-UI-001');await byId('modelId').selectOption('1');
+    await byId('new-record').click();await byId('modelId').selectOption('1');await byId('sn').fill('E2E-UI-001');await byId('modelId').selectOption('1');
     await byId('appearanceNotes').fill('scratch <script>never execute</script>');await byId('issueNotes').fill('AC failure');
     await page.locator('input[name=outcome][value=awp]').check();assert.equal(await byId('complete-record').count(),0);
     await byId('save-record').click();await page.getByText('Saved successfully',{exact:true}).waitFor();
@@ -44,11 +44,11 @@ test('real browser operator, BOM, WFR, checks, photo, history and admin workflow
     await byId('upload-photo').click();await byId('photos').locator('img').waitFor();
     await byId('complete-record').click();await page.waitForFunction(()=>document.querySelector('#issueNotes')?.disabled&&document.querySelector('.heading')?.textContent.includes('Completed'));assert.equal(await byId('issueNotes').isDisabled(),true);
     await mkdir('artifacts/e2e',{recursive:true});await page.screenshot({path:'artifacts/e2e/operator-completed.png',fullPage:true});
-    await byId('records-nav').click();await byId('new-record').click();await byId('sn').fill('E2E-SCRAP-002');
+    await byId('records-nav').click();await byId('new-record').click();await byId('modelId').selectOption('1');await byId('sn').fill('E2E-SCRAP-002');
     page.removeAllListeners('dialog');page.once('dialog',d=>d.dismiss());await byId('records-nav').click();assert.equal(await byId('sn').inputValue(),'E2E-SCRAP-002');page.on('dialog',d=>d.accept());
     await page.locator('input[name=outcome][value=scrap]').check();await byId('complete-record').click();assert.match(await byId('form-error').textContent(),/scrap reason/i);
     await byId('scrapReason').fill('Damaged beyond repair');await byId('complete-record').click();await page.waitForFunction(()=>document.querySelector('#issueNotes')?.disabled&&document.querySelector('.heading')?.textContent.includes('Completed'));
-    await byId('records-nav').click();await byId('new-record').click();await byId('sn').fill('E2E-REFURB-003');await page.locator('input[name=outcome][value=like_new]').check();
+    await byId('records-nav').click();await byId('new-record').click();await byId('modelId').selectOption('1');await byId('sn').fill('E2E-REFURB-003');await page.locator('input[name=outcome][value=like_new]').check();
     assert.equal(await page.locator('.checks select').count(),0);await byId('complete-record').click();assert.match(await byId('form-error').textContent(),/initial|inspection/i);
     for(const radio of await page.locator('[data-check-phase=initial][value=pass]').all())await radio.check();
     await page.locator('[data-appearance=no_defect]').check();await page.locator('[data-appearance=scratches]').check();assert.equal(await page.locator('[data-appearance=no_defect]').isChecked(),false);

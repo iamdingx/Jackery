@@ -28,12 +28,12 @@ test('review regression: saved model and selected appearance labels use their hi
   await login();await page.locator('#filter-q').fill('SNAPSHOT-LABEL-001');await page.locator('#filters').getByRole('button',{name:'Search',exact:true}).click();await page.locator('[data-open-record]').first().click();
   assert.equal(await page.locator('#modelId option:checked').textContent(),'Sample Model A','Saved model name must remain historical');
   assert.equal((await page.locator('[data-appearance=scratches]').locator('..').textContent()).trim(),'Scratches','Saved selected defect name must remain historical');
-  await page.locator('#records-nav').click();await page.locator('#new-record').click();
+  await page.locator('#records-nav').click();await page.locator('#new-record').click();await page.locator('#modelId').selectOption('1');
   assert.equal(await page.locator('#modelId option:checked').textContent(),'Renamed Future Model','New work uses the current catalog');
 });
 
 test('review regression: reloading warns before discarding a selected but not uploaded photo', {timeout:60000},async t=>{
-  const {page,login}=await fixture(t);await login();await page.locator('#new-record').click();await page.locator('#sn').fill('PENDING-RELOAD-001');
+  const {page,login}=await fixture(t);await login();await page.locator('#new-record').click();await page.locator('#modelId').selectOption('1');await page.locator('#sn').fill('PENDING-RELOAD-001');
   await page.locator('#save-record').click();await page.getByText('Saved successfully',{exact:true}).waitFor();
   await page.locator('#photo-file').setInputFiles({name:'pending.png',mimeType:'image/png',buffer:Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAIAAAADCAIAAAA2iEnWAAAAEUlEQVR4nGP8zwACTGASRgEAFEABBVDVLjgAAAAASUVORK5CYII=','base64')});
   const saved=page.waitForResponse(r=>r.request().method()==='PUT'&&/\/api\/records\/\d+$/.test(r.url()));

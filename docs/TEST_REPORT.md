@@ -1,5 +1,9 @@
 # 当前测试报告
 
+最新：无默认型号、取消选型确认与Jackery字标，129+31=160/160全量回归通过，详见[本轮报告](./MODEL_ENTRY_UPLOAD_REPORT.md)和[证据](./model-entry/VERIFICATION_SUMMARY.json)。上传原失败文件原因仍待真实重试诊断，未宣称原问题已解决。
+
+以下为上一轮翻译发布记录：
+
 本轮全部中文来源指导双语更新：**129/129单元/API + 28/28浏览器，合计157/157通过**，0失败/跳过/取消。源指纹：`05226c66c698f41af8ce23a23091fe848e642f61850c89d769dfa3d13e4ae5d3`。见[本轮报告](./guidance-translation/REPORT.md)及[机器证据](./guidance-translation/VERIFICATION_SUMMARY.json)。
 
 服务器Ubuntu隔离核心回归129/129通过。实际生产库只读覆盖371处来源指导字段；公网资源哈希匹配、health正常。生产初始凭据已不匹配当前密码，故未声明生产登录后操作通过；没有重置账号。隔离浏览器对9来源型号、故障/方案上下双语及布局验证通过。

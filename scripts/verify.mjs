@@ -9,7 +9,7 @@ const summary = { startedAt: new Date().toISOString(), node: process.version, ca
 function run(name, files) {
   return new Promise(resolve => {
     const log = [];
-    const child = spawn(process.execPath, ['--test', '--test-reporter=spec', ...files], { cwd: root, env: process.env, windowsHide: true });
+    const child = spawn(process.execPath, ['--test', '--test-reporter=spec', ...(name==='browser-e2e'?['--test-concurrency=2']:[]), ...files], { cwd: root, env: process.env, windowsHide: true });
     const timer = setTimeout(() => { child.kill(); }, 8 * 60 * 1000);
     child.stdout.on('data', d => log.push(d)); child.stderr.on('data', d => log.push(d));
     child.on('error', e => log.push(Buffer.from(e.stack + '\n')));

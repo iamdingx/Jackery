@@ -15,7 +15,7 @@ async function fixture(t){
 }
 
 test('v03 exact English fields, separate translations, inspection gate and draft language retention',{timeout:60000},async t=>{
-  const {page}=await fixture(t);await page.locator('#new-record').click();
+  const {page}=await fixture(t);await page.locator('#new-record').click();await page.locator('#modelId').selectOption('1');
   assert.equal(await page.getByRole('columnheader',{name:'Inspection Result',exact:true}).count(),1);
   for(const name of ['Initial Test','Final Test'])assert.equal(await page.getByRole('columnheader',{name,exact:true}).count(),0);
   assert.equal(await page.locator('.checks input[type=radio]').count(),9);
@@ -51,7 +51,7 @@ test('v03 exact English fields, separate translations, inspection gate and draft
 
 test('v03 BOM keeps pending quantities across languages, warns missing English and locates duplicate',{timeout:60000},async t=>{
   const {page}=await fixture(t);await page.route('**/api/models/1/bom?*',async route=>{const q=new URL(route.request().url()).searchParams.get('q');await route.fulfill({json:{items:q==='absent'?[]:[{id:909,sku:'原-SKU-909',descriptionEn:'',descriptionZh:'原中文规格',unit:'pcs'}],total:q==='absent'?0:1}});});
-  await page.locator('#new-record').click();await page.locator('#open-bom').click();
+  await page.locator('#new-record').click();await page.locator('#modelId').selectOption('1');await page.locator('#open-bom').click();
   await page.locator('#bom-results .translation-warning').waitFor();assert.ok((await page.locator('#bom-results').textContent()).includes('English description missing'));assert.equal(await page.locator('#bom-results .part-description-zh').first().textContent(),'原中文规格');
   await page.locator('[data-bom-select="909"]').check();await page.locator('[data-pending-qty="909"]').fill('3.25');
   await page.locator('#bom-language').click();await page.locator('#bom-language').click();assert.equal(await page.locator('[data-pending-qty="909"]').inputValue(),'3.25');
@@ -65,7 +65,7 @@ test('v03 BOM keeps pending quantities across languages, warns missing English a
 });
 
 test('v03 SN automatic found hint and account language preferences isolate users',{timeout:60000},async t=>{
-  const {page,login}=await fixture(t);await page.locator('#new-record').click();await page.locator('#sn').fill('DEMO-HISTORY-001');
+  const {page,login}=await fixture(t);await page.locator('#new-record').click();await page.locator('#modelId').selectOption('1');await page.locator('#sn').fill('DEMO-HISTORY-001');
   await page.getByText('Previous records found for this SN. Records owned by others are view-only.',{exact:true}).waitFor();
   assert.equal(await page.locator('#sn').isEnabled(),true);const preference=page.waitForResponse(r=>r.url().endsWith('/api/account/language')&&r.request().method()==='PUT');await page.locator('#language').click();await preference;
   page.on('dialog',d=>d.accept());await page.locator('#logout').click();await login('blair','JackeryBlair!2026');assert.equal(await page.locator('html').getAttribute('lang'),'en');
@@ -74,7 +74,7 @@ test('v03 SN automatic found hint and account language preferences isolate users
 });
 
 test('v03 exact SN allows a new visit and history resumes only own unfinished record',{timeout:60000},async t=>{
-  const {page}=await fixture(t);await page.locator('#new-record').click();await page.locator('#sn').fill('DEMO-HISTORY-001');await page.locator('[name=outcome][value=awp]').check();
+  const {page}=await fixture(t);await page.locator('#new-record').click();await page.locator('#modelId').selectOption('1');await page.locator('#sn').fill('DEMO-HISTORY-001');await page.locator('[name=outcome][value=awp]').check();
   await page.locator('#save-record').click();await page.getByText('Saved successfully',{exact:true}).waitFor();const order=await page.locator('#workOrder').inputValue();
   await page.locator('#view-history').click();await page.locator('#history-results [data-history-record]').first().waitFor();
   const own=page.locator('#history-results tr').filter({hasText:order});await own.locator('[data-history-record]').click();
@@ -87,7 +87,7 @@ test('v03 rapid SN input and logout cancel history lookup and finish the final l
   const {page,login}=await fixture(t);const lateHistory=[],consoleErrors=[];let signingOut=false;
   page.on('request',request=>{if(request.url().endsWith('/api/logout'))signingOut=true;if(signingOut&&request.url().includes('/api/sn-history?'))lateHistory.push(request.url());});
   page.on('console',message=>{if(message.type()==='error')consoleErrors.push(message.text());});
-  await page.locator('#new-record').click();await page.locator('#sn').fill('RAPID-LOGOUT-SN');page.once('dialog',d=>d.accept());await page.locator('#logout').click();await page.locator('#username').waitFor();
+  await page.locator('#new-record').click();await page.locator('#modelId').selectOption('1');await page.locator('#sn').fill('RAPID-LOGOUT-SN');page.once('dialog',d=>d.accept());await page.locator('#logout').click();await page.locator('#username').waitFor();
   await new Promise(resolve=>setTimeout(resolve,500));
   assert.deepEqual(lateHistory,[],'No history lookup may start after sign-out begins');assert.deepEqual(consoleErrors,[]);
   signingOut=false;await login();
@@ -101,14 +101,14 @@ test('v03 rapid SN input and logout cancel history lookup and finish the final l
 test('v03 sign-out aborts an in-flight SN lookup before another account starts work',{timeout:60000},async t=>{
   const {page,login}=await fixture(t);const consoleErrors=[];page.on('console',message=>{if(message.type()==='error')consoleErrors.push(message.text());});
   await page.route('**/api/sn-history?*',async route=>{await new Promise(resolve=>setTimeout(resolve,700));await route.fulfill({json:{items:[{id:999}]}}).catch(()=>{});});
-  await page.locator('#new-record').click();const started=page.waitForRequest(r=>r.url().includes('/api/sn-history?'));await page.locator('#sn').fill('IN-FLIGHT-LOOKUP');await started;
+  await page.locator('#new-record').click();await page.locator('#modelId').selectOption('1');const started=page.waitForRequest(r=>r.url().includes('/api/sn-history?'));await page.locator('#sn').fill('IN-FLIGHT-LOOKUP');await started;
   const aborted=page.waitForEvent('requestfailed',r=>r.url().includes('/api/sn-history?'));page.once('dialog',d=>d.accept());await page.locator('#logout').click();await page.locator('#username').waitFor();
-  assert.match((await aborted).failure().errorText,/ABORTED|CANCELLED/i);await login('blair','JackeryBlair!2026');await page.locator('#new-record').click();
+  assert.match((await aborted).failure().errorText,/ABORTED|CANCELLED/i);await login('blair','JackeryBlair!2026');await page.locator('#new-record').click();await page.locator('#modelId').selectOption('1');
   assert.equal(await page.locator('#sn').inputValue(),'');assert.equal(await page.getByText('Previous records found for this SN. Records owned by others are view-only.',{exact:true}).count(),0);assert.deepEqual(consoleErrors,[]);
 });
 
 test('v03 custom photo picker exposes English controls and preserves original filename across languages',{timeout:60000},async t=>{
-  const {page}=await fixture(t);await page.locator('#new-record').click();await page.locator('.evidence-section summary').click();assert.equal(await page.locator('#photo-selection').textContent(),'No photo selected');
+  const {page}=await fixture(t);await page.locator('#new-record').click();await page.locator('#modelId').selectOption('1');await page.locator('.evidence-section summary').click();assert.equal(await page.locator('#photo-selection').textContent(),'No photo selected');
   const chooser=page.waitForEvent('filechooser');await page.getByRole('button',{name:'Choose Photo',exact:true}).click();await (await chooser).setFiles({name:'原始 Evidence.png',mimeType:'image/png',buffer:Buffer.from('source bytes')});
   assert.equal(await page.locator('#photo-selection').textContent(),'Selected: 原始 Evidence.png');await page.locator('#language').click();assert.equal(await page.locator('#language').textContent(),'EN');await page.locator('#language').click();assert.equal(await page.locator('#photo-selection').textContent(),'Selected: 原始 Evidence.png');
 });
@@ -116,14 +116,14 @@ test('v03 custom photo picker exposes English controls and preserves original fi
 test('v03 delayed broad BOM response cannot replace a newer target search',{timeout:60000},async t=>{
   const {page}=await fixture(t);let finishBroad;const broadDone=new Promise(resolve=>finishBroad=resolve);
   await page.route('**/api/models/1/bom?*',async route=>{const q=new URL(route.request().url()).searchParams.get('q');if(!q){await new Promise(resolve=>setTimeout(resolve,300));await route.fulfill({json:{items:[{id:901,sku:'STALE-BROAD-SKU',descriptionEn:'Stale broad result'}],total:1}});finishBroad();}else await route.fulfill({json:{items:[{id:902,sku:'LATEST-TARGET-SKU',descriptionEn:'Latest target result'}],total:1}});});
-  await page.locator('#new-record').click();await page.locator('#open-bom').click();await page.locator('#bom-search').fill('target');await page.locator('#bom-search-form button').click();await page.getByText('LATEST-TARGET-SKU',{exact:true}).waitFor();
+  await page.locator('#new-record').click();await page.locator('#modelId').selectOption('1');await page.locator('#open-bom').click();await page.locator('#bom-search').fill('target');await page.locator('#bom-search-form button').click();await page.getByText('LATEST-TARGET-SKU',{exact:true}).waitFor();
   await broadDone;await new Promise(resolve=>setTimeout(resolve,100));assert.ok((await page.locator('#bom-results').textContent()).includes('LATEST-TARGET-SKU'));assert.equal(await page.getByText('STALE-BROAD-SKU',{exact:true}).count(),0);
 });
 
 test('v03 closing an in-flight BOM request cannot mutate a newly opened drawer or throw after close',{timeout:60000},async t=>{
   const {page}=await fixture(t);const errors=[];page.on('pageerror',err=>errors.push(err.message));let mode='success',slow=true,finishSlow,slowDone;
   await page.route('**/api/models/1/bom?*',async route=>{if(slow){slow=false;const responseMode=mode;await new Promise(resolve=>setTimeout(resolve,300));await route.fulfill(responseMode==='error'?{status:503,json:{error:{message:'Stale BOM failure'}}}:{json:{items:[{id:903,sku:'CLOSED-DRAWER-SKU',descriptionEn:'Closed drawer result'}],total:1}});finishSlow();}else await route.fulfill({json:{items:[{id:904,sku:'CURRENT-DRAWER-SKU',descriptionEn:'Current drawer result'}],total:1}});});
-  await page.locator('#new-record').click();
+  await page.locator('#new-record').click();await page.locator('#modelId').selectOption('1');
   for(const nextMode of ['success','error']){mode=nextMode;slow=true;slowDone=new Promise(resolve=>finishSlow=resolve);await page.locator('#open-bom').click();await page.locator('#bom-cancel').click();await page.locator('#open-bom').click();await page.getByText('CURRENT-DRAWER-SKU',{exact:true}).waitFor();await slowDone;await new Promise(resolve=>setTimeout(resolve,100));assert.ok((await page.locator('#bom-results').textContent()).includes('CURRENT-DRAWER-SKU'));assert.equal(await page.locator('#bom-error').isHidden(),true);await page.locator('#bom-cancel').click();}
   mode='error';slow=true;slowDone=new Promise(resolve=>finishSlow=resolve);await page.locator('#open-bom').click();await page.locator('#bom-cancel').click();await slowDone;await new Promise(resolve=>setTimeout(resolve,100));assert.deepEqual(errors,[]);
 });

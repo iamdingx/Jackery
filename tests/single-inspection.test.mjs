@@ -11,7 +11,7 @@ test('v0.3 single inspection radios persist failed evidence for ROK', {timeout:6
     browser=await chromium.launch({headless:true,executablePath:'C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe'});
     const page=await browser.newPage({viewport:{width:1680,height:1100}}),errors=[];page.on('pageerror',e=>errors.push(e.message));
     await page.goto(app.baseUrl);await page.locator('#username').fill('alex');await page.locator('#password').fill('JackeryAlex!2026');await page.getByRole('button',{name:'Sign in',exact:true}).click();
-    await page.locator('#new-record').click();await page.locator('#sn').fill('SINGLE-RADIO-001');
+    await page.locator('#new-record').click();await page.locator('#modelId').selectOption('1');await page.locator('#sn').fill('SINGLE-RADIO-001');
     assert.equal(await page.locator('.checks select').count(),0,'Functional checks must not use dropdowns');
     assert.equal(await page.locator('.checks input[type=radio]').count(),9,'Three radio choices per inspection item');
     assert.equal(await page.getByRole('columnheader',{name:'Inspection Result',exact:true}).count(),1);

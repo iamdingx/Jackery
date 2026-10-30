@@ -35,7 +35,7 @@ async function bilingual(scope,english,chinese){
 }
 
 test('source translations display new checks and guidance in both languages without replacing source text or fault selections',{timeout:60000},async t=>{
- const {page,errors}=await fixture(t);await page.locator('#new-record').click();
+ const {page,errors}=await fixture(t);await page.locator('#new-record').click();await page.locator('#modelId').selectOption('1');
  const row=page.locator('.checks tbody tr').filter({has:page.locator('[data-check-code="translated"]')});
  await bilingual(row,sourceTranslations[original],original);assert.equal(await row.locator('[role=radiogroup]').getAttribute('aria-label'),sourceTranslations[original]+' · '+original);
  await bilingual(page.locator('.checks tbody tr').filter({has:page.locator('[data-check-code="existing"]')}),'Existing inspection English','原始检查');
@@ -67,7 +67,7 @@ test('legacy blank English snapshot uses exact source fallback and preserves his
 });
 
 test('empty guidance stays empty and unknown originals use explicit fallback without inherited translations',{timeout:60000},async t=>{
- const {page,errors}=await fixture(t,{checks:[{code:'empty',labelEn:'',labelZh:''},{code:'unknown',labelEn:'',labelZh:'未提供翻译'},{code:'prototype',labelEn:'',labelZh:'constructor'}],translations:{},knowledgeData:{faultCodes:[{code:'EMPTY',titleEn:'',titleZh:'',descriptionEn:'',descriptionZh:'',solutionEn:'',solutionZh:''}],repairGuides:[{id:'EMPTY-GUIDE',titleEn:'',titleZh:'',symptomsEn:'',symptomsZh:'',stepsEn:[],stepsZh:[]}],notices:[{descriptionZh:''}]}});await page.locator('#new-record').click();
+ const {page,errors}=await fixture(t,{checks:[{code:'empty',labelEn:'',labelZh:''},{code:'unknown',labelEn:'',labelZh:'未提供翻译'},{code:'prototype',labelEn:'',labelZh:'constructor'}],translations:{},knowledgeData:{faultCodes:[{code:'EMPTY',titleEn:'',titleZh:'',descriptionEn:'',descriptionZh:'',solutionEn:'',solutionZh:''}],repairGuides:[{id:'EMPTY-GUIDE',titleEn:'',titleZh:'',symptomsEn:'',symptomsZh:'',stepsEn:[],stepsZh:[]}],notices:[{descriptionZh:''}]}});await page.locator('#new-record').click();await page.locator('#modelId').selectOption('1');
  const empty=page.locator('.checks tbody tr').filter({has:page.locator('[data-check-code=empty]')});assert.equal(await empty.locator('.translation-warning').count(),0);assert.equal(await empty.locator('.guidance-en').count(),0);
  for(const code of ['unknown','prototype']){const row=page.locator('.checks tbody tr').filter({has:page.locator(`[data-check-code=${code}]`)});assert.equal(await row.locator('.translation-warning').count(),1);assert.doesNotMatch(await row.textContent(),/function Object|native code/);}
  assert.equal(await page.locator('.check-language-warning').count(),1);await page.locator('#fault-codes').click();await page.locator('.fault-option summary').click();assert.equal(await page.locator('#fault-dialog .translation-warning').count(),0);assert.equal(await page.locator('#fault-dialog h4').count(),0);await page.locator('#fault-close').click();await page.locator('#open-guides').click();assert.equal(await page.locator('#guides-dialog .translation-warning').count(),0);assert.equal(await page.locator('#guides-dialog .guidance-en').count(),0);assert.deepEqual(errors,[]);

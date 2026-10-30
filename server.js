@@ -233,7 +233,7 @@ export async function startServer({dataDir=path.join(root,'data'),demo=false,por
       absent('API route not found');
     }catch(e){
       if(res.headersSent){res.destroy();return;}
-      if(e instanceof ApiError)return send(e.status,{error:{code:e.code,message:e.message,...(e.details===undefined?{}:{details:e.details})}});
+      if(e instanceof ApiError){if(req.method==='POST'&&/^\/api\/records\/\d+\/photos(?:\?|$)/.test(req.url))console.warn('Photo upload rejected:',JSON.stringify({status:e.status,code:e.code,message:e.message}));return send(e.status,{error:{code:e.code,message:e.message,...(e.details===undefined?{}:{details:e.details})}});}
       // Do not log request bodies, database values, credentials or session tokens.
       console.error('Request failed:',e?.code??e?.name??'Error');return send(500,{error:{code:'INTERNAL_ERROR',message:'An internal error occurred'}});
     }
