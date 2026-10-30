@@ -1,0 +1,29 @@
+✔ real browser operator, BOM, WFR, checks, photo, history and admin workflows (7778.0565ms)
+✔ latest user override: every outcome has one inspection of radio choices and ROK needs no retest (3778.4174ms)
+✔ review regression: password change is blocked while a work record is unsaved (3702.4847ms)
+✔ review regression: fresh production administrator can change password and sign in again (1940.1615ms)
+✔ review regression: admin filters and cached state do not carry into another operator login (1561.3186ms)
+✔ review regression: saved model and selected appearance labels use their historical snapshots (3683.9921ms)
+✔ review regression: reloading warns before discarding a selected but not uploaded photo (1994.6046ms)
+✔ review regression: other-owner exact-SN history photos render with one authorized SN parameter (3691.8097ms)
+✔ v0.3 single inspection radios persist failed evidence for ROK (3693.7419ms)
+✔ v03 Module4 UI: admin corrects foreign WFR without completion and owner resumes own history (3723.9854ms)
+✔ v03 Module5 UI: failed upload precise copy, retained file retry, size/format validation (2994.5673ms)
+✔ v03 Module2/3 UI: long English labels, 100 consumption rows and export locale (1990.7502ms)
+✔ v03 exact English fields, separate translations, inspection gate and draft language retention (3773.503ms)
+✔ v03 BOM keeps pending quantities across languages, warns missing English and locates duplicate (2617.3064ms)
+✔ v03 SN automatic found hint and account language preferences isolate users (2115.4908ms)
+✔ v03 exact SN allows a new visit and history resumes only own unfinished record (1776.8388ms)
+✔ v03 rapid SN input and logout cancel history lookup and finish the final language save (2974.5294ms)
+✔ v03 sign-out aborts an in-flight SN lookup before another account starts work (1526.2211ms)
+✔ v03 custom photo picker exposes English controls and preserves original filename across languages (1209.2059ms)
+✔ v03 delayed broad BOM response cannot replace a newer target search (1482.6843ms)
+✔ v03 closing an in-flight BOM request cannot mutate a newly opened drawer or throw after close (2392.4931ms)
+ℹ tests 21
+ℹ suites 0
+ℹ pass 21
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 20280.9935

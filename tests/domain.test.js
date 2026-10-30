@@ -14,9 +14,10 @@ test('refurbishment completion rejects failed initial checks and waiting outcome
   const saved = validateRecord({outcome:'awp',action:'save'},previous,catalog);
   assert.equal(saved.status,'wfr'); assert.equal(saved.sn,'SN');
 });
-test('repair requires final Pass, scrap a reason and no_defect is exclusive', async () => {
+test('repair requires assessed inspection, scrap a reason and no_defect is exclusive', async () => {
   const {validateRecord} = await load(); assert.equal(typeof validateRecord,'function');
-  assert.throws(() => validateRecord({outcome:'rok',action:'complete'},previous,catalog), /final tests/i);
+  assert.throws(() => validateRecord({outcome:'rok',action:'complete'},previous,catalog), /inspection/i);
+  assert.equal(validateRecord({outcome:'rok',action:'complete',checks:{initial:{ac:'fail'}}},previous,catalog).status,'completed');
   assert.throws(() => validateRecord({outcome:'scrap',action:'complete'},previous,catalog), /reason/i);
   assert.throws(() => validateRecord({appearanceCodes:['no_defect','scratches']},previous,catalog), /appearance|exclusive/i);
   assert.equal(validateRecord({outcome:'scrap',scrapReason:'Unsafe',action:'complete'},previous,catalog).status,'completed');

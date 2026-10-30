@@ -14,9 +14,11 @@ async function fixture(t){
   await page.goto(app.baseUrl);await login();return {app,page,login};
 }
 
-test('v03 exact English fields, separate translations, final gate and draft language retention',{timeout:60000},async t=>{
+test('v03 exact English fields, separate translations, inspection gate and draft language retention',{timeout:60000},async t=>{
   const {page}=await fixture(t);await page.locator('#new-record').click();
-  for(const name of ['Initial Test','Final Test'])assert.equal(await page.getByRole('columnheader',{name,exact:true}).count(),1);
+  assert.equal(await page.getByRole('columnheader',{name:'Inspection Result',exact:true}).count(),1);
+  for(const name of ['Initial Test','Final Test'])assert.equal(await page.getByRole('columnheader',{name,exact:true}).count(),0);
+  assert.equal(await page.locator('.checks input[type=radio]').count(),9);
   assert.equal(await page.locator('.checks select').count(),0);
   for(const [id,name] of Object.entries({translatedAppearanceNotes:'Translated Appearance Notes',translatedIssueNotes:'Translated Issue Notes',receivingSku:'Receiving SKU',postSortSku:'Post-Sort SKU',receivingOrderNo:'Receiving Order No.',receivingStatus:'Receiving Status',productNameVerification:'Product Name Verification',skuVerification:'SKU Verification',parentRecord:'Parent Record',unspecifiedTextField:'Unspecified Text Field'})){
     assert.equal(await page.getByLabel(name,{exact:true}).count(),1,id);assert.equal(await page.locator('#'+id).isDisabled(),true,id);
@@ -29,19 +31,19 @@ test('v03 exact English fields, separate translations, final gate and draft lang
   await page.locator('#sn').fill('V03-DRAFT');await page.locator('#appearanceNotes').fill('原外观');await page.locator('#issueNotes').fill('Original issue');
   await page.locator('#translatedAppearanceNotes').fill('Manual appearance');await page.locator('#translatedIssueNotes').fill('Manual issue');
   await page.locator('[data-check-phase=initial][data-check-code=ac_output][value=fail]').check();await page.locator('[name=outcome][value=rok]').check();await page.locator('#complete-record').click();
-  assert.equal(await page.locator('#form-error').textContent(),'Complete all final tests with a Pass result before selecting ROK for completion.');
+  assert.equal(await page.locator('#form-error').textContent(),'Complete all inspection items. Refurbishment requires all results to pass.');
   await page.locator('#language').click();await page.locator('#language').click();
   assert.equal(await page.locator('#translatedAppearanceNotes').inputValue(),'Manual appearance');assert.equal(await page.locator('#issueNotes').inputValue(),'Original issue');
   assert.equal(await page.locator('[data-check-phase=initial][data-check-code=ac_output][value=fail]').isChecked(),true);
   await page.locator('[name=outcome][value=scrap]').check();await page.locator('#complete-record').click();
   assert.equal(await page.locator('#form-error').textContent(),'Enter a scrap reason before completing this record.');
-  for(const radio of await page.locator('[data-check-phase=final][value=pass]').all())await radio.check();
+  for(const code of ['dc_output','charging'])await page.locator(`[data-check-phase=initial][data-check-code=${code}][value=pass]`).check();
   await page.locator('[name=outcome][value=awp]').check();await page.locator('#save-record').click();await page.getByText('Saved successfully',{exact:true}).waitFor();
   const loaded=page.waitForResponse(r=>r.request().method()==='GET'&&/\/api\/records\/\d+$/.test(r.url()));await page.locator('#reload-record').click();await loaded;
   assert.equal(await page.locator('#translatedIssueNotes').inputValue(),'Manual issue');assert.equal(await page.locator('#appearanceNotes').inputValue(),'原外观');
   await page.locator('[name=outcome][value=like_new]').check();assert.equal(await page.locator('[data-check-phase=final]').count(),0);
   assert.equal(await page.locator('[data-check-phase=initial][data-check-code=ac_output][value=fail]').isChecked(),true);
-  await page.locator('[name=outcome][value=awp]').check();assert.equal(await page.locator('[data-check-phase=final][value=pass]:checked').count(),3);
+  await page.locator('[name=outcome][value=awp]').check();assert.equal(await page.locator('[data-check-phase=final]').count(),0);assert.equal(await page.locator('[data-check-phase=initial][value=pass]:checked').count(),2);
   await page.locator('#appearanceNotes').fill('');assert.equal(await page.locator('#translatedAppearanceNotes').inputValue(),'');assert.equal(await page.locator('#translatedAppearanceNotes').isDisabled(),true);
 });
 

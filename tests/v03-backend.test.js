@@ -14,24 +14,25 @@ const model={id:1,nameEn:'Model',nameZh:'型号',active:true,checkItems:[{code:'
 const catalog={models:[model],appearanceOptions:[],bom:[]};
 const previous={id:1,sn:'SN',workOrder:'HB-1',modelId:1,modelSnapshot:model,checks:{initial:{ac:'fail'},final:{ac:'not_tested'}},workDate:'2026-10-30',appearanceCodes:[],appearanceSnapshot:[],materials:[],photos:[],status:'draft'};
 const refs={receivingSku:'原-SKU(1-like new)',postSortSku:'Post-Sort !',receivingOrderNo:'R-123',receivingStatus:'待入库',productNameVerification:'客户原值',skuVerification:'未确认',parentRecord:'parent-17',unspecifiedTextField:'文本 9 原值'};
-const rokError='Complete all final tests with a Pass result before selecting ROK for completion.';
+const rokError='Complete all inspection items. Refurbishment requires all results to pass.';
 
-test('v0.3 ROK requires every final test pass and preserves failing initial evidence',()=>{
-  for(const state of ['not_tested','fail'])assert.throws(()=>validateRecord({outcome:'rok',action:'complete',checks:{initial:{ac:'pass'},final:{ac:state}}},previous,catalog),{message:rokError});
+test('v0.3 ROK requires assessed inspection and preserves failing evidence and legacy archive',()=>{
+  assert.throws(()=>validateRecord({outcome:'rok',action:'complete',checks:{initial:{ac:'not_tested'},final:{ac:'pass'}}},previous,catalog),{message:rokError});
   const complete=validateRecord({outcome:'rok',action:'complete',checks:{initial:{ac:'fail'},final:{ac:'pass'}}},previous,catalog);
-  assert.equal(complete.status,'completed');assert.deepEqual(complete.checks,{initial:{ac:'fail'},final:{ac:'pass'}});
-  assert.throws(()=>validateRecord({action:'complete',checks:{final:{ac:'fail'}}},{...complete},catalog),{message:rokError});
+  assert.equal(complete.status,'completed');assert.deepEqual(complete.checks,{initial:{ac:'fail'},final:{ac:'not_tested'}});
+  assert.throws(()=>validateRecord({action:'complete',checks:{initial:{ac:'not_tested'}}},{...complete},catalog),{message:rokError});
   assert.throws(()=>validateRecord({outcome:'scrap',action:'complete'},previous,catalog),{message:'Enter a scrap reason before completing this record.'});
 });
 
-test('v0.3 missing stages preserve evidence, new final defaults untested, refurb only needs initial',()=>{
+test('v0.3 edits preserve legacy archive, new inspections have no final, refurb requires pass',()=>{
   const withFinal={...previous,checks:{initial:{ac:'fail'},final:{ac:'pass'}}};
   assert.deepEqual(validateRecord({checks:{initial:{ac:'pass'}}},withFinal,catalog).checks.final,{ac:'pass'});
-  assert.deepEqual(validateRecord({checks:{final:{ac:'pass'}}},previous,catalog).checks.initial,{ac:'fail'});
-  assert.deepEqual(validateRecord({}, {...previous,checks:{initial:{ac:'pass'}}},catalog).checks.final,{ac:'not_tested'});
+  assert.deepEqual(validateRecord({checks:{final:{ac:'pass'}}},previous,catalog).checks,previous.checks);
+  assert.equal(Object.hasOwn(validateRecord({}, {...previous,checks:{initial:{ac:'pass'}}},catalog).checks,'final'),false);
   assert.equal(validateRecord({outcome:'good',action:'complete',checks:{initial:{ac:'pass'},final:{ac:'fail'}}},previous,catalog).status,'completed');
   assert.equal(validateRecord({outcome:'awp',checks:{initial:{ac:'fail'},final:{ac:'not_tested'}}},previous,catalog).status,'wfr');
-  assert.throws(()=>validateRecord({checks:{final:{unknown:'pass'}}},previous,catalog),/check/i);
+  assert.deepEqual(validateRecord({checks:{final:{unknown:'pass'}}},previous,catalog).checks,previous.checks);
+  assert.throws(()=>validateRecord({checks:{initial:{unknown:'pass'}}},previous,catalog),/check/i);
 });
 
 test('v0.3 optional reference and translation strings survive independently without rewriting',()=>{
@@ -59,19 +60,22 @@ test('v0.3 export uses Part SKU and readable states alongside exact stored codes
   assert.match(sheet(en,3),/>Part SKU</);assert.match(sheet(en,1),/>Product SKU</);
   const summary=exportedRows(sheet(en,1)),checks=exportedRows(sheet(en,2)),materials=exportedRows(sheet(en,3));
   assert.deepEqual(summary.map(row=>[row.Status,row['Status Code']]),[['In Progress','draft'],['In Progress','wfr'],['Completed','completed']]);
-  assert.deepEqual(checks.slice(0,2).map(row=>[row.Stage,row['Stage Code'],row.Result,row['Result Code']]),[['Initial Test','initial','Not Tested','not_tested'],['Final Test','final','Pass','pass']]);
+  assert.equal(checks.length,3);
+  assert.deepEqual(checks.slice(0,2).map(row=>[row.Stage,row['Stage Code'],row.Result,row['Result Code']]),[['Inspection Result','inspection','Not Tested','not_tested'],['Inspection Result','inspection','Fail','fail']]);
   assert.equal(checks[2].Result,'Fail');assert.equal(checks[2]['Result Code'],'fail');assert.equal(materials[0]['Part SKU'],'原-Part-SKU');
   const zhSummary=exportedRows(sheet(zh,1)),zhChecks=exportedRows(sheet(zh,2));
   assert.deepEqual(zhSummary.map(row=>[row['完成状态'],row['完成状态代码']]),[['未完成','draft'],['未完成','wfr'],['已完成','completed']]);
-  assert.deepEqual(zhChecks.slice(0,2).map(row=>[row['检查阶段'],row['检查阶段代码'],row['检查结果'],row['检查结果代码']]),[['初检','initial','未检查','not_tested'],['完工复测','final','正常','pass']]);
+  assert.deepEqual(zhChecks.slice(0,2).map(row=>[row['检查阶段'],row['检查阶段代码'],row['检查结果'],row['检查结果代码']]),[['检验结果','inspection','未检查','not_tested'],['检验结果','inspection','异常','fail']]);
   assert.equal(zhChecks[2]['检查结果'],'异常');
 });
 
-test('v0.3 exports both repair/WFR test stages, one refurb stage, references and language-specific headers',()=>{
+test('v0.3 exports one inspection for all outcomes, legacy archive, references and language-specific headers',()=>{
   const records=['rok','awp','good'].map((outcome,i)=>({...previous,...refs,id:i+1,outcome,workOrder:`HB-${i+1}`,appearanceNotes:'壳体划伤',translatedAppearanceNotes:'Scratched casing',issueNotes:'无法充电',translatedIssueNotes:'Cannot charge',checks:{initial:{ac:'fail'},final:{ac:'pass'}}}));
   const en=unzip(exportRecords(records,'','en')),zh=unzip(exportRecords(records,'','zh'));
-  assert.equal((sheet(en,2).match(/<row /g)||[]).length,6);
-  assert.match(sheet(en,2),/>initial</);assert.match(sheet(en,2),/>final</);assert.doesNotMatch(sheet(en,2),/>inspection</);
+  assert.equal((sheet(en,2).match(/<row /g)||[]).length,4);
+  assert.doesNotMatch(sheet(en,2),/>initial</);assert.doesNotMatch(sheet(en,2),/>final</);assert.match(sheet(en,2),/>inspection</);
+  assert.match(sheet(en,1),/>Legacy Post-work Checks JSON</);assert.match(sheet(zh,1),/>旧版复测存档 JSON</);
+  for(const row of exportedRows(sheet(en,1)))assert.equal(row['Legacy Post-work Checks JSON'],'{&quot;ac&quot;:&quot;pass&quot;}');
   assert.match(sheet(en,1),/>Receiving SKU</);assert.match(sheet(en,1),/>Translated Issue Notes</);
   assert.match(sheet(zh,1),/>作业单号</);assert.match(sheet(zh,1),/>问题描述-翻译</);
   assert.match(sheet(zh,2),/>检查阶段</);assert.match(sheet(zh,3),/>实际耗用数量</);assert.match(sheet(zh,4),/>原始文件名</);
@@ -102,14 +106,14 @@ test('v0.3 upgrades pre-language user schema idempotently without changing store
   store=openStore(dir,true);assert.equal(store.db.prepare('SELECT language FROM users WHERE id=1').get().language,'zh');assert.equal(store.db.prepare('SELECT data FROM records WHERE id=1').get().data,storedRecord);store.db.close();
 });
 
-test('v0.3 API preserves references/final checks, validates export language, searches legacy BOM without English',async t=>{
+test('v0.3 API preserves references, strips client final checks, validates export language, searches legacy BOM without English',async t=>{
   const h=await harness(t),a=h.client();await a.login();
   let r=(await a.req('/api/records','POST',{modelId:1,sn:'V03',...refs})).data.record;
-  assert.deepEqual(r.checks.final,{ac_output:'not_tested',dc_output:'not_tested',charging:'not_tested'});
+  assert.equal(Object.hasOwn(r.checks,'final'),false);
   for(const [key,value] of Object.entries(refs))assert.equal(r[key],value);
-  const fail=await a.req(`/api/records/${r.id}`,'PUT',{version:r.version,outcome:'rok',action:'complete',checks:{initial:{ac_output:'pass',dc_output:'pass',charging:'pass'},final:{ac_output:'fail',dc_output:'pass',charging:'pass'}}});assert.equal(fail.status,422);assert.equal(fail.data.error.message,rokError);
+  const fail=await a.req(`/api/records/${r.id}`,'PUT',{version:r.version,outcome:'rok',action:'complete',checks:{initial:{ac_output:'not_tested',dc_output:'pass',charging:'pass'},final:{ac_output:'pass',dc_output:'pass',charging:'pass'}}});assert.equal(fail.status,422);assert.equal(fail.data.error.message,rokError);
   r=(await a.req(`/api/records/${r.id}`,'PUT',{version:r.version,outcome:'awp',checks:{initial:{ac_output:'fail'},final:{ac_output:'pass'}}})).data.record;
-  assert.equal(r.checks.initial.ac_output,'fail');assert.equal(r.checks.final.ac_output,'pass');
+  assert.equal(r.checks.initial.ac_output,'fail');assert.equal(Object.hasOwn(r.checks,'final'),false);
   assert.equal((await a.req('/api/export?language=fr')).status,422);
   const exported=await a.req('/api/export?language=zh');assert.equal(exported.status,200);assert.match(sheet(unzip(exported.bytes),1),/>作业单号</);
   const db=new DatabaseSync(path.join(h.dir,'huabao.sqlite'));db.prepare('UPDATE bom SET data=? WHERE id=1').run(JSON.stringify({id:1,modelId:1,sku:'LEGACY-SKU',descriptionZh:'旧物料',unit:'pc',active:true}));db.close();

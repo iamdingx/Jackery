@@ -74,8 +74,10 @@ export function validateRecord(input,previous,catalog){
   const known=new Set(v.modelSnapshot.checkItems.map(i=>i.code));
   const supplied=input.checks??(modelChanged?{}:previous.checks)??{};
   if(!supplied||typeof supplied!=='object'||Array.isArray(supplied)||Object.keys(supplied).some(k=>!['initial','final'].includes(k)))invalid('Invalid check stages');
-  v.checks={initial:{},final:{}};
-  for(const stage of ['initial','final']){
+  v.checks={initial:{}};
+  // Final tests from older records are immutable historical evidence, not an editable stage.
+  if(previous.checks?.final)v.checks.final=structuredClone(previous.checks.final);
+  for(const stage of ['initial']){
     const stageInput=supplied[stage]??(!modelChanged?previous.checks?.[stage]:undefined)??{};
     if(typeof stageInput!=='object'||!stageInput||Array.isArray(stageInput)||Object.keys(stageInput).some(k=>!known.has(k)))invalid('Unknown check code');
     for(const code of known){const state=stageInput[code]??'not_tested';if(!['not_tested','pass','fail'].includes(state))invalid('Invalid check state');v.checks[stage][code]=state;}
@@ -96,7 +98,8 @@ export function validateRecord(input,previous,catalog){
   if(action==='complete'){
     if(!definition||definition.group==='wfr')invalid('A final eligible outcome is required; waiting outcomes cannot complete');
     if(definition.group==='refurbishment'&&!Object.values(v.checks.initial).every(s=>s==='pass'))invalid('All inspection results must pass for refurbishment');
-    if(v.outcome==='rok'&&!Object.values(v.checks.final).every(s=>s==='pass'))invalid('Complete all final tests with a Pass result before selecting ROK for completion.');
+    const unchangedLegacyRepair=previous.status==='completed'&&previous.outcome==='rok'&&previous.checks?.final&&!modelChanged&&[...known].every(code=>v.checks.initial[code]===(previous.checks?.initial?.[code]??'not_tested'));
+    if(v.outcome==='rok'&&!unchangedLegacyRepair&&!Object.values(v.checks.initial).every(s=>s==='pass'||s==='fail'))invalid('Complete all inspection items. Refurbishment requires all results to pass.');
     if(v.outcome==='scrap'&&!v.scrapReason.trim())invalid('Enter a scrap reason before completing this record.');
     v.status='completed';
   }else v.status=definition?.group==='wfr'?'wfr':'draft';

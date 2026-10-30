@@ -12,11 +12,13 @@ test('appearance no defect is mutually exclusive in both selection directions', 
   assert.deepEqual(toggleAppearance(['no_defect'],'scratches',true),['scratches']);
   assert.deepEqual(toggleAppearance(['scratches'],'scratches',false),[]);
 });
-test('completion validation separates initial and final inspections, scrap reason and WFR', () => {
+test('completion validation uses one inspection, scrap reason and WFR', () => {
   const r={modelSnapshot:{checkItems:[{code:'a'}]},checks:{initial:{a:'pass'},final:{a:'fail'}},materials:[]};
   assert.equal(completionError({...r,outcome:'like_new'}),null);
-  assert.equal(completionError({...r,outcome:'rok'}),'final');
-  assert.equal(completionError({...r,outcome:'rok',checks:{initial:{a:'not_tested'}}}),'final');
+  assert.equal(completionError({...r,outcome:'rok'}),null);
+  assert.equal(completionError({...r,outcome:'rok',checks:{initial:{a:'fail'}}}),null);
+  assert.equal(completionError({...r,outcome:'like_new',checks:{initial:{a:'fail'}}}),'inspection');
+  assert.equal(completionError({...r,outcome:'rok',checks:{initial:{a:'not_tested'}}}),'inspection');
   assert.equal(completionError({...r,outcome:'scrap',scrapReason:' '}),'scrap');
   assert.equal(completionError({...r,outcome:'awp'}),'wfr');
   assert.equal(completionError({...r,outcome:null}),'outcome');

@@ -1,0 +1,7 @@
+{
+  "passed": true,
+  "reader": "openpyxl",
+  "records": 2,
+  "inspectionRows": 2,
+  "legacyEvidencePreserved": true
+}

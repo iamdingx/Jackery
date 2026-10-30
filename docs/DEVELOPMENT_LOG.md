@@ -41,3 +41,7 @@ Track root cause, reproduction, fix round 1..5, focused check, previous green-su
 ## v0.3 deep QA restoration — 2026-10-30
 
 User explicitly selected v0.3 as sole acceptance baseline and restored final all-Pass ROK despite the preceding single-inspection request. Original reference docs preserved; current contract and tests updated together. Backend new tests RED0/7→GREEN7/7; frontend state RED0/2→GREEN2/2 and browser RED0/3→GREEN. Original AC01–18 coverage retained. Added ordered five-module API execution, real browser admin unfinished correction/resume, upload503 retry, 100-row three-width layout and independent bilingual XLSX reader. Found late SN lookup401 and OS-language native file picker; reproduced and fixed in round2. Current full-suite evidence is stored in artifacts/verification and docs/qa-v03. Tests use isolated temporary data, no migration or external publication.
+
+## Single-inspection regression correction
+
+User reported the previously approved single-inspection UI had regressed. Root cause: deepQA v0.3 template reinstated legacy final-test rules and changed the tests to confirm that behavior. Latest explicit correction now governs CURRENT_RULES.md; old source documents remain historical. New independent regression reproduced 0/6, then all6 passed after restoring one inspection/radios, single payload, ROK assessed items, immutable legacy archive and one export row perfunction. All unrelated v0.3 improvements retained. Real BOM import/quantity policy remain unapproved and untouched.

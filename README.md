@@ -61,9 +61,9 @@ PACK-001,Packing Box,包装盒,pcs
 
 - 新单结果初始为空。先保存后可由原作业员续填；同 SN 独立返修创建新作业单。
 - 普通列表及导出仅本人；管理员全部。输入完整精确 SN 可只读查看该 SN 他人历史，不能修改或转交。
-- 按最新 v0.3 验收基线：翻新保留一份初检；维修分开 Initial Test／Final Test，每项 Pass／Fail／Not Tested 单选，默认未检查。
-- 翻新：初检全部 Pass 后选 Like New／Good／Acceptable。
-- 维修 ROK：Final Test 全部 Pass；原始异常初检保留。SCRAP 必填原因。
+- 当前规则：所有作业只记录一次检验，每项 Pass／Fail／Not Tested 单选点，默认未检查，取消作业后复测。见 docs/CURRENT_RULES.md。
+- 翻新：本次检验全部 Pass 后选 Like New／Good／Acceptable。
+- 维修 ROK：所有功能项已检验（Pass或Fail），保留发现的异常，不要求复测。SCRAP 必填原因。
 - WFR（AWP／Needs Analysis）：保存等待，保持未完成，不能当成已结案。
 - 所耗物料从型号 BOM 选择，默认数量 1；重复选择不会自动多记；支持三位小数，无耗料也可完成。
 - 完成后作业员只读；管理员更正需原因，并保留修改前后值和操作者。
@@ -77,7 +77,7 @@ PACK-001,Packing Box,包装盒,pcs
 
 Export 生成一个 XLSX 文件，包含 **Work Summary、Functional Checks、Material Usage、Photo Index** 四表，按 Work Order 关联。图片以链接查看，打开时需要同系统账号权限。外部没有账号的人不会自动获得图片访问权。历史导出不会随之后更正自动变化。
 
-导出按当前 EN/ZH 界面选择表头，原中文、原SKU、手工译文保持原值。维修/WFR 功能项按初检和复测分别输出，翻新只输出初检。上一轮单次检验版本已有记录不迁移、不补造复测 Pass；若旧已完成 ROK 缺复测，管理员更正仍需满足本轮复测门禁。
+导出按当前 EN/ZH 界面选择表头，原中文、原SKU、手工译文保持原值。所有功能项只输出一次检验。旧记录复测数据仅在 Legacy Post-work Checks JSON 存档列保留，不能在编辑界面更改，也不用于ROK复测门禁。
 
 系统对极端大型导出明确报错，不静默截断；详细上限见开发报告。未完成／WFR 状态保留，不混作已完成台数。
 

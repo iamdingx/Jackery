@@ -10,21 +10,21 @@ This is the binding frontend/backend interface. New internal API: no prior consu
 
 `AppearanceOption = {code,labelEn,labelZh,active}`. `BomItem = {id,modelId,sku,descriptionEn,descriptionZh,unit,active}`.
 
-`Record = {id,workOrder,sn,modelId,modelSnapshot:Model,productSku,ownerId,ownerName,sourcePallet,storagePallet,workDate,status:'draft'|'wfr'|'completed',outcome:null|'like_new'|'good'|'acceptable'|'rok'|'scrap'|'awp'|'needs_analysis',outcomeGroup:null|'refurbishment'|'repair'|'wfr',appearanceCodes:string[],appearanceSnapshot:AppearanceOption[],appearanceNotes,issueNotes,translatedAppearanceNotes,translatedIssueNotes,receivingSku,postSortSku,receivingOrderNo,receivingStatus,productNameVerification,skuVerification,parentRecord,unspecifiedTextField,scrapReason,checks:{initial:{[checkCode]:'not_tested'|'pass'|'fail'},final:{[checkCode]:same}},materials:{bomId,sku,descriptionEn,descriptionZh,unit,quantity}[],photos:Photo[],version:number,createdAt,updatedAt,completedAt:null|string}`.
+`Record = {id,workOrder,sn,modelId,modelSnapshot:Model,productSku,ownerId,ownerName,sourcePallet,storagePallet,workDate,status:'draft'|'wfr'|'completed',outcome:null|'like_new'|'good'|'acceptable'|'rok'|'scrap'|'awp'|'needs_analysis',outcomeGroup:null|'refurbishment'|'repair'|'wfr',appearanceCodes:string[],appearanceSnapshot:AppearanceOption[],appearanceNotes,issueNotes,translatedAppearanceNotes,translatedIssueNotes,receivingSku,postSortSku,receivingOrderNo,receivingStatus,productNameVerification,skuVerification,parentRecord,unspecifiedTextField,scrapReason,checks:{initial:{[checkCode]:'not_tested'|'pass'|'fail'},final?:{[checkCode]:same}},materials:{bomId,sku,descriptionEn,descriptionZh,unit,quantity}[],photos:Photo[],version:number,createdAt,updatedAt,completedAt:null|string}`.
 
 `Photo = {id,recordId,filename,mime,size,width,height,url,uploadedAt,uploadedBy}`; URL relative `/api/photos/:id`. Append `?sn=<exact SN>` to photo URLs when viewing someone else's exact-SN history.
 
 `RecordInput = {version,sn,modelId,productSku,sourcePallet,storagePallet,workDate,outcome,appearanceCodes,appearanceNotes,issueNotes,translatedAppearanceNotes,translatedIssueNotes,receivingSku,postSortSku,receivingOrderNo,receivingStatus,productNameVerification,skuVerification,parentRecord,unspecifiedTextField,scrapReason,checks,materials:{bomId,quantity}[],action:'save'|'complete'}`. Ignore/reject attempts to alter server-owned owner/ID/snapshot/label fields; NEVER trust client snapshots or descriptions. `action=save` yields status wfr for waiting outcomes, otherwise draft. `complete` requires final eligible outcome and validates before committing. A completed record is not unlocked by a normal save.
 
-## v0.3 acceptance restoration — 2026-10-30
+## Current user override: single functional inspection
 
-Latest explicit user instruction restores v0.3/v0.1 dual-stage repair checks, superseding the single-inspection revision. POTENTIALLY BREAKING behavior correction; bundled UI/tests updated together, no external consumers identified.
+CURRENT_RULES.md supersedes v0.3 final-test requirements. Bundled UI and API update together; no external consumers identified. This intentionally reverses the previous potentially breaking dual-stage restoration.
 
-- `checks.initial` and `checks.final` are separate editable maps on unfinished records. An omitted map preserves saved values; missing values default not_tested, never fabricated pass. Refurbishment needs initial all-pass; ROK needs final all-pass. SCRAP reason mandatory; WFR cannot complete. Completed admin corrections revalidate the same rules.
-- ROK error: `Complete all final tests with a Pass result before selecting ROK for completion.` SCRAP error: `Enter a scrap reason before completing this record.`
-- New optional original/manual-translation/reference strings default empty. Original notes and translated notes each max 10,000 chars; new references max 2,000. Nonempty translation without corresponding nonempty original is rejected. No translator or external workflow. UI reference fields are view-only; no automatic generated SKU or associated work order.
-- Per-account language defaults en. Existing user table upgraded idempotently with language column, existing record JSON not rewritten. Added optional response field is backward compatible.
-- Export language selects literal header dictionaries; four sheet names remain stable. Repair/WFR exports both stages; refurbishment one. Human-readable export formatting is documented with final QA report; free-text originals and SKU remain exact.
+- `checks.initial` is the one editable inspection for every outcome. New records/payloads have no final map. Any existing `checks.final` remains immutable archived evidence; client final values are ignored, never created or overwritten.
+- ROK requires every inspection item assessed (pass/fail); refurbishment requires all pass; SCRAP reason and WFR incompletion remain. Old completed ROK with legacy final evidence may receive notes-only corrections when model/inspection are unchanged; no new incomplete inspection can use that exception.
+- Client preflight and incomplete-ROK error: `Complete all inspection items. Refurbishment requires all results to pass.` Existing SCRAP exact copy remains unchanged.
+- New optional original/manual-translation/reference fields, per-account language preferences and CSRF/auth contract from the v0.3 QA work are retained. No translator or external warehouse/approval workflow.
+- Export has one stage `inspection`, displayed Inspection Result (ZH检验结果) per function. Any old final evidence remains in Legacy Post-work Checks JSON (ZH旧版复测存档 JSON) in Work Summary; the other three sheets, bilingual headers, readable values and raw codes remain.
 
 ## Session
 
@@ -94,4 +94,4 @@ Use tested Node 24 APIs, not unpinned main/Node 26 aliases.
 
 ## Readable export values
 
-Work Summary Status has In Progress/Completed (localized for zh), with separate Status Code preserving draft/wfr/completed. Functional Checks Stage and Result show Initial Test/Final Test and Pass/Fail/Not Tested (localized for zh), with separate Stage Code and Result Code preserving raw values. Material Usage header Part SKU remains distinct from Product SKU. This is an XLSX header/value formatting change for bundled consumers; free originals, stored codes, relationships and four-sheet count are unchanged. No external consumers identified.
+Work Summary Status has In Progress/Completed (localized for zh), with separate Status Code preserving draft/wfr/completed. Functional Checks Stage and Result show Inspection Result and Pass/Fail/Not Tested (localized for zh), with separate Stage Code and Result Code preserving raw values. Material Usage header Part SKU remains distinct from Product SKU. This is an XLSX header/value formatting change for bundled consumers; free originals, stored codes, relationships and four-sheet count are unchanged. No external consumers identified.
