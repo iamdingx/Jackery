@@ -1,0 +1,16 @@
+{
+  "status": "UPGRADED",
+  "appCommit": "13940d50937faa3349dc27f17030d6d527a55fd9",
+  "candidate": "2b47f8bcbd4b0b6a10223d64379bb2c18198d368b90b50ed5409232b35f08ab2",
+  "previousRelease": "/opt/jackery/releases/70bd7b1-manual-model-20261030",
+  "release": "/opt/jackery/releases/13940d5-jpeg-upload-20261030",
+  "runtimeArchiveSha256": "6601fb4c5b79f711246490fb93b71bc1692365a825bd4511c2612b573359801f",
+  "backup": "/var/backups/jackery/guidance-update-20261030T062452Z-2773376",
+  "allPersistentTablesUnchanged": true,
+  "tableCounts": {"records": 3, "photos": 0, "users": 2, "models": 9, "bom": 404, "model_knowledge": 9, "meta": 2, "audits": 14},
+  "verifiedAt": "2026-10-30T06:24:54.345526+00:00",
+  "publicHealth": {"httpStatus": 200, "ok": true, "version": "1.0.0", "demo": false},
+  "localRegression": {"core": 131, "browser": 32, "pass": 163, "fail": 0},
+  "productionWorkRecordsWrittenByTests": 0,
+  "originalUserFileInspected": false
+}

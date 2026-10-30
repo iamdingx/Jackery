@@ -15,3 +15,11 @@
 ## 全量回归
 
 131/131单元/API + 32/32浏览器，163/163通过，零失败/跳过/取消。候选指纹 `2b47f8bcbd4b0b6a10223d64379bb2c18198d368b90b50ed5409232b35f08ab2`。包含本轮三个新增用例及之前全部测试，未恢复默认型号、选型确认或作业后复测。证据见jpeg-upload/VERIFICATION_SUMMARY.json。
+
+## 部署及服务器验证
+
+2026-10-30 14:24:54（中国时间）已发布到 `/opt/jackery/releases/13940d5-jpeg-upload-20261030`，应用提交13940d5；运行包SHA256 `6601fb4c5b79f711246490fb93b71bc1692365a825bd4511c2612b573359801f`。原70bd7b1发布保留。备份 `/var/backups/jackery/guidance-update-20261030T062452Z-2773376`；八表逐表行数及哈希一致，原3工单/0照片/2账号/9型号/404BOM/9知识/2meta/14审计保持。部署回执见jpeg-upload/DEPLOYMENT_RECEIPT.json。
+
+生产日志14:16:48再次确认原相同上传拒绝 `IMAGE_INVALID / Invalid JPEG ending`。本轮没有要求用户补发页面截图，也没有更改其照片或工单。上线后公网health200、production；Ubuntu/Node24.22.2隔离核心131/131通过，日志 `/home/sagacity/jackery-jpeg-linux-core.log`。
+
+服务器使用**当前正式发布代码**、独立测试目录执行真实API链路：登录测试账号→新建模拟记录→上传带来源尾部数据的JPEG→下载。上传201、2×3、image/jpeg、nosniff、逐字节原样、匿名401全部通过；未使用或写入正式业务库。证据见jpeg-upload/SERVER_SMOKE.json。原用户文件尚未直接检验，最终实际效果由其原页面重试上传验证；后端已更新，无需重建工单，当前前端会保留失败照片供再次上传。

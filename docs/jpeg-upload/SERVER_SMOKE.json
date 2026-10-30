@@ -1,0 +1,14 @@
+{
+  "passed": true,
+  "environment": "Isolated server database; deployed application code",
+  "productionWorkRecordsWritten": 0,
+  "uploadStatus": 201,
+  "width": 2,
+  "height": 3,
+  "originalBytesPreserved": true,
+  "mime": "image/jpeg",
+  "nosniff": true,
+  "anonymousDenied": true,
+  "verifiedAt": "2026-10-30T06:26:44.950Z",
+  "linuxCore": {"tests": 131, "pass": 131, "fail": 0, "skipped": 0, "cancelled": 0}
+}
