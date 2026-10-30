@@ -1,0 +1,28 @@
+{
+  "verifiedAt": "2026-10-30T08:16:07.286Z",
+  "health": {
+    "ok": true,
+    "version": "1.0.0",
+    "demo": false
+  },
+  "assets": [
+    {
+      "file": "app.js",
+      "httpStatus": 200,
+      "sha256": "8e484909bb9ef1f20e84699caf60bf208233b64b0fd29a980bd4ff37a58d8b44",
+      "matchesVerifiedSource": true
+    },
+    {
+      "file": "styles.css",
+      "httpStatus": 200,
+      "sha256": "39ed8b7b34abf9940748e4e7d71a6e0e807b1370c9237926b9f3396d68de611c",
+      "matchesVerifiedSource": true
+    },
+    {
+      "file": "state.js",
+      "httpStatus": 200,
+      "sha256": "6f4c702fc44bc299f6547027253f9477ec2eebfcea8cacf087e36f465aa92994",
+      "matchesVerifiedSource": true
+    }
+  ]
+}

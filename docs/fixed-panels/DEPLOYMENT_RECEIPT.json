@@ -1,0 +1,17 @@
+{
+  "status": "UPGRADED",
+  "appCommit": "df6b4c9e4081ec97e96d72367f646747e95521d9",
+  "candidate": "3810ce7705e2968dee41cc01de60eeead17ddf27b414400c4bbde4ff4e475ccc",
+  "previousRelease": "/opt/jackery/releases/13940d5-jpeg-upload-20261030",
+  "release": "/opt/jackery/releases/df6b4c9-fixed-panels-20261030",
+  "runtimeArchiveSha256": "f58c07790fa32024b4d3418f31bb10ebbd2594513fc4b96a08b496b438d7b4b4",
+  "backup": "/var/backups/jackery/guidance-update-20261030T081521Z-2785423",
+  "allPersistentTablesUnchanged": true,
+  "tableCounts": {"records": 6, "photos": 5, "users": 3, "models": 9, "bom": 404, "model_knowledge": 9, "meta": 2, "audits": 31},
+  "verifiedAt": "2026-10-30T08:15:22.923602+00:00",
+  "productionReadOnlyChecks": {"sourceModels": 9, "modelsWithBluetooth": 9, "unfinished": 2, "unfinishedWithBluetooth": 2, "completed": 4, "completedSnapshotsUnchanged": true},
+  "productionWorkRecordsWrittenByTests": 0,
+  "authenticatedProductionBrowserTest": "Not attempted; current production password unavailable; no password reset",
+  "localRegression": {"core": 133, "browser": 33, "pass": 166, "fail": 0},
+  "linuxCore": {"tests": 133, "pass": 133, "fail": 0, "skipped": 0, "cancelled": 0}
+}

@@ -1,6 +1,6 @@
 # Bluetooth与固定分区改版
 
-状态：本地实现、视觉检查及全量回归通过，准备发布。
+状态：已发布，GitHub源码已同步，本地全量回归及服务器核心回归通过。
 
 桌面五个独立面板：功能检查、BOM耗用、照片；功能检查下方为Defect remark，右边是Condition & Notes。三个被用户指定的备注/照片区均固定展开，不再放入同一块折叠。缺陷备注一个文本框（沿用issueNotes），外观一个文本框Appearance Notes及原缺陷多选。两个旧译文输入从编辑器移除，旧存储值及四表导出保留。
 
@@ -13,3 +13,13 @@ TDD新增2个API与1个真实浏览器用例，先验证缺项/缺面板失败�
 ## 最终回归
 
 133/133单元/API + 33/33浏览器，166/166通过，0失败/跳过/取消。精确源码指纹 `3810ce7705e2968dee41cc01de60eeead17ddf27b414400c4bbde4ff4e475ccc`。证据见fixed-panels/VERIFICATION_SUMMARY.json。增加蓝牙后真实型号检查导出行由7增至8，旧断言已按新规则更新；译文存档与已完成历史快照保留不变。
+
+## 生产发布与数据验证
+
+2026-10-30 16:15:22（中国时间）已切换到 `/opt/jackery/releases/df6b4c9-fixed-panels-20261030`，应用提交df6b4c9；运行包SHA256 `f58c07790fa32024b4d3418f31bb10ebbd2594513fc4b96a08b496b438d7b4b4`。源码已推至用户指定iamdingx/Jackery的main分支。新SSH文件连接曾暂时关闭，间隔后重试标准SCP成功；实际发布包逐文件SHA256SUMS通过。未修改SSH安全配置。
+
+备份 `/var/backups/jackery/guidance-update-20261030T081521Z-2785423`，内层数据备份jackery-2026-10-30T08-15-21-626Z-2785468。原13940d5版本保留。八张业务/配置表升级前后逐表哈希一致，6笔工单、5张照片、3账号及404BOM保持；未写模拟工单到正式库，没有改生产密码。
+
+正式库只读调用已发布模块确认9/9型号含蓝牙、2/2未完成单有效清单含蓝牙、4/4已完成历史快照完全不变。公网health200、production，app.js/styles.css/state.js与166项测试版本哈希一致。没有当前生产登录口令，所以未操作生产用户的编辑器；真实浏览器完整流程使用独立目录及实际来源型号验证。
+
+Ubuntu/Node24.22.2隔离执行全部核心133/133通过，0失败/跳过/取消；服务器日志 `/home/sagacity/jackery-panels-linux-core.log`。部署及公网机器证据见fixed-panels/DEPLOYMENT_RECEIPT.json、PUBLIC_SMOKE.json。无结构迁移；回退程序时将current指向原13940d5目录并重启，不回写业务库。原版程序不知道新增的蓝牙要求，回退仅作为故障恢复，不应无故操作。
