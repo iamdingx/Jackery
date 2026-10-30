@@ -1,9 +1,9 @@
 # 当前测试报告
 
-BOM上下双语与批量仿真结果见[完整报告](./batch-simulation/REPORT.md)。
+本轮全部中文来源指导双语更新：**129/129单元/API + 28/28浏览器，合计157/157通过**，0失败/跳过/取消。源指纹：`05226c66c698f41af8ce23a23091fe848e642f61850c89d769dfa3d13e4ae5d3`。见[本轮报告](./guidance-translation/REPORT.md)及[机器证据](./guidance-translation/VERIFICATION_SUMMARY.json)。
 
-123/123单元/API + 25/25浏览器回归通过，合计148/148，0失败/跳过/取消。批量仿真：API103+1扩展全部通过，浏览器103全部通过，实际断言4562项。
+服务器Ubuntu隔离核心回归129/129通过。实际生产库只读覆盖371处来源指导字段；公网资源哈希匹配、health正常。生产初始凭据已不匹配当前密码，故未声明生产登录后操作通过；没有重置账号。隔离浏览器对9来源型号、故障/方案上下双语及布局验证通过。
 
-源指纹：`84b855ad13e879837a2cad8cbef061a23f97d2af7d1c1cab721423b97e288bf5`。机器证据见[VERIFICATION_SUMMARY.json](./batch-simulation/VERIFICATION_SUMMARY.json)。
+此前BOM上下双语与批量仿真结果保留在[历史完整报告](./batch-simulation/REPORT.md)：当时123+25=148项回归通过，API103+1扩展、浏览器103全部通过，断言4562项；历史源指纹`84b855ad13e879837a2cad8cbef061a23f97d2af7d1c1cab721423b97e288bf5`。这些计数属于前一轮，不替代本轮157项证据。
 
 [单次检验与BOM最新规则](./CURRENT_RULES.md)生效，不恢复作业后复测。

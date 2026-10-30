@@ -1,0 +1,34 @@
+{
+  "passed": true,
+  "baseUrl": "http://127.0.0.1:14505",
+  "verifiedAt": "2026-10-30T04:55:43.501Z",
+  "translatedFields": 371,
+  "preservedEmptySolutions": 90,
+  "sourceDictionaryEntries": 65,
+  "checks": [
+    "Isolated account login",
+    "9 model API source coverage",
+    "Bilingual checks and fault details",
+    "English above Chinese",
+    "Original empty solutions preserved",
+    "Guide tables bilingual",
+    "Language switch preserves unsaved SN and selected faults",
+    "Single inspection radio controls",
+    "1366 and 1536 layout",
+    "No page errors"
+  ],
+  "linuxCore": {
+    "tests": 129,
+    "pass": 129,
+    "fail": 0
+  },
+  "local": {
+    "core": 129,
+    "browser": 28,
+    "total": 157,
+    "fail": 0
+  },
+  "environment": "Isolated demo database with actual source catalog; not production login",
+  "recordCountBefore": 2,
+  "recordCountAfter": 2
+}

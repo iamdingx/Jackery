@@ -1,6 +1,6 @@
 # 完整中文来源指导双语更新
 
-状态：本地实现、独立审查及全量回归通过，等待本轮服务器切换验收。
+状态：本地实现、独立审查及全量回归通过；2026-10-30 已更新生产服务器，公网资源与已验证源码一致。生产账号登录后操作验收受限，详见下文。
 
 范围：9型号的检查、故障标题/说明、5张常见故障整表、温度提示及来源别名，371处非空指导字段/49唯一文案+16来源别名。原90处空解决方案保持为空，未编写新维修建议，未建立未经来源确认的F码方案关联。
 
@@ -12,4 +12,8 @@
 
 输入源目录不变；译文覆盖及完整表格/否定条件校验见TRANSLATION_REPORT.md。该译文不代表实机技术验证，源文未完整指代的条件保留边界，不补阈值、性能或替换流程。
 
-机器证据：VERIFICATION_SUMMARY.json。部署结果将在SERVER_ACCEPTANCE.json及deployment目录记录，不能以本地通过代替公网验收。
+机器证据：VERIFICATION_SUMMARY.json。隔离浏览器实际加载9个来源型号，对371处译文、90处原空方案、故障弹窗、常见故障整表、单次检验、语言切换草稿保留及1366/1536布局验证通过，见ISOLATED_BROWSER_ACCEPTANCE.json；没有向正式库写测试工单。
+
+服务器：应用发布至 `/opt/jackery/releases/d0fa49c-guidance-en-20261030`，Ubuntu同版本核心测试129/129通过。生产库只读核验9型号、371处译文、90处空方案；更新前后records/photos/users/models/bom/model_knowledge/meta/audits八表逐表行数与SHA256均一致。旧发布及备份保留，可回退程序。
+
+公网health为200、production模式；app.js/styles.css/state.js均200且SHA256与本地测试版本一致。已保存的初始生产凭据收到401，经服务器只读核实原凭据确已不匹配现有密码；本轮没有重置或修改密码。生产登录后的操作验收未完成，不能把隔离浏览器通过视为生产登录通过。详情见SERVER_ACCEPTANCE.json及deployment/221.224.86.238/GUIDANCE_UPDATE_REPORT.md。

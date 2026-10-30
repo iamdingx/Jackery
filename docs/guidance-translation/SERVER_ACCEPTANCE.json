@@ -1,0 +1,21 @@
+{
+  "status": "DEPLOYED_WITH_AUTHENTICATED_BROWSER_CHECK_UNAVAILABLE",
+  "baseUrl": "http://221.224.86.238/",
+  "appCommit": "d0fa49cc506e04183c6ec6b09325b5eb410686a1",
+  "candidate": "05226c66c698f41af8ce23a23091fe848e642f61850c89d769dfa3d13e4ae5d3",
+  "release": "/opt/jackery/releases/d0fa49c-guidance-en-20261030",
+  "backup": "/var/backups/jackery/guidance-update-20261030T044711Z-2768343",
+  "deploymentVerifiedAt": "2026-10-30T04:47:13.067835+00:00",
+  "allPersistentTablesUnchanged": true,
+  "tableCounts": {"records": 0, "photos": 0, "users": 1, "models": 9, "bom": 404, "model_knowledge": 9, "meta": 2, "audits": 0},
+  "linuxCore": {"tests": 129, "pass": 129, "fail": 0, "skipped": 0, "cancelled": 0},
+  "productionReadOnlySourceVerification": {"models": 9, "sourceTranslations": 65, "translatedFields": 371, "originalEmptySolutions": 90},
+  "health": {"httpStatus": 200, "ok": true, "version": "1.0.0", "demo": false},
+  "publicAssets": [
+    {"file": "app.js", "status": 200, "matchesVerifiedSource": true, "sha256": "ba34adac9321a94a162e0c0491876aae011f9a7ce0e04535660433013db4cb14"},
+    {"file": "styles.css", "status": 200, "matchesVerifiedSource": true, "sha256": "0492a434437773b66dcc30e4ae0111987efeedf9db2ec32d314bacf7120bd039"},
+    {"file": "state.js", "status": 200, "matchesVerifiedSource": true, "sha256": "6f4c702fc44bc299f6547027253f9477ec2eebfcea8cacf087e36f465aa92994"}
+  ],
+  "authenticatedProductionBrowser": {"passed": false, "reason": "Saved initial credentials rejected with 401. Read-only server verification confirms the original password no longer matches the current user. Password was not reset or modified."},
+  "isolatedBrowser": {"passed": true, "evidence": "ISOLATED_BROWSER_ACCEPTANCE.json", "productionWorkRecordsWritten": 0}
+}
