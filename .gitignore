@@ -10,3 +10,11 @@ tests/.tmp/
 *.sqlite*
 .env
 release/
+__pycache__/
+
+# Generated simulation evidence is delivered in the ZIP, not source control.
+docs/batch-simulation/API_RESULTS.json
+docs/batch-simulation/BROWSER_RESULTS.json
+docs/batch-simulation/runs/
+docs/batch-simulation/screenshots/
+docs/batch-simulation/supplementary-browser/BROWSER_RESULTS.json

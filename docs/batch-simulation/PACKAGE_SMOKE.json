@@ -1,0 +1,19 @@
+{
+  "bomTranslations": 242,
+  "bilingualBomApi": true,
+  "passed": true,
+  "verifiedCandidate": "84b855ad13e879837a2cad8cbef061a23f97d2af7d1c1cab721423b97e288bf5",
+  "cleanProductionStart": true,
+  "thirdPartyRuntimePackagesRequired": false,
+  "randomInitialAdminLoginPassed": true,
+  "initialWorkRecords": 0,
+  "activeModels": 7,
+  "activeBomRows": 261,
+  "modelFaultCodes": 10,
+  "modelGuides": 5,
+  "packageExcludesRuntimeAndPrivateData": true,
+  "sourceFingerprintMatchesFullRegression": true,
+  "platform": "Windows",
+  "node": "v24.22.1",
+  "verifiedAt": "2026-10-30T03:39:17.133Z"
+}

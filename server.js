@@ -11,6 +11,7 @@ import {parseBomCsv} from './src/csv.js';
 import {exportRecords} from './src/export.js';
 import {listenForBrowser} from './src/ports.js';
 import {importJackeryCatalog} from './src/catalog-import.js';
+import {loadBomTranslations,translateBom} from './src/bom-translations.js';
 
 const root=path.dirname(fileURLToPath(import.meta.url));
 const MAX_BODY=12*1024*1024;
@@ -39,9 +40,12 @@ async function body(req){
   try{const result=JSON.parse(Buffer.concat(parts).toString('utf8')||'{}');if(!isObject(result))throw new Error();return result;}catch{throw new ApiError(400,'INVALID_JSON','Body must be a JSON object');}
 }
 
-export async function startServer({dataDir=path.join(root,'data'),demo=false,port=0,host='127.0.0.1',publicBaseUrl,catalogPath}={}){
+export async function startServer({dataDir=path.join(root,'data'),demo=false,port=0,host='127.0.0.1',publicBaseUrl,catalogPath,translationsPath}={}){
+  const bundledTranslations=path.join(root,'catalogs','jackery-bom-translations.json');
+  const bomTranslations=await loadBomTranslations(translationsPath??(existsSync(bundledTranslations)?bundledTranslations:undefined));
   if(publicBaseUrl){const parsed=new URL(publicBaseUrl);if(!['http:','https:'].includes(parsed.protocol)||parsed.username||parsed.password||parsed.pathname!=='/'||parsed.search||parsed.hash)throw new Error('PUBLIC_BASE_URL must be an HTTP(S) origin');publicBaseUrl=parsed.origin;}
   const store=openStore(path.resolve(dataDir),demo),{db}=store;
+  const recordCatalog=()=>{const c=store.catalog();return {...c,bom:c.bom.map(b=>translateBom(b,bomTranslations))};};
   if(catalogPath){try{importJackeryCatalog(store,JSON.parse(await readFile(path.resolve(catalogPath),'utf8')),{deactivateSamples:true});}catch(error){db.close();throw error;}}
   const throttles=new Map();
   const dummyHash=passwordHash(randomBytes(24).toString('hex'));
@@ -108,7 +112,7 @@ export async function startServer({dataDir=path.join(root,'data'),demo=false,por
       }
       if(method==='GET'&&route==='/api/catalog'){
         const inactive=params.get('includeInactive')==='1';if(inactive&&user.role!=='admin')forbidden();
-        const c=store.catalog();return send(200,{models:c.models.filter(m=>inactive||m.active),appearanceOptions:c.appearanceOptions.filter(m=>inactive||m.active),outcomes});
+        const c=store.catalog();return send(200,{models:c.models.filter(m=>inactive||m.active),appearanceOptions:c.appearanceOptions.filter(m=>inactive||m.active),outcomes,bomTranslations});
       }
       let match=route.match(/^\/api\/models\/(\d+)\/knowledge$/);
       if(method==='GET'&&match){
@@ -120,7 +124,7 @@ export async function startServer({dataDir=path.join(root,'data'),demo=false,por
         const modelId=Number(match[1]);if(!store.get('models',modelId))absent('Model not found');
         const inactive=params.get('includeInactive')==='1';if(inactive&&user.role!=='admin')forbidden();
         const {page,pageSize}=pagination(params,50),q=params.get('q')??'';textValue(q,'Search',200);const lower=q.toLocaleLowerCase();
-        const items=store.all('bom').filter(b=>b.modelId===modelId&&(inactive||b.active)&&(!q||[b.sku,b.descriptionEn,b.descriptionZh].some(value=>(value??'').toLocaleLowerCase().includes(lower)))).sort((a,b)=>Number(b.sku===q)-Number(a.sku===q)||a.sku.localeCompare(b.sku)).map(b=>({...b,missingEnglish:!b.descriptionEn?.trim()}));
+        const items=store.all('bom').map(b=>translateBom(b,bomTranslations)).filter(b=>b.modelId===modelId&&(inactive||b.active)&&(!q||[b.sku,b.descriptionEn,b.descriptionZh].some(value=>(value??'').toLocaleLowerCase().includes(lower)))).sort((a,b)=>Number(b.sku===q)-Number(a.sku===q)||a.sku.localeCompare(b.sku)).map(b=>({...b,missingEnglish:!b.descriptionEn?.trim()}));
         return send(200,{items:items.slice((page-1)*pageSize,page*pageSize),total:items.length,page,pageSize});
       }
       if(method==='GET'&&route==='/api/records'){const {page,pageSize}=pagination(params,20),items=filteredRecords(store,user,params);return send(200,{items:items.slice((page-1)*pageSize,page*pageSize),total:items.length,page,pageSize});}
@@ -133,7 +137,7 @@ export async function startServer({dataDir=path.join(root,'data'),demo=false,por
         const record=store.tx(()=>{
           const model=store.get('models',positiveId(input.modelId,'Model ID'));if(!model?.active||!model.checkItems.length)invalid('Select an active model with a check list');
           const id=store.next('records'),now=new Date().toISOString();
-          const validated=validateRecord({...input,outcome:null,appearanceCodes:[],checks:{},materials:[],action:'save'},{modelId:model.id,modelSnapshot:model,productSku:model.productSku},store.catalog());
+          const validated=validateRecord({...input,outcome:null,appearanceCodes:[],checks:{},materials:[],action:'save'},{modelId:model.id,modelSnapshot:model,productSku:model.productSku},recordCatalog());
           const r={...validated,id,workOrder:`HB-${now.slice(0,10).replaceAll('-','')}-${String(id).padStart(6,'0')}`,ownerId:user.id,ownerName:user.displayName,photos:[],version:1,createdAt:now,updatedAt:now,completedAt:null};return persistRecord(r,user,'create','',null);
         });return send(201,{record});
       }
@@ -149,7 +153,7 @@ export async function startServer({dataDir=path.join(root,'data'),demo=false,por
             if(correction){if(user.role!=='admin')forbidden();textValue(input.reason??'','Correction reason',2000,true);}else if(before.ownerId!==user.id||before.status==='completed')forbidden('Only the owner may edit an unfinished record; administrator corrections require a reason');
             version(input.version,before);
             const changes=correction?input.changes:input;if(!isObject(changes))invalid('Changes must be a record input');
-            const after=validateRecord({...changes,...(correction&&before.status==='completed'?{action:'complete'}:{})},before,store.catalog());
+            const after=validateRecord({...changes,...(correction&&before.status==='completed'?{action:'complete'}:{})},before,recordCatalog());
             after.version=before.version+1;after.updatedAt=new Date().toISOString();after.completedAt=after.status==='completed'?(before.completedAt??after.updatedAt):null;
             return persistRecord(after,user,correction?'correction':after.status==='completed'?'complete':'save',correction?input.reason.trim():'',before);
           });return send(200,{record});

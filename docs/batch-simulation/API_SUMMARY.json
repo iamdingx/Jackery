@@ -1,0 +1,25 @@
+{
+  "startedAt": "2026-10-30T03:23:09.483886+00:00",
+  "updatedAt": "2026-10-30T03:23:25.938207+00:00",
+  "baseUrl": "http://127.0.0.1:16361",
+  "prefix": "API-R5-20261030",
+  "cases": 104,
+  "passed": 104,
+  "failed": 0,
+  "distinctCreatedRecords": 108,
+  "manifestCases": 103,
+  "manifestPassed": 103,
+  "extensionCases": 1,
+  "extensionPassed": 1,
+  "assertions": 1684,
+  "assertionsPassed": 1684,
+  "categoryCounts": {
+    "positive": 43,
+    "bom": 20,
+    "sn_model": 15,
+    "fault": 10,
+    "permission_audit": 10,
+    "bilingual_export_attachment": 5,
+    "extended_regression": 1
+  }
+}

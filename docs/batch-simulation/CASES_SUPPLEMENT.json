@@ -1,0 +1,161 @@
+{
+  "schemaVersion": 1,
+  "cases": [
+    {
+      "id": "C101",
+      "category": "positive",
+      "variant": "positive_single_f5_requested",
+      "code": "positive_single_f5_requested",
+      "account": "alex",
+      "sn": "JACKERY-SIM-20261030-C101-single_f5_requested",
+      "catalogKey": "e1000pro-default",
+      "modelId": 3,
+      "version": "未标注版本",
+      "faultCodes": [
+        "F5"
+      ],
+      "materials": [
+        {
+          "sku": "08-1031-160035",
+          "qty": 1,
+          "standardQty": 2
+        }
+      ],
+      "checks": {
+        "initial": {
+          "CHECK_01": "fail",
+          "CHECK_02": "pass",
+          "CHECK_03": "pass",
+          "CHECK_04": "pass",
+          "CHECK_05": "pass",
+          "CHECK_06": "pass",
+          "CHECK_07": "pass"
+        }
+      },
+      "outcome": "rok",
+      "scrapReason": "",
+      "language": "en",
+      "path": "New Record > SN scan > Model > Fault Codes > BOM > Inspection > Save > Reload > Complete",
+      "expected": {
+        "status": 200,
+        "baselineCreated": 201,
+        "business": "单次检验AllPass；like_new合法结案锁定；故障/材料/原文保留；无final阶段"
+      },
+      "assertions": [
+        "指定故障组合F5准确保存/重载；双语BOM与硬上限不变；单次检验合法结案",
+        "选中故障代码及服务器原文快照逐项一致",
+        "英文上中文下，SN与Part SKU原码不变",
+        "仅checks.initial，无新增final"
+      ],
+      "modelIdResolution": "planned fresh demo ID; runtime resolves by catalogKey",
+      "snTemplate": "{prefix}-C101-single_f5_requested",
+      "inspection": "MixedFail",
+      "expectedResult": "指定故障组合F5准确保存/重载；双语BOM与硬上限不变；单次检验合法结案"
+    },
+    {
+      "id": "C102",
+      "category": "positive",
+      "variant": "positive_multi_f0_f3_f8_requested",
+      "code": "positive_multi_f0_f3_f8_requested",
+      "account": "blair",
+      "sn": "JACKERY-SIM-20261030-C102-multi_f0_f3_f8_requested",
+      "catalogKey": "e1000v2-costdown",
+      "modelId": 5,
+      "version": "降本版",
+      "faultCodes": [
+        "F0",
+        "F3",
+        "F8"
+      ],
+      "materials": [
+        {
+          "sku": "26-0008-000030",
+          "qty": 4,
+          "standardQty": 4
+        }
+      ],
+      "checks": {
+        "initial": {
+          "CHECK_01": "pass",
+          "CHECK_02": "pass",
+          "CHECK_03": "pass",
+          "CHECK_04": "pass",
+          "CHECK_05": "pass",
+          "CHECK_06": "pass",
+          "CHECK_07": "pass"
+        }
+      },
+      "outcome": "like_new",
+      "scrapReason": "",
+      "language": "zh",
+      "path": "New Record > SN scan > Model > Fault Codes > BOM > Inspection > Save > Reload > Complete",
+      "expected": {
+        "status": 200,
+        "baselineCreated": 201,
+        "business": "单次检验AllPass；like_new合法结案锁定；故障/材料/原文保留；无final阶段"
+      },
+      "assertions": [
+        "指定故障组合F0,F3,F8准确保存/重载；双语BOM与硬上限不变；单次检验合法结案",
+        "选中故障代码及服务器原文快照逐项一致",
+        "英文上中文下，SN与Part SKU原码不变",
+        "仅checks.initial，无新增final"
+      ],
+      "modelIdResolution": "planned fresh demo ID; runtime resolves by catalogKey",
+      "snTemplate": "{prefix}-C102-multi_f0_f3_f8_requested",
+      "inspection": "AllPass",
+      "expectedResult": "指定故障组合F0,F3,F8准确保存/重载；双语BOM与硬上限不变；单次检验合法结案"
+    },
+    {
+      "id": "C103",
+      "category": "positive",
+      "variant": "positive_multi_f2_f9_requested",
+      "code": "positive_multi_f2_f9_requested",
+      "account": "alex",
+      "sn": "JACKERY-SIM-20261030-C103-multi_f2_f9_requested",
+      "catalogKey": "e2000plus-b",
+      "modelId": 8,
+      "version": "B版",
+      "faultCodes": [
+        "F2",
+        "F9"
+      ],
+      "materials": [
+        {
+          "sku": "26-0008-000012",
+          "qty": 2,
+          "standardQty": 2
+        }
+      ],
+      "checks": {
+        "initial": {
+          "CHECK_01": "pass",
+          "CHECK_02": "pass",
+          "CHECK_03": "pass",
+          "CHECK_04": "pass",
+          "CHECK_05": "pass",
+          "CHECK_06": "pass",
+          "CHECK_07": "pass"
+        }
+      },
+      "outcome": "awp",
+      "scrapReason": "",
+      "language": "en",
+      "path": "New Record > SN scan > Model > Fault Codes > BOM > Inspection > Save > Reload > Complete",
+      "expected": {
+        "status": 200,
+        "baselineCreated": 201,
+        "business": "单次检验AllPass；like_new合法结案锁定；故障/材料/原文保留；无final阶段"
+      },
+      "assertions": [
+        "指定故障组合F2,F9准确保存/重载；双语BOM与硬上限不变；WFR保存续填后结案",
+        "选中故障代码及服务器原文快照逐项一致",
+        "英文上中文下，SN与Part SKU原码不变",
+        "仅checks.initial，无新增final"
+      ],
+      "modelIdResolution": "planned fresh demo ID; runtime resolves by catalogKey",
+      "snTemplate": "{prefix}-C103-multi_f2_f9_requested",
+      "inspection": "AllPass",
+      "expectedResult": "指定故障组合F2,F9准确保存/重载；双语BOM与硬上限不变；WFR保存续填后结案"
+    }
+  ]
+}

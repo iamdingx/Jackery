@@ -1,0 +1,974 @@
+{
+  "schemaVersion": 1,
+  "version": "jackery-bom-en-20261030",
+  "entries": [
+    {
+      "descriptionZh": "储能电源总成 | HTE0811000A-EU-JAK RoHS REACH",
+      "descriptionEn": "Energy Storage Power Supply Assembly | HTE0811000A-EU-JAK RoHS REACH"
+    },
+    {
+      "descriptionZh": "主板-PCBA | HTE081-M-A4 RoHS REACH",
+      "descriptionEn": "Mainboard PCBA | HTE081-M-A4 RoHS REACH"
+    },
+    {
+      "descriptionZh": "灯板-PCBA | HTE081-L-A4 RoHS REACH",
+      "descriptionEn": "Light Board PCBA | HTE081-L-A4 RoHS REACH"
+    },
+    {
+      "descriptionZh": "转接板-PCBA | HTE081-Z-C-A3 RoHS REACH",
+      "descriptionEn": "Adapter Board PCBA | HTE081-Z-C-A3 RoHS REACH"
+    },
+    {
+      "descriptionZh": "转接板-PCBA | HTE081-Z-A1（美日欧） RoHS REACH",
+      "descriptionEn": "Adapter Board PCBA | HTE081-Z-A1 (US/JP/EU) RoHS REACH"
+    },
+    {
+      "descriptionZh": "功率板-PCBA | HTE081-P-A3 RoHS REACH",
+      "descriptionEn": "Power Board PCBA | HTE081-P-A3 RoHS REACH"
+    },
+    {
+      "descriptionZh": "充电板-PCBA | HTE081-S-A3 RoHS REACH",
+      "descriptionEn": "Charging Board PCBA | HTE081-S-A3 RoHS REACH"
+    },
+    {
+      "descriptionZh": "采集板-PCBA | HTE081-A-A3 RoHS REACH",
+      "descriptionEn": "Acquisition Board PCBA | HTE081-A-A3 RoHS REACH"
+    },
+    {
+      "descriptionZh": "COB面灯 | COB面灯2820 5W 白色 COB 面光 LED 带端子线  -40 ~ +100℃  RoHS REAC",
+      "descriptionEn": "COB Panel Light | COB Panel Light 2820 5W White COB Area Light LED With Terminal Cable -40 ~ +100℃ RoHS REAC"
+    },
+    {
+      "descriptionZh": "双向逆变器 | TopBand 输入功率800W,输出功率1000W,230V,50Hz,欧/澳/英规 RoHS REACH",
+      "descriptionEn": "Bidirectional Inverter | TopBand Input Power 800W, Output Power 1000W,230V,50Hz, EU/AU/UK Specification RoHS REACH"
+    },
+    {
+      "descriptionZh": "AC输入线 | UL1569 #16AWG,蓝棕,250mm,3P连接器,500V,105°C,VW-1 UL ROHS REACH",
+      "descriptionEn": "AC Input Cable | UL1569 #16AWG, Blue/Brown,250mm,3P Connector,500V,105°C,VW-1 UL ROHS REACH"
+    },
+    {
+      "descriptionZh": "显示屏 | HTE0811000A-CN-DX2 显示屏 DS-B22795A，5V，LCD屏，黑底白光，通讯电压3.3~3.5V RoHS REACH",
+      "descriptionEn": "Display | HTE0811000A-CN-DX2 Display DS-B22795A,5V,LCD Screen, Black Background, White Backlight, Communication Voltage 3.3~3.5V RoHS REACH"
+    },
+    {
+      "descriptionZh": "前壳组件 | 试产HTE0811000A-EU-JAK 前壳组件（160133前壳+160025导光柱*4+160027灯板按键*2+160028显示屏按键*1+160026主板按键*2+160029车充硅胶盖*1+160030照明硅胶盖*1）20220803  ROHS REACH",
+      "descriptionEn": "Front Housing Assembly | Trial Production HTE0811000A-EU-JAK Front Housing Assembly (160133 Front Housing +160025 Light Guide Post *4+160027 Light Board Button *2+160028 Display Button *1+160026 Mainboard Button *2+160029 Car Charging Silicone Cover *1+160030 Lighting Silicone Cover *1) 20220803 ROHS REACH"
+    },
+    {
+      "descriptionZh": "后壳组件 | 试产HTE0811000A-UK/AU/EU-JAK 后壳组件（PC+ABS，科技灰，台化3100，防火94V-0，晒纹+丝印） 维诺 20220817  ROHS REACH",
+      "descriptionEn": "Rear Housing Assembly | Trial Production HTE0811000A-UK/AU/EU-JAK Rear Housing Assembly (PC+ABS, Technology Gray, Taihua 3100, Flammability 94V-0, Textured Finish + Screen Printing) Weinuo 20220817 ROHS REACH"
+    },
+    {
+      "descriptionZh": "把手组件 | HTE0811000A-US-JAK ABS,科技灰HB-31-065+HB-31-066橙色,奇美757,UL94-HB,晒纹 ROHS REACH",
+      "descriptionEn": "Handle Assembly | HTE0811000A-US-JAK ABS, Technology Gray HB-31-065+HB-31-066 Orange, Chimei 757,UL94-HB, Textured Finish ROHS REACH"
+    },
+    {
+      "descriptionZh": "装饰盖 | HTE0811000A-CN-DX2 装饰盖（PC+ABS，橙色PT021C，台化3100，防火94V-0，晒纹）20220329 RoHS REACH",
+      "descriptionEn": "Decorative Cover | HTE0811000A-CN-DX2 Decorative Cover (PC+ABS, Orange PT021C, Taihua 3100, Flammability 94V-0, Textured Finish) 20220329 RoHS REACH"
+    },
+    {
+      "descriptionZh": "镜片 | HTE0811000A-CN-DX2 显示屏镜片（透明PC片，丝印黑色 背3M胶+易撕耳）20220329 RoHS REACH",
+      "descriptionEn": "Lens | HTE0811000A-CN-DX2 Display Lens (Transparent PC Sheet, Black Screen Printing 3M Adhesive Backing + Easy-Peel Tab) 20220329 RoHS REACH"
+    },
+    {
+      "descriptionZh": "镜片 | HTE0782000A-JP-JAK 镜片（乳白色PC片，透光度70%）德赛  20211027  RoHS REACH",
+      "descriptionEn": "Lens | HTE0782000A-JP-JAK Lens (Milky White PC Sheet, Light Transmittance 70%) Desai 20211027 RoHS REACH"
+    },
+    {
+      "descriptionZh": "灯罩 | HTE0811000A-JP-JAK 灯罩（PC，真空镀亮银色，台化3100，防火94V-0 耐温100℃）20220624 RoHS REACH",
+      "descriptionEn": "Lampshade | HTE0811000A-JP-JAK Lampshade (PC, Vacuum-Plated Bright Silver, Taihua 3100, Flammability 94V-0 Temperature Resistance 100℃) 20220624 RoHS REACH"
+    },
+    {
+      "descriptionZh": "脚垫 | HTE0811000A-CN-DX2 脚垫（TPR/TPE硅胶，橙色PT021C，防火94V-0，晒纹）单面背EVA3M双面胶 20220329 RoHS REACH",
+      "descriptionEn": "Foot Pad | HTE0811000A-CN-DX2 Foot Pad (TPR/TPE Silicone, Orange PT021C, Flammability 94V-0, Textured Finish) EVA3M Double-Sided Adhesive on One Side 20220329 RoHS REACH"
+    },
+    {
+      "descriptionZh": "硅胶片 | HTE0551000B-JP-JAK 硅胶片（TPU硅胶（要求硬度与008脚垫一致）防火94V-0）20190927  RoHS REACH",
+      "descriptionEn": "Silicone Sheet | HTE0551000B-JP-JAK Silicone Sheet (TPU Silicone (Hardness Required to Match Foot Pad 008) Flammability 94V-0) 20190927 RoHS REACH"
+    },
+    {
+      "descriptionZh": "把手插条 | HTE045-JAK  把手插条（铝合金，侧面开两个小缺口）蓝谷20191216   RoHS REACH",
+      "descriptionEn": "Handle Insert Strip | HTE045-JAK Handle Insert Strip (Aluminum Alloy, Two Small Notches on the Side) Langu 20191216 RoHS REACH"
+    },
+    {
+      "descriptionZh": "AC插座 | HTE0782000A-EU-JAK 欧规AC插座（16A/250V 三插）科技灰 华琴 20220307 ROHS REACH",
+      "descriptionEn": "AC Socket | HTE0782000A-EU-JAK EU Specification AC Socket (16A/250V Three-Pin) Technology Gray Huaqin 20220307 ROHS REACH"
+    },
+    {
+      "descriptionZh": "逆变器通讯线束 | HTE0811000A-CN-DX2 逆变器通讯线束（UL2464#26AWG多芯导线长L=270mm,XHB2.5-7P/电压DC500V,温度120度,防火等级VW-1）带磁环 ROHS REACH",
+      "descriptionEn": "Inverter Communication Harness | HTE0811000A-CN-DX2 Inverter Communication Harness (UL2464#26AWG Multicore Wire Length L=270mm,XHB2.5-7P/ Voltage DC500V, Temperature 120 Degrees, Flammability Rating VW-1) With Ferrite Ring ROHS REACH"
+    },
+    {
+      "descriptionZh": "主板-灯板线 | HTE0811000A-CN-DX2 主板-灯板线（UL2464#26AWG多芯导线长L=140mm,PHS2.0-7P/电压DC500V,温度120度,防火等级VW-1）磁环 ROHS REACH",
+      "descriptionEn": "Mainboard-to-Light Board Cable | HTE0811000A-CN-DX2 Mainboard-to-Light Board Cable (UL2464#26AWG Multicore Wire Length L=140mm,PHS2.0-7P/ Voltage DC500V, Temperature 120 Degrees, Flammability Rating VW-1) Ferrite Ring ROHS REACH"
+    },
+    {
+      "descriptionZh": "主板-显示屏线束 | HTE0811000A-CN-DX2 主板-显示屏线束（UL2464#26AWG多芯导线长L=90mm,XHB2.5-7P/电压DC500V,温度120度,防火等级VW-1）ROHS REACH",
+      "descriptionEn": "Mainboard-to-Display Harness | HTE0811000A-CN-DX2 Mainboard-to-Display Harness (UL2464#26AWG Multicore Wire Length L=90mm,XHB2.5-7P/ Voltage DC500V, Temperature 120 Degrees, Flammability Rating VW-1) ROHS REACH"
+    },
+    {
+      "descriptionZh": "AC接地线 | HTE0811000A-CN-DX2 AC接地线（UL1569#18AWG导线长L=240mm,M3 OT端子/电压DC500V,温度120度,防火等级VW-1）ROHS REACH",
+      "descriptionEn": "AC Ground Wire | HTE0811000A-CN-DX2 AC Ground Wire (UL1569#18AWG Wire Length L=240mm,M3 OT Terminal / Voltage DC500V, Temperature 120 Degrees, Flammability Rating VW-1) ROHS REACH"
+    },
+    {
+      "descriptionZh": "AC输出线 | AC输出线（UL3135#14AWG 硅胶导线/HX62008-2R L=180mm 电压DC500V 额定电流10A,温度120度,防火等级VW-1）带磁环 ROHS REACH ROHS REACH",
+      "descriptionEn": "AC Output Cable | AC Output Cable (UL3135#14AWG Silicone Wire /HX62008-2R L=180mm Voltage DC500V Rated Current 10A, Temperature 120 Degrees, Flammability Rating VW-1) With Ferrite Ring ROHS REACH ROHS REACH"
+    },
+    {
+      "descriptionZh": "转接头 | HTO665A-CH-DX2 8MM转2P转接头+硅胶面条线配件 RoHS REACH",
+      "descriptionEn": "Adapter | HTO665A-CH-DX2 8MM to 2P Adapter + Silicone Flat Cable Accessory RoHS REACH"
+    },
+    {
+      "descriptionZh": "彩盒 | HTE0811000A-EU/KR-JAK 彩盒 20220718 RoHS REACH",
+      "descriptionEn": "Retail Box | HTE0811000A-EU/KR-JAK Retail Box 20220718 RoHS REACH"
+    },
+    {
+      "descriptionZh": "说明书 | HTE0811000A-EU-JAK 说明书 20220804 RoHS REACH",
+      "descriptionEn": "Instruction Manual | HTE0811000A-EU-JAK Instruction Manual 20220804 RoHS REACH"
+    },
+    {
+      "descriptionZh": "提手 | HTE032/042/053彩盒提手（小）高义 20211012  RoHS REACH",
+      "descriptionEn": "Carry Handle | HTE032/042/053 Retail Box Carry Handle (Small) Gaoyi 20211012 RoHS REACH"
+    },
+    {
+      "descriptionZh": "AC充电线 | 欧规三插头转品字尾AC充电线 橙色PVC外被 L=2M 3G1.0mm2/OD:7.0mm 10A/250V 70℃ 橙色Jackery魔术扎 联升 ROHS REACH",
+      "descriptionEn": "AC Charging Cable | EU Specification Three-Pin Plug to IEC-Type Connector AC Charging Cable Orange PVC Jacket L=2M 3G1.0mm2/OD:7.0mm 10A/250V 70℃ Orange Jackery Hook-and-Loop Strap Liansheng ROHS REACH"
+    },
+    {
+      "descriptionZh": "车充线 | HTO735A-US-JAK 车充头转DC8020补电线 橙色PVC外被 L=2M 16#/OD:6.3mm 10A/24V 80℃ 橙色Jackery魔术扎 吉力 20211208 ROHS REACH",
+      "descriptionEn": "Car Charging Cable | HTO735A-US-JAK Car Charger Plug to DC8020 Charging Cable Orange PVC Jacket L=2M 16#/OD:6.3mm 10A/24V 80℃ Orange Jackery Hook-and-Loop Strap Jili 20211208 ROHS REACH"
+    },
+    {
+      "descriptionZh": "标贴 | HTE0721500B-US-JAK 彩盒封口标  20211018 RoHS REACH",
+      "descriptionEn": "Label | HTE0721500B-US-JAK Retail Box Sealing Label 20211018 RoHS REACH"
+    },
+    {
+      "descriptionZh": "标贴 | HTE0811000A-EU-JAK 后标贴 20220921  RoHS REACH",
+      "descriptionEn": "Label | HTE0811000A-EU-JAK Rear Label 20220921 RoHS REACH"
+    },
+    {
+      "descriptionZh": "标贴 | HTO735A-US/JP/EU-JAK 车充线警示标贴 高义 20210211 RoHS REACH",
+      "descriptionEn": "Label | HTO735A-US/JP/EU-JAK Car Charging Cable Warning Label Gaoyi 20210211 RoHS REACH"
+    },
+    {
+      "descriptionZh": "彩盒信息标贴 | HTE0811000A-EU-JAK 尺寸：230*170mm材质：70#合成纸不干胶 RoHS REACH",
+      "descriptionEn": "Retail Box Information Label | HTE0811000A-EU-JAK Dimensions:230*170mm Material:70# Synthetic Paper Self-Adhesive RoHS REACH"
+    },
+    {
+      "descriptionZh": "标贴 | HTE042/052/053-US-JAK 彩盒UPC空白贴纸（56*30mm) 生产打印 高义 20211206  RoHS REACH",
+      "descriptionEn": "Label | HTE042/052/053-US-JAK Retail Box UPC Blank Sticker (56*30mm) Production Printing Gaoyi 20211206 RoHS REACH"
+    },
+    {
+      "descriptionZh": "标贴 | 欧代标贴(56×22mm)  20220706 RoHS REACH",
+      "descriptionEn": "Label | EU Representative Label (56×22mm) 20220706 RoHS REACH"
+    },
+    {
+      "descriptionZh": "内托 | HTE0811000A-CN-DX2 黑色泡棉内托上 20220714 RoHS REACH",
+      "descriptionEn": "Inner Tray | HTE0811000A-CN-DX2 Black Foam Upper Inner Tray 20220714 RoHS REACH"
+    },
+    {
+      "descriptionZh": "内托 | HTE0811000A-CN-DX2 黑色泡棉内托下 20220608 RoHS REACH",
+      "descriptionEn": "Inner Tray | HTE0811000A-CN-DX2 Black Foam Lower Inner Tray 20220608 RoHS REACH"
+    },
+    {
+      "descriptionZh": "保护膜 | HTE0811000A-US/JP/EU/CN/KR-JAK 显示屏保护膜 20220705 RoHS REACH",
+      "descriptionEn": "Protective Film | HTE0811000A-US/JP/EU/CN/KR-JAK Display Protective Film 20220705 RoHS REACH"
+    },
+    {
+      "descriptionZh": "配件包 | 配件包 16X26cm  涤纶布料600X400D 反包边 带新织唛JACKERY   （用于JAK 电小二产品）ROHS REACH",
+      "descriptionEn": "Accessory Bag | Accessory Bag 16X26cm Polyester Fabric 600X400D Reverse Binding With New Woven Label JACKERY (For JAK Dian Xiao Er Products) ROHS REACH"
+    },
+    {
+      "descriptionZh": "UN箱 | BOX-(H=H 395*315*350MM) HTE0811000A-US/JP/EU-JAK UN箱 20220701 RoHS REACH",
+      "descriptionEn": "UN Box | BOX-(H=H 395*315*350MM) HTE0811000A-US/JP/EU-JAK UN Box 20220701 RoHS REACH"
+    },
+    {
+      "descriptionZh": "充电透明贴纸 | Pro系列欧规首次使用充电透明贴纸 尺寸：75*35mm材质：50#透明不干胶白色印刷 RoHS REACH",
+      "descriptionEn": "Transparent Charging Sticker | Pro Series EU Specification First-Use Charging Transparent Sticker Dimensions:75*35mm Material:50# Transparent Self-Adhesive White Printing RoHS REACH"
+    },
+    {
+      "descriptionZh": "主板-PCBA | HTE109-M-B3 降本(主板供电线磁环三圈)  RoHS REACH",
+      "descriptionEn": "Mainboard PCBA | HTE109-M-B3 Cost-Reduced (Mainboard Power Cable: Three Turns Through Ferrite Ring) RoHS REACH"
+    },
+    {
+      "descriptionZh": "电池保护板-PCBA | HTE109-B-B6 ROHS REACH",
+      "descriptionEn": "Battery Protection Board PCBA | HTE109-B-B6 ROHS REACH"
+    },
+    {
+      "descriptionZh": "转接板-PCBA | HTE109-Z-DC A1 DC转接板 降本 ROHS REACH",
+      "descriptionEn": "Adapter Board PCBA | HTE109-Z-DC A1 DC Adapter Board Cost-Reduced ROHS REACH"
+    },
+    {
+      "descriptionZh": "双向逆变器 | HTE109降本欧规铂科双向逆变器 1450W,1500W,230V,50HZ RoHS REACH",
+      "descriptionEn": "Bidirectional Inverter | HTE109 Cost-Reduced EU Specification Boke Bidirectional Inverter 1450W,1500W,230V,50HZ RoHS REACH"
+    },
+    {
+      "descriptionZh": "前壳组件 | HTE1091000A-EU-JAK PC+ABS,科技灰 HB-31-065,台化3100,UL94-V0,晒纹+丝印 ROHS REACH",
+      "descriptionEn": "Front Housing Assembly | HTE1091000A-EU-JAK PC+ABS, Technology Gray HB-31-065, Taihua 3100,UL94-V0, Textured Finish + Screen Printing ROHS REACH"
+    },
+    {
+      "descriptionZh": "后壳 | HTE1091000A-CN-DX2 PC+ABS,科技灰 HB-31-065,雅淇台化3100,UL94-V0,晒纹+丝印 ROHS REACH",
+      "descriptionEn": "Rear Housing | HTE1091000A-CN-DX2 PC+ABS, Technology Gray HB-31-065, Yaqi Taihua 3100,UL94-V0, Textured Finish + Screen Printing ROHS REACH"
+    },
+    {
+      "descriptionZh": "把手组件 | HTE109降本 ABS、硅胶、PA66,科技灰,PA66+30%GF、橙色,奇美-757、硅胶,UL94-HB,晒纹,德赛 ROHS REACH",
+      "descriptionEn": "Handle Assembly | HTE109 Cost-Reduced ABS/ Silicone /PA66, Technology Gray,PA66+30%GF/ Orange, Chimei -757/ Silicone,UL94-HB, Textured Finish, Desai ROHS REACH"
+    },
+    {
+      "descriptionZh": "左装饰盖 | HTE1091000A-CN-DX2 PC+ABS,橙色 HB-31-066,雅淇台化3100,UL94-V0,晒纹 ROHS REACH",
+      "descriptionEn": "Left Decorative Cover | HTE1091000A-CN-DX2 PC+ABS, Orange HB-31-066, Yaqi Taihua 3100,UL94-V0, Textured Finish ROHS REACH"
+    },
+    {
+      "descriptionZh": "右装饰盖 | HTE1091000A-CN-DX2 PC+ABS,橙色,台化3100,UL94-V0,晒纹+丝印新增8020标识 ROHS REACH",
+      "descriptionEn": "Right Decorative Cover | HTE1091000A-CN-DX2 PC+ABS, Orange, Taihua 3100,UL94-V0, Textured Finish + Screen Printing With Added 8020 Marking ROHS REACH"
+    },
+    {
+      "descriptionZh": "脚垫 | HTE1091000A-CN-DX2 硅胶,橙色 HB-31-066,硅胶,UL94-HB,晒纹 RoHS REACH",
+      "descriptionEn": "Foot Pad | HTE1091000A-CN-DX2 Silicone, Orange HB-31-066, Silicone,UL94-HB, Textured Finish RoHS REACH"
+    },
+    {
+      "descriptionZh": "显示屏镜片 | HTE109降本 PC,透明,PC,HB,黑色丝印+背胶+背胶拉手,鑫铠源 RoHS REACH",
+      "descriptionEn": "Display Lens | HTE109 Cost-Reduced PC, Transparent,PC,HB, Black Screen Printing + Adhesive Backing + Adhesive Pull Tab, Xinkaiyuan RoHS REACH"
+    },
+    {
+      "descriptionZh": "把手插条 | HTE109降本 PC+ABS-HB-31-065-UL94-HB-德米乐 ROHS REACH",
+      "descriptionEn": "Handle Insert Strip | HTE109 Cost-Reduced PC+ABS-HB-31-065-UL94-HB- Demile ROHS REACH"
+    },
+    {
+      "descriptionZh": "AC插座 | 欧规插座,16A/250V,三pin,科技灰 HB-31-065,45*45，带盖，带手感油 RoHS REACH",
+      "descriptionEn": "AC Socket | EU Specification Socket,16A/250V, Three-pin, Technology Gray HB-31-065,45*45, With Cover, With Soft-Touch Coating RoHS REACH"
+    },
+    {
+      "descriptionZh": "品字插座 | 品字尾,10A/250V或15A/250V,3pin,橙色 RoHS REACH",
+      "descriptionEn": "IEC-Type Appliance Socket | IEC-Type Connector,10A/250V or 15A/250V,3pin, Orange RoHS REACH"
+    },
+    {
+      "descriptionZh": "螺钉 | 自攻钉,十字盘头带介子头,3*3.5*10,碳钢+加硬,镀彩锌 RoHS REACH",
+      "descriptionEn": "Screw | Self-Tapping Screw, Cross-Recessed Pan Head With Washer Head,3*3.5*10, Carbon Steel + Hardened, Color Zinc Plating RoHS REACH"
+    },
+    {
+      "descriptionZh": "螺丝 | PB3X8XD5.5X2圆头十字自攻螺丝,加硬，白色 深勤业 ROHS REACH",
+      "descriptionEn": "Screw | PB3X8XD5.5X2 Round Head, Cross Recess Self-Tapping Screw, Hardened, White Shen Qinye ROHS REACH"
+    },
+    {
+      "descriptionZh": "螺丝 | 自攻螺丝,圆头,PA5*18_D8.2*3.2,碳钢,镀彩锌,十字 ROHS REACH",
+      "descriptionEn": "Screw | Self-Tapping Screw, Round Head,PA5*18_D8.2*3.2, Carbon Steel, Color Zinc Plating, Cross Recess ROHS REACH"
+    },
+    {
+      "descriptionZh": "螺丝 | PB2X5XD5X2圆头十字自攻螺丝,加硬，白色 深勤业 ROHS REACH",
+      "descriptionEn": "Screw | PB2X5XD5X2 Round Head, Cross Recess Self-Tapping Screw, Hardened, White Shen Qinye ROHS REACH"
+    },
+    {
+      "descriptionZh": "螺丝 | 螺丝,三合一组合螺丝,十字圆头,M4*10,碳钢,镀彩锌,机牙 RoHS REACH",
+      "descriptionEn": "Screw | Screw, Three-in-One Assembly Screw, Cross-Recessed Round Head,M4*10, Carbon Steel, Color Zinc Plating, Machine Thread RoHS REACH"
+    },
+    {
+      "descriptionZh": "螺丝 | 自攻螺丝,十字扁圆头,TB4*16,碳钢,加硬 ROHS REACH",
+      "descriptionEn": "Screw | Self-Tapping Screw, Cross-Recessed Truss Head,TB4*16, Carbon Steel, Hardened ROHS REACH"
+    },
+    {
+      "descriptionZh": "AC输入线 | UL1569/1007#14AWG,蓝棕,130mm,2pin连接器,300V,80°C以上,VW-1 UL",
+      "descriptionEn": "AC Input Cable | UL1569/1007#14AWG, Blue/Brown,130mm,2pin Connector,300V,80°C or Above,VW-1 UL"
+    },
+    {
+      "descriptionZh": "AC接地线 | 欧规 UL1569/1007#16AWG,黄绿,160mm,管型端子,300V,80°C以上,VW-1 UL",
+      "descriptionEn": "AC Ground Wire | EU Specification UL1569/1007#16AWG, Yellow-Green,160mm, Tubular Terminal,300V,80°C or Above,VW-1 UL"
+    },
+    {
+      "descriptionZh": "电压温度采集线 | UL1007/1569/2464 28/26AWG,黑色,230mm,PH连接器,300V,80°C以上,VW-1 UL",
+      "descriptionEn": "Voltage and Temperature Acquisition Cable | UL1007/1569/2464 28/26AWG, Black,230mm,PH Connector,300V,80°C or Above,VW-1 UL"
+    },
+    {
+      "descriptionZh": "通讯线 | 109项目 UL2464 屏蔽线 28/26AWG,黑色,300mm,2.0间距连接器,300V,80°C以上,VW-1 UL",
+      "descriptionEn": "Communication Cable | 109 Project UL2464 Shielded Cable 28/26AWG, Black,300mm,2.0 Pitch Connector,300V,80°C or Above,VW-1 UL"
+    },
+    {
+      "descriptionZh": "欧规AC输出线 | 109 UL1007/1569#16AWG,蓝棕,155mm,2pin连接器,300V,80°C,VW-1,ROHS REACH UL",
+      "descriptionEn": "EU AC Output Cable | 109 UL1007/1569#16AWG, Blue/Brown,155mm,2pin Connector,300V,80°C,VW-1,ROHS REACH UL"
+    },
+    {
+      "descriptionZh": "显示屏 | COG显示屏,外边框尺寸：72*40mm，镜面尺寸：64*32mm,断码 RoHS REACH",
+      "descriptionEn": "Display | COG Display, Outer Frame Dimensions:72*40mm, Lens Dimensions:64*32mm, Segmented RoHS REACH"
+    },
+    {
+      "descriptionZh": "彩盒 | HTE1091000A-US-JAK 350克粉灰裱双E坑（150底/120/100/120）黄底，,367*264*343mm,印刷：4C+PT 021C RoHS REACH",
+      "descriptionEn": "Retail Box | HTE1091000A-US-JAK 350 g Coated Gray-Back Board Laminated to Double E-Flute Corrugated Board (150 Back /120/100/120) Yellow Back,,367*264*343mm, Printing:4C+PT 021C RoHS REACH"
+    },
+    {
+      "descriptionZh": "通用纸护角（顶部） | 通用（二供） 纸浆-干压成型，2.5mm厚度,110*110*83mm,成型来料 RoHS REACH",
+      "descriptionEn": "Universal Paper Corner Protector (Top) | Universal (Second Supplier) Pulp, Dry-Press Molded,2.5mm Thickness,110*110*83mm, Supplied Molded RoHS REACH"
+    },
+    {
+      "descriptionZh": "通用纸护角（底部） | 通用（二供） 纸浆-干压成型，2.5mm厚度,110*110*96mm,成型来料 RoHS REACH",
+      "descriptionEn": "Universal Paper Corner Protector (Bottom) | Universal (Second Supplier) Pulp, Dry-Press Molded,2.5mm Thickness,110*110*96mm, Supplied Molded RoHS REACH"
+    },
+    {
+      "descriptionZh": "配件盒_内托 | HTE1091000A-CN-DX2 250g牛皮纸裱E坑(250g/140g/250g)耐破8kg.f/cm,258*136*44mm,胶粘 RoHS REACH",
+      "descriptionEn": "Accessory Box / Inner Tray | HTE1091000A-CN-DX2 250g Kraft Paper Laminated to E-Flute Corrugated Board (250g/140g/250g) Burst Strength 8kg.f/cm,258*136*44mm, Glued RoHS REACH"
+    },
+    {
+      "descriptionZh": "竹纤维袋 | HTE1091000A-JAK 白色70g竹纤维,570*570*1mm,工艺：双边车缝线，单边开口 RoHS REACH",
+      "descriptionEn": "Bamboo Fiber Bag | HTE1091000A-JAK White 70g Bamboo Fiber,570*570*1mm, Process: Sewn on Two Sides, Open on One Side RoHS REACH"
+    },
+    {
+      "descriptionZh": "UN箱 | HTE1091000A-US-JAK H=H(230/140/70/180/230),385x280x366mm,颜色：单黑印刷+白墨 RoHS REACH",
+      "descriptionEn": "UN Box | HTE1091000A-US-JAK H=H (230/140/70/180/230),385x280x366mm, Color: Single-Black Printing + White Ink RoHS REACH"
+    },
+    {
+      "descriptionZh": "产品图标贴 | HTE1091000A-EU-JAK 尺寸：211.8*105.5mm 材质：70#合成纸不干胶过哑胶 RoHS REACH",
+      "descriptionEn": "Product Pictogram Label | HTE1091000A-EU-JAK Dimensions:211.8*105.5mm Material:70# Synthetic Paper Self-Adhesive Matte Lamination RoHS REACH"
+    },
+    {
+      "descriptionZh": "产品后标贴 | HTE1091000A-EU-JAK 尺寸：105.8x85.6mm,材质：50#消银龙过哑胶,颜色：科技灰   RoHS REACH",
+      "descriptionEn": "Product Rear Label | HTE1091000A-EU-JAK Dimensions:105.8x85.6mm, Material:50# Matte Silver Film (Xiaoyinlong) Matte Lamination, Color: Technology Gray RoHS REACH"
+    },
+    {
+      "descriptionZh": "说明书 | HTE1091000A-EU-JAK 尺寸：130x185mm,材质：80克书纸双面印刷,装订方式：胶装, 颜色：90%黑  RoHS REACH",
+      "descriptionEn": "Instruction Manual | HTE1091000A-EU-JAK Dimensions:130x185mm, Material:80 g Book Paper Double-Sided Printing, Binding Method: Perfect Binding, Color:90% Black RoHS REACH"
+    },
+    {
+      "descriptionZh": "彩盒信息标贴 | HTE1091000A-EU-JAK 尺寸：230x170mm，材质：80g铜版纸不干胶过哑油,颜色：Pantone 021C RoHS REACH",
+      "descriptionEn": "Retail Box Information Label | HTE1091000A-EU-JAK Dimensions:230x170mm, Material:80g Coated Paper Self-Adhesive Matte Varnish, Color:Pantone 021C RoHS REACH"
+    },
+    {
+      "descriptionZh": "欧规AC充电线 | 欧规三插头转品字尾AC充电线,橙色PVC外被,1500MM,3G1.0mm2/OD:7.0mm,,250V,10A,70℃,橙色Jackery魔术扎 品牌logo升级 /",
+      "descriptionEn": "EU AC Charging Cable | EU Specification Three-Pin Plug to IEC-Type Connector AC Charging Cable, Orange PVC Jacket,1500MM,3G1.0mm2/OD:7.0mm,,250V,10A,70℃, Orange Jackery Hook-and-Loop Strap Brand logo Update /"
+    },
+    {
+      "descriptionZh": "间隔纸封口标 | 通用 成品尺寸：120*60mm2.材质：80g铜版纸间隔胶过哑油3.颜色：pantone 021C4.背胶：可移不干胶，加强粘性. RoHS REACH",
+      "descriptionEn": "Pattern-Adhesive Paper Sealing Label | Universal Finished Dimensions:120*60mm2. Material:80g Coated Paper Patterned Adhesive Matte Varnish 3. Color:pantone 021C4. Adhesive Backing: Removable Self-Adhesive, Increased Adhesion . RoHS REACH"
+    },
+    {
+      "descriptionZh": "显示屏保护膜 | HTE112600A共用 成品尺寸：71.5*47.5mm材质工艺：透明可移不干胶,橙色021C+底部白色部分无粘性，好移除 RoHS REACH",
+      "descriptionEn": "Display Protective Film | HTE112600A Shared Finished Dimensions:71.5*47.5mm Material / Process: Transparent Removable Self-Adhesive, Orange 021C+ White Area at Bottom Non-Adhesive, Easy to Remove RoHS REACH"
+    },
+    {
+      "descriptionZh": "Triman标贴 | Triman标贴, 设备+线材（带电池产品） 尺寸：90*20mm 材质：50# 透明PET 不干胶过哑胶 RoHS REACH",
+      "descriptionEn": "Triman Label | Triman Label, Equipment + Cables (Products With Batteries) Dimensions:90*20mm Material:50# Transparent PET Self-Adhesive Matte Lamination RoHS REACH"
+    },
+    {
+      "descriptionZh": "主板-PCBA | HTE053-M-E0 (IC-IP6525T 带卡扣）  RoHS REACH",
+      "descriptionEn": "Mainboard PCBA | HTE053-M-E0 (IC-IP6525T With Clip) RoHS REACH"
+    },
+    {
+      "descriptionZh": "液晶屏 | HTE008液晶显示屏(LCD 液晶显示) A2 20181113  RoHS REACH",
+      "descriptionEn": "LCD | HTE008 Liquid Crystal Display (LCD Liquid Crystal Display) A2 20181113 RoHS REACH"
+    },
+    {
+      "descriptionZh": "灯板-PCBA | HTE053A-P(灯板）  RoHS REACH",
+      "descriptionEn": "Light Board PCBA | HTE053A-P (Light Board) RoHS REACH"
+    },
+    {
+      "descriptionZh": "车充板-PCBA | HTE056-C-V1  RoHS REACH",
+      "descriptionEn": "Car Charging PCBA | HTE056-C-V1 RoHS REACH"
+    },
+    {
+      "descriptionZh": "电池保护板-PCBA | HTE053-BMS-R4 RoHS REACH",
+      "descriptionEn": "Battery Protection Board PCBA | HTE053-BMS-R4 RoHS REACH"
+    },
+    {
+      "descriptionZh": "逆变器 | 晨旭通 1000W 单向逆变器 230V 50Hz 正弦波 20220920 RoHS REACH",
+      "descriptionEn": "Inverter | Chen Xutong 1000W Unidirectional Inverter 230V 50Hz Sine Wave 20220920 RoHS REACH"
+    },
+    {
+      "descriptionZh": "后壳 | 试产HTE0531000C-US-JAK后壳（PC+ABS,防火94V-0，雅淇台化3100，黑灰色，外观面晒纹） 德米乐 20220913 RoHS REACH",
+      "descriptionEn": "Rear Housing | Trial Production HTE0531000C-US-JAK Rear Housing (PC+ABS, Flammability 94V-0, Yaqi Taihua 3100, Black-Gray, Textured Exterior Surface) Demile 20220913 RoHS REACH"
+    },
+    {
+      "descriptionZh": "左右装饰盖 | HTE0531000C-US-JAK PC+ABS,橙色,金发PC/ABS  JH981-HT08,UL 94-V0,外观面晒纹 ROHS REACH",
+      "descriptionEn": "Left and Right Decorative Covers | HTE0531000C-US-JAK PC+ABS, Orange, Jinfa PC/ABS JH981-HT08,UL 94-V0, Textured Exterior Surface ROHS REACH"
+    },
+    {
+      "descriptionZh": "脚垫1 | 试产HTE0531000C-US-JAK脚垫A（TPU硅胶（要求硬度与008脚垫一致）防火94V-0，橙色）单面背EVA双面胶 20220913 RoHS REACH",
+      "descriptionEn": "Foot Pad 1 | Trial Production HTE0531000C-US-JAK Foot Pad A (TPU Silicone (Hardness Required to Match Foot Pad 008) Flammability 94V-0, Orange) EVA Double-Sided Adhesive on One Side 20220913 RoHS REACH"
+    },
+    {
+      "descriptionZh": "脚垫2 | 试产HTE0531000C-US-JAK脚垫B（TPU硅胶（要求硬度与008脚垫一致）防火94V-0，橙色）单面背EVA双面胶 20220913 RoHS REACH",
+      "descriptionEn": "Foot Pad 2 | Trial Production HTE0531000C-US-JAK Foot Pad B (TPU Silicone (Hardness Required to Match Foot Pad 008) Flammability 94V-0, Orange) EVA Double-Sided Adhesive on One Side 20220913 RoHS REACH"
+    },
+    {
+      "descriptionZh": "前壳组件 | HTE0531000C-EU-JAK PC+ABS,HB-31-065,雅淇台化3100,UL 94-V0,外观面晒纹 RoHS REACH",
+      "descriptionEn": "Front Housing Assembly | HTE0531000C-EU-JAK PC+ABS,HB-31-065, Yaqi Taihua 3100,UL 94-V0, Textured Exterior Surface RoHS REACH"
+    },
+    {
+      "descriptionZh": "说明书 | HTE0531000C-EU/UK-JAK  说明书 20220726 RoHS REACH",
+      "descriptionEn": "Instruction Manual | HTE0531000C-EU/UK-JAK Instruction Manual 20220726 RoHS REACH"
+    },
+    {
+      "descriptionZh": "彩盒 | HTE0531000C/880C-EU-JAK 彩盒（含提手） 20220726 RoHS REACH",
+      "descriptionEn": "Retail Box | HTE0531000C/880C-EU-JAK Retail Box (Including Carry Handle) 20220726 RoHS REACH"
+    },
+    {
+      "descriptionZh": "充电器 | 24V/7.5A  180W充电器  三插梅花尾/7909 （3C、PSE、UL、UKCA认证） 20210518 RoHS REACH",
+      "descriptionEn": "Charger | 24V/7.5A 180W Charger Three-Pin Cloverleaf Connector /7909 (3C/PSE/UL/UKCA Certification) 20210518 RoHS REACH"
+    },
+    {
+      "descriptionZh": "AC充电线 | 欧规三插头转梅花尾AC充电线 黑色PVC外被 L=1.2M 3G0.75mm2/OD:6.55mm 2.5A/250V 70℃ 塑胶绝缘套 联升 ROHS REACH",
+      "descriptionEn": "AC Charging Cable | EU Specification Three-Pin Plug to Cloverleaf Connector AC Charging Cable Black PVC Jacket L=1.2M 3G0.75mm2/OD:6.55mm 2.5A/250V 70℃ Plastic Insulating Sleeve Liansheng ROHS REACH"
+    },
+    {
+      "descriptionZh": "车充线 | 车充头转DC7909补电线 黑色PVC外被 L=2M 16#/OD:6.3mm 10A/24V VW-1 80℃ Jackery橙色硅胶环 吉力 RoHS REACH",
+      "descriptionEn": "Car Charging Cable | Car Charger Plug to DC7909 Charging Cable Black PVC Jacket L=2M 16#/OD:6.3mm 10A/24V VW-1 80℃ Jackery Orange Silicone Ring Jili RoHS REACH"
+    },
+    {
+      "descriptionZh": "内托 | HTE0531000C/880C-US-JAK  内托上 20220719 RoHS REACH",
+      "descriptionEn": "Inner Tray | HTE0531000C/880C-US-JAK Upper Inner Tray 20220719 RoHS REACH"
+    },
+    {
+      "descriptionZh": "内托 | HTE0531000C/880C-US-JAK  内托下 20220719 RoHS REACH",
+      "descriptionEn": "Inner Tray | HTE0531000C/880C-US-JAK Lower Inner Tray 20220719 RoHS REACH"
+    },
+    {
+      "descriptionZh": "产品后标贴 | HTE0531000C-EU-JAK 尺寸：104*55mm 材质：50#消银龙过哑胶 RoHS REACH",
+      "descriptionEn": "Product Rear Label | HTE0531000C-EU-JAK Dimensions:104*55mm Material:50# Matte Silver Film (Xiaoyinlong) Matte Lamination RoHS REACH"
+    },
+    {
+      "descriptionZh": "标贴 | HTE0531000C-EU-JAK 彩盒参数贴纸 20220726 RoHS REACH",
+      "descriptionEn": "Label | HTE0531000C-EU-JAK Retail Box Parameter Label 20220726 RoHS REACH"
+    },
+    {
+      "descriptionZh": "保护膜 | HTE0531000C-US-JAK 显示屏保护膜 20210918 RoHS REACH",
+      "descriptionEn": "Protective Film | HTE0531000C-US-JAK Display Protective Film 20210918 RoHS REACH"
+    },
+    {
+      "descriptionZh": "UN箱 | HTE0531000C/880C-US-JAK UN箱385*281*341mm 20220719 RoHS REACH",
+      "descriptionEn": "UN Box | HTE0531000C/880C-US-JAK UN Box 385*281*341mm 20220719 RoHS REACH"
+    },
+    {
+      "descriptionZh": "主板-PCBA | HTE097-M-A3（OPPT模式） ROHS REACH",
+      "descriptionEn": "Mainboard PCBA | HTE097-M-A3 (OPPT Mode) ROHS REACH"
+    },
+    {
+      "descriptionZh": "充电板-PCBA | HTE099-S-A3（欧/美） ROHS REACH",
+      "descriptionEn": "Charging Board PCBA | HTE099-S-A3 (EU/US) ROHS REACH"
+    },
+    {
+      "descriptionZh": "车充板-PCBA | HTE097-C-A3 ROHS REACH",
+      "descriptionEn": "Car Charging PCBA | HTE097-C-A3 ROHS REACH"
+    },
+    {
+      "descriptionZh": "转接板-PCBA | HTE097-Z-A1 ROHS REACH",
+      "descriptionEn": "Adapter Board PCBA | HTE097-Z-A1 ROHS REACH"
+    },
+    {
+      "descriptionZh": "转接板-PCBA | HTE097-Z-AC-A3 ROHS REACH",
+      "descriptionEn": "Adapter Board PCBA | HTE097-Z-AC-A3 ROHS REACH"
+    },
+    {
+      "descriptionZh": "扩容板-PCBA | HTE099-ZKR-A1 ROHS REACH",
+      "descriptionEn": "Expansion Board PCBA | HTE099-ZKR-A1 ROHS REACH"
+    },
+    {
+      "descriptionZh": "电池保护板-PCBA | HTE099-B-A2 ROHS REACH",
+      "descriptionEn": "Battery Protection Board PCBA | HTE099-B-A2 ROHS REACH"
+    },
+    {
+      "descriptionZh": "双向逆变器 | TopBand 输入功率2000W,输出功率3000W,230V,50Hz,英/欧规 RoHS REACH",
+      "descriptionEn": "Bidirectional Inverter | TopBand Input Power 2000W, Output Power 3000W,230V,50Hz, UK/EU Specification RoHS REACH"
+    },
+    {
+      "descriptionZh": "前壳组件 | HTE0992000A-EU-JAK PC+ABS,科技灰,台化3100,防火94V-0,晒纹+丝印 ROHS REACH",
+      "descriptionEn": "Front Housing Assembly | HTE0992000A-EU-JAK PC+ABS, Technology Gray, Taihua 3100, Flammability 94V-0, Textured Finish + Screen Printing ROHS REACH"
+    },
+    {
+      "descriptionZh": "后壳组件 | HTE0992000B-EU-JAK PC+ABS,科技灰,台华3100,UL,94V-0 RoHS REACH",
+      "descriptionEn": "Rear Housing Assembly | HTE0992000B-EU-JAK PC+ABS, Technology Gray, Taihua 3100,UL,94V-0 RoHS REACH"
+    },
+    {
+      "descriptionZh": "拉杆组件 | HTE0973000A-US-JAK PC+ABS,科技灰,台华3100,94V-0,晒纹+丝印 RoHS REACH",
+      "descriptionEn": "Telescopic Handle Assembly | HTE0973000A-US-JAK PC+ABS, Technology Gray, Taihua 3100,94V-0, Textured Finish + Screen Printing RoHS REACH"
+    },
+    {
+      "descriptionZh": "左装饰盖 | HTE0973000A-US-JAK PC+ABS,科技灰,台华3100,94V-0,晒纹+丝印 RoHS REACH",
+      "descriptionEn": "Left Decorative Cover | HTE0973000A-US-JAK PC+ABS, Technology Gray, Taihua 3100,94V-0, Textured Finish + Screen Printing RoHS REACH"
+    },
+    {
+      "descriptionZh": "右装饰盖 | HTE0973000A-EU-JAK PC+ABS,科技灰,台化3100,94-V0,晒纹 ROHS REACH",
+      "descriptionEn": "Right Decorative Cover | HTE0973000A-EU-JAK PC+ABS, Technology Gray, Taihua 3100,94-V0, Textured Finish ROHS REACH"
+    },
+    {
+      "descriptionZh": "硅胶脚垫-A | HTE0973000A-US-JAK 70度硅胶,橙色,硅胶,94-V0,晒纹 RoHS REACH",
+      "descriptionEn": "Silicone Foot Pad -A | HTE0973000A-US-JAK 70 Degree Silicone, Orange, Silicone,94-V0, Textured Finish RoHS REACH"
+    },
+    {
+      "descriptionZh": "硅胶脚垫-B | HTE0973000A-US-JAK 70度硅胶,橙色,硅胶,94-V0,晒纹 ROHS REACH",
+      "descriptionEn": "Silicone Foot Pad -B | HTE0973000A-US-JAK 70 Degree Silicone, Orange, Silicone,94-V0, Textured Finish ROHS REACH"
+    },
+    {
+      "descriptionZh": "风扇 | 80*25,12DC,0.17A,转速4500,3PIN,140mm ROHS REACH",
+      "descriptionEn": "Fan | 80*25,12DC,0.17A, Rotational Speed 4500,3PIN,140mm ROHS REACH"
+    },
+    {
+      "descriptionZh": "螺丝 | PM4*12圆头机牙两组合螺丝（螺丝+弹垫），十字头，碳钢加硬，镀彩锌，点耐落胶 ROHS REACH",
+      "descriptionEn": "Screw | PM4*12 Round-Head Machine-Thread Two-Piece Assembly Screw (Screw + Spring Washer), Cross Recess, Hardened Carbon Steel, Color Zinc Plating, Applied Nailuo Threadlocking Adhesive ROHS REACH"
+    },
+    {
+      "descriptionZh": "螺丝 | PM5x10螺丝组件(PM5螺丝+平垫+弹垫) 十字 白色 ROHS REACH",
+      "descriptionEn": "Screw | PM5x10 Screw Assembly (PM5 Screw + Flat Washer + Spring Washer) Cross Recess White ROHS REACH"
+    },
+    {
+      "descriptionZh": "螺丝 | 普通机牙螺丝,十字头,PM5X150XD9X3,碳钢,镀锌镍合金+点耐落胶 RoHS REACH",
+      "descriptionEn": "Screw | Standard Machine Thread Screw, Cross Recess,PM5X150XD9X3, Carbon Steel, Zinc-Nickel Alloy Plating + Applied Nailuo Threadlocking Adhesive RoHS REACH"
+    },
+    {
+      "descriptionZh": "螺丝 | PM5*12_D9*2.5 圆头十字槽机牙螺丝，碳钢加硬，镀锌镍合金+耐落胶，NSS48h， ROHS REACH",
+      "descriptionEn": "Screw | PM5*12_D9*2.5 Round Head, Cross Recess Machine Thread Screw, Hardened Carbon Steel, Zinc-Nickel Alloy Plating + Nailuo Threadlocking Adhesive,NSS48h, ROHS REACH"
+    },
+    {
+      "descriptionZh": "螺丝 | 普通机牙螺丝,圆头十字,PM5*20*D9,碳钢,镀锌镍合金+点耐落胶 RoHS REACH",
+      "descriptionEn": "Screw | Standard Machine Thread Screw, Round Head, Cross Recess,PM5*20*D9, Carbon Steel, Zinc-Nickel Alloy Plating + Applied Nailuo Threadlocking Adhesive RoHS REACH"
+    },
+    {
+      "descriptionZh": "螺丝 | PM4*33.5 D6*2 圆头机牙螺丝，十字头，碳钢加硬，镀彩锌，点耐落胶10mm ROHS REACH",
+      "descriptionEn": "Screw | PM4*33.5 D6*2 Round-Head Machine Thread Screw, Cross Recess, Hardened Carbon Steel, Color Zinc Plating, Applied Nailuo Threadlocking Adhesive 10mm ROHS REACH"
+    },
+    {
+      "descriptionZh": "螺丝 | CM5*25_D9*2 平头十字槽机牙螺丝，碳钢加硬，镀环保彩锌+耐落胶，NSS48h，ROHS REACH",
+      "descriptionEn": "Screw | CM5*25_D9*2 Flat Head, Cross Recess Machine Thread Screw, Hardened Carbon Steel, Environment-Friendly Color Zinc Plating + Nailuo Threadlocking Adhesive,NSS48h,ROHS REACH"
+    },
+    {
+      "descriptionZh": "螺丝 | 自攻螺丝,圆头十字,PB3X10XD5.5X2,碳钢加硬,镀彩锌 ROHS REACH",
+      "descriptionEn": "Screw | Self-Tapping Screw, Round Head, Cross Recess,PB3X10XD5.5X2, Hardened Carbon Steel, Color Zinc Plating ROHS REACH"
+    },
+    {
+      "descriptionZh": "螺丝 | 机牙螺丝,平头十字槽,CM5*30*D11*2.5,碳钢加硬,镀锌镍合金+耐落胶 RoHS REACH",
+      "descriptionEn": "Screw | Machine Thread Screw, Flat Head, Cross Recess,CM5*30*D11*2.5, Hardened Carbon Steel, Zinc-Nickel Alloy Plating + Nailuo Threadlocking Adhesive RoHS REACH"
+    },
+    {
+      "descriptionZh": "过流保护器 | 88-18-P11B014-P00SK 125V/250VAC,18A,1000A(UL1077),60℃ UL",
+      "descriptionEn": "Overcurrent Protector | 88-18-P11B014-P00SK 125V/250VAC,18A,1000A (UL1077),60℃ UL"
+    },
+    {
+      "descriptionZh": "显示屏 | HTE0973000A-US-JAK FB001180-VLPW LCD屏 黑底白光 5V,125.00(W)*57.00 (H)*6.90(T_Max)mm,通讯电压 RoHS REACH",
+      "descriptionEn": "Display | HTE0973000A-US-JAK FB001180-VLPW LCD Screen Black Background, White Backlight 5V,125.00 (W)*57.00 (H)*6.90 (T_Max) mm, Communication Voltage RoHS REACH"
+    },
+    {
+      "descriptionZh": "逆变器通讯线 | UL2464 26AWG*7C,多芯线多种颜色,300mm,2*5PIN连接器,300V,105°C,VW-1 UL ROHS REACH",
+      "descriptionEn": "Inverter Communication Cable | UL2464 26AWG*7C, Multicore Cable, Various Colors,300mm,2*5PIN Connector,300V,105°C,VW-1 UL ROHS REACH"
+    },
+    {
+      "descriptionZh": "磁环 | UF-75A 带卡扣 钧之富 RoHS REACH",
+      "descriptionEn": "Ferrite Ring | UF-75A With Clip Jun Zhifu RoHS REACH"
+    },
+    {
+      "descriptionZh": "主板-显示屏线束 | UL1569 #26AWG,黑色,70MM,7PS塑壳,500V,105℃,VW-1 UL ROHS REACH",
+      "descriptionEn": "Mainboard-to-Display Harness | UL1569 #26AWG, Black,70MM,7PS Plastic Housing,500V,105℃,VW-1 UL ROHS REACH"
+    },
+    {
+      "descriptionZh": "车充通讯线 | UL1569 #26AWG,黑色,100MM,6P塑壳,500V,105℃,VW-1 UL ROHS REACH",
+      "descriptionEn": "Car Charging Communication Cable | UL1569 #26AWG, Black,100MM,6P Plastic Housing,500V,105℃,VW-1 UL ROHS REACH"
+    },
+    {
+      "descriptionZh": "主板-BMS通讯线 | UL2464 26AWG*11C,多芯线多种颜色,390mm,2*8PIN连接器,300V,105°C,VW-1 UL ROHS REACH",
+      "descriptionEn": "Mainboard-to-BMS Communication Cable | UL2464 26AWG*11C, Multicore Cable, Various Colors,390mm,2*8PIN Connector,300V,105°C,VW-1 UL ROHS REACH"
+    },
+    {
+      "descriptionZh": "PV通讯线 | UL1569 #26AWG,黑色,160mm,8PIN连接器,300V,105°C,VW-1 UL ROHS REACH",
+      "descriptionEn": "PV Communication Cable | UL1569 #26AWG, Black,160mm,8PIN Connector,300V,105°C,VW-1 UL ROHS REACH"
+    },
+    {
+      "descriptionZh": "欧规AC输出线 | UL3512/3135 #12AWG,红黑,90mm,OT端子,500V,105℃,VW-1 UL ROHS REACH",
+      "descriptionEn": "EU AC Output Cable | UL3512/3135 #12AWG, Red/Black,90mm,OT Terminal,500V,105℃,VW-1 UL ROHS REACH"
+    },
+    {
+      "descriptionZh": "欧规AC接地线 | UL1569 #16AWG,黄绿,90mm,直插端子,300V,105°C,VW-1 UL ROHS REACH",
+      "descriptionEn": "EU AC Ground Wire | UL1569 #16AWG, Yellow-Green,90mm, Straight Plug-In Terminal,300V,105°C,VW-1 UL ROHS REACH"
+    },
+    {
+      "descriptionZh": "扩容板-BMS信号线 | UL2464 26AWG*8C 屏蔽线,多芯颜色,300mm,2*5PIN连接器,300V,105°C,VW-1 UL ROHS REACH",
+      "descriptionEn": "Expansion Board-to-BMS Signal Cable | UL2464 26AWG*8C Shielded Cable, Multicore, Various Colors,300mm,2*5PIN Connector,300V,105°C,VW-1 UL ROHS REACH"
+    },
+    {
+      "descriptionZh": "DC7909转8020转接头 | HTO665A-CN-DX2 8MM转2P转接头+硅胶面条线,127MM,硅胶面条线配件,5V ,10A,105℃,黄铜，PVC,UL94-V0, 橙色，抗紫外线，过72H盐雾 IP67防水 UL 加州65 RoHS2.0 REACH",
+      "descriptionEn": "DC7909-to-8020 Adapter | HTO665A-CN-DX2 8MM to 2P Adapter + Silicone Flat Cable,127MM, Silicone Flat Cable Accessory,5V,10A,105℃, Brass,PVC,UL94-V0, Orange, UV-Resistant, Passed 72H Salt Spray IP67 Waterproof UL California 65 RoHS2.0 REACH"
+    },
+    {
+      "descriptionZh": "车充线 | 车充头转DC8020补电线,L=2M,UL2464 16AWG,12V,10A,VW-1,黄铜，PVC外被,UL94-V0,橙色，抗紫外线，过72H盐雾，80℃,橙色Jackery新短魔术扎 UL ROHS REACH 加州65",
+      "descriptionEn": "Car Charging Cable | Car Charger Plug to DC8020 Charging Cable,L=2M,UL2464 16AWG,12V,10A,VW-1, Brass,PVC Jacket,UL94-V0, Orange, UV-Resistant, Passed 72H Salt Spray,80℃, Orange Jackery New Short Hook-and-Loop Strap UL ROHS REACH California 65"
+    },
+    {
+      "descriptionZh": "彩盒 | HTE0992000A 尺寸：555x432x483.5mm 材质：350G粉灰裱 （230g单面染黑/100黄芯/H160优牛/100黄芯) 印刷工艺： 4色+ 1专（021c） RoHS REACH",
+      "descriptionEn": "Retail Box | HTE0992000A Dimensions:555x432x483.5mm Material:350G Coated Gray-Back Board Laminated to (230g Black-Dyed on One Side /100 Yellow Core /H160 Premium Kraft /100 Yellow Core) Printing Process: 4 Colors + 1 Spot Color (021c) RoHS REACH"
+    },
+    {
+      "descriptionZh": "UN箱 | HTE0973000A H=H(230/140/70/180/230),575*453*507mm,颜色：单黑印刷+白墨埋口位：胶粘 RoHS REACH",
+      "descriptionEn": "UN Box | HTE0973000A H=H (230/140/70/180/230),575*453*507mm, Color: Single-Black Printing + White Ink Joint Location: Glued RoHS REACH"
+    },
+    {
+      "descriptionZh": "产品图标贴 | HTE0992000A-EU-JAK 尺寸：286.5*119mm 材质：70#合成纸不干胶过哑胶 RoHS REACH",
+      "descriptionEn": "Product Pictogram Label | HTE0992000A-EU-JAK Dimensions:286.5*119mm Material:70# Synthetic Paper Self-Adhesive Matte Lamination RoHS REACH"
+    },
+    {
+      "descriptionZh": "说明书 | HTE0992000A-EU-UK-JAK 成品尺寸：130*185mm材质：封面封底128g双哑粉,内页105g双哑粉装订方式：胶装颜色：90%黑 RoHS REACH",
+      "descriptionEn": "Instruction Manual | HTE0992000A-EU-UK-JAK Finished Dimensions:130*185mm Material: Front and Back Covers 128g Double-Sided Matte-Coated Paper, Inner Pages 105g Double-Sided Matte-Coated Paper Binding Method: Perfect Binding Color:90% Black RoHS REACH"
+    },
+    {
+      "descriptionZh": "提手 | 试产HTE0792400B-US-GEV PP提手（2mm厚） RoHS REACH",
+      "descriptionEn": "Carry Handle | Trial Production HTE0792400B-US-GEV PP Carry Handle (2mm Thick) RoHS REACH"
+    },
+    {
+      "descriptionZh": "隔板 | HTE0973000A-US-JAK 尺寸：543x424mm材质：350G粉灰裱 （230g单面染黑/100黄芯/H160优牛/100黄芯）过哑胶裱坑 ROSH REACH",
+      "descriptionEn": "Divider | HTE0973000A-US-JAK Dimensions:543x424mm Material:350G Coated Gray-Back Board Laminated to (230g Black-Dyed on One Side /100 Yellow Core /H160 Premium Kraft /100 Yellow Core) Matte-Laminated Corrugated Board ROSH REACH"
+    },
+    {
+      "descriptionZh": "内托上 | HTE0973000A-US-JAK 尺寸：545x424x83mm材质：EPE,黑色，21kg/m³ ROSH REACH",
+      "descriptionEn": "Upper Inner Tray | HTE0973000A-US-JAK Dimensions:545x424x83mm Material:EPE, Black,21kg/m³ ROSH REACH"
+    },
+    {
+      "descriptionZh": "内托下 | HTE0973000A-US-JAK 尺寸：545x424x80mm材质：EPE,黑色，21kg/m³ ROSH REACH",
+      "descriptionEn": "Lower Inner Tray | HTE0973000A-US-JAK Dimensions:545x424x80mm Material:EPE, Black,21kg/m³ ROSH REACH"
+    },
+    {
+      "descriptionZh": "标贴 | HTE053/072/078/081-CA-JAK 彩盒封口标(无文字）20221018 RoHS REACH",
+      "descriptionEn": "Label | HTE053/072/078/081-CA-JAK Retail Box Sealing Label (No Text) 20221018 RoHS REACH"
+    },
+    {
+      "descriptionZh": "彩盒信息标贴 | HTE0992000A-EU-JAK 尺寸：230*170mm材质：70#合成纸不干胶 RoSH REACH",
+      "descriptionEn": "Retail Box Information Label | HTE0992000A-EU-JAK Dimensions:230*170mm Material:70# Synthetic Paper Self-Adhesive RoSH REACH"
+    },
+    {
+      "descriptionZh": "车充线警示标贴(通用版本) | 车充线 尺寸:140x22mm颜色:Pantone 102C材质:0.05mmPET+雾膜+背胶 RoHS REACH",
+      "descriptionEn": "Car Charging Cable Warning Label (Universal Version) | Car Charging Cable Dimensions:140x22mm Color:Pantone 102C Material:0.05mmPET+ Matte Film + Adhesive Backing RoHS REACH"
+    },
+    {
+      "descriptionZh": "产品后标贴 | HTE0992000A-EU-JAK ROSH REACH 尺寸：173*77mm材质：50#消银龙过哑胶底色：科技灰 RoSH REACH",
+      "descriptionEn": "Product Rear Label | HTE0992000A-EU-JAK ROSH REACH Dimensions:173*77mm Material:50# Matte Silver Film (Xiaoyinlong) Matte Lamination Background Color: Technology Gray RoSH REACH"
+    },
+    {
+      "descriptionZh": "显示屏保护膜 | HTE0973000A-US-JAK 尺寸：112.4*53.5mm材质工艺：透明可移不干胶注意：要容易移除 不留胶 ROSH REACH",
+      "descriptionEn": "Display Protective Film | HTE0973000A-US-JAK Dimensions:112.4*53.5mm Material / Process: Transparent Removable Self-Adhesive Note: Must Be Easy to Remove No Adhesive Residue ROSH REACH"
+    },
+    {
+      "descriptionZh": "APP操作说明书 | HTE0973000A-EU-JAK 成品尺寸：130*185mm材质：105g双哑粉正反面印刷 ROSH REACH",
+      "descriptionEn": "APP Operating Instructions | HTE0973000A-EU-JAK Finished Dimensions:130*185mm Material:105g Double-Sided Matte-Coated Paper Front-and-Back Printing ROSH REACH"
+    },
+    {
+      "descriptionZh": "配件包 | 配件包 涤纶布料,1,16X26cm,涤纶布料,16X26cm,涤纶布料600X400D 反包边 带新织唛JACKERY 新logo 防溢色 （用于JAK 电小二产品）ROHS REACH ROHS REACH",
+      "descriptionEn": "Accessory Bag | Accessory Bag Polyester Fabric,1,16X26cm, Polyester Fabric,16X26cm, Polyester Fabric 600X400D Reverse Binding With New Woven Label JACKERY New logo Color-Bleed Prevention (For JAK Dian Xiao Er Products) ROHS REACH ROHS REACH"
+    },
+    {
+      "descriptionZh": "储能电源总成 | HTE0992000B-EU-JAK（降本）  ROHS REACH",
+      "descriptionEn": "Energy Storage Power Supply Assembly | HTE0992000B-EU-JAK (Cost-Reduced) ROHS REACH"
+    },
+    {
+      "descriptionZh": "电池保护板-PCBA | HTE099-B-A3（降本） ROHS REACH",
+      "descriptionEn": "Battery Protection Board PCBA | HTE099-B-A3 (Cost-Reduced) ROHS REACH"
+    },
+    {
+      "descriptionZh": "双向逆变器 | HTE097欧规图为 输入功率2000W,输出功率3000W,230V,50Hz,降本 逆变器 RoHS REACH",
+      "descriptionEn": "Bidirectional Inverter | HTE097 EU Specification Tuwei Input Power 2000W, Output Power 3000W,230V,50Hz, Cost-Reduced Inverter RoHS REACH"
+    },
+    {
+      "descriptionZh": "镜片 | HTE0973000A-US-JAK PC,透明,PC,94-V0,表面丝印 RoHS REACH",
+      "descriptionEn": "Lens | HTE0973000A-US-JAK PC, Transparent,PC,94-V0, Surface Screen Printing RoHS REACH"
+    },
+    {
+      "descriptionZh": "彩盒 | HTE0992000B-US-JAK 尺寸：531x411x483mm，材质：350G粉灰裱BE坑（100/H160优牛/100/230G黄芯黄底），联胜，印刷：4C+PT 021C RoHS REACH",
+      "descriptionEn": "Retail Box | HTE0992000B-US-JAK Dimensions:531x411x483mm, Material:350G Coated Gray-Back Board Laminated to BE-Flute Corrugated Board (100/H160 Premium Kraft /100/230G Yellow Core / Yellow Back), Liansheng, Printing:4C+PT 021C RoHS REACH"
+    },
+    {
+      "descriptionZh": "UN箱 | HTE0992000A 共用全降解UN箱 H=H(230/140/70/180/230),546（L)*430(W)*503(H)mm,颜色：单黑印刷+白墨    埋口位：胶粘 RoHS REACH",
+      "descriptionEn": "UN Box | HTE0992000A Shared, Fully Degradable UN Box H=H (230/140/70/180/230),546 (L)*430 (W)*503 (H) mm, Color: Single-Black Printing + White Ink Joint Location: Glued RoHS REACH"
+    },
+    {
+      "descriptionZh": "说明书 | HTE0992000A-EU UK-JAK 成品尺寸：130*185mm 材质：80g书纸  装订方式：胶装 RoHS REACH",
+      "descriptionEn": "Instruction Manual | HTE0992000A-EU UK-JAK Finished Dimensions:130*185mm Material:80g Book Paper Binding Method: Perfect Binding RoHS REACH"
+    },
+    {
+      "descriptionZh": "内托上 | HTE099 097-US-JAK 尺寸：525x403x100mm 材质：瓦楞+蜂窝板+植绒布+棉 RoHS REACH",
+      "descriptionEn": "Upper Inner Tray | HTE099 097-US-JAK Dimensions:525x403x100mm Material: Corrugated Board + Honeycomb Board + Flocked Fabric + Cotton RoHS REACH"
+    },
+    {
+      "descriptionZh": "内托下 | HTE097 099-US-JAK 尺寸：525x403x85mm 材质：瓦楞+蜂窝板 RoHS REACH",
+      "descriptionEn": "Lower Inner Tray | HTE097 099-US-JAK Dimensions:525x403x85mm Material: Corrugated Board + Honeycomb Board RoHS REACH"
+    },
+    {
+      "descriptionZh": "彩盒信息标贴 | HTE0992000A-EU-JAK 尺寸：230*170mm材质：80g铜版纸不干胶过哑油颜色：021C RoHS REACH",
+      "descriptionEn": "Retail Box Information Label | HTE0992000A-EU-JAK Dimensions:230*170mm Material:80g Coated Paper Self-Adhesive Matte Varnish Color:021C RoHS REACH"
+    },
+    {
+      "descriptionZh": "产品后标贴 | HTE0992000A-EU UK-JAK 尺寸：173*77mm材质：50#消银龙过哑胶字体颜色：专银（跟色样）底色：科技灰 RoSH REACH",
+      "descriptionEn": "Product Rear Label | HTE0992000A-EU UK-JAK Dimensions:173*77mm Material:50# Matte Silver Film (Xiaoyinlong) Matte Lamination Text Color: Spot Silver (Match Color Sample) Background Color: Technology Gray RoSH REACH"
+    },
+    {
+      "descriptionZh": "Triman标贴 | Triman标贴，设备+线材+其他配件（带电池产品） 尺寸：90*20mm 材质：50# 透明PET 不干胶过哑胶 RoHS REACH",
+      "descriptionEn": "Triman Label | Triman Label, Equipment + Cables + Other Accessories (Products With Batteries) Dimensions:90*20mm Material:50# Transparent PET Self-Adhesive Matte Lamination RoHS REACH"
+    },
+    {
+      "descriptionZh": "充电板-PCBA | HTE078-S-A3 ROHS REACH",
+      "descriptionEn": "Charging Board PCBA | HTE078-S-A3 ROHS REACH"
+    },
+    {
+      "descriptionZh": "主板-PCBA | HTE078-M-A8 RoHS REACH",
+      "descriptionEn": "Mainboard PCBA | HTE078-M-A8 RoHS REACH"
+    },
+    {
+      "descriptionZh": "车充板-PCBA | HTE078-C-A3（欧韩英澳） RoHS REACH",
+      "descriptionEn": "Car Charging PCBA | HTE078-C-A3 (EU/KR/UK/AU) RoHS REACH"
+    },
+    {
+      "descriptionZh": "灯板-PCBA | HTE078-L-A2 RoHS REACH",
+      "descriptionEn": "Light Board PCBA | HTE078-L-A2 RoHS REACH"
+    },
+    {
+      "descriptionZh": "转接板-PCBA | HTE078-Z-A3(中美日欧英澳) ROHS REACH",
+      "descriptionEn": "Adapter Board PCBA | HTE078-Z-A3 (CN/US/JP/EU/UK/AU) ROHS REACH"
+    },
+    {
+      "descriptionZh": "电池保护板-PCBA | HTE078-B-A3（降本） ROHS REACH",
+      "descriptionEn": "Battery Protection Board PCBA | HTE078-B-A3 (Cost-Reduced) ROHS REACH"
+    },
+    {
+      "descriptionZh": "双向逆变器 | TopBand 输入功率1800W,输出功率2200W,230V,50Hz,欧规 RoHS REACH",
+      "descriptionEn": "Bidirectional Inverter | TopBand Input Power 1800W, Output Power 2200W,230V,50Hz, EU Specification RoHS REACH"
+    },
+    {
+      "descriptionZh": "AC输入-逆变器线 | UL1569 #14AWG,蓝棕,320mm,3P连接器,500v,105°C,VW-1 UL ROHS REACH",
+      "descriptionEn": "AC Input-to-Inverter Cable | UL1569 #14AWG, Blue/Brown,320mm,3P Connector,500v,105°C,VW-1 UL ROHS REACH"
+    },
+    {
+      "descriptionZh": "前壳组件 | HTE0782000A-EU-JAK 前壳组件（160070前壳-A02+155798导光柱*4+155799灯板按键*2+155800显示屏按键*1+155801主板按键*2+155803车充硅胶盖*1+155804灯板硅胶盖*1+155854AC输出硅胶盖*2）德赛 20220506 ROHS REACH",
+      "descriptionEn": "Front Housing Assembly | HTE0782000A-EU-JAK Front Housing Assembly (160070 Front Housing -A02+155798 Light Guide Post *4+155799 Light Board Button *2+155800 Display Button *1+155801 Mainboard Button *2+155803 Car Charging Silicone Cover *1+155804 Light Board Silicone Cover *1+ 155854AC Output Silicone Cover *2) Desai 20220506 ROHS REACH"
+    },
+    {
+      "descriptionZh": "后壳组件 | HTE0782000A-EU-JAK 后壳组件（160123后壳+155806AC硅胶盖*1+155805DC硅胶盖*1）德赛 20220610  ROHS REACH",
+      "descriptionEn": "Rear Housing Assembly | HTE0782000A-EU-JAK Rear Housing Assembly (160123 Rear Housing +155806AC Silicone Cover *1+155805DC Silicone Cover *1) Desai 20220610 ROHS REACH"
+    },
+    {
+      "descriptionZh": "把手组件 | HTE0782000A-JP-JAK PC+ABS,科技灰,台化3100,UL94-V0,晒纹 RoHS REACH",
+      "descriptionEn": "Handle Assembly | HTE0782000A-JP-JAK PC+ABS, Technology Gray, Taihua 3100,UL94-V0, Textured Finish RoHS REACH"
+    },
+    {
+      "descriptionZh": "装饰盖 | HTE0782000A-JP-JAK 装饰盖（PC+ABS，橙色PT021C，台化3100，防火94V-0，晒纹）德赛 20211027  RoHS REACH",
+      "descriptionEn": "Decorative Cover | HTE0782000A-JP-JAK Decorative Cover (PC+ABS, Orange PT021C, Taihua 3100, Flammability 94V-0, Textured Finish) Desai 20211027 RoHS REACH"
+    },
+    {
+      "descriptionZh": "前后壳支撑柱 | HTE0611500B-CN-DX2前后壳支撑柱（PC+ABS,防火94V-0 ，台化AC3100，深灰色，晒火花纹）快鸿 20211110  RoHS REACH",
+      "descriptionEn": "Front/Rear Housing Support Post | HTE0611500B-CN-DX2 Front/Rear Housing Support Post (PC+ABS, Flammability 94V-0, Taihua AC3100, Dark Gray, Spark-Textured Finish) Kuaihong 20211110 RoHS REACH"
+    },
+    {
+      "descriptionZh": "前后壳固定插条 | HTE0782000A-JP-JAK 前后壳固定插条（铝合金AL6063）德赛 20211027  RoHS REACH",
+      "descriptionEn": "Front/Rear Housing Retaining Strip | HTE0782000A-JP-JAK Front/Rear Housing Retaining Strip (Aluminum Alloy AL6063) Desai 20211027 RoHS REACH"
+    },
+    {
+      "descriptionZh": "逆变器支撑架 | HTE0782000A-JP-JAK 逆变器支撑架（PC+ABS，黑灰色PT433，台化3100，防火94V-0）德赛 20211027  RoHS REACH",
+      "descriptionEn": "Inverter Support Bracket | HTE0782000A-JP-JAK Inverter Support Bracket (PC+ABS, Black-Gray PT433, Taihua 3100, Flammability 94V-0) Desai 20211027 RoHS REACH"
+    },
+    {
+      "descriptionZh": "镜片 | HTE0611500A-US-JAK 镜片（透明PC片，丝印黑色+背3M双面胶+易撕耳） 20200831  RoHS REACH",
+      "descriptionEn": "Lens | HTE0611500A-US-JAK Lens (Transparent PC Sheet, Black Screen Printing + 3M Double-Sided Adhesive Backing + Easy-Peel Tab) 20200831 RoHS REACH"
+    },
+    {
+      "descriptionZh": "脚垫 | HTE078 硅胶,橙色,TPU硅胶,94-v0,晒纹 ROHS REACH",
+      "descriptionEn": "Foot Pad | HTE078 Silicone, Orange,TPU Silicone,94-v0, Textured Finish ROHS REACH"
+    },
+    {
+      "descriptionZh": "脚垫转接板 | HTE0782000A-JP-JAK PC+ABS 台化3100 UL94-V0 RoHS REACH",
+      "descriptionEn": "Foot Pad Adapter Plate | HTE0782000A-JP-JAK PC+ABS Taihua 3100 UL94-V0 RoHS REACH"
+    },
+    {
+      "descriptionZh": "过流保护器 | HTE0782000A-CN-DX2 过流保护器 88AR-12-014-SZ 额定电压125V/250VAC 额定电流12A 限制短路电流1000A 温度60℃ 60秒自动复位 国昱 RoHS REACH",
+      "descriptionEn": "Overcurrent Protector | HTE0782000A-CN-DX2 Overcurrent Protector 88AR-12-014-SZ Rated Voltage 125V/250VAC Rated Current 12A Limited Short-Circuit Current 1000A Temperature 60℃ 60 Seconds Automatic Reset Guoyu RoHS REACH"
+    },
+    {
+      "descriptionZh": "主板-灯板线 | UL2651 26AWG*7P,灰色,90mm,PHB2.0-7P,500v,105°C,VW-1 UL ROHS REACH",
+      "descriptionEn": "Mainboard-to-Light Board Cable | UL2651 26AWG*7P, Gray,90mm,PHB2.0-7P,500v,105°C,VW-1 UL ROHS REACH"
+    },
+    {
+      "descriptionZh": "主板-前充电板线 | UL1569#26AWG,多种颜色,40mm,6P连接器,500V,105°c,VW-1 UL ROHS REACH",
+      "descriptionEn": "Mainboard-to-Front Charging Board Cable | UL1569#26AWG, Various Colors,40mm,6P Connector,500V,105°c,VW-1 UL ROHS REACH"
+    },
+    {
+      "descriptionZh": "主板-显示屏线 | HTE0782000A-JP-JAK ,主板-显示屏线,（UL2651#26AWG/24AWG*7P灰,排线 长L=110mm/XH2.54-7P 带锁扣,电压DC500V 额定电流2A,温度120度,防火等级FT1）,利信辉  ROHS REACH",
+      "descriptionEn": "Mainboard-to-Display Cable | HTE0782000A-JP-JAK, Mainboard-to-Display Cable,(UL2651#26AWG/24AWG*7P Gray, Ribbon Cable Length L=110mm/XH2.54-7P With Latch, Voltage DC500V Rated Current 2A, Temperature 120 Degrees, Flammability Rating FT1), Li Xinhui ROHS REACH"
+    },
+    {
+      "descriptionZh": "主板-逆变器信号线 | HTE0782000A-JP-JAK 主板-逆变器信号线（UL2464#26AWG*9P屏蔽线长L=460mm/双排2.54间距XH2.54-5P带扣,带磁环 电压DC500V 额定电流0.3A,温度120度,防火等级FT1）ROHS REACH",
+      "descriptionEn": "Mainboard-to-Inverter Signal Cable | HTE0782000A-JP-JAK Mainboard-to-Inverter Signal Cable (UL2464#26AWG*9P Shielded Cable Length L=460mm/ Double Row 2.54 Pitch XH2.54-5P With Latch, With Ferrite Ring Voltage DC500V Rated Current 0.3A, Temperature 120 Degrees, Flammability Rating FT1) ROHS REACH"
+    },
+    {
+      "descriptionZh": "主板-BMS信号线 | HTE0782000A-JP-JAK 主板-BMS信号线（UL2464#26AWG*10P屏蔽线长L=310mm/双排2.0间距PHSD2.0-5P带扣,电压DC500V 额定电流0.3A,温度120度,防火等级FT1）盛联 ROHS REACH",
+      "descriptionEn": "Mainboard-to-BMS Signal Cable | HTE0782000A-JP-JAK Mainboard-to-BMS Signal Cable (UL2464#26AWG*10P Shielded Cable Length L=310mm/ Double Row 2.0 Pitch PHSD2.0-5P With Latch, Voltage DC500V Rated Current 0.3A, Temperature 120 Degrees, Flammability Rating FT1) Shenglian ROHS REACH"
+    },
+    {
+      "descriptionZh": "前充电板-BMS线 | HTE0782000A-JP-JAK 前充电板-BMS线（UL3135#12AWG 硅胶导线长L=140mm/350mm/M5圆形端子/XT60H-F/XT60H-M,电压DC500V 额定电流50A,温度120度,防火等级VW-1）ROHS REACH",
+      "descriptionEn": "Front Charging Board-to-BMS Cable | HTE0782000A-JP-JAK Front Charging Board-to-BMS Cable (UL3135#12AWG Silicone Wire Length L=140mm/350mm/M5 Ring Terminal /XT60H-F/XT60H-M, Voltage DC500V Rated Current 50A, Temperature 120 Degrees, Flammability Rating VW-1) ROHS REACH"
+    },
+    {
+      "descriptionZh": "AC输出线正极线 | UL1569#14AWG,棕,310mm,2P连接器,500v,105°C,vw-1 UL ROHS REACH",
+      "descriptionEn": "AC Output Positive Wire | UL1569#14AWG, Brown,310mm,2P Connector,500v,105°C,vw-1 UL ROHS REACH"
+    },
+    {
+      "descriptionZh": "AC输出线负极线 | UL1569#14AWG,蓝色,310mm,2P连接器,500v,105℃,VW-1 UL ROHS REACH",
+      "descriptionEn": "AC Output Negative Wire | UL1569#14AWG, Blue,310mm,2P Connector,500v,105℃,VW-1 UL ROHS REACH"
+    },
+    {
+      "descriptionZh": "AC接地线 | HTE0782000A-EU-JAK AC接地线（UL3135#18AWG 黄绿色硅胶导线长L=270mm/110mm,M3端子,电压DC500V 额定电流30A,温度120度,防火等级VW-1）中振 ROHS REACH",
+      "descriptionEn": "AC Ground Wire | HTE0782000A-EU-JAK AC Ground Wire (UL3135#18AWG Yellow-Green Silicone Wire Length L=270mm/110mm,M3 Terminal, Voltage DC500V Rated Current 30A, Temperature 120 Degrees, Flammability Rating VW-1) Zhongzhen ROHS REACH"
+    },
+    {
+      "descriptionZh": "AC输入-保险丝线 | HTE0782000A-JP-JAK AC输入-保险丝线（UL1569#14AWG 棕色硅胶导线长L=90mm 旗形端子250*0.8镀锡铜自锁,电压DC500V 额定电流10A,温度120度,防火等级VW-1）ROHS REACH",
+      "descriptionEn": "AC Input-to-Fuse Cable | HTE0782000A-JP-JAK AC Input-to-Fuse Cable (UL1569#14AWG Brown Silicone Wire Length L=90mm Flag Terminal 250*0.8 Tin-Plated Copper, Self-Locking, Voltage DC500V Rated Current 10A, Temperature 120 Degrees, Flammability Rating VW-1) ROHS REACH"
+    },
+    {
+      "descriptionZh": "短路帽 | 短路帽（PH2.54-2P开口配08.7003.100333使用， 东莞连科）  RoHS REACH",
+      "descriptionEn": "Jumper Cap | Jumper Cap (PH2.54-2P Open Type, Used With 08.7003.100333 Use, Dongguan Lianke) RoHS REACH"
+    },
+    {
+      "descriptionZh": "彩盒 | HTE0782000A-EU/KR-JAK 彩盒 20220718 RoHS REACH",
+      "descriptionEn": "Retail Box | HTE0782000A-EU/KR-JAK Retail Box 20220718 RoHS REACH"
+    },
+    {
+      "descriptionZh": "说明书 | HTE0782000A-EU-JAK 说明书  20220408 RoHS REACH",
+      "descriptionEn": "Instruction Manual | HTE0782000A-EU-JAK Instruction Manual 20220408 RoHS REACH"
+    },
+    {
+      "descriptionZh": "提手 | HTE072/073彩盒提手（大）高义 20211012  RoHS REACH",
+      "descriptionEn": "Carry Handle | HTE072/073 Retail Box Carry Handle (Large) Gaoyi 20211012 RoHS REACH"
+    },
+    {
+      "descriptionZh": "隔板 | HTE078彩盒底部隔板 ((436*323mm 带KW2300双面胶3条) )  20220623 RoHS REACH",
+      "descriptionEn": "Divider | HTE078 Retail Box Bottom Divider ((436*323mm With KW2300 Double-Sided Adhesive 3 Strips)) 20220623 RoHS REACH"
+    },
+    {
+      "descriptionZh": "内托 | HTE0782000A-KR-JAK泡棉内托（上） 20220623 RoHS REACH",
+      "descriptionEn": "Inner Tray | HTE0782000A-KR-JAK Foam Inner Tray (Upper) 20220623 RoHS REACH"
+    },
+    {
+      "descriptionZh": "内托 | HTE0782000A-KR-JAK泡棉内托（下）20220623 RoHS REACH",
+      "descriptionEn": "Inner Tray | HTE0782000A-KR-JAK Foam Inner Tray (Lower) 20220623 RoHS REACH"
+    },
+    {
+      "descriptionZh": "标贴 | HTE0782000A-EU-JAK 彩盒产品信息标贴 20220705  RoHS REACH",
+      "descriptionEn": "Label | HTE0782000A-EU-JAK Retail Box Product Information Label 20220705 RoHS REACH"
+    },
+    {
+      "descriptionZh": "标贴 | HTE0782000A-EU-JAK 后标贴 20220921  RoHS REACH",
+      "descriptionEn": "Label | HTE0782000A-EU-JAK Rear Label 20220921 RoHS REACH"
+    },
+    {
+      "descriptionZh": "保护膜 | HTE0782000A-US/JP/EU/KR/CN-JAK 显示屏保护膜 RoHS REACH",
+      "descriptionEn": "Protective Film | HTE0782000A-US/JP/EU/KR/CN-JAK Display Protective Film RoHS REACH"
+    },
+    {
+      "descriptionZh": "UN箱 | BOX-(H=H 463*347*438mm) HTE0782000A-US/JP/EU/KR-JAK UN箱（海运）20220623 RoHS REACH",
+      "descriptionEn": "UN Box | BOX-(H=H 463*347*438mm) HTE0782000A-US/JP/EU/KR-JAK UN Box (Sea Freight) 20220623 RoHS REACH"
+    },
+    {
+      "descriptionZh": "磨砂袋 | HTO732A-US-JAK 磨砂袋，尺寸：240*140mm，短边开口 RoHS REACH",
+      "descriptionEn": "Frosted Bag | HTO732A-US-JAK Frosted Bag, Dimensions:240*140mm, Opening on Short Edge RoHS REACH"
+    },
+    {
+      "descriptionZh": "储能电源总成 | HTE1172000A-EU-JAK 降本 RoHS REACH",
+      "descriptionEn": "Energy Storage Power Supply Assembly | HTE1172000A-EU-JAK Cost-Reduced RoHS REACH"
+    },
+    {
+      "descriptionZh": "主板-PCBA | HTE117-M-A3 RoHS REACH",
+      "descriptionEn": "Mainboard PCBA | HTE117-M-A3 RoHS REACH"
+    },
+    {
+      "descriptionZh": "双向逆变器-PCBA | HTE117B-INV-M-A6 欧英规逆变器   RoHS REACH",
+      "descriptionEn": "Bidirectional Inverter PCBA | HTE117B-INV-M-A6 EU/UK Specification Inverter RoHS REACH"
+    },
+    {
+      "descriptionZh": "DC转接板-PCBA | HTE117-Z-DC-A1 欧规DC转接板降本   ROHS REACH",
+      "descriptionEn": "DC Adapter Board PCBA | HTE117-Z-DC-A1 EU Specification DC Adapter Board Cost-Reduced ROHS REACH"
+    },
+    {
+      "descriptionZh": "上壳组件 | HTE1172000A-US-JAK PC+ABS,HB-31-065科技灰,台化3100,UL94-V0,晒纹+丝印 ROHS REACH",
+      "descriptionEn": "Upper Housing Assembly | HTE1172000A-US-JAK PC+ABS,HB-31-065 Technology Gray, Taihua 3100,UL94-V0, Textured Finish + Screen Printing ROHS REACH"
+    },
+    {
+      "descriptionZh": "前壳组件 | HTE1172000A-EU-JAK PC+ABS,HB-31-065科技灰,台化3100,UL94-V0,晒纹+丝印 ROHS REACH",
+      "descriptionEn": "Front Housing Assembly | HTE1172000A-EU-JAK PC+ABS,HB-31-065 Technology Gray, Taihua 3100,UL94-V0, Textured Finish + Screen Printing ROHS REACH"
+    },
+    {
+      "descriptionZh": "左装饰盖 | HTE1172000A-US-JAK PC+ABS,HB-31-066 橙色,台化3100,UL94-V0,晒纹 ROHS REACH",
+      "descriptionEn": "Left Decorative Cover | HTE1172000A-US-JAK PC+ABS,HB-31-066 Orange, Taihua 3100,UL94-V0, Textured Finish ROHS REACH"
+    },
+    {
+      "descriptionZh": "右装饰盖 | HTE117欧规新增8020 PC+ABS,橙色,台化3100,UL94-V0,晒纹+丝印 ROHS REACH",
+      "descriptionEn": "Right Decorative Cover | HTE117 EU Specification Added 8020 PC+ABS, Orange, Taihua 3100,UL94-V0, Textured Finish + Screen Printing ROHS REACH"
+    },
+    {
+      "descriptionZh": "脚垫 | HTE1172000A-US-JAK TPR/TPE硅胶,橙色PT021C,-,UL94-V0,晒纹 RoHS REACH",
+      "descriptionEn": "Foot Pad | HTE1172000A-US-JAK TPR/TPE Silicone, Orange PT021C,-,UL94-V0, Textured Finish RoHS REACH"
+    },
+    {
+      "descriptionZh": "灯镜片 | HTE112600A-US-JAK PC,HB-94-056,雅淇沙伯基础940,UL94-V0,抛光,透光度50% RoHS REACH",
+      "descriptionEn": "Light Lens | HTE112600A-US-JAK PC,HB-94-056, Yaqi Shabo Jichu 940,UL94-V0, Polished, Light Transmittance 50% RoHS REACH"
+    },
+    {
+      "descriptionZh": "屏蔽底板 | HTE1172000B-US/JP-JAK AL6061-T6,铝本色,AL6061-T6,清洗 RoHS REACH",
+      "descriptionEn": "Shielding Base Plate | HTE1172000B-US/JP-JAK AL6061-T6, Natural Aluminum Color,AL6061-T6, Cleaned RoHS REACH"
+    },
+    {
+      "descriptionZh": "底板绝缘片 | HTE1172000B-US/JP-JAK 底板PC绝缘片,0.3mm,无,UL94-V0 RoSH REACH",
+      "descriptionEn": "Base Plate Insulation Sheet | HTE1172000B-US/JP-JAK Base Plate PC Insulation Sheet,0.3mm, None,UL94-V0 RoSH REACH"
+    },
+    {
+      "descriptionZh": "螺丝 | PB4*12 D7*2 圆头自攻螺丝，十字头，碳钢加硬，镀彩锌 奎鑫/深勤业 ROHS REACH",
+      "descriptionEn": "Screw | PB4*12 D7*2 Round Head Self-Tapping Screw, Cross Recess, Hardened Carbon Steel, Color Zinc Plating Kuixin / Shen Qinye ROHS REACH"
+    },
+    {
+      "descriptionZh": "螺丝 | PM3*8圆头机牙组合螺丝（螺丝+平垫+弹垫），十字头，碳钢加硬，镀彩锌，点耐落胶 奎鑫 ROHS REACH",
+      "descriptionEn": "Screw | PM3*8 Round-Head Machine-Thread Assembly Screw (Screw + Flat Washer + Spring Washer), Cross Recess, Hardened Carbon Steel, Color Zinc Plating, Applied Nailuo Threadlocking Adhesive Kuixin ROHS REACH"
+    },
+    {
+      "descriptionZh": "主板-BMS通讯线 | HTE117B UL1569 26AWG ,彩色,200mm,PHSD端子,1A,300V,105°,VW-1,/ ROHS, UL,REACH",
+      "descriptionEn": "Mainboard-to-BMS Communication Cable | HTE117B UL1569 26AWG, Multicolor,200mm,PHSD Terminal,1A,300V,105°,VW-1,/ ROHS, UL,REACH"
+    },
+    {
+      "descriptionZh": "电压温度采集线 | 117B UL1007/1569 28/26AWG,黑色,170mm,PH连接器,300V,105°C,VW-1,REACH ROHS UL",
+      "descriptionEn": "Voltage and Temperature Acquisition Cable | 117B UL1007/1569 28/26AWG, Black,170mm,PH Connector,300V,105°C,VW-1,REACH ROHS UL"
+    },
+    {
+      "descriptionZh": "欧规AC输出线 | HTE117B 1569#12AWG,红黑,100mm,XT端子,10A,300V,105°,VW-1,/ UL ROHS REACH",
+      "descriptionEn": "EU AC Output Cable | HTE117B 1569#12AWG, Red/Black,100mm,XT Terminal,10A,300V,105°,VW-1,/ UL ROHS REACH"
+    },
+    {
+      "descriptionZh": "欧规AC输入线 | HTE117B UL1569/1007#16AWG,蓝棕,230mm,XT连接器,300V,105°C,VW-1,ROHS REACH UL",
+      "descriptionEn": "EU AC Input Cable | HTE117B UL1569/1007#16AWG, Blue/Brown,230mm,XT Connector,300V,105°C,VW-1,ROHS REACH UL"
+    },
+    {
+      "descriptionZh": "彩盒 | HTE1172000A-JP-JAK 350g粉灰裱双E坑 黄底（150底/120/100/120）联胜,375*304*388mm,颜色：4C+PT 021C RoHS REACH",
+      "descriptionEn": "Retail Box | HTE1172000A-JP-JAK 350g Coated Gray-Back Board Laminated to Double E-Flute Corrugated Board Yellow Back (150 Back /120/100/120) Liansheng,375*304*388mm, Color:4C+PT 021C RoHS REACH"
+    },
+    {
+      "descriptionZh": "UN箱 | HTE1172000A-US-JAK H=H (230/140/70/180/230),392*318*403mm,颜色：单黑印刷+白墨，埋口位：胶粘 RoHS REACH",
+      "descriptionEn": "UN Box | HTE1172000A-US-JAK H=H (230/140/70/180/230),392*318*403mm, Color: Single-Black Printing + White Ink, Joint Location: Glued RoHS REACH"
+    },
+    {
+      "descriptionZh": "内托 | 通用顶部护角 纸浆,110*110*83mm,成型来料 RoHS REACH",
+      "descriptionEn": "Inner Tray | Universal Top Corner Protector Pulp,110*110*83mm, Supplied Molded RoHS REACH"
+    },
+    {
+      "descriptionZh": "下内托 | 通用 底部护角 纸浆-干压成型，2mm厚度,110*110*96mm,成型来料 RoHS REACH",
+      "descriptionEn": "Lower Inner Tray | Universal Bottom Corner Protector Pulp, Dry-Press Molded,2mm Thickness,110*110*96mm, Supplied Molded RoHS REACH"
+    },
+    {
+      "descriptionZh": "竹纤维袋 | 通用 70g竹纤维袋,700*650*1mm,短边开后 RoHS REACH",
+      "descriptionEn": "Bamboo Fiber Bag | Universal 70g Bamboo Fiber Bag,700*650*1mm, Short Edge Opened at Rear RoHS REACH"
+    },
+    {
+      "descriptionZh": "配件盒_内托 | HTE1172000A-CN-DX2 250g牛皮纸裱E坑(250g/140g/250g)耐破8kg.f/cm,300*149*44mm,胶粘 RoHS REACH",
+      "descriptionEn": "Accessory Box / Inner Tray | HTE1172000A-CN-DX2 250g Kraft Paper Laminated to E-Flute Corrugated Board (250g/140g/250g) Burst Strength 8kg.f/cm,300*149*44mm, Glued RoHS REACH"
+    },
+    {
+      "descriptionZh": "产品图标贴 | HTE1172000A-EU-JAK 尺寸：213*113mm,材质：70#合成纸不干胶过哑胶 RoHS REACH",
+      "descriptionEn": "Product Pictogram Label | HTE1172000A-EU-JAK Dimensions:213*113mm, Material:70# Synthetic Paper Self-Adhesive Matte Lamination RoHS REACH"
+    },
+    {
+      "descriptionZh": "说明书 | HTE1172000A-EU-JAK 尺寸：130x185mm，材质：80g书纸正反面印刷，装订方式: 胶装，颜色：90%黑 RoSH REACH",
+      "descriptionEn": "Instruction Manual | HTE1172000A-EU-JAK Dimensions:130x185mm, Material:80g Book Paper Front-and-Back Printing, Binding Method: Perfect Binding, Color:90% Black RoSH REACH"
+    },
+    {
+      "descriptionZh": "彩盒信息标贴 | HTE1172000A-EU-JAK 尺寸：230x170mm，材质：80g铜版纸不干胶过哑油，颜色：Pantone 021C RoHS REACH",
+      "descriptionEn": "Retail Box Information Label | HTE1172000A-EU-JAK Dimensions:230x170mm, Material:80g Coated Paper Self-Adhesive Matte Varnish, Color:Pantone 021C RoHS REACH"
+    },
+    {
+      "descriptionZh": "后标贴 | HTE1172000A-EU-JAK 尺寸：105.8x85.6mm，材质：50#消银龙过哑胶，字体颜色：专银（跟色样），底色：科技灰 RoHS REACH",
+      "descriptionEn": "Rear Label | HTE1172000A-EU-JAK Dimensions:105.8x85.6mm, Material:50# Matte Silver Film (Xiaoyinlong) Matte Lamination, Text Color: Spot Silver (Match Color Sample), Background Color: Technology Gray RoHS REACH"
+    }
+  ]
+}

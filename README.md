@@ -59,7 +59,7 @@ node scripts/import-jackery-catalog.mjs --demo --report artifacts/import-report.
 - **标准用量是每条作业单、每种BOM物料的硬上限**，保存/WFR/结案/管理员更正同样校验。相同物料只有一行；续存更新实际耗量，不累加保存次数。原始pcs物料数量必须为整数；默认1，不能超过上限。
 - 缺少标准量不补1。E1000的25行缺量；E1000V2原始版型号冲突、E2000plus A版停用冲突及个别源状态异常，合计143行已导入为挂起，不能选用。详见 `docs/jackery-release/SOURCE_REPORT.md`。
 - BOM包材按物料计耗，整机根与软件不当作实物耗用（共排除10行）。不管理库存或自动入库。
-- 英文物料/功能项/故障资料缺失时明确提示并显示来源中文，不自动生成翻译。F0–F9按型号提供；常见故障方案单独显示原表，不捏造F代码与方案的一一对应。
+- BOM已有本地离线整理译文，英文在上、中文原文在下，两语言界面顺序一致；功能项/故障资料以及未知BOM原文缺英文仍明确提示，不调用外部翻译。F0–F9按型号提供；常见故障方案单独显示原表，不捏造F代码与方案的一一对应。
 - 后续管理CSV模板为 `sku,descriptionEn,descriptionZh,unit,standardQty`，如 `PART-001,Control Board,控制板,pcs,1`。同型号SKU唯一，最多5000行，整批校验后写入。兼容历史4列表头，但Jackery源型号新增启用项必须有标准量。管理员BOM编辑提供标准量字段；检查清单仍为一行一项，源名称中的换行、竖线、反斜杠分别用 `\n`、`\p`、`\\`可逆显示，保存恢复原值。
 
 ## 作业规则
@@ -119,7 +119,7 @@ node scripts/backup.mjs
 
 浏览器：开发环境安装 Playwright 1.62.1（仅测试依赖）并具备 Chromium／Edge 后执行 `node --test tests/*.test.mjs`。本次脚本使用 Windows 已安装 Edge 的标准路径；其他浏览器或平台需相应调整测试 launch 配置。测试使用新临时配置，不使用日常登录配置。
 
-完整回归：`node scripts/verify.mjs`。日志与结果 JSON 写到 artifacts/verification/，按当前源代码指纹验证，失败不打包。实际结果见 docs/TEST_REPORT.md及docs/jackery-release/REPORT.md。
+完整回归：`node scripts/verify.mjs`。日志与结果 JSON 写到 artifacts/verification/，按当前源代码指纹验证，失败不打包。实际结果见 docs/TEST_REPORT.md及docs/batch-simulation/REPORT.md。
 
 受限沙箱若禁止 localhost 或浏览器进程，测试必须在允许本机网络的测试环境运行，不能把环境 EACCES 误认为业务通过或忽略浏览器测试。
 
@@ -133,3 +133,7 @@ node scripts/backup.mjs
 - docs/：契约、计划、实施／测试报告、截图与业务依据。
 
 V1 不包含库存、价格结算、飞书历史迁移、自动翻译、ERP/WMS/华宝接口、入库审批或离线同步。随包目录只表示已提供资料，不证明当前供货可用性；挂起项、英文名称及版本适用性仍需来源补齐。
+
+## BOM双语与批量仿真（当前改版）
+
+`catalogs/jackery-bom-translations.json`按完整原文精确匹配242个描述，覆盖404行。SKU、数字、标准量、启用状态及旧工单原文不变。人工英文优先；未知原文有明确缺英文提示。当前规则、103行用例表、API/浏览器逐笔日志、风险、Python requests脚本运行步骤见`docs/batch-simulation/REPORT.md`。每轮使用`node scripts/start-simulation.mjs`建立新隔离测试库，禁止对4310业务库仿真。

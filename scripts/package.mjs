@@ -5,7 +5,7 @@ import path from 'node:path';
 import { makeZip } from '../src/zip.js';
 import { candidateFingerprint, root } from './project.mjs';
 
-const ignored = new Set(['.git','.superpowers','.codex','node_modules','runtime','data','data-demo','backups','artifacts','.tmp','release']);
+const ignored = new Set(['.git','.superpowers','.codex','node_modules','runtime','data','data-demo','backups','artifacts','.tmp','release','__pycache__']);
 const sourceDirectories = new Set(['src','public','tests','docs','scripts','catalogs']);
 const sourceRootFiles = new Set(['.gitignore','server.js','package.json','package-lock.json','README.md','PRODUCT_CONTRACT.md','Start.cmd','Start-Demo.cmd','start.sh']);
 export function collectPackageFiles(projectRoot = root) {

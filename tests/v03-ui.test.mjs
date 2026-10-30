@@ -52,7 +52,7 @@ test('v03 exact English fields, separate translations, inspection gate and draft
 test('v03 BOM keeps pending quantities across languages, warns missing English and locates duplicate',{timeout:60000},async t=>{
   const {page}=await fixture(t);await page.route('**/api/models/1/bom?*',async route=>{const q=new URL(route.request().url()).searchParams.get('q');await route.fulfill({json:{items:q==='absent'?[]:[{id:909,sku:'原-SKU-909',descriptionEn:'',descriptionZh:'原中文规格',unit:'pcs'}],total:q==='absent'?0:1}});});
   await page.locator('#new-record').click();await page.locator('#open-bom').click();
-  await page.locator('#bom-results .translation-warning').waitFor();assert.ok((await page.locator('#bom-results').textContent()).includes('English description missing'));assert.ok((await page.locator('#bom-results').textContent()).includes('Original: 原中文规格'));
+  await page.locator('#bom-results .translation-warning').waitFor();assert.ok((await page.locator('#bom-results').textContent()).includes('English description missing'));assert.equal(await page.locator('#bom-results .part-description-zh').first().textContent(),'原中文规格');
   await page.locator('[data-bom-select="909"]').check();await page.locator('[data-pending-qty="909"]').fill('3.25');
   await page.locator('#bom-language').click();await page.locator('#bom-language').click();assert.equal(await page.locator('[data-pending-qty="909"]').inputValue(),'3.25');
   for(const dismiss of [()=>page.locator('#bom-cancel').click(),()=>page.locator('#dialog-x').click(),()=>page.keyboard.press('Escape')]){page.once('dialog',d=>d.dismiss());await dismiss();assert.equal(await page.locator('#bom-dialog').count(),1);assert.equal(await page.locator('[data-pending-qty="909"]').inputValue(),'3.25');}

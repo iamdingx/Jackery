@@ -1,0 +1,5141 @@
+{
+  "schemaVersion": 1,
+  "rules": [
+    "docs/CURRENT_RULES.md",
+    "docs/jackery-release/REPORT.md"
+  ],
+  "counts": {
+    "positive": 43,
+    "bom": 20,
+    "sn_model": 15,
+    "fault": 10,
+    "permission_audit": 10,
+    "bilingual_export_attachment": 5
+  },
+  "cases": [
+    {
+      "id": "C001",
+      "category": "positive",
+      "variant": "positive_like_new_1",
+      "code": "positive_like_new_1",
+      "account": "alex",
+      "sn": "JACKERY-SIM-20261030-001-positive_like_new_1",
+      "catalogKey": "e1000pro-default",
+      "modelId": 3,
+      "version": "未标注版本",
+      "faultCodes": [],
+      "materials": [
+        {
+          "sku": "08-1031-160035",
+          "qty": 1,
+          "standardQty": 2
+        }
+      ],
+      "checks": {
+        "initial": {
+          "CHECK_01": "pass",
+          "CHECK_02": "pass",
+          "CHECK_03": "pass",
+          "CHECK_04": "pass",
+          "CHECK_05": "pass",
+          "CHECK_06": "pass",
+          "CHECK_07": "pass"
+        }
+      },
+      "outcome": "like_new",
+      "scrapReason": "",
+      "language": "en",
+      "path": "create > save > reload > complete",
+      "expected": {
+        "status": 200,
+        "baselineCreated": 201,
+        "business": "单次检验AllPass；like_new合法结案锁定；故障/材料/原文保留；无final阶段"
+      },
+      "assertions": [
+        "单次检验AllPass；like_new合法结案锁定；故障/材料/原文保留；无final阶段",
+        "先创建独立合法baseline并记录真实ID",
+        "保存/重载校验实际字段值，不只校验HTTP"
+      ],
+      "modelIdResolution": "planned fresh demo ID; runtime resolves by catalogKey",
+      "snTemplate": "{prefix}-001-positive_like_new_1",
+      "inspection": "AllPass",
+      "expectedResult": "单次检验AllPass；like_new合法结案锁定；故障/材料/原文保留；无final阶段"
+    },
+    {
+      "id": "C002",
+      "category": "positive",
+      "variant": "positive_good_1",
+      "code": "positive_good_1",
+      "account": "blair",
+      "sn": "JACKERY-SIM-20261030-002-positive_good_1",
+      "catalogKey": "e2000plus-b",
+      "modelId": 8,
+      "version": "B版",
+      "faultCodes": [
+        "F0"
+      ],
+      "materials": [
+        {
+          "sku": "26-0008-000012",
+          "qty": 2,
+          "standardQty": 2
+        }
+      ],
+      "checks": {
+        "initial": {
+          "CHECK_01": "pass",
+          "CHECK_02": "pass",
+          "CHECK_03": "pass",
+          "CHECK_04": "pass",
+          "CHECK_05": "pass",
+          "CHECK_06": "pass",
+          "CHECK_07": "pass"
+        }
+      },
+      "outcome": "good",
+      "scrapReason": "",
+      "language": "zh",
+      "path": "create > save > reload > complete",
+      "expected": {
+        "status": 200,
+        "baselineCreated": 201,
+        "business": "单次检验AllPass；good合法结案锁定；故障/材料/原文保留；无final阶段"
+      },
+      "assertions": [
+        "单次检验AllPass；good合法结案锁定；故障/材料/原文保留；无final阶段",
+        "先创建独立合法baseline并记录真实ID",
+        "保存/重载校验实际字段值，不只校验HTTP"
+      ],
+      "modelIdResolution": "planned fresh demo ID; runtime resolves by catalogKey",
+      "snTemplate": "{prefix}-002-positive_good_1",
+      "inspection": "AllPass",
+      "expectedResult": "单次检验AllPass；good合法结案锁定；故障/材料/原文保留；无final阶段"
+    },
+    {
+      "id": "C003",
+      "category": "positive",
+      "variant": "positive_acceptable_1",
+      "code": "positive_acceptable_1",
+      "account": "alex",
+      "sn": "JACKERY-SIM-20261030-003-positive_acceptable_1",
+      "catalogKey": "e2000v2-costdown",
+      "modelId": 11,
+      "version": "降本版",
+      "faultCodes": [
+        "F9"
+      ],
+      "materials": [
+        {
+          "sku": "26-0008-000037",
+          "qty": 1,
+          "standardQty": 4
+        }
+      ],
+      "checks": {
+        "initial": {
+          "CHECK_01": "pass",
+          "CHECK_02": "pass",
+          "CHECK_03": "pass",
+          "CHECK_04": "pass",
+          "CHECK_05": "pass",
+          "CHECK_06": "pass",
+          "CHECK_07": "pass",
+          "CHECK_08": "pass"
+        }
+      },
+      "outcome": "acceptable",
+      "scrapReason": "",
+      "language": "en",
+      "path": "create > save > reload > complete",
+      "expected": {
+        "status": 200,
+        "baselineCreated": 201,
+        "business": "单次检验AllPass；acceptable合法结案锁定；故障/材料/原文保留；无final阶段"
+      },
+      "assertions": [
+        "单次检验AllPass；acceptable合法结案锁定；故障/材料/原文保留；无final阶段",
+        "先创建独立合法baseline并记录真实ID",
+        "保存/重载校验实际字段值，不只校验HTTP"
+      ],
+      "modelIdResolution": "planned fresh demo ID; runtime resolves by catalogKey",
+      "snTemplate": "{prefix}-003-positive_acceptable_1",
+      "inspection": "AllPass",
+      "expectedResult": "单次检验AllPass；acceptable合法结案锁定；故障/材料/原文保留；无final阶段"
+    },
+    {
+      "id": "C004",
+      "category": "positive",
+      "variant": "positive_rok_1",
+      "code": "positive_rok_1",
+      "account": "blair",
+      "sn": "JACKERY-SIM-20261030-004-positive_rok_1",
+      "catalogKey": "e1000-default",
+      "modelId": 6,
+      "version": "未标注版本",
+      "faultCodes": [
+        "F0",
+        "F8"
+      ],
+      "materials": [],
+      "checks": {
+        "initial": {
+          "CHECK_01": "fail",
+          "CHECK_02": "pass",
+          "CHECK_03": "pass",
+          "CHECK_04": "pass",
+          "CHECK_05": "pass",
+          "CHECK_06": "pass"
+        }
+      },
+      "outcome": "rok",
+      "scrapReason": "",
+      "language": "zh",
+      "path": "create > save > reload > complete",
+      "expected": {
+        "status": 200,
+        "baselineCreated": 201,
+        "business": "单次检验MixedFail；rok合法结案锁定；故障/材料/原文保留；无final阶段"
+      },
+      "assertions": [
+        "单次检验MixedFail；rok合法结案锁定；故障/材料/原文保留；无final阶段",
+        "先创建独立合法baseline并记录真实ID",
+        "保存/重载校验实际字段值，不只校验HTTP"
+      ],
+      "modelIdResolution": "planned fresh demo ID; runtime resolves by catalogKey",
+      "snTemplate": "{prefix}-004-positive_rok_1",
+      "inspection": "MixedFail",
+      "expectedResult": "单次检验MixedFail；rok合法结案锁定；故障/材料/原文保留；无final阶段"
+    },
+    {
+      "id": "C005",
+      "category": "positive",
+      "variant": "positive_scrap_1",
+      "code": "positive_scrap_1",
+      "account": "alex",
+      "sn": "JACKERY-SIM-20261030-005-positive_scrap_1",
+      "catalogKey": "e2000v2-original",
+      "modelId": 10,
+      "version": "原始版",
+      "faultCodes": [
+        "F1",
+        "F3",
+        "F5"
+      ],
+      "materials": [
+        {
+          "sku": "26-0008-000037",
+          "qty": 1,
+          "standardQty": 4
+        }
+      ],
+      "checks": {
+        "initial": {
+          "CHECK_01": "pass",
+          "CHECK_02": "pass",
+          "CHECK_03": "pass",
+          "CHECK_04": "pass",
+          "CHECK_05": "pass",
+          "CHECK_06": "pass",
+          "CHECK_07": "pass",
+          "CHECK_08": "pass"
+        }
+      },
+      "outcome": "scrap",
+      "scrapReason": "Battery enclosure damaged / 电池外壳破损",
+      "language": "en",
+      "path": "create > save > reload > complete",
+      "expected": {
+        "status": 200,
+        "baselineCreated": 201,
+        "business": "单次检验AllPass；scrap合法结案锁定；故障/材料/原文保留；无final阶段"
+      },
+      "assertions": [
+        "单次检验AllPass；scrap合法结案锁定；故障/材料/原文保留；无final阶段",
+        "先创建独立合法baseline并记录真实ID",
+        "保存/重载校验实际字段值，不只校验HTTP"
+      ],
+      "modelIdResolution": "planned fresh demo ID; runtime resolves by catalogKey",
+      "snTemplate": "{prefix}-005-positive_scrap_1",
+      "inspection": "AllPass",
+      "expectedResult": "单次检验AllPass；scrap合法结案锁定；故障/材料/原文保留；无final阶段"
+    },
+    {
+      "id": "C006",
+      "category": "positive",
+      "variant": "positive_awp_1",
+      "code": "positive_awp_1",
+      "account": "blair",
+      "sn": "JACKERY-SIM-20261030-006-positive_awp_1",
+      "catalogKey": "e1000v2-costdown",
+      "modelId": 5,
+      "version": "降本版",
+      "faultCodes": [],
+      "materials": [
+        {
+          "sku": "26-0008-000030",
+          "qty": 4,
+          "standardQty": 4
+        }
+      ],
+      "checks": {
+        "initial": {
+          "CHECK_01": "not_tested",
+          "CHECK_02": "pass",
+          "CHECK_03": "pass",
+          "CHECK_04": "pass",
+          "CHECK_05": "pass",
+          "CHECK_06": "pass",
+          "CHECK_07": "pass"
+        }
+      },
+      "outcome": "awp",
+      "scrapReason": "",
+      "language": "zh",
+      "path": "create > save > reload > resume > complete",
+      "expected": {
+        "status": 200,
+        "baselineCreated": 201,
+        "business": "单次检验NotTested；WFR本人重载续填后ROK结案；故障/材料/原文保留；无final阶段"
+      },
+      "assertions": [
+        "单次检验NotTested；WFR本人重载续填后ROK结案；故障/材料/原文保留；无final阶段",
+        "先创建独立合法baseline并记录真实ID",
+        "保存/重载校验实际字段值，不只校验HTTP"
+      ],
+      "modelIdResolution": "planned fresh demo ID; runtime resolves by catalogKey",
+      "snTemplate": "{prefix}-006-positive_awp_1",
+      "inspection": "NotTested",
+      "expectedResult": "单次检验NotTested；WFR本人重载续填后ROK结案；故障/材料/原文保留；无final阶段"
+    },
+    {
+      "id": "C007",
+      "category": "positive",
+      "variant": "positive_needs_analysis_1",
+      "code": "positive_needs_analysis_1",
+      "account": "alex",
+      "sn": "JACKERY-SIM-20261030-007-positive_needs_analysis_1",
+      "catalogKey": "e2000pro-default",
+      "modelId": 9,
+      "version": "未标注版本",
+      "faultCodes": [
+        "F0"
+      ],
+      "materials": [
+        {
+          "sku": "08-1031-155788",
+          "qty": 1,
+          "standardQty": 2
+        }
+      ],
+      "checks": {
+        "initial": {
+          "CHECK_01": "not_tested",
+          "CHECK_02": "pass",
+          "CHECK_03": "pass",
+          "CHECK_04": "pass",
+          "CHECK_05": "pass",
+          "CHECK_06": "pass",
+          "CHECK_07": "pass",
+          "CHECK_08": "pass"
+        }
+      },
+      "outcome": "needs_analysis",
+      "scrapReason": "",
+      "language": "en",
+      "path": "create > save > reload > resume > complete",
+      "expected": {
+        "status": 200,
+        "baselineCreated": 201,
+        "business": "单次检验NotTested；WFR本人重载续填后ROK结案；故障/材料/原文保留；无final阶段"
+      },
+      "assertions": [
+        "单次检验NotTested；WFR本人重载续填后ROK结案；故障/材料/原文保留；无final阶段",
+        "先创建独立合法baseline并记录真实ID",
+        "保存/重载校验实际字段值，不只校验HTTP"
+      ],
+      "modelIdResolution": "planned fresh demo ID; runtime resolves by catalogKey",
+      "snTemplate": "{prefix}-007-positive_needs_analysis_1",
+      "inspection": "NotTested",
+      "expectedResult": "单次检验NotTested；WFR本人重载续填后ROK结案；故障/材料/原文保留；无final阶段"
+    },
+    {
+      "id": "C008",
+      "category": "positive",
+      "variant": "positive_like_new_2",
+      "code": "positive_like_new_2",
+      "account": "blair",
+      "sn": "JACKERY-SIM-20261030-008-positive_like_new_2",
+      "catalogKey": "e1000v2-costdown",
+      "modelId": 5,
+      "version": "降本版",
+      "faultCodes": [
+        "F9"
+      ],
+      "materials": [
+        {
+          "sku": "26-0008-000030",
+          "qty": 4,
+          "standardQty": 4
+        }
+      ],
+      "checks": {
+        "initial": {
+          "CHECK_01": "pass",
+          "CHECK_02": "pass",
+          "CHECK_03": "pass",
+          "CHECK_04": "pass",
+          "CHECK_05": "pass",
+          "CHECK_06": "pass",
+          "CHECK_07": "pass"
+        }
+      },
+      "outcome": "like_new",
+      "scrapReason": "",
+      "language": "zh",
+      "path": "create > save > reload > complete",
+      "expected": {
+        "status": 200,
+        "baselineCreated": 201,
+        "business": "单次检验AllPass；like_new合法结案锁定；故障/材料/原文保留；无final阶段"
+      },
+      "assertions": [
+        "单次检验AllPass；like_new合法结案锁定；故障/材料/原文保留；无final阶段",
+        "先创建独立合法baseline并记录真实ID",
+        "保存/重载校验实际字段值，不只校验HTTP"
+      ],
+      "modelIdResolution": "planned fresh demo ID; runtime resolves by catalogKey",
+      "snTemplate": "{prefix}-008-positive_like_new_2",
+      "inspection": "AllPass",
+      "expectedResult": "单次检验AllPass；like_new合法结案锁定；故障/材料/原文保留；无final阶段"
+    },
+    {
+      "id": "C009",
+      "category": "positive",
+      "variant": "positive_good_2",
+      "code": "positive_good_2",
+      "account": "alex",
+      "sn": "JACKERY-SIM-20261030-009-positive_good_2",
+      "catalogKey": "e2000pro-default",
+      "modelId": 9,
+      "version": "未标注版本",
+      "faultCodes": [
+        "F0",
+        "F8"
+      ],
+      "materials": [
+        {
+          "sku": "08-1031-155788",
+          "qty": 1,
+          "standardQty": 2
+        }
+      ],
+      "checks": {
+        "initial": {
+          "CHECK_01": "pass",
+          "CHECK_02": "pass",
+          "CHECK_03": "pass",
+          "CHECK_04": "pass",
+          "CHECK_05": "pass",
+          "CHECK_06": "pass",
+          "CHECK_07": "pass",
+          "CHECK_08": "pass"
+        }
+      },
+      "outcome": "good",
+      "scrapReason": "",
+      "language": "en",
+      "path": "create > save > reload > complete",
+      "expected": {
+        "status": 200,
+        "baselineCreated": 201,
+        "business": "单次检验AllPass；good合法结案锁定；故障/材料/原文保留；无final阶段"
+      },
+      "assertions": [
+        "单次检验AllPass；good合法结案锁定；故障/材料/原文保留；无final阶段",
+        "先创建独立合法baseline并记录真实ID",
+        "保存/重载校验实际字段值，不只校验HTTP"
+      ],
+      "modelIdResolution": "planned fresh demo ID; runtime resolves by catalogKey",
+      "snTemplate": "{prefix}-009-positive_good_2",
+      "inspection": "AllPass",
+      "expectedResult": "单次检验AllPass；good合法结案锁定；故障/材料/原文保留；无final阶段"
+    },
+    {
+      "id": "C010",
+      "category": "positive",
+      "variant": "positive_acceptable_2",
+      "code": "positive_acceptable_2",
+      "account": "blair",
+      "sn": "JACKERY-SIM-20261030-010-positive_acceptable_2",
+      "catalogKey": "e1000pro-default",
+      "modelId": 3,
+      "version": "未标注版本",
+      "faultCodes": [
+        "F1",
+        "F3",
+        "F5"
+      ],
+      "materials": [
+        {
+          "sku": "08-1031-160035",
+          "qty": 2,
+          "standardQty": 2
+        }
+      ],
+      "checks": {
+        "initial": {
+          "CHECK_01": "pass",
+          "CHECK_02": "pass",
+          "CHECK_03": "pass",
+          "CHECK_04": "pass",
+          "CHECK_05": "pass",
+          "CHECK_06": "pass",
+          "CHECK_07": "pass"
+        }
+      },
+      "outcome": "acceptable",
+      "scrapReason": "",
+      "language": "zh",
+      "path": "create > save > reload > complete",
+      "expected": {
+        "status": 200,
+        "baselineCreated": 201,
+        "business": "单次检验AllPass；acceptable合法结案锁定；故障/材料/原文保留；无final阶段"
+      },
+      "assertions": [
+        "单次检验AllPass；acceptable合法结案锁定；故障/材料/原文保留；无final阶段",
+        "先创建独立合法baseline并记录真实ID",
+        "保存/重载校验实际字段值，不只校验HTTP"
+      ],
+      "modelIdResolution": "planned fresh demo ID; runtime resolves by catalogKey",
+      "snTemplate": "{prefix}-010-positive_acceptable_2",
+      "inspection": "AllPass",
+      "expectedResult": "单次检验AllPass；acceptable合法结案锁定；故障/材料/原文保留；无final阶段"
+    },
+    {
+      "id": "C011",
+      "category": "positive",
+      "variant": "positive_rok_2",
+      "code": "positive_rok_2",
+      "account": "alex",
+      "sn": "JACKERY-SIM-20261030-011-positive_rok_2",
+      "catalogKey": "e2000plus-b",
+      "modelId": 8,
+      "version": "B版",
+      "faultCodes": [],
+      "materials": [
+        {
+          "sku": "26-0008-000012",
+          "qty": 1,
+          "standardQty": 2
+        }
+      ],
+      "checks": {
+        "initial": {
+          "CHECK_01": "pass",
+          "CHECK_02": "pass",
+          "CHECK_03": "pass",
+          "CHECK_04": "pass",
+          "CHECK_05": "pass",
+          "CHECK_06": "pass",
+          "CHECK_07": "pass"
+        }
+      },
+      "outcome": "rok",
+      "scrapReason": "",
+      "language": "en",
+      "path": "create > save > reload > complete",
+      "expected": {
+        "status": 200,
+        "baselineCreated": 201,
+        "business": "单次检验AllPass；rok合法结案锁定；故障/材料/原文保留；无final阶段"
+      },
+      "assertions": [
+        "单次检验AllPass；rok合法结案锁定；故障/材料/原文保留；无final阶段",
+        "先创建独立合法baseline并记录真实ID",
+        "保存/重载校验实际字段值，不只校验HTTP"
+      ],
+      "modelIdResolution": "planned fresh demo ID; runtime resolves by catalogKey",
+      "snTemplate": "{prefix}-011-positive_rok_2",
+      "inspection": "AllPass",
+      "expectedResult": "单次检验AllPass；rok合法结案锁定；故障/材料/原文保留；无final阶段"
+    },
+    {
+      "id": "C012",
+      "category": "positive",
+      "variant": "positive_scrap_2",
+      "code": "positive_scrap_2",
+      "account": "blair",
+      "sn": "JACKERY-SIM-20261030-012-positive_scrap_2",
+      "catalogKey": "e2000v2-costdown",
+      "modelId": 11,
+      "version": "降本版",
+      "faultCodes": [
+        "F0"
+      ],
+      "materials": [
+        {
+          "sku": "26-0008-000037",
+          "qty": 4,
+          "standardQty": 4
+        }
+      ],
+      "checks": {
+        "initial": {
+          "CHECK_01": "pass",
+          "CHECK_02": "pass",
+          "CHECK_03": "pass",
+          "CHECK_04": "pass",
+          "CHECK_05": "pass",
+          "CHECK_06": "pass",
+          "CHECK_07": "pass",
+          "CHECK_08": "pass"
+        }
+      },
+      "outcome": "scrap",
+      "scrapReason": "Battery enclosure damaged / 电池外壳破损",
+      "language": "zh",
+      "path": "create > save > reload > complete",
+      "expected": {
+        "status": 200,
+        "baselineCreated": 201,
+        "business": "单次检验AllPass；scrap合法结案锁定；故障/材料/原文保留；无final阶段"
+      },
+      "assertions": [
+        "单次检验AllPass；scrap合法结案锁定；故障/材料/原文保留；无final阶段",
+        "先创建独立合法baseline并记录真实ID",
+        "保存/重载校验实际字段值，不只校验HTTP"
+      ],
+      "modelIdResolution": "planned fresh demo ID; runtime resolves by catalogKey",
+      "snTemplate": "{prefix}-012-positive_scrap_2",
+      "inspection": "AllPass",
+      "expectedResult": "单次检验AllPass；scrap合法结案锁定；故障/材料/原文保留；无final阶段"
+    },
+    {
+      "id": "C013",
+      "category": "positive",
+      "variant": "positive_awp_2",
+      "code": "positive_awp_2",
+      "account": "alex",
+      "sn": "JACKERY-SIM-20261030-013-positive_awp_2",
+      "catalogKey": "e1000-default",
+      "modelId": 6,
+      "version": "未标注版本",
+      "faultCodes": [
+        "F9"
+      ],
+      "materials": [],
+      "checks": {
+        "initial": {
+          "CHECK_01": "not_tested",
+          "CHECK_02": "pass",
+          "CHECK_03": "pass",
+          "CHECK_04": "pass",
+          "CHECK_05": "pass",
+          "CHECK_06": "pass"
+        }
+      },
+      "outcome": "awp",
+      "scrapReason": "",
+      "language": "en",
+      "path": "create > save > reload > resume > complete",
+      "expected": {
+        "status": 200,
+        "baselineCreated": 201,
+        "business": "单次检验NotTested；WFR本人重载续填后ROK结案；故障/材料/原文保留；无final阶段"
+      },
+      "assertions": [
+        "单次检验NotTested；WFR本人重载续填后ROK结案；故障/材料/原文保留；无final阶段",
+        "先创建独立合法baseline并记录真实ID",
+        "保存/重载校验实际字段值，不只校验HTTP"
+      ],
+      "modelIdResolution": "planned fresh demo ID; runtime resolves by catalogKey",
+      "snTemplate": "{prefix}-013-positive_awp_2",
+      "inspection": "NotTested",
+      "expectedResult": "单次检验NotTested；WFR本人重载续填后ROK结案；故障/材料/原文保留；无final阶段"
+    },
+    {
+      "id": "C014",
+      "category": "positive",
+      "variant": "positive_needs_analysis_2",
+      "code": "positive_needs_analysis_2",
+      "account": "blair",
+      "sn": "JACKERY-SIM-20261030-014-positive_needs_analysis_2",
+      "catalogKey": "e2000v2-original",
+      "modelId": 10,
+      "version": "原始版",
+      "faultCodes": [
+        "F0",
+        "F8"
+      ],
+      "materials": [
+        {
+          "sku": "26-0008-000037",
+          "qty": 4,
+          "standardQty": 4
+        }
+      ],
+      "checks": {
+        "initial": {
+          "CHECK_01": "not_tested",
+          "CHECK_02": "pass",
+          "CHECK_03": "pass",
+          "CHECK_04": "pass",
+          "CHECK_05": "pass",
+          "CHECK_06": "pass",
+          "CHECK_07": "pass",
+          "CHECK_08": "pass"
+        }
+      },
+      "outcome": "needs_analysis",
+      "scrapReason": "",
+      "language": "zh",
+      "path": "create > save > reload > resume > complete",
+      "expected": {
+        "status": 200,
+        "baselineCreated": 201,
+        "business": "单次检验NotTested；WFR本人重载续填后ROK结案；故障/材料/原文保留；无final阶段"
+      },
+      "assertions": [
+        "单次检验NotTested；WFR本人重载续填后ROK结案；故障/材料/原文保留；无final阶段",
+        "先创建独立合法baseline并记录真实ID",
+        "保存/重载校验实际字段值，不只校验HTTP"
+      ],
+      "modelIdResolution": "planned fresh demo ID; runtime resolves by catalogKey",
+      "snTemplate": "{prefix}-014-positive_needs_analysis_2",
+      "inspection": "NotTested",
+      "expectedResult": "单次检验NotTested；WFR本人重载续填后ROK结案；故障/材料/原文保留；无final阶段"
+    },
+    {
+      "id": "C015",
+      "category": "positive",
+      "variant": "positive_like_new_3",
+      "code": "positive_like_new_3",
+      "account": "alex",
+      "sn": "JACKERY-SIM-20261030-015-positive_like_new_3",
+      "catalogKey": "e1000-default",
+      "modelId": 6,
+      "version": "未标注版本",
+      "faultCodes": [
+        "F1",
+        "F3",
+        "F5"
+      ],
+      "materials": [],
+      "checks": {
+        "initial": {
+          "CHECK_01": "pass",
+          "CHECK_02": "pass",
+          "CHECK_03": "pass",
+          "CHECK_04": "pass",
+          "CHECK_05": "pass",
+          "CHECK_06": "pass"
+        }
+      },
+      "outcome": "like_new",
+      "scrapReason": "",
+      "language": "en",
+      "path": "create > save > reload > complete",
+      "expected": {
+        "status": 200,
+        "baselineCreated": 201,
+        "business": "单次检验AllPass；like_new合法结案锁定；故障/材料/原文保留；无final阶段"
+      },
+      "assertions": [
+        "单次检验AllPass；like_new合法结案锁定；故障/材料/原文保留；无final阶段",
+        "先创建独立合法baseline并记录真实ID",
+        "保存/重载校验实际字段值，不只校验HTTP"
+      ],
+      "modelIdResolution": "planned fresh demo ID; runtime resolves by catalogKey",
+      "snTemplate": "{prefix}-015-positive_like_new_3",
+      "inspection": "AllPass",
+      "expectedResult": "单次检验AllPass；like_new合法结案锁定；故障/材料/原文保留；无final阶段"
+    },
+    {
+      "id": "C016",
+      "category": "positive",
+      "variant": "positive_good_3",
+      "code": "positive_good_3",
+      "account": "blair",
+      "sn": "JACKERY-SIM-20261030-016-positive_good_3",
+      "catalogKey": "e2000v2-original",
+      "modelId": 10,
+      "version": "原始版",
+      "faultCodes": [],
+      "materials": [
+        {
+          "sku": "26-0008-000037",
+          "qty": 4,
+          "standardQty": 4
+        }
+      ],
+      "checks": {
+        "initial": {
+          "CHECK_01": "pass",
+          "CHECK_02": "pass",
+          "CHECK_03": "pass",
+          "CHECK_04": "pass",
+          "CHECK_05": "pass",
+          "CHECK_06": "pass",
+          "CHECK_07": "pass",
+          "CHECK_08": "pass"
+        }
+      },
+      "outcome": "good",
+      "scrapReason": "",
+      "language": "zh",
+      "path": "create > save > reload > complete",
+      "expected": {
+        "status": 200,
+        "baselineCreated": 201,
+        "business": "单次检验AllPass；good合法结案锁定；故障/材料/原文保留；无final阶段"
+      },
+      "assertions": [
+        "单次检验AllPass；good合法结案锁定；故障/材料/原文保留；无final阶段",
+        "先创建独立合法baseline并记录真实ID",
+        "保存/重载校验实际字段值，不只校验HTTP"
+      ],
+      "modelIdResolution": "planned fresh demo ID; runtime resolves by catalogKey",
+      "snTemplate": "{prefix}-016-positive_good_3",
+      "inspection": "AllPass",
+      "expectedResult": "单次检验AllPass；good合法结案锁定；故障/材料/原文保留；无final阶段"
+    },
+    {
+      "id": "C017",
+      "category": "positive",
+      "variant": "positive_acceptable_3",
+      "code": "positive_acceptable_3",
+      "account": "alex",
+      "sn": "JACKERY-SIM-20261030-017-positive_acceptable_3",
+      "catalogKey": "e1000v2-costdown",
+      "modelId": 5,
+      "version": "降本版",
+      "faultCodes": [
+        "F0"
+      ],
+      "materials": [
+        {
+          "sku": "26-0008-000030",
+          "qty": 1,
+          "standardQty": 4
+        }
+      ],
+      "checks": {
+        "initial": {
+          "CHECK_01": "pass",
+          "CHECK_02": "pass",
+          "CHECK_03": "pass",
+          "CHECK_04": "pass",
+          "CHECK_05": "pass",
+          "CHECK_06": "pass",
+          "CHECK_07": "pass"
+        }
+      },
+      "outcome": "acceptable",
+      "scrapReason": "",
+      "language": "en",
+      "path": "create > save > reload > complete",
+      "expected": {
+        "status": 200,
+        "baselineCreated": 201,
+        "business": "单次检验AllPass；acceptable合法结案锁定；故障/材料/原文保留；无final阶段"
+      },
+      "assertions": [
+        "单次检验AllPass；acceptable合法结案锁定；故障/材料/原文保留；无final阶段",
+        "先创建独立合法baseline并记录真实ID",
+        "保存/重载校验实际字段值，不只校验HTTP"
+      ],
+      "modelIdResolution": "planned fresh demo ID; runtime resolves by catalogKey",
+      "snTemplate": "{prefix}-017-positive_acceptable_3",
+      "inspection": "AllPass",
+      "expectedResult": "单次检验AllPass；acceptable合法结案锁定；故障/材料/原文保留；无final阶段"
+    },
+    {
+      "id": "C018",
+      "category": "positive",
+      "variant": "positive_rok_3",
+      "code": "positive_rok_3",
+      "account": "blair",
+      "sn": "JACKERY-SIM-20261030-018-positive_rok_3",
+      "catalogKey": "e2000pro-default",
+      "modelId": 9,
+      "version": "未标注版本",
+      "faultCodes": [
+        "F9"
+      ],
+      "materials": [
+        {
+          "sku": "08-1031-155788",
+          "qty": 2,
+          "standardQty": 2
+        }
+      ],
+      "checks": {
+        "initial": {
+          "CHECK_01": "fail",
+          "CHECK_02": "pass",
+          "CHECK_03": "pass",
+          "CHECK_04": "pass",
+          "CHECK_05": "pass",
+          "CHECK_06": "pass",
+          "CHECK_07": "pass",
+          "CHECK_08": "pass"
+        }
+      },
+      "outcome": "rok",
+      "scrapReason": "",
+      "language": "zh",
+      "path": "create > save > reload > complete",
+      "expected": {
+        "status": 200,
+        "baselineCreated": 201,
+        "business": "单次检验MixedFail；rok合法结案锁定；故障/材料/原文保留；无final阶段"
+      },
+      "assertions": [
+        "单次检验MixedFail；rok合法结案锁定；故障/材料/原文保留；无final阶段",
+        "先创建独立合法baseline并记录真实ID",
+        "保存/重载校验实际字段值，不只校验HTTP"
+      ],
+      "modelIdResolution": "planned fresh demo ID; runtime resolves by catalogKey",
+      "snTemplate": "{prefix}-018-positive_rok_3",
+      "inspection": "MixedFail",
+      "expectedResult": "单次检验MixedFail；rok合法结案锁定；故障/材料/原文保留；无final阶段"
+    },
+    {
+      "id": "C019",
+      "category": "positive",
+      "variant": "positive_scrap_3",
+      "code": "positive_scrap_3",
+      "account": "alex",
+      "sn": "JACKERY-SIM-20261030-019-positive_scrap_3",
+      "catalogKey": "e1000pro-default",
+      "modelId": 3,
+      "version": "未标注版本",
+      "faultCodes": [
+        "F0",
+        "F8"
+      ],
+      "materials": [
+        {
+          "sku": "08-1031-160035",
+          "qty": 1,
+          "standardQty": 2
+        }
+      ],
+      "checks": {
+        "initial": {
+          "CHECK_01": "pass",
+          "CHECK_02": "pass",
+          "CHECK_03": "pass",
+          "CHECK_04": "pass",
+          "CHECK_05": "pass",
+          "CHECK_06": "pass",
+          "CHECK_07": "pass"
+        }
+      },
+      "outcome": "scrap",
+      "scrapReason": "Battery enclosure damaged / 电池外壳破损",
+      "language": "en",
+      "path": "create > save > reload > complete",
+      "expected": {
+        "status": 200,
+        "baselineCreated": 201,
+        "business": "单次检验AllPass；scrap合法结案锁定；故障/材料/原文保留；无final阶段"
+      },
+      "assertions": [
+        "单次检验AllPass；scrap合法结案锁定；故障/材料/原文保留；无final阶段",
+        "先创建独立合法baseline并记录真实ID",
+        "保存/重载校验实际字段值，不只校验HTTP"
+      ],
+      "modelIdResolution": "planned fresh demo ID; runtime resolves by catalogKey",
+      "snTemplate": "{prefix}-019-positive_scrap_3",
+      "inspection": "AllPass",
+      "expectedResult": "单次检验AllPass；scrap合法结案锁定；故障/材料/原文保留；无final阶段"
+    },
+    {
+      "id": "C020",
+      "category": "positive",
+      "variant": "positive_awp_3",
+      "code": "positive_awp_3",
+      "account": "blair",
+      "sn": "JACKERY-SIM-20261030-020-positive_awp_3",
+      "catalogKey": "e2000plus-b",
+      "modelId": 8,
+      "version": "B版",
+      "faultCodes": [
+        "F1",
+        "F3",
+        "F5"
+      ],
+      "materials": [
+        {
+          "sku": "26-0008-000012",
+          "qty": 2,
+          "standardQty": 2
+        }
+      ],
+      "checks": {
+        "initial": {
+          "CHECK_01": "not_tested",
+          "CHECK_02": "pass",
+          "CHECK_03": "pass",
+          "CHECK_04": "pass",
+          "CHECK_05": "pass",
+          "CHECK_06": "pass",
+          "CHECK_07": "pass"
+        }
+      },
+      "outcome": "awp",
+      "scrapReason": "",
+      "language": "zh",
+      "path": "create > save > reload > resume > complete",
+      "expected": {
+        "status": 200,
+        "baselineCreated": 201,
+        "business": "单次检验NotTested；WFR本人重载续填后ROK结案；故障/材料/原文保留；无final阶段"
+      },
+      "assertions": [
+        "单次检验NotTested；WFR本人重载续填后ROK结案；故障/材料/原文保留；无final阶段",
+        "先创建独立合法baseline并记录真实ID",
+        "保存/重载校验实际字段值，不只校验HTTP"
+      ],
+      "modelIdResolution": "planned fresh demo ID; runtime resolves by catalogKey",
+      "snTemplate": "{prefix}-020-positive_awp_3",
+      "inspection": "NotTested",
+      "expectedResult": "单次检验NotTested；WFR本人重载续填后ROK结案；故障/材料/原文保留；无final阶段"
+    },
+    {
+      "id": "C021",
+      "category": "positive",
+      "variant": "positive_needs_analysis_3",
+      "code": "positive_needs_analysis_3",
+      "account": "alex",
+      "sn": "JACKERY-SIM-20261030-021-positive_needs_analysis_3",
+      "catalogKey": "e2000v2-costdown",
+      "modelId": 11,
+      "version": "降本版",
+      "faultCodes": [],
+      "materials": [
+        {
+          "sku": "26-0008-000037",
+          "qty": 1,
+          "standardQty": 4
+        }
+      ],
+      "checks": {
+        "initial": {
+          "CHECK_01": "not_tested",
+          "CHECK_02": "pass",
+          "CHECK_03": "pass",
+          "CHECK_04": "pass",
+          "CHECK_05": "pass",
+          "CHECK_06": "pass",
+          "CHECK_07": "pass",
+          "CHECK_08": "pass"
+        }
+      },
+      "outcome": "needs_analysis",
+      "scrapReason": "",
+      "language": "en",
+      "path": "create > save > reload > resume > complete",
+      "expected": {
+        "status": 200,
+        "baselineCreated": 201,
+        "business": "单次检验NotTested；WFR本人重载续填后ROK结案；故障/材料/原文保留；无final阶段"
+      },
+      "assertions": [
+        "单次检验NotTested；WFR本人重载续填后ROK结案；故障/材料/原文保留；无final阶段",
+        "先创建独立合法baseline并记录真实ID",
+        "保存/重载校验实际字段值，不只校验HTTP"
+      ],
+      "modelIdResolution": "planned fresh demo ID; runtime resolves by catalogKey",
+      "snTemplate": "{prefix}-021-positive_needs_analysis_3",
+      "inspection": "NotTested",
+      "expectedResult": "单次检验NotTested；WFR本人重载续填后ROK结案；故障/材料/原文保留；无final阶段"
+    },
+    {
+      "id": "C022",
+      "category": "positive",
+      "variant": "positive_like_new_4",
+      "code": "positive_like_new_4",
+      "account": "blair",
+      "sn": "JACKERY-SIM-20261030-022-positive_like_new_4",
+      "catalogKey": "e2000plus-b",
+      "modelId": 8,
+      "version": "B版",
+      "faultCodes": [
+        "F0"
+      ],
+      "materials": [
+        {
+          "sku": "26-0008-000012",
+          "qty": 2,
+          "standardQty": 2
+        }
+      ],
+      "checks": {
+        "initial": {
+          "CHECK_01": "pass",
+          "CHECK_02": "pass",
+          "CHECK_03": "pass",
+          "CHECK_04": "pass",
+          "CHECK_05": "pass",
+          "CHECK_06": "pass",
+          "CHECK_07": "pass"
+        }
+      },
+      "outcome": "like_new",
+      "scrapReason": "",
+      "language": "zh",
+      "path": "create > save > reload > complete",
+      "expected": {
+        "status": 200,
+        "baselineCreated": 201,
+        "business": "单次检验AllPass；like_new合法结案锁定；故障/材料/原文保留；无final阶段"
+      },
+      "assertions": [
+        "单次检验AllPass；like_new合法结案锁定；故障/材料/原文保留；无final阶段",
+        "先创建独立合法baseline并记录真实ID",
+        "保存/重载校验实际字段值，不只校验HTTP"
+      ],
+      "modelIdResolution": "planned fresh demo ID; runtime resolves by catalogKey",
+      "snTemplate": "{prefix}-022-positive_like_new_4",
+      "inspection": "AllPass",
+      "expectedResult": "单次检验AllPass；like_new合法结案锁定；故障/材料/原文保留；无final阶段"
+    },
+    {
+      "id": "C023",
+      "category": "positive",
+      "variant": "positive_good_4",
+      "code": "positive_good_4",
+      "account": "alex",
+      "sn": "JACKERY-SIM-20261030-023-positive_good_4",
+      "catalogKey": "e2000v2-costdown",
+      "modelId": 11,
+      "version": "降本版",
+      "faultCodes": [
+        "F9"
+      ],
+      "materials": [
+        {
+          "sku": "26-0008-000037",
+          "qty": 1,
+          "standardQty": 4
+        }
+      ],
+      "checks": {
+        "initial": {
+          "CHECK_01": "pass",
+          "CHECK_02": "pass",
+          "CHECK_03": "pass",
+          "CHECK_04": "pass",
+          "CHECK_05": "pass",
+          "CHECK_06": "pass",
+          "CHECK_07": "pass",
+          "CHECK_08": "pass"
+        }
+      },
+      "outcome": "good",
+      "scrapReason": "",
+      "language": "en",
+      "path": "create > save > reload > complete",
+      "expected": {
+        "status": 200,
+        "baselineCreated": 201,
+        "business": "单次检验AllPass；good合法结案锁定；故障/材料/原文保留；无final阶段"
+      },
+      "assertions": [
+        "单次检验AllPass；good合法结案锁定；故障/材料/原文保留；无final阶段",
+        "先创建独立合法baseline并记录真实ID",
+        "保存/重载校验实际字段值，不只校验HTTP"
+      ],
+      "modelIdResolution": "planned fresh demo ID; runtime resolves by catalogKey",
+      "snTemplate": "{prefix}-023-positive_good_4",
+      "inspection": "AllPass",
+      "expectedResult": "单次检验AllPass；good合法结案锁定；故障/材料/原文保留；无final阶段"
+    },
+    {
+      "id": "C024",
+      "category": "positive",
+      "variant": "positive_acceptable_4",
+      "code": "positive_acceptable_4",
+      "account": "blair",
+      "sn": "JACKERY-SIM-20261030-024-positive_acceptable_4",
+      "catalogKey": "e1000-default",
+      "modelId": 6,
+      "version": "未标注版本",
+      "faultCodes": [
+        "F0",
+        "F8"
+      ],
+      "materials": [],
+      "checks": {
+        "initial": {
+          "CHECK_01": "pass",
+          "CHECK_02": "pass",
+          "CHECK_03": "pass",
+          "CHECK_04": "pass",
+          "CHECK_05": "pass",
+          "CHECK_06": "pass"
+        }
+      },
+      "outcome": "acceptable",
+      "scrapReason": "",
+      "language": "zh",
+      "path": "create > save > reload > complete",
+      "expected": {
+        "status": 200,
+        "baselineCreated": 201,
+        "business": "单次检验AllPass；acceptable合法结案锁定；故障/材料/原文保留；无final阶段"
+      },
+      "assertions": [
+        "单次检验AllPass；acceptable合法结案锁定；故障/材料/原文保留；无final阶段",
+        "先创建独立合法baseline并记录真实ID",
+        "保存/重载校验实际字段值，不只校验HTTP"
+      ],
+      "modelIdResolution": "planned fresh demo ID; runtime resolves by catalogKey",
+      "snTemplate": "{prefix}-024-positive_acceptable_4",
+      "inspection": "AllPass",
+      "expectedResult": "单次检验AllPass；acceptable合法结案锁定；故障/材料/原文保留；无final阶段"
+    },
+    {
+      "id": "C025",
+      "category": "positive",
+      "variant": "positive_rok_4",
+      "code": "positive_rok_4",
+      "account": "alex",
+      "sn": "JACKERY-SIM-20261030-025-positive_rok_4",
+      "catalogKey": "e2000v2-original",
+      "modelId": 10,
+      "version": "原始版",
+      "faultCodes": [
+        "F1",
+        "F3",
+        "F5"
+      ],
+      "materials": [
+        {
+          "sku": "26-0008-000037",
+          "qty": 1,
+          "standardQty": 4
+        }
+      ],
+      "checks": {
+        "initial": {
+          "CHECK_01": "pass",
+          "CHECK_02": "pass",
+          "CHECK_03": "pass",
+          "CHECK_04": "pass",
+          "CHECK_05": "pass",
+          "CHECK_06": "pass",
+          "CHECK_07": "pass",
+          "CHECK_08": "pass"
+        }
+      },
+      "outcome": "rok",
+      "scrapReason": "",
+      "language": "en",
+      "path": "create > save > reload > complete",
+      "expected": {
+        "status": 200,
+        "baselineCreated": 201,
+        "business": "单次检验AllPass；rok合法结案锁定；故障/材料/原文保留；无final阶段"
+      },
+      "assertions": [
+        "单次检验AllPass；rok合法结案锁定；故障/材料/原文保留；无final阶段",
+        "先创建独立合法baseline并记录真实ID",
+        "保存/重载校验实际字段值，不只校验HTTP"
+      ],
+      "modelIdResolution": "planned fresh demo ID; runtime resolves by catalogKey",
+      "snTemplate": "{prefix}-025-positive_rok_4",
+      "inspection": "AllPass",
+      "expectedResult": "单次检验AllPass；rok合法结案锁定；故障/材料/原文保留；无final阶段"
+    },
+    {
+      "id": "C026",
+      "category": "positive",
+      "variant": "positive_scrap_4",
+      "code": "positive_scrap_4",
+      "account": "blair",
+      "sn": "JACKERY-SIM-20261030-026-positive_scrap_4",
+      "catalogKey": "e1000v2-costdown",
+      "modelId": 5,
+      "version": "降本版",
+      "faultCodes": [],
+      "materials": [
+        {
+          "sku": "26-0008-000030",
+          "qty": 4,
+          "standardQty": 4
+        }
+      ],
+      "checks": {
+        "initial": {
+          "CHECK_01": "pass",
+          "CHECK_02": "pass",
+          "CHECK_03": "pass",
+          "CHECK_04": "pass",
+          "CHECK_05": "pass",
+          "CHECK_06": "pass",
+          "CHECK_07": "pass"
+        }
+      },
+      "outcome": "scrap",
+      "scrapReason": "Battery enclosure damaged / 电池外壳破损",
+      "language": "zh",
+      "path": "create > save > reload > complete",
+      "expected": {
+        "status": 200,
+        "baselineCreated": 201,
+        "business": "单次检验AllPass；scrap合法结案锁定；故障/材料/原文保留；无final阶段"
+      },
+      "assertions": [
+        "单次检验AllPass；scrap合法结案锁定；故障/材料/原文保留；无final阶段",
+        "先创建独立合法baseline并记录真实ID",
+        "保存/重载校验实际字段值，不只校验HTTP"
+      ],
+      "modelIdResolution": "planned fresh demo ID; runtime resolves by catalogKey",
+      "snTemplate": "{prefix}-026-positive_scrap_4",
+      "inspection": "AllPass",
+      "expectedResult": "单次检验AllPass；scrap合法结案锁定；故障/材料/原文保留；无final阶段"
+    },
+    {
+      "id": "C027",
+      "category": "positive",
+      "variant": "positive_awp_4",
+      "code": "positive_awp_4",
+      "account": "alex",
+      "sn": "JACKERY-SIM-20261030-027-positive_awp_4",
+      "catalogKey": "e2000pro-default",
+      "modelId": 9,
+      "version": "未标注版本",
+      "faultCodes": [
+        "F0"
+      ],
+      "materials": [
+        {
+          "sku": "08-1031-155788",
+          "qty": 1,
+          "standardQty": 2
+        }
+      ],
+      "checks": {
+        "initial": {
+          "CHECK_01": "not_tested",
+          "CHECK_02": "pass",
+          "CHECK_03": "pass",
+          "CHECK_04": "pass",
+          "CHECK_05": "pass",
+          "CHECK_06": "pass",
+          "CHECK_07": "pass",
+          "CHECK_08": "pass"
+        }
+      },
+      "outcome": "awp",
+      "scrapReason": "",
+      "language": "en",
+      "path": "create > save > reload > resume > complete",
+      "expected": {
+        "status": 200,
+        "baselineCreated": 201,
+        "business": "单次检验NotTested；WFR本人重载续填后ROK结案；故障/材料/原文保留；无final阶段"
+      },
+      "assertions": [
+        "单次检验NotTested；WFR本人重载续填后ROK结案；故障/材料/原文保留；无final阶段",
+        "先创建独立合法baseline并记录真实ID",
+        "保存/重载校验实际字段值，不只校验HTTP"
+      ],
+      "modelIdResolution": "planned fresh demo ID; runtime resolves by catalogKey",
+      "snTemplate": "{prefix}-027-positive_awp_4",
+      "inspection": "NotTested",
+      "expectedResult": "单次检验NotTested；WFR本人重载续填后ROK结案；故障/材料/原文保留；无final阶段"
+    },
+    {
+      "id": "C028",
+      "category": "positive",
+      "variant": "positive_needs_analysis_4",
+      "code": "positive_needs_analysis_4",
+      "account": "blair",
+      "sn": "JACKERY-SIM-20261030-028-positive_needs_analysis_4",
+      "catalogKey": "e1000pro-default",
+      "modelId": 3,
+      "version": "未标注版本",
+      "faultCodes": [
+        "F9"
+      ],
+      "materials": [
+        {
+          "sku": "08-1031-160035",
+          "qty": 2,
+          "standardQty": 2
+        }
+      ],
+      "checks": {
+        "initial": {
+          "CHECK_01": "not_tested",
+          "CHECK_02": "pass",
+          "CHECK_03": "pass",
+          "CHECK_04": "pass",
+          "CHECK_05": "pass",
+          "CHECK_06": "pass",
+          "CHECK_07": "pass"
+        }
+      },
+      "outcome": "needs_analysis",
+      "scrapReason": "",
+      "language": "zh",
+      "path": "create > save > reload > resume > complete",
+      "expected": {
+        "status": 200,
+        "baselineCreated": 201,
+        "business": "单次检验NotTested；WFR本人重载续填后ROK结案；故障/材料/原文保留；无final阶段"
+      },
+      "assertions": [
+        "单次检验NotTested；WFR本人重载续填后ROK结案；故障/材料/原文保留；无final阶段",
+        "先创建独立合法baseline并记录真实ID",
+        "保存/重载校验实际字段值，不只校验HTTP"
+      ],
+      "modelIdResolution": "planned fresh demo ID; runtime resolves by catalogKey",
+      "snTemplate": "{prefix}-028-positive_needs_analysis_4",
+      "inspection": "NotTested",
+      "expectedResult": "单次检验NotTested；WFR本人重载续填后ROK结案；故障/材料/原文保留；无final阶段"
+    },
+    {
+      "id": "C029",
+      "category": "positive",
+      "variant": "positive_like_new_5",
+      "code": "positive_like_new_5",
+      "account": "alex",
+      "sn": "JACKERY-SIM-20261030-029-positive_like_new_5",
+      "catalogKey": "e2000pro-default",
+      "modelId": 9,
+      "version": "未标注版本",
+      "faultCodes": [
+        "F0",
+        "F8"
+      ],
+      "materials": [
+        {
+          "sku": "08-1031-155788",
+          "qty": 1,
+          "standardQty": 2
+        }
+      ],
+      "checks": {
+        "initial": {
+          "CHECK_01": "pass",
+          "CHECK_02": "pass",
+          "CHECK_03": "pass",
+          "CHECK_04": "pass",
+          "CHECK_05": "pass",
+          "CHECK_06": "pass",
+          "CHECK_07": "pass",
+          "CHECK_08": "pass"
+        }
+      },
+      "outcome": "like_new",
+      "scrapReason": "",
+      "language": "en",
+      "path": "create > save > reload > complete",
+      "expected": {
+        "status": 200,
+        "baselineCreated": 201,
+        "business": "单次检验AllPass；like_new合法结案锁定；故障/材料/原文保留；无final阶段"
+      },
+      "assertions": [
+        "单次检验AllPass；like_new合法结案锁定；故障/材料/原文保留；无final阶段",
+        "先创建独立合法baseline并记录真实ID",
+        "保存/重载校验实际字段值，不只校验HTTP"
+      ],
+      "modelIdResolution": "planned fresh demo ID; runtime resolves by catalogKey",
+      "snTemplate": "{prefix}-029-positive_like_new_5",
+      "inspection": "AllPass",
+      "expectedResult": "单次检验AllPass；like_new合法结案锁定；故障/材料/原文保留；无final阶段"
+    },
+    {
+      "id": "C030",
+      "category": "positive",
+      "variant": "positive_good_5",
+      "code": "positive_good_5",
+      "account": "blair",
+      "sn": "JACKERY-SIM-20261030-030-positive_good_5",
+      "catalogKey": "e1000pro-default",
+      "modelId": 3,
+      "version": "未标注版本",
+      "faultCodes": [
+        "F1",
+        "F3",
+        "F5"
+      ],
+      "materials": [
+        {
+          "sku": "08-1031-160035",
+          "qty": 2,
+          "standardQty": 2
+        }
+      ],
+      "checks": {
+        "initial": {
+          "CHECK_01": "pass",
+          "CHECK_02": "pass",
+          "CHECK_03": "pass",
+          "CHECK_04": "pass",
+          "CHECK_05": "pass",
+          "CHECK_06": "pass",
+          "CHECK_07": "pass"
+        }
+      },
+      "outcome": "good",
+      "scrapReason": "",
+      "language": "zh",
+      "path": "create > save > reload > complete",
+      "expected": {
+        "status": 200,
+        "baselineCreated": 201,
+        "business": "单次检验AllPass；good合法结案锁定；故障/材料/原文保留；无final阶段"
+      },
+      "assertions": [
+        "单次检验AllPass；good合法结案锁定；故障/材料/原文保留；无final阶段",
+        "先创建独立合法baseline并记录真实ID",
+        "保存/重载校验实际字段值，不只校验HTTP"
+      ],
+      "modelIdResolution": "planned fresh demo ID; runtime resolves by catalogKey",
+      "snTemplate": "{prefix}-030-positive_good_5",
+      "inspection": "AllPass",
+      "expectedResult": "单次检验AllPass；good合法结案锁定；故障/材料/原文保留；无final阶段"
+    },
+    {
+      "id": "C031",
+      "category": "positive",
+      "variant": "positive_acceptable_5",
+      "code": "positive_acceptable_5",
+      "account": "alex",
+      "sn": "JACKERY-SIM-20261030-031-positive_acceptable_5",
+      "catalogKey": "e2000plus-b",
+      "modelId": 8,
+      "version": "B版",
+      "faultCodes": [],
+      "materials": [
+        {
+          "sku": "26-0008-000012",
+          "qty": 1,
+          "standardQty": 2
+        }
+      ],
+      "checks": {
+        "initial": {
+          "CHECK_01": "pass",
+          "CHECK_02": "pass",
+          "CHECK_03": "pass",
+          "CHECK_04": "pass",
+          "CHECK_05": "pass",
+          "CHECK_06": "pass",
+          "CHECK_07": "pass"
+        }
+      },
+      "outcome": "acceptable",
+      "scrapReason": "",
+      "language": "en",
+      "path": "create > save > reload > complete",
+      "expected": {
+        "status": 200,
+        "baselineCreated": 201,
+        "business": "单次检验AllPass；acceptable合法结案锁定；故障/材料/原文保留；无final阶段"
+      },
+      "assertions": [
+        "单次检验AllPass；acceptable合法结案锁定；故障/材料/原文保留；无final阶段",
+        "先创建独立合法baseline并记录真实ID",
+        "保存/重载校验实际字段值，不只校验HTTP"
+      ],
+      "modelIdResolution": "planned fresh demo ID; runtime resolves by catalogKey",
+      "snTemplate": "{prefix}-031-positive_acceptable_5",
+      "inspection": "AllPass",
+      "expectedResult": "单次检验AllPass；acceptable合法结案锁定；故障/材料/原文保留；无final阶段"
+    },
+    {
+      "id": "C032",
+      "category": "positive",
+      "variant": "positive_rok_5",
+      "code": "positive_rok_5",
+      "account": "blair",
+      "sn": "JACKERY-SIM-20261030-032-positive_rok_5",
+      "catalogKey": "e2000v2-costdown",
+      "modelId": 11,
+      "version": "降本版",
+      "faultCodes": [
+        "F0"
+      ],
+      "materials": [
+        {
+          "sku": "26-0008-000037",
+          "qty": 4,
+          "standardQty": 4
+        }
+      ],
+      "checks": {
+        "initial": {
+          "CHECK_01": "fail",
+          "CHECK_02": "pass",
+          "CHECK_03": "pass",
+          "CHECK_04": "pass",
+          "CHECK_05": "pass",
+          "CHECK_06": "pass",
+          "CHECK_07": "pass",
+          "CHECK_08": "pass"
+        }
+      },
+      "outcome": "rok",
+      "scrapReason": "",
+      "language": "zh",
+      "path": "create > save > reload > complete",
+      "expected": {
+        "status": 200,
+        "baselineCreated": 201,
+        "business": "单次检验MixedFail；rok合法结案锁定；故障/材料/原文保留；无final阶段"
+      },
+      "assertions": [
+        "单次检验MixedFail；rok合法结案锁定；故障/材料/原文保留；无final阶段",
+        "先创建独立合法baseline并记录真实ID",
+        "保存/重载校验实际字段值，不只校验HTTP"
+      ],
+      "modelIdResolution": "planned fresh demo ID; runtime resolves by catalogKey",
+      "snTemplate": "{prefix}-032-positive_rok_5",
+      "inspection": "MixedFail",
+      "expectedResult": "单次检验MixedFail；rok合法结案锁定；故障/材料/原文保留；无final阶段"
+    },
+    {
+      "id": "C033",
+      "category": "positive",
+      "variant": "positive_scrap_5",
+      "code": "positive_scrap_5",
+      "account": "alex",
+      "sn": "JACKERY-SIM-20261030-033-positive_scrap_5",
+      "catalogKey": "e1000-default",
+      "modelId": 6,
+      "version": "未标注版本",
+      "faultCodes": [
+        "F9"
+      ],
+      "materials": [],
+      "checks": {
+        "initial": {
+          "CHECK_01": "pass",
+          "CHECK_02": "pass",
+          "CHECK_03": "pass",
+          "CHECK_04": "pass",
+          "CHECK_05": "pass",
+          "CHECK_06": "pass"
+        }
+      },
+      "outcome": "scrap",
+      "scrapReason": "Battery enclosure damaged / 电池外壳破损",
+      "language": "en",
+      "path": "create > save > reload > complete",
+      "expected": {
+        "status": 200,
+        "baselineCreated": 201,
+        "business": "单次检验AllPass；scrap合法结案锁定；故障/材料/原文保留；无final阶段"
+      },
+      "assertions": [
+        "单次检验AllPass；scrap合法结案锁定；故障/材料/原文保留；无final阶段",
+        "先创建独立合法baseline并记录真实ID",
+        "保存/重载校验实际字段值，不只校验HTTP"
+      ],
+      "modelIdResolution": "planned fresh demo ID; runtime resolves by catalogKey",
+      "snTemplate": "{prefix}-033-positive_scrap_5",
+      "inspection": "AllPass",
+      "expectedResult": "单次检验AllPass；scrap合法结案锁定；故障/材料/原文保留；无final阶段"
+    },
+    {
+      "id": "C034",
+      "category": "positive",
+      "variant": "positive_awp_5",
+      "code": "positive_awp_5",
+      "account": "blair",
+      "sn": "JACKERY-SIM-20261030-034-positive_awp_5",
+      "catalogKey": "e2000v2-original",
+      "modelId": 10,
+      "version": "原始版",
+      "faultCodes": [
+        "F0",
+        "F8"
+      ],
+      "materials": [
+        {
+          "sku": "26-0008-000037",
+          "qty": 4,
+          "standardQty": 4
+        }
+      ],
+      "checks": {
+        "initial": {
+          "CHECK_01": "not_tested",
+          "CHECK_02": "pass",
+          "CHECK_03": "pass",
+          "CHECK_04": "pass",
+          "CHECK_05": "pass",
+          "CHECK_06": "pass",
+          "CHECK_07": "pass",
+          "CHECK_08": "pass"
+        }
+      },
+      "outcome": "awp",
+      "scrapReason": "",
+      "language": "zh",
+      "path": "create > save > reload > resume > complete",
+      "expected": {
+        "status": 200,
+        "baselineCreated": 201,
+        "business": "单次检验NotTested；WFR本人重载续填后ROK结案；故障/材料/原文保留；无final阶段"
+      },
+      "assertions": [
+        "单次检验NotTested；WFR本人重载续填后ROK结案；故障/材料/原文保留；无final阶段",
+        "先创建独立合法baseline并记录真实ID",
+        "保存/重载校验实际字段值，不只校验HTTP"
+      ],
+      "modelIdResolution": "planned fresh demo ID; runtime resolves by catalogKey",
+      "snTemplate": "{prefix}-034-positive_awp_5",
+      "inspection": "NotTested",
+      "expectedResult": "单次检验NotTested；WFR本人重载续填后ROK结案；故障/材料/原文保留；无final阶段"
+    },
+    {
+      "id": "C035",
+      "category": "positive",
+      "variant": "positive_needs_analysis_5",
+      "code": "positive_needs_analysis_5",
+      "account": "alex",
+      "sn": "JACKERY-SIM-20261030-035-positive_needs_analysis_5",
+      "catalogKey": "e1000v2-costdown",
+      "modelId": 5,
+      "version": "降本版",
+      "faultCodes": [
+        "F1",
+        "F3",
+        "F5"
+      ],
+      "materials": [
+        {
+          "sku": "26-0008-000030",
+          "qty": 1,
+          "standardQty": 4
+        }
+      ],
+      "checks": {
+        "initial": {
+          "CHECK_01": "not_tested",
+          "CHECK_02": "pass",
+          "CHECK_03": "pass",
+          "CHECK_04": "pass",
+          "CHECK_05": "pass",
+          "CHECK_06": "pass",
+          "CHECK_07": "pass"
+        }
+      },
+      "outcome": "needs_analysis",
+      "scrapReason": "",
+      "language": "en",
+      "path": "create > save > reload > resume > complete",
+      "expected": {
+        "status": 200,
+        "baselineCreated": 201,
+        "business": "单次检验NotTested；WFR本人重载续填后ROK结案；故障/材料/原文保留；无final阶段"
+      },
+      "assertions": [
+        "单次检验NotTested；WFR本人重载续填后ROK结案；故障/材料/原文保留；无final阶段",
+        "先创建独立合法baseline并记录真实ID",
+        "保存/重载校验实际字段值，不只校验HTTP"
+      ],
+      "modelIdResolution": "planned fresh demo ID; runtime resolves by catalogKey",
+      "snTemplate": "{prefix}-035-positive_needs_analysis_5",
+      "inspection": "NotTested",
+      "expectedResult": "单次检验NotTested；WFR本人重载续填后ROK结案；故障/材料/原文保留；无final阶段"
+    },
+    {
+      "id": "C036",
+      "category": "positive",
+      "variant": "positive_like_new_6",
+      "code": "positive_like_new_6",
+      "account": "blair",
+      "sn": "JACKERY-SIM-20261030-036-positive_like_new_6",
+      "catalogKey": "e2000v2-original",
+      "modelId": 10,
+      "version": "原始版",
+      "faultCodes": [],
+      "materials": [
+        {
+          "sku": "26-0008-000037",
+          "qty": 4,
+          "standardQty": 4
+        }
+      ],
+      "checks": {
+        "initial": {
+          "CHECK_01": "pass",
+          "CHECK_02": "pass",
+          "CHECK_03": "pass",
+          "CHECK_04": "pass",
+          "CHECK_05": "pass",
+          "CHECK_06": "pass",
+          "CHECK_07": "pass",
+          "CHECK_08": "pass"
+        }
+      },
+      "outcome": "like_new",
+      "scrapReason": "",
+      "language": "zh",
+      "path": "create > save > reload > complete",
+      "expected": {
+        "status": 200,
+        "baselineCreated": 201,
+        "business": "单次检验AllPass；like_new合法结案锁定；故障/材料/原文保留；无final阶段"
+      },
+      "assertions": [
+        "单次检验AllPass；like_new合法结案锁定；故障/材料/原文保留；无final阶段",
+        "先创建独立合法baseline并记录真实ID",
+        "保存/重载校验实际字段值，不只校验HTTP"
+      ],
+      "modelIdResolution": "planned fresh demo ID; runtime resolves by catalogKey",
+      "snTemplate": "{prefix}-036-positive_like_new_6",
+      "inspection": "AllPass",
+      "expectedResult": "单次检验AllPass；like_new合法结案锁定；故障/材料/原文保留；无final阶段"
+    },
+    {
+      "id": "C037",
+      "category": "positive",
+      "variant": "positive_good_6",
+      "code": "positive_good_6",
+      "account": "alex",
+      "sn": "JACKERY-SIM-20261030-037-positive_good_6",
+      "catalogKey": "e1000v2-costdown",
+      "modelId": 5,
+      "version": "降本版",
+      "faultCodes": [
+        "F0"
+      ],
+      "materials": [
+        {
+          "sku": "26-0008-000030",
+          "qty": 1,
+          "standardQty": 4
+        }
+      ],
+      "checks": {
+        "initial": {
+          "CHECK_01": "pass",
+          "CHECK_02": "pass",
+          "CHECK_03": "pass",
+          "CHECK_04": "pass",
+          "CHECK_05": "pass",
+          "CHECK_06": "pass",
+          "CHECK_07": "pass"
+        }
+      },
+      "outcome": "good",
+      "scrapReason": "",
+      "language": "en",
+      "path": "create > save > reload > complete",
+      "expected": {
+        "status": 200,
+        "baselineCreated": 201,
+        "business": "单次检验AllPass；good合法结案锁定；故障/材料/原文保留；无final阶段"
+      },
+      "assertions": [
+        "单次检验AllPass；good合法结案锁定；故障/材料/原文保留；无final阶段",
+        "先创建独立合法baseline并记录真实ID",
+        "保存/重载校验实际字段值，不只校验HTTP"
+      ],
+      "modelIdResolution": "planned fresh demo ID; runtime resolves by catalogKey",
+      "snTemplate": "{prefix}-037-positive_good_6",
+      "inspection": "AllPass",
+      "expectedResult": "单次检验AllPass；good合法结案锁定；故障/材料/原文保留；无final阶段"
+    },
+    {
+      "id": "C038",
+      "category": "positive",
+      "variant": "positive_acceptable_6",
+      "code": "positive_acceptable_6",
+      "account": "blair",
+      "sn": "JACKERY-SIM-20261030-038-positive_acceptable_6",
+      "catalogKey": "e2000pro-default",
+      "modelId": 9,
+      "version": "未标注版本",
+      "faultCodes": [
+        "F9"
+      ],
+      "materials": [
+        {
+          "sku": "08-1031-155788",
+          "qty": 2,
+          "standardQty": 2
+        }
+      ],
+      "checks": {
+        "initial": {
+          "CHECK_01": "pass",
+          "CHECK_02": "pass",
+          "CHECK_03": "pass",
+          "CHECK_04": "pass",
+          "CHECK_05": "pass",
+          "CHECK_06": "pass",
+          "CHECK_07": "pass",
+          "CHECK_08": "pass"
+        }
+      },
+      "outcome": "acceptable",
+      "scrapReason": "",
+      "language": "zh",
+      "path": "create > save > reload > complete",
+      "expected": {
+        "status": 200,
+        "baselineCreated": 201,
+        "business": "单次检验AllPass；acceptable合法结案锁定；故障/材料/原文保留；无final阶段"
+      },
+      "assertions": [
+        "单次检验AllPass；acceptable合法结案锁定；故障/材料/原文保留；无final阶段",
+        "先创建独立合法baseline并记录真实ID",
+        "保存/重载校验实际字段值，不只校验HTTP"
+      ],
+      "modelIdResolution": "planned fresh demo ID; runtime resolves by catalogKey",
+      "snTemplate": "{prefix}-038-positive_acceptable_6",
+      "inspection": "AllPass",
+      "expectedResult": "单次检验AllPass；acceptable合法结案锁定；故障/材料/原文保留；无final阶段"
+    },
+    {
+      "id": "C039",
+      "category": "positive",
+      "variant": "positive_rok_6",
+      "code": "positive_rok_6",
+      "account": "alex",
+      "sn": "JACKERY-SIM-20261030-039-positive_rok_6",
+      "catalogKey": "e1000pro-default",
+      "modelId": 3,
+      "version": "未标注版本",
+      "faultCodes": [
+        "F0",
+        "F8"
+      ],
+      "materials": [
+        {
+          "sku": "08-1031-160035",
+          "qty": 1,
+          "standardQty": 2
+        }
+      ],
+      "checks": {
+        "initial": {
+          "CHECK_01": "pass",
+          "CHECK_02": "pass",
+          "CHECK_03": "pass",
+          "CHECK_04": "pass",
+          "CHECK_05": "pass",
+          "CHECK_06": "pass",
+          "CHECK_07": "pass"
+        }
+      },
+      "outcome": "rok",
+      "scrapReason": "",
+      "language": "en",
+      "path": "create > save > reload > complete",
+      "expected": {
+        "status": 200,
+        "baselineCreated": 201,
+        "business": "单次检验AllPass；rok合法结案锁定；故障/材料/原文保留；无final阶段"
+      },
+      "assertions": [
+        "单次检验AllPass；rok合法结案锁定；故障/材料/原文保留；无final阶段",
+        "先创建独立合法baseline并记录真实ID",
+        "保存/重载校验实际字段值，不只校验HTTP"
+      ],
+      "modelIdResolution": "planned fresh demo ID; runtime resolves by catalogKey",
+      "snTemplate": "{prefix}-039-positive_rok_6",
+      "inspection": "AllPass",
+      "expectedResult": "单次检验AllPass；rok合法结案锁定；故障/材料/原文保留；无final阶段"
+    },
+    {
+      "id": "C040",
+      "category": "positive",
+      "variant": "positive_scrap_6",
+      "code": "positive_scrap_6",
+      "account": "blair",
+      "sn": "JACKERY-SIM-20261030-040-positive_scrap_6",
+      "catalogKey": "e2000plus-b",
+      "modelId": 8,
+      "version": "B版",
+      "faultCodes": [
+        "F1",
+        "F3",
+        "F5"
+      ],
+      "materials": [
+        {
+          "sku": "26-0008-000012",
+          "qty": 2,
+          "standardQty": 2
+        }
+      ],
+      "checks": {
+        "initial": {
+          "CHECK_01": "pass",
+          "CHECK_02": "pass",
+          "CHECK_03": "pass",
+          "CHECK_04": "pass",
+          "CHECK_05": "pass",
+          "CHECK_06": "pass",
+          "CHECK_07": "pass"
+        }
+      },
+      "outcome": "scrap",
+      "scrapReason": "Battery enclosure damaged / 电池外壳破损",
+      "language": "zh",
+      "path": "create > save > reload > complete",
+      "expected": {
+        "status": 200,
+        "baselineCreated": 201,
+        "business": "单次检验AllPass；scrap合法结案锁定；故障/材料/原文保留；无final阶段"
+      },
+      "assertions": [
+        "单次检验AllPass；scrap合法结案锁定；故障/材料/原文保留；无final阶段",
+        "先创建独立合法baseline并记录真实ID",
+        "保存/重载校验实际字段值，不只校验HTTP"
+      ],
+      "modelIdResolution": "planned fresh demo ID; runtime resolves by catalogKey",
+      "snTemplate": "{prefix}-040-positive_scrap_6",
+      "inspection": "AllPass",
+      "expectedResult": "单次检验AllPass；scrap合法结案锁定；故障/材料/原文保留；无final阶段"
+    },
+    {
+      "id": "C041",
+      "category": "bom",
+      "variant": "cap_save_over",
+      "code": "cap_save_over",
+      "account": "alex",
+      "sn": "JACKERY-SIM-20261030-041-cap_save_over",
+      "catalogKey": "e1000v2-costdown",
+      "modelId": 5,
+      "version": "降本版",
+      "faultCodes": [],
+      "materials": [
+        {
+          "sku": "26-0008-000030",
+          "qty": 1,
+          "standardQty": 4
+        }
+      ],
+      "checks": {
+        "initial": {
+          "CHECK_01": "not_tested",
+          "CHECK_02": "pass",
+          "CHECK_03": "pass",
+          "CHECK_04": "pass",
+          "CHECK_05": "pass",
+          "CHECK_06": "pass",
+          "CHECK_07": "pass"
+        }
+      },
+      "outcome": "awp",
+      "scrapReason": "",
+      "language": "en",
+      "path": "create legal independent baseline > cap_save_over > reject and unchanged reload",
+      "expected": {
+        "status": 422,
+        "baselineCreated": 201,
+        "business": "保存超标准量422并且原工单不变"
+      },
+      "assertions": [
+        "保存超标准量422并且原工单不变",
+        "先创建独立合法baseline并记录真实ID",
+        "拒绝分支校验原工单数据及version不变"
+      ],
+      "modelIdResolution": "planned fresh demo ID; runtime resolves by catalogKey",
+      "snTemplate": "{prefix}-041-cap_save_over",
+      "inspection": "NotTested",
+      "expectedResult": "保存超标准量422并且原工单不变"
+    },
+    {
+      "id": "C042",
+      "category": "bom",
+      "variant": "cap_complete_over",
+      "code": "cap_complete_over",
+      "account": "blair",
+      "sn": "JACKERY-SIM-20261030-042-cap_complete_over",
+      "catalogKey": "e1000v2-costdown",
+      "modelId": 5,
+      "version": "降本版",
+      "faultCodes": [
+        "F0"
+      ],
+      "materials": [
+        {
+          "sku": "26-0008-000030",
+          "qty": 4,
+          "standardQty": 4
+        }
+      ],
+      "checks": {
+        "initial": {
+          "CHECK_01": "not_tested",
+          "CHECK_02": "pass",
+          "CHECK_03": "pass",
+          "CHECK_04": "pass",
+          "CHECK_05": "pass",
+          "CHECK_06": "pass",
+          "CHECK_07": "pass"
+        }
+      },
+      "outcome": "awp",
+      "scrapReason": "",
+      "language": "zh",
+      "path": "create legal independent baseline > cap_complete_over > reject and unchanged reload",
+      "expected": {
+        "status": 422,
+        "baselineCreated": 201,
+        "business": "结案超标准量422且不完成"
+      },
+      "assertions": [
+        "结案超标准量422且不完成",
+        "先创建独立合法baseline并记录真实ID",
+        "拒绝分支校验原工单数据及version不变"
+      ],
+      "modelIdResolution": "planned fresh demo ID; runtime resolves by catalogKey",
+      "snTemplate": "{prefix}-042-cap_complete_over",
+      "inspection": "NotTested",
+      "expectedResult": "结案超标准量422且不完成"
+    },
+    {
+      "id": "C043",
+      "category": "bom",
+      "variant": "cap_admin_over",
+      "code": "cap_admin_over",
+      "account": "alex",
+      "sn": "JACKERY-SIM-20261030-043-cap_admin_over",
+      "catalogKey": "e1000v2-costdown",
+      "modelId": 5,
+      "version": "降本版",
+      "faultCodes": [
+        "F9"
+      ],
+      "materials": [
+        {
+          "sku": "26-0008-000030",
+          "qty": 1,
+          "standardQty": 4
+        }
+      ],
+      "checks": {
+        "initial": {
+          "CHECK_01": "not_tested",
+          "CHECK_02": "pass",
+          "CHECK_03": "pass",
+          "CHECK_04": "pass",
+          "CHECK_05": "pass",
+          "CHECK_06": "pass",
+          "CHECK_07": "pass"
+        }
+      },
+      "outcome": "awp",
+      "scrapReason": "",
+      "language": "en",
+      "path": "create legal independent baseline > cap_admin_over > reject and unchanged reload",
+      "expected": {
+        "status": 422,
+        "baselineCreated": 201,
+        "business": "管理员更正同样执行标准量硬上限"
+      },
+      "assertions": [
+        "管理员更正同样执行标准量硬上限",
+        "先创建独立合法baseline并记录真实ID",
+        "拒绝分支校验原工单数据及version不变"
+      ],
+      "modelIdResolution": "planned fresh demo ID; runtime resolves by catalogKey",
+      "snTemplate": "{prefix}-043-cap_admin_over",
+      "inspection": "NotTested",
+      "expectedResult": "管理员更正同样执行标准量硬上限"
+    },
+    {
+      "id": "C044",
+      "category": "bom",
+      "variant": "quantity_zero",
+      "code": "quantity_zero",
+      "account": "blair",
+      "sn": "JACKERY-SIM-20261030-044-quantity_zero",
+      "catalogKey": "e1000v2-costdown",
+      "modelId": 5,
+      "version": "降本版",
+      "faultCodes": [
+        "F0",
+        "F8"
+      ],
+      "materials": [
+        {
+          "sku": "26-0008-000030",
+          "qty": 4,
+          "standardQty": 4
+        }
+      ],
+      "checks": {
+        "initial": {
+          "CHECK_01": "not_tested",
+          "CHECK_02": "pass",
+          "CHECK_03": "pass",
+          "CHECK_04": "pass",
+          "CHECK_05": "pass",
+          "CHECK_06": "pass",
+          "CHECK_07": "pass"
+        }
+      },
+      "outcome": "awp",
+      "scrapReason": "",
+      "language": "zh",
+      "path": "create legal independent baseline > quantity_zero > reject and unchanged reload",
+      "expected": {
+        "status": 422,
+        "baselineCreated": 201,
+        "business": "零耗用拒绝"
+      },
+      "assertions": [
+        "零耗用拒绝",
+        "先创建独立合法baseline并记录真实ID",
+        "拒绝分支校验原工单数据及version不变"
+      ],
+      "modelIdResolution": "planned fresh demo ID; runtime resolves by catalogKey",
+      "snTemplate": "{prefix}-044-quantity_zero",
+      "inspection": "NotTested",
+      "expectedResult": "零耗用拒绝"
+    },
+    {
+      "id": "C045",
+      "category": "bom",
+      "variant": "quantity_negative",
+      "code": "quantity_negative",
+      "account": "alex",
+      "sn": "JACKERY-SIM-20261030-045-quantity_negative",
+      "catalogKey": "e1000v2-costdown",
+      "modelId": 5,
+      "version": "降本版",
+      "faultCodes": [
+        "F1",
+        "F3",
+        "F5"
+      ],
+      "materials": [
+        {
+          "sku": "26-0008-000030",
+          "qty": 1,
+          "standardQty": 4
+        }
+      ],
+      "checks": {
+        "initial": {
+          "CHECK_01": "not_tested",
+          "CHECK_02": "pass",
+          "CHECK_03": "pass",
+          "CHECK_04": "pass",
+          "CHECK_05": "pass",
+          "CHECK_06": "pass",
+          "CHECK_07": "pass"
+        }
+      },
+      "outcome": "awp",
+      "scrapReason": "",
+      "language": "en",
+      "path": "create legal independent baseline > quantity_negative > reject and unchanged reload",
+      "expected": {
+        "status": 422,
+        "baselineCreated": 201,
+        "business": "负数耗用拒绝"
+      },
+      "assertions": [
+        "负数耗用拒绝",
+        "先创建独立合法baseline并记录真实ID",
+        "拒绝分支校验原工单数据及version不变"
+      ],
+      "modelIdResolution": "planned fresh demo ID; runtime resolves by catalogKey",
+      "snTemplate": "{prefix}-045-quantity_negative",
+      "inspection": "NotTested",
+      "expectedResult": "负数耗用拒绝"
+    },
+    {
+      "id": "C046",
+      "category": "bom",
+      "variant": "pcs_fraction",
+      "code": "pcs_fraction",
+      "account": "blair",
+      "sn": "JACKERY-SIM-20261030-046-pcs_fraction",
+      "catalogKey": "e1000v2-costdown",
+      "modelId": 5,
+      "version": "降本版",
+      "faultCodes": [],
+      "materials": [
+        {
+          "sku": "26-0008-000030",
+          "qty": 4,
+          "standardQty": 4
+        }
+      ],
+      "checks": {
+        "initial": {
+          "CHECK_01": "not_tested",
+          "CHECK_02": "pass",
+          "CHECK_03": "pass",
+          "CHECK_04": "pass",
+          "CHECK_05": "pass",
+          "CHECK_06": "pass",
+          "CHECK_07": "pass"
+        }
+      },
+      "outcome": "awp",
+      "scrapReason": "",
+      "language": "zh",
+      "path": "create legal independent baseline > pcs_fraction > reject and unchanged reload",
+      "expected": {
+        "status": 422,
+        "baselineCreated": 201,
+        "business": "pcs非整数拒绝"
+      },
+      "assertions": [
+        "pcs非整数拒绝",
+        "先创建独立合法baseline并记录真实ID",
+        "拒绝分支校验原工单数据及version不变"
+      ],
+      "modelIdResolution": "planned fresh demo ID; runtime resolves by catalogKey",
+      "snTemplate": "{prefix}-046-pcs_fraction",
+      "inspection": "NotTested",
+      "expectedResult": "pcs非整数拒绝"
+    },
+    {
+      "id": "C047",
+      "category": "bom",
+      "variant": "quantity_string",
+      "code": "quantity_string",
+      "account": "alex",
+      "sn": "JACKERY-SIM-20261030-047-quantity_string",
+      "catalogKey": "e1000v2-costdown",
+      "modelId": 5,
+      "version": "降本版",
+      "faultCodes": [
+        "F0"
+      ],
+      "materials": [
+        {
+          "sku": "26-0008-000030",
+          "qty": 1,
+          "standardQty": 4
+        }
+      ],
+      "checks": {
+        "initial": {
+          "CHECK_01": "not_tested",
+          "CHECK_02": "pass",
+          "CHECK_03": "pass",
+          "CHECK_04": "pass",
+          "CHECK_05": "pass",
+          "CHECK_06": "pass",
+          "CHECK_07": "pass"
+        }
+      },
+      "outcome": "awp",
+      "scrapReason": "",
+      "language": "en",
+      "path": "create legal independent baseline > quantity_string > reject and unchanged reload",
+      "expected": {
+        "status": 422,
+        "baselineCreated": 201,
+        "business": "字符串数量拒绝"
+      },
+      "assertions": [
+        "字符串数量拒绝",
+        "先创建独立合法baseline并记录真实ID",
+        "拒绝分支校验原工单数据及version不变"
+      ],
+      "modelIdResolution": "planned fresh demo ID; runtime resolves by catalogKey",
+      "snTemplate": "{prefix}-047-quantity_string",
+      "inspection": "NotTested",
+      "expectedResult": "字符串数量拒绝"
+    },
+    {
+      "id": "C048",
+      "category": "bom",
+      "variant": "quantity_null",
+      "code": "quantity_null",
+      "account": "blair",
+      "sn": "JACKERY-SIM-20261030-048-quantity_null",
+      "catalogKey": "e1000v2-costdown",
+      "modelId": 5,
+      "version": "降本版",
+      "faultCodes": [
+        "F9"
+      ],
+      "materials": [
+        {
+          "sku": "26-0008-000030",
+          "qty": 4,
+          "standardQty": 4
+        }
+      ],
+      "checks": {
+        "initial": {
+          "CHECK_01": "not_tested",
+          "CHECK_02": "pass",
+          "CHECK_03": "pass",
+          "CHECK_04": "pass",
+          "CHECK_05": "pass",
+          "CHECK_06": "pass",
+          "CHECK_07": "pass"
+        }
+      },
+      "outcome": "awp",
+      "scrapReason": "",
+      "language": "zh",
+      "path": "create legal independent baseline > quantity_null > reject and unchanged reload",
+      "expected": {
+        "status": 422,
+        "baselineCreated": 201,
+        "business": "null数量拒绝"
+      },
+      "assertions": [
+        "null数量拒绝",
+        "先创建独立合法baseline并记录真实ID",
+        "拒绝分支校验原工单数据及version不变"
+      ],
+      "modelIdResolution": "planned fresh demo ID; runtime resolves by catalogKey",
+      "snTemplate": "{prefix}-048-quantity_null",
+      "inspection": "NotTested",
+      "expectedResult": "null数量拒绝"
+    },
+    {
+      "id": "C049",
+      "category": "bom",
+      "variant": "duplicate_material",
+      "code": "duplicate_material",
+      "account": "alex",
+      "sn": "JACKERY-SIM-20261030-049-duplicate_material",
+      "catalogKey": "e1000v2-costdown",
+      "modelId": 5,
+      "version": "降本版",
+      "faultCodes": [
+        "F0",
+        "F8"
+      ],
+      "materials": [
+        {
+          "sku": "26-0008-000030",
+          "qty": 1,
+          "standardQty": 4
+        }
+      ],
+      "checks": {
+        "initial": {
+          "CHECK_01": "not_tested",
+          "CHECK_02": "pass",
+          "CHECK_03": "pass",
+          "CHECK_04": "pass",
+          "CHECK_05": "pass",
+          "CHECK_06": "pass",
+          "CHECK_07": "pass"
+        }
+      },
+      "outcome": "awp",
+      "scrapReason": "",
+      "language": "en",
+      "path": "create legal independent baseline > duplicate_material > reject and unchanged reload",
+      "expected": {
+        "status": 422,
+        "baselineCreated": 201,
+        "business": "同一BOM行重复拒绝且不新增"
+      },
+      "assertions": [
+        "同一BOM行重复拒绝且不新增",
+        "先创建独立合法baseline并记录真实ID",
+        "拒绝分支校验原工单数据及version不变"
+      ],
+      "modelIdResolution": "planned fresh demo ID; runtime resolves by catalogKey",
+      "snTemplate": "{prefix}-049-duplicate_material",
+      "inspection": "NotTested",
+      "expectedResult": "同一BOM行重复拒绝且不新增"
+    },
+    {
+      "id": "C050",
+      "category": "bom",
+      "variant": "foreign_model_material",
+      "code": "foreign_model_material",
+      "account": "blair",
+      "sn": "JACKERY-SIM-20261030-050-foreign_model_material",
+      "catalogKey": "e1000v2-costdown",
+      "modelId": 5,
+      "version": "降本版",
+      "faultCodes": [
+        "F1",
+        "F3",
+        "F5"
+      ],
+      "materials": [
+        {
+          "sku": "26-0008-000030",
+          "qty": 4,
+          "standardQty": 4
+        }
+      ],
+      "checks": {
+        "initial": {
+          "CHECK_01": "not_tested",
+          "CHECK_02": "pass",
+          "CHECK_03": "pass",
+          "CHECK_04": "pass",
+          "CHECK_05": "pass",
+          "CHECK_06": "pass",
+          "CHECK_07": "pass"
+        }
+      },
+      "outcome": "awp",
+      "scrapReason": "",
+      "language": "zh",
+      "path": "create legal independent baseline > foreign_model_material > reject and unchanged reload",
+      "expected": {
+        "status": 422,
+        "baselineCreated": 201,
+        "business": "跨型号BOM拒绝"
+      },
+      "assertions": [
+        "跨型号BOM拒绝",
+        "先创建独立合法baseline并记录真实ID",
+        "拒绝分支校验原工单数据及version不变"
+      ],
+      "modelIdResolution": "planned fresh demo ID; runtime resolves by catalogKey",
+      "snTemplate": "{prefix}-050-foreign_model_material",
+      "inspection": "NotTested",
+      "expectedResult": "跨型号BOM拒绝"
+    },
+    {
+      "id": "C051",
+      "category": "bom",
+      "variant": "suspended_material",
+      "code": "suspended_material",
+      "account": "alex",
+      "sn": "JACKERY-SIM-20261030-051-suspended_material",
+      "catalogKey": "e2000v2-original",
+      "modelId": 10,
+      "version": "原始版",
+      "faultCodes": [],
+      "materials": [],
+      "checks": {
+        "initial": {
+          "CHECK_01": "not_tested",
+          "CHECK_02": "not_tested",
+          "CHECK_03": "not_tested",
+          "CHECK_04": "not_tested",
+          "CHECK_05": "not_tested",
+          "CHECK_06": "not_tested",
+          "CHECK_07": "not_tested",
+          "CHECK_08": "not_tested"
+        }
+      },
+      "outcome": "awp",
+      "scrapReason": "",
+      "language": "en",
+      "path": "create legal independent baseline > suspended_material > reject and unchanged reload",
+      "expected": {
+        "status": 422,
+        "baselineCreated": 201,
+        "business": "挂起物料不允许新增"
+      },
+      "assertions": [
+        "挂起物料不允许新增",
+        "先创建独立合法baseline并记录真实ID",
+        "拒绝分支校验原工单数据及version不变"
+      ],
+      "modelIdResolution": "planned fresh demo ID; runtime resolves by catalogKey",
+      "snTemplate": "{prefix}-051-suspended_material",
+      "inspection": "NotTested",
+      "expectedResult": "挂起物料不允许新增"
+    },
+    {
+      "id": "C052",
+      "category": "bom",
+      "variant": "unknown_bom",
+      "code": "unknown_bom",
+      "account": "blair",
+      "sn": "JACKERY-SIM-20261030-052-unknown_bom",
+      "catalogKey": "e1000v2-costdown",
+      "modelId": 5,
+      "version": "降本版",
+      "faultCodes": [
+        "F0"
+      ],
+      "materials": [
+        {
+          "sku": "26-0008-000030",
+          "qty": 4,
+          "standardQty": 4
+        }
+      ],
+      "checks": {
+        "initial": {
+          "CHECK_01": "not_tested",
+          "CHECK_02": "pass",
+          "CHECK_03": "pass",
+          "CHECK_04": "pass",
+          "CHECK_05": "pass",
+          "CHECK_06": "pass",
+          "CHECK_07": "pass"
+        }
+      },
+      "outcome": "awp",
+      "scrapReason": "",
+      "language": "zh",
+      "path": "create legal independent baseline > unknown_bom > reject and unchanged reload",
+      "expected": {
+        "status": 422,
+        "baselineCreated": 201,
+        "business": "不存在BOM拒绝"
+      },
+      "assertions": [
+        "不存在BOM拒绝",
+        "先创建独立合法baseline并记录真实ID",
+        "拒绝分支校验原工单数据及version不变"
+      ],
+      "modelIdResolution": "planned fresh demo ID; runtime resolves by catalogKey",
+      "snTemplate": "{prefix}-052-unknown_bom",
+      "inspection": "NotTested",
+      "expectedResult": "不存在BOM拒绝"
+    },
+    {
+      "id": "C053",
+      "category": "bom",
+      "variant": "cap_exact_save",
+      "code": "cap_exact_save",
+      "account": "alex",
+      "sn": "JACKERY-SIM-20261030-053-cap_exact_save",
+      "catalogKey": "e1000v2-costdown",
+      "modelId": 5,
+      "version": "降本版",
+      "faultCodes": [
+        "F9"
+      ],
+      "materials": [
+        {
+          "sku": "26-0008-000030",
+          "qty": 1,
+          "standardQty": 4
+        }
+      ],
+      "checks": {
+        "initial": {
+          "CHECK_01": "not_tested",
+          "CHECK_02": "pass",
+          "CHECK_03": "pass",
+          "CHECK_04": "pass",
+          "CHECK_05": "pass",
+          "CHECK_06": "pass",
+          "CHECK_07": "pass"
+        }
+      },
+      "outcome": "awp",
+      "scrapReason": "",
+      "language": "en",
+      "path": "create legal independent baseline > cap_exact_save > actual field assertions and reload",
+      "expected": {
+        "status": 200,
+        "baselineCreated": 201,
+        "business": "等于标准量可保存"
+      },
+      "assertions": [
+        "等于标准量可保存",
+        "先创建独立合法baseline并记录真实ID",
+        "保存/重载校验实际字段值，不只校验HTTP"
+      ],
+      "modelIdResolution": "planned fresh demo ID; runtime resolves by catalogKey",
+      "snTemplate": "{prefix}-053-cap_exact_save",
+      "inspection": "NotTested",
+      "expectedResult": "等于标准量可保存"
+    },
+    {
+      "id": "C054",
+      "category": "bom",
+      "variant": "cap_lower_save",
+      "code": "cap_lower_save",
+      "account": "blair",
+      "sn": "JACKERY-SIM-20261030-054-cap_lower_save",
+      "catalogKey": "e1000v2-costdown",
+      "modelId": 5,
+      "version": "降本版",
+      "faultCodes": [
+        "F0",
+        "F8"
+      ],
+      "materials": [
+        {
+          "sku": "26-0008-000030",
+          "qty": 4,
+          "standardQty": 4
+        }
+      ],
+      "checks": {
+        "initial": {
+          "CHECK_01": "not_tested",
+          "CHECK_02": "pass",
+          "CHECK_03": "pass",
+          "CHECK_04": "pass",
+          "CHECK_05": "pass",
+          "CHECK_06": "pass",
+          "CHECK_07": "pass"
+        }
+      },
+      "outcome": "awp",
+      "scrapReason": "",
+      "language": "zh",
+      "path": "create legal independent baseline > cap_lower_save > actual field assertions and reload",
+      "expected": {
+        "status": 200,
+        "baselineCreated": 201,
+        "business": "小于标准量可保存"
+      },
+      "assertions": [
+        "小于标准量可保存",
+        "先创建独立合法baseline并记录真实ID",
+        "保存/重载校验实际字段值，不只校验HTTP"
+      ],
+      "modelIdResolution": "planned fresh demo ID; runtime resolves by catalogKey",
+      "snTemplate": "{prefix}-054-cap_lower_save",
+      "inspection": "NotTested",
+      "expectedResult": "小于标准量可保存"
+    },
+    {
+      "id": "C055",
+      "category": "bom",
+      "variant": "wfr_repeated_not_accumulated",
+      "code": "wfr_repeated_not_accumulated",
+      "account": "alex",
+      "sn": "JACKERY-SIM-20261030-055-wfr_repeated_not_accumulated",
+      "catalogKey": "e1000v2-costdown",
+      "modelId": 5,
+      "version": "降本版",
+      "faultCodes": [
+        "F1",
+        "F3",
+        "F5"
+      ],
+      "materials": [
+        {
+          "sku": "26-0008-000030",
+          "qty": 1,
+          "standardQty": 4
+        }
+      ],
+      "checks": {
+        "initial": {
+          "CHECK_01": "not_tested",
+          "CHECK_02": "pass",
+          "CHECK_03": "pass",
+          "CHECK_04": "pass",
+          "CHECK_05": "pass",
+          "CHECK_06": "pass",
+          "CHECK_07": "pass"
+        }
+      },
+      "outcome": "awp",
+      "scrapReason": "",
+      "language": "en",
+      "path": "create legal independent baseline > wfr_repeated_not_accumulated > actual field assertions and reload",
+      "expected": {
+        "status": 200,
+        "baselineCreated": 201,
+        "business": "WFR相同耗用重复保存不累加"
+      },
+      "assertions": [
+        "WFR相同耗用重复保存不累加",
+        "先创建独立合法baseline并记录真实ID",
+        "保存/重载校验实际字段值，不只校验HTTP"
+      ],
+      "modelIdResolution": "planned fresh demo ID; runtime resolves by catalogKey",
+      "snTemplate": "{prefix}-055-wfr_repeated_not_accumulated",
+      "inspection": "NotTested",
+      "expectedResult": "WFR相同耗用重复保存不累加"
+    },
+    {
+      "id": "C056",
+      "category": "bom",
+      "variant": "catalog_counts",
+      "code": "catalog_counts",
+      "account": "blair",
+      "sn": "JACKERY-SIM-20261030-056-catalog_counts",
+      "catalogKey": "e1000v2-costdown",
+      "modelId": 5,
+      "version": "降本版",
+      "faultCodes": [],
+      "materials": [
+        {
+          "sku": "26-0008-000030",
+          "qty": 4,
+          "standardQty": 4
+        }
+      ],
+      "checks": {
+        "initial": {
+          "CHECK_01": "not_tested",
+          "CHECK_02": "pass",
+          "CHECK_03": "pass",
+          "CHECK_04": "pass",
+          "CHECK_05": "pass",
+          "CHECK_06": "pass",
+          "CHECK_07": "pass"
+        }
+      },
+      "outcome": "awp",
+      "scrapReason": "",
+      "language": "zh",
+      "path": "create legal independent baseline > catalog_counts > actual field assertions and reload",
+      "expected": {
+        "status": 200,
+        "baselineCreated": 201,
+        "business": "9型号/7启用与404/261/143行守恒"
+      },
+      "assertions": [
+        "9型号/7启用与404/261/143行守恒",
+        "先创建独立合法baseline并记录真实ID",
+        "保存/重载校验实际字段值，不只校验HTTP"
+      ],
+      "modelIdResolution": "planned fresh demo ID; runtime resolves by catalogKey",
+      "snTemplate": "{prefix}-056-catalog_counts",
+      "inspection": "NotTested",
+      "expectedResult": "9型号/7启用与404/261/143行守恒"
+    },
+    {
+      "id": "C057",
+      "category": "bom",
+      "variant": "suspended_original_create",
+      "code": "suspended_original_create",
+      "account": "alex",
+      "sn": "JACKERY-SIM-20261030-057-suspended_original_create",
+      "catalogKey": "e1000v2-costdown",
+      "modelId": 5,
+      "version": "降本版",
+      "faultCodes": [
+        "F0"
+      ],
+      "materials": [
+        {
+          "sku": "26-0008-000030",
+          "qty": 1,
+          "standardQty": 4
+        }
+      ],
+      "checks": {
+        "initial": {
+          "CHECK_01": "not_tested",
+          "CHECK_02": "pass",
+          "CHECK_03": "pass",
+          "CHECK_04": "pass",
+          "CHECK_05": "pass",
+          "CHECK_06": "pass",
+          "CHECK_07": "pass"
+        }
+      },
+      "outcome": "awp",
+      "scrapReason": "",
+      "language": "en",
+      "path": "create legal independent baseline > suspended_original_create > reject and unchanged reload",
+      "expected": {
+        "status": 422,
+        "baselineCreated": 201,
+        "business": "E1000V2原始版挂起不得新建"
+      },
+      "assertions": [
+        "E1000V2原始版挂起不得新建",
+        "先创建独立合法baseline并记录真实ID",
+        "拒绝分支校验原工单数据及version不变"
+      ],
+      "modelIdResolution": "planned fresh demo ID; runtime resolves by catalogKey",
+      "snTemplate": "{prefix}-057-suspended_original_create",
+      "inspection": "NotTested",
+      "expectedResult": "E1000V2原始版挂起不得新建"
+    },
+    {
+      "id": "C058",
+      "category": "bom",
+      "variant": "suspended_a_create",
+      "code": "suspended_a_create",
+      "account": "blair",
+      "sn": "JACKERY-SIM-20261030-058-suspended_a_create",
+      "catalogKey": "e1000v2-costdown",
+      "modelId": 5,
+      "version": "降本版",
+      "faultCodes": [
+        "F9"
+      ],
+      "materials": [
+        {
+          "sku": "26-0008-000030",
+          "qty": 4,
+          "standardQty": 4
+        }
+      ],
+      "checks": {
+        "initial": {
+          "CHECK_01": "not_tested",
+          "CHECK_02": "pass",
+          "CHECK_03": "pass",
+          "CHECK_04": "pass",
+          "CHECK_05": "pass",
+          "CHECK_06": "pass",
+          "CHECK_07": "pass"
+        }
+      },
+      "outcome": "awp",
+      "scrapReason": "",
+      "language": "zh",
+      "path": "create legal independent baseline > suspended_a_create > reject and unchanged reload",
+      "expected": {
+        "status": 422,
+        "baselineCreated": 201,
+        "business": "E2000plus A版挂起不得新建"
+      },
+      "assertions": [
+        "E2000plus A版挂起不得新建",
+        "先创建独立合法baseline并记录真实ID",
+        "拒绝分支校验原工单数据及version不变"
+      ],
+      "modelIdResolution": "planned fresh demo ID; runtime resolves by catalogKey",
+      "snTemplate": "{prefix}-058-suspended_a_create",
+      "inspection": "NotTested",
+      "expectedResult": "E2000plus A版挂起不得新建"
+    },
+    {
+      "id": "C059",
+      "category": "bom",
+      "variant": "e1000_no_consumption",
+      "code": "e1000_no_consumption",
+      "account": "alex",
+      "sn": "JACKERY-SIM-20261030-059-e1000_no_consumption",
+      "catalogKey": "e1000-default",
+      "modelId": 6,
+      "version": "未标注版本",
+      "faultCodes": [
+        "F0",
+        "F8"
+      ],
+      "materials": [],
+      "checks": {
+        "initial": {
+          "CHECK_01": "not_tested",
+          "CHECK_02": "pass",
+          "CHECK_03": "pass",
+          "CHECK_04": "pass",
+          "CHECK_05": "pass",
+          "CHECK_06": "pass"
+        }
+      },
+      "outcome": "awp",
+      "scrapReason": "",
+      "language": "en",
+      "path": "create legal independent baseline > e1000_no_consumption > reject and unchanged reload",
+      "expected": {
+        "status": 422,
+        "baselineCreated": 201,
+        "business": "E1000可检验与故障但缺量BOM拒绝耗用"
+      },
+      "assertions": [
+        "E1000可检验与故障但缺量BOM拒绝耗用",
+        "先创建独立合法baseline并记录真实ID",
+        "拒绝分支校验原工单数据及version不变"
+      ],
+      "modelIdResolution": "planned fresh demo ID; runtime resolves by catalogKey",
+      "snTemplate": "{prefix}-059-e1000_no_consumption",
+      "inspection": "NotTested",
+      "expectedResult": "E1000可检验与故障但缺量BOM拒绝耗用"
+    },
+    {
+      "id": "C060",
+      "category": "bom",
+      "variant": "version_independent_cap",
+      "code": "version_independent_cap",
+      "account": "blair",
+      "sn": "JACKERY-SIM-20261030-060-version_independent_cap",
+      "catalogKey": "e1000v2-costdown",
+      "modelId": 5,
+      "version": "降本版",
+      "faultCodes": [
+        "F1",
+        "F3",
+        "F5"
+      ],
+      "materials": [
+        {
+          "sku": "26-0008-000030",
+          "qty": 4,
+          "standardQty": 4
+        }
+      ],
+      "checks": {
+        "initial": {
+          "CHECK_01": "not_tested",
+          "CHECK_02": "pass",
+          "CHECK_03": "pass",
+          "CHECK_04": "pass",
+          "CHECK_05": "pass",
+          "CHECK_06": "pass",
+          "CHECK_07": "pass"
+        }
+      },
+      "outcome": "awp",
+      "scrapReason": "",
+      "language": "zh",
+      "path": "create legal independent baseline > version_independent_cap > actual field assertions and reload",
+      "expected": {
+        "status": 200,
+        "baselineCreated": 201,
+        "business": "同SKU独立工单：E1000V2降本17拒18，E2000plus-B25允25拒26；切型号同请求合法新BOM与F0/F9可保存，旧检查清空且新故障snapshot准确"
+      },
+      "assertions": [
+        "同SKU独立工单：E1000V2降本17拒18，E2000plus-B25允25拒26；切型号同请求合法新BOM与F0/F9可保存，旧检查清空且新故障snapshot准确",
+        "两独立合法工单均记录真实ID",
+        "保留R2切型号+BOM失败原始证据，修复后重放同路径"
+      ],
+      "modelIdResolution": "planned fresh demo ID; runtime resolves by catalogKey",
+      "snTemplate": "{prefix}-060-version_independent_cap",
+      "inspection": "NotTested",
+      "expectedResult": "同SKU独立工单：E1000V2降本17拒18，E2000plus-B25允25拒26；切型号同请求合法新BOM与F0/F9可保存，旧检查清空且新故障snapshot准确"
+    },
+    {
+      "id": "C061",
+      "category": "sn_model",
+      "variant": "blank_sn",
+      "code": "blank_sn",
+      "account": "alex",
+      "sn": "JACKERY-SIM-20261030-061-blank_sn",
+      "catalogKey": "e1000pro-default",
+      "modelId": 3,
+      "version": "未标注版本",
+      "faultCodes": [],
+      "materials": [
+        {
+          "sku": "08-1031-160035",
+          "qty": 1,
+          "standardQty": 2
+        }
+      ],
+      "checks": {
+        "initial": {
+          "CHECK_01": "not_tested",
+          "CHECK_02": "pass",
+          "CHECK_03": "pass",
+          "CHECK_04": "pass",
+          "CHECK_05": "pass",
+          "CHECK_06": "pass",
+          "CHECK_07": "pass"
+        }
+      },
+      "outcome": "awp",
+      "scrapReason": "",
+      "language": "en",
+      "path": "create legal independent baseline > blank_sn > reject and unchanged reload",
+      "expected": {
+        "status": 422,
+        "baselineCreated": 201,
+        "business": "空SN不得新建"
+      },
+      "assertions": [
+        "空SN不得新建",
+        "先创建独立合法baseline并记录真实ID",
+        "拒绝分支校验原工单数据及version不变"
+      ],
+      "modelIdResolution": "planned fresh demo ID; runtime resolves by catalogKey",
+      "snTemplate": "{prefix}-061-blank_sn",
+      "inspection": "NotTested",
+      "expectedResult": "空SN不得新建"
+    },
+    {
+      "id": "C062",
+      "category": "sn_model",
+      "variant": "whitespace_sn",
+      "code": "whitespace_sn",
+      "account": "blair",
+      "sn": "JACKERY-SIM-20261030-062-whitespace_sn",
+      "catalogKey": "e1000v2-costdown",
+      "modelId": 5,
+      "version": "降本版",
+      "faultCodes": [
+        "F0"
+      ],
+      "materials": [
+        {
+          "sku": "26-0008-000030",
+          "qty": 4,
+          "standardQty": 4
+        }
+      ],
+      "checks": {
+        "initial": {
+          "CHECK_01": "not_tested",
+          "CHECK_02": "pass",
+          "CHECK_03": "pass",
+          "CHECK_04": "pass",
+          "CHECK_05": "pass",
+          "CHECK_06": "pass",
+          "CHECK_07": "pass"
+        }
+      },
+      "outcome": "awp",
+      "scrapReason": "",
+      "language": "zh",
+      "path": "create legal independent baseline > whitespace_sn > reject and unchanged reload",
+      "expected": {
+        "status": 422,
+        "baselineCreated": 201,
+        "business": "全空白SN不得新建"
+      },
+      "assertions": [
+        "全空白SN不得新建",
+        "先创建独立合法baseline并记录真实ID",
+        "拒绝分支校验原工单数据及version不变"
+      ],
+      "modelIdResolution": "planned fresh demo ID; runtime resolves by catalogKey",
+      "snTemplate": "{prefix}-062-whitespace_sn",
+      "inspection": "NotTested",
+      "expectedResult": "全空白SN不得新建"
+    },
+    {
+      "id": "C063",
+      "category": "sn_model",
+      "variant": "overlength_sn",
+      "code": "overlength_sn",
+      "account": "alex",
+      "sn": "JACKERY-SIM-20261030-063-overlength_sn",
+      "catalogKey": "e1000-default",
+      "modelId": 6,
+      "version": "未标注版本",
+      "faultCodes": [
+        "F9"
+      ],
+      "materials": [],
+      "checks": {
+        "initial": {
+          "CHECK_01": "not_tested",
+          "CHECK_02": "pass",
+          "CHECK_03": "pass",
+          "CHECK_04": "pass",
+          "CHECK_05": "pass",
+          "CHECK_06": "pass"
+        }
+      },
+      "outcome": "awp",
+      "scrapReason": "",
+      "language": "en",
+      "path": "create legal independent baseline > overlength_sn > reject and unchanged reload",
+      "expected": {
+        "status": 422,
+        "baselineCreated": 201,
+        "business": "201字符SN拒绝"
+      },
+      "assertions": [
+        "201字符SN拒绝",
+        "先创建独立合法baseline并记录真实ID",
+        "拒绝分支校验原工单数据及version不变"
+      ],
+      "modelIdResolution": "planned fresh demo ID; runtime resolves by catalogKey",
+      "snTemplate": "{prefix}-063-overlength_sn",
+      "inspection": "NotTested",
+      "expectedResult": "201字符SN拒绝"
+    },
+    {
+      "id": "C064",
+      "category": "sn_model",
+      "variant": "numeric_sn",
+      "code": "numeric_sn",
+      "account": "blair",
+      "sn": "JACKERY-SIM-20261030-064-numeric_sn",
+      "catalogKey": "e2000plus-b",
+      "modelId": 8,
+      "version": "B版",
+      "faultCodes": [
+        "F0",
+        "F8"
+      ],
+      "materials": [
+        {
+          "sku": "26-0008-000012",
+          "qty": 2,
+          "standardQty": 2
+        }
+      ],
+      "checks": {
+        "initial": {
+          "CHECK_01": "not_tested",
+          "CHECK_02": "pass",
+          "CHECK_03": "pass",
+          "CHECK_04": "pass",
+          "CHECK_05": "pass",
+          "CHECK_06": "pass",
+          "CHECK_07": "pass"
+        }
+      },
+      "outcome": "awp",
+      "scrapReason": "",
+      "language": "zh",
+      "path": "create legal independent baseline > numeric_sn > reject and unchanged reload",
+      "expected": {
+        "status": 422,
+        "baselineCreated": 201,
+        "business": "数字型SN拒绝"
+      },
+      "assertions": [
+        "数字型SN拒绝",
+        "先创建独立合法baseline并记录真实ID",
+        "拒绝分支校验原工单数据及version不变"
+      ],
+      "modelIdResolution": "planned fresh demo ID; runtime resolves by catalogKey",
+      "snTemplate": "{prefix}-064-numeric_sn",
+      "inspection": "NotTested",
+      "expectedResult": "数字型SN拒绝"
+    },
+    {
+      "id": "C065",
+      "category": "sn_model",
+      "variant": "control_sn",
+      "code": "control_sn",
+      "account": "alex",
+      "sn": "JACKERY-SIM-20261030-065-control_sn",
+      "catalogKey": "e2000pro-default",
+      "modelId": 9,
+      "version": "未标注版本",
+      "faultCodes": [
+        "F1",
+        "F3",
+        "F5"
+      ],
+      "materials": [
+        {
+          "sku": "08-1031-155788",
+          "qty": 1,
+          "standardQty": 2
+        }
+      ],
+      "checks": {
+        "initial": {
+          "CHECK_01": "not_tested",
+          "CHECK_02": "pass",
+          "CHECK_03": "pass",
+          "CHECK_04": "pass",
+          "CHECK_05": "pass",
+          "CHECK_06": "pass",
+          "CHECK_07": "pass",
+          "CHECK_08": "pass"
+        }
+      },
+      "outcome": "awp",
+      "scrapReason": "",
+      "language": "en",
+      "path": "create legal independent baseline > control_sn > reject and unchanged reload",
+      "expected": {
+        "status": 422,
+        "baselineCreated": 201,
+        "business": "控制字符SN拒绝"
+      },
+      "assertions": [
+        "控制字符SN拒绝",
+        "先创建独立合法baseline并记录真实ID",
+        "拒绝分支校验原工单数据及version不变"
+      ],
+      "modelIdResolution": "planned fresh demo ID; runtime resolves by catalogKey",
+      "snTemplate": "{prefix}-065-control_sn",
+      "inspection": "NotTested",
+      "expectedResult": "控制字符SN拒绝"
+    },
+    {
+      "id": "C066",
+      "category": "sn_model",
+      "variant": "sn_trim",
+      "code": "sn_trim",
+      "account": "blair",
+      "sn": "JACKERY-SIM-20261030-066-sn_trim",
+      "catalogKey": "e2000v2-original",
+      "modelId": 10,
+      "version": "原始版",
+      "faultCodes": [],
+      "materials": [
+        {
+          "sku": "26-0008-000037",
+          "qty": 4,
+          "standardQty": 4
+        }
+      ],
+      "checks": {
+        "initial": {
+          "CHECK_01": "not_tested",
+          "CHECK_02": "pass",
+          "CHECK_03": "pass",
+          "CHECK_04": "pass",
+          "CHECK_05": "pass",
+          "CHECK_06": "pass",
+          "CHECK_07": "pass",
+          "CHECK_08": "pass"
+        }
+      },
+      "outcome": "awp",
+      "scrapReason": "",
+      "language": "zh",
+      "path": "create legal independent baseline > sn_trim > actual field assertions and reload",
+      "expected": {
+        "status": 201,
+        "baselineCreated": 201,
+        "business": "SN去两端空白且内容保留"
+      },
+      "assertions": [
+        "SN去两端空白且内容保留",
+        "先创建独立合法baseline并记录真实ID",
+        "保存/重载校验实际字段值，不只校验HTTP"
+      ],
+      "modelIdResolution": "planned fresh demo ID; runtime resolves by catalogKey",
+      "snTemplate": "{prefix}-066-sn_trim",
+      "inspection": "NotTested",
+      "expectedResult": "SN去两端空白且内容保留"
+    },
+    {
+      "id": "C067",
+      "category": "sn_model",
+      "variant": "sn_special_chars",
+      "code": "sn_special_chars",
+      "account": "alex",
+      "sn": "JACKERY-SIM-20261030-067-sn_special_chars",
+      "catalogKey": "e2000v2-costdown",
+      "modelId": 11,
+      "version": "降本版",
+      "faultCodes": [
+        "F0"
+      ],
+      "materials": [
+        {
+          "sku": "26-0008-000037",
+          "qty": 1,
+          "standardQty": 4
+        }
+      ],
+      "checks": {
+        "initial": {
+          "CHECK_01": "not_tested",
+          "CHECK_02": "pass",
+          "CHECK_03": "pass",
+          "CHECK_04": "pass",
+          "CHECK_05": "pass",
+          "CHECK_06": "pass",
+          "CHECK_07": "pass",
+          "CHECK_08": "pass"
+        }
+      },
+      "outcome": "awp",
+      "scrapReason": "",
+      "language": "en",
+      "path": "create legal independent baseline > sn_special_chars > actual field assertions and reload",
+      "expected": {
+        "status": 201,
+        "baselineCreated": 201,
+        "business": "SN特殊字符逐字保留"
+      },
+      "assertions": [
+        "SN特殊字符逐字保留",
+        "先创建独立合法baseline并记录真实ID",
+        "保存/重载校验实际字段值，不只校验HTTP"
+      ],
+      "modelIdResolution": "planned fresh demo ID; runtime resolves by catalogKey",
+      "snTemplate": "{prefix}-067-sn_special_chars",
+      "inspection": "NotTested",
+      "expectedResult": "SN特殊字符逐字保留"
+    },
+    {
+      "id": "C068",
+      "category": "sn_model",
+      "variant": "exact_history",
+      "code": "exact_history",
+      "account": "blair",
+      "sn": "JACKERY-SIM-20261030-068-exact_history",
+      "catalogKey": "e1000pro-default",
+      "modelId": 3,
+      "version": "未标注版本",
+      "faultCodes": [
+        "F9"
+      ],
+      "materials": [
+        {
+          "sku": "08-1031-160035",
+          "qty": 2,
+          "standardQty": 2
+        }
+      ],
+      "checks": {
+        "initial": {
+          "CHECK_01": "not_tested",
+          "CHECK_02": "pass",
+          "CHECK_03": "pass",
+          "CHECK_04": "pass",
+          "CHECK_05": "pass",
+          "CHECK_06": "pass",
+          "CHECK_07": "pass"
+        }
+      },
+      "outcome": "awp",
+      "scrapReason": "",
+      "language": "zh",
+      "path": "create legal independent baseline > exact_history > actual field assertions and reload",
+      "expected": {
+        "status": 200,
+        "baselineCreated": 201,
+        "business": "完整SN返回本件历史"
+      },
+      "assertions": [
+        "完整SN返回本件历史",
+        "先创建独立合法baseline并记录真实ID",
+        "保存/重载校验实际字段值，不只校验HTTP"
+      ],
+      "modelIdResolution": "planned fresh demo ID; runtime resolves by catalogKey",
+      "snTemplate": "{prefix}-068-exact_history",
+      "inspection": "NotTested",
+      "expectedResult": "完整SN返回本件历史"
+    },
+    {
+      "id": "C069",
+      "category": "sn_model",
+      "variant": "partial_history_empty",
+      "code": "partial_history_empty",
+      "account": "alex",
+      "sn": "JACKERY-SIM-20261030-069-partial_history_empty",
+      "catalogKey": "e1000v2-costdown",
+      "modelId": 5,
+      "version": "降本版",
+      "faultCodes": [
+        "F0",
+        "F8"
+      ],
+      "materials": [
+        {
+          "sku": "26-0008-000030",
+          "qty": 1,
+          "standardQty": 4
+        }
+      ],
+      "checks": {
+        "initial": {
+          "CHECK_01": "not_tested",
+          "CHECK_02": "pass",
+          "CHECK_03": "pass",
+          "CHECK_04": "pass",
+          "CHECK_05": "pass",
+          "CHECK_06": "pass",
+          "CHECK_07": "pass"
+        }
+      },
+      "outcome": "awp",
+      "scrapReason": "",
+      "language": "en",
+      "path": "create legal independent baseline > partial_history_empty > actual field assertions and reload",
+      "expected": {
+        "status": 200,
+        "baselineCreated": 201,
+        "business": "部分SN不匹配历史"
+      },
+      "assertions": [
+        "部分SN不匹配历史",
+        "先创建独立合法baseline并记录真实ID",
+        "保存/重载校验实际字段值，不只校验HTTP"
+      ],
+      "modelIdResolution": "planned fresh demo ID; runtime resolves by catalogKey",
+      "snTemplate": "{prefix}-069-partial_history_empty",
+      "inspection": "NotTested",
+      "expectedResult": "部分SN不匹配历史"
+    },
+    {
+      "id": "C070",
+      "category": "sn_model",
+      "variant": "same_sn_second_record",
+      "code": "same_sn_second_record",
+      "account": "blair",
+      "sn": "JACKERY-SIM-20261030-070-same_sn_second_record",
+      "catalogKey": "e1000-default",
+      "modelId": 6,
+      "version": "未标注版本",
+      "faultCodes": [
+        "F1",
+        "F3",
+        "F5"
+      ],
+      "materials": [],
+      "checks": {
+        "initial": {
+          "CHECK_01": "not_tested",
+          "CHECK_02": "pass",
+          "CHECK_03": "pass",
+          "CHECK_04": "pass",
+          "CHECK_05": "pass",
+          "CHECK_06": "pass"
+        }
+      },
+      "outcome": "awp",
+      "scrapReason": "",
+      "language": "zh",
+      "path": "create legal independent baseline > same_sn_second_record > actual field assertions and reload",
+      "expected": {
+        "status": 201,
+        "baselineCreated": 201,
+        "business": "同SN可有独立第二工单不覆盖"
+      },
+      "assertions": [
+        "同SN可有独立第二工单不覆盖",
+        "先创建独立合法baseline并记录真实ID",
+        "保存/重载校验实际字段值，不只校验HTTP"
+      ],
+      "modelIdResolution": "planned fresh demo ID; runtime resolves by catalogKey",
+      "snTemplate": "{prefix}-070-same_sn_second_record",
+      "inspection": "NotTested",
+      "expectedResult": "同SN可有独立第二工单不覆盖"
+    },
+    {
+      "id": "C071",
+      "category": "sn_model",
+      "variant": "invalid_model",
+      "code": "invalid_model",
+      "account": "alex",
+      "sn": "JACKERY-SIM-20261030-071-invalid_model",
+      "catalogKey": "e2000plus-b",
+      "modelId": 8,
+      "version": "B版",
+      "faultCodes": [],
+      "materials": [
+        {
+          "sku": "26-0008-000012",
+          "qty": 1,
+          "standardQty": 2
+        }
+      ],
+      "checks": {
+        "initial": {
+          "CHECK_01": "not_tested",
+          "CHECK_02": "pass",
+          "CHECK_03": "pass",
+          "CHECK_04": "pass",
+          "CHECK_05": "pass",
+          "CHECK_06": "pass",
+          "CHECK_07": "pass"
+        }
+      },
+      "outcome": "awp",
+      "scrapReason": "",
+      "language": "en",
+      "path": "create legal independent baseline > invalid_model > reject and unchanged reload",
+      "expected": {
+        "status": 422,
+        "baselineCreated": 201,
+        "business": "不存在modelId拒绝"
+      },
+      "assertions": [
+        "不存在modelId拒绝",
+        "先创建独立合法baseline并记录真实ID",
+        "拒绝分支校验原工单数据及version不变"
+      ],
+      "modelIdResolution": "planned fresh demo ID; runtime resolves by catalogKey",
+      "snTemplate": "{prefix}-071-invalid_model",
+      "inspection": "NotTested",
+      "expectedResult": "不存在modelId拒绝"
+    },
+    {
+      "id": "C072",
+      "category": "sn_model",
+      "variant": "string_model",
+      "code": "string_model",
+      "account": "blair",
+      "sn": "JACKERY-SIM-20261030-072-string_model",
+      "catalogKey": "e2000pro-default",
+      "modelId": 9,
+      "version": "未标注版本",
+      "faultCodes": [
+        "F0"
+      ],
+      "materials": [
+        {
+          "sku": "08-1031-155788",
+          "qty": 2,
+          "standardQty": 2
+        }
+      ],
+      "checks": {
+        "initial": {
+          "CHECK_01": "not_tested",
+          "CHECK_02": "pass",
+          "CHECK_03": "pass",
+          "CHECK_04": "pass",
+          "CHECK_05": "pass",
+          "CHECK_06": "pass",
+          "CHECK_07": "pass",
+          "CHECK_08": "pass"
+        }
+      },
+      "outcome": "awp",
+      "scrapReason": "",
+      "language": "zh",
+      "path": "create legal independent baseline > string_model > reject and unchanged reload",
+      "expected": {
+        "status": 422,
+        "baselineCreated": 201,
+        "business": "字符串modelId拒绝"
+      },
+      "assertions": [
+        "字符串modelId拒绝",
+        "先创建独立合法baseline并记录真实ID",
+        "拒绝分支校验原工单数据及version不变"
+      ],
+      "modelIdResolution": "planned fresh demo ID; runtime resolves by catalogKey",
+      "snTemplate": "{prefix}-072-string_model",
+      "inspection": "NotTested",
+      "expectedResult": "字符串modelId拒绝"
+    },
+    {
+      "id": "C073",
+      "category": "sn_model",
+      "variant": "model_change_clears_context",
+      "code": "model_change_clears_context",
+      "account": "alex",
+      "sn": "JACKERY-SIM-20261030-073-model_change_clears_context",
+      "catalogKey": "e2000v2-original",
+      "modelId": 10,
+      "version": "原始版",
+      "faultCodes": [
+        "F9"
+      ],
+      "materials": [
+        {
+          "sku": "26-0008-000037",
+          "qty": 1,
+          "standardQty": 4
+        }
+      ],
+      "checks": {
+        "initial": {
+          "CHECK_01": "not_tested",
+          "CHECK_02": "pass",
+          "CHECK_03": "pass",
+          "CHECK_04": "pass",
+          "CHECK_05": "pass",
+          "CHECK_06": "pass",
+          "CHECK_07": "pass",
+          "CHECK_08": "pass"
+        }
+      },
+      "outcome": "awp",
+      "scrapReason": "",
+      "language": "en",
+      "path": "create legal independent baseline > model_change_clears_context > actual field assertions and reload",
+      "expected": {
+        "status": 200,
+        "baselineCreated": 201,
+        "business": "切型号清空检查/物料/故障上下文"
+      },
+      "assertions": [
+        "切型号清空检查/物料/故障上下文",
+        "先创建独立合法baseline并记录真实ID",
+        "保存/重载校验实际字段值，不只校验HTTP"
+      ],
+      "modelIdResolution": "planned fresh demo ID; runtime resolves by catalogKey",
+      "snTemplate": "{prefix}-073-model_change_clears_context",
+      "inspection": "NotTested",
+      "expectedResult": "切型号清空检查/物料/故障上下文"
+    },
+    {
+      "id": "C074",
+      "category": "sn_model",
+      "variant": "model_change_foreign_material",
+      "code": "model_change_foreign_material",
+      "account": "blair",
+      "sn": "JACKERY-SIM-20261030-074-model_change_foreign_material",
+      "catalogKey": "e2000v2-costdown",
+      "modelId": 11,
+      "version": "降本版",
+      "faultCodes": [
+        "F0",
+        "F8"
+      ],
+      "materials": [
+        {
+          "sku": "26-0008-000037",
+          "qty": 4,
+          "standardQty": 4
+        }
+      ],
+      "checks": {
+        "initial": {
+          "CHECK_01": "not_tested",
+          "CHECK_02": "pass",
+          "CHECK_03": "pass",
+          "CHECK_04": "pass",
+          "CHECK_05": "pass",
+          "CHECK_06": "pass",
+          "CHECK_07": "pass",
+          "CHECK_08": "pass"
+        }
+      },
+      "outcome": "awp",
+      "scrapReason": "",
+      "language": "zh",
+      "path": "create legal independent baseline > model_change_foreign_material > reject and unchanged reload",
+      "expected": {
+        "status": 422,
+        "baselineCreated": 201,
+        "business": "切型号携带旧BOM拒绝"
+      },
+      "assertions": [
+        "切型号携带旧BOM拒绝",
+        "先创建独立合法baseline并记录真实ID",
+        "拒绝分支校验原工单数据及version不变"
+      ],
+      "modelIdResolution": "planned fresh demo ID; runtime resolves by catalogKey",
+      "snTemplate": "{prefix}-074-model_change_foreign_material",
+      "inspection": "NotTested",
+      "expectedResult": "切型号携带旧BOM拒绝"
+    },
+    {
+      "id": "C075",
+      "category": "sn_model",
+      "variant": "model_change_old_checks",
+      "code": "model_change_old_checks",
+      "account": "alex",
+      "sn": "JACKERY-SIM-20261030-075-model_change_old_checks",
+      "catalogKey": "e1000pro-default",
+      "modelId": 3,
+      "version": "未标注版本",
+      "faultCodes": [
+        "F1",
+        "F3",
+        "F5"
+      ],
+      "materials": [
+        {
+          "sku": "08-1031-160035",
+          "qty": 1,
+          "standardQty": 2
+        }
+      ],
+      "checks": {
+        "initial": {
+          "CHECK_01": "not_tested",
+          "CHECK_02": "pass",
+          "CHECK_03": "pass",
+          "CHECK_04": "pass",
+          "CHECK_05": "pass",
+          "CHECK_06": "pass",
+          "CHECK_07": "pass"
+        }
+      },
+      "outcome": "awp",
+      "scrapReason": "",
+      "language": "en",
+      "path": "create legal independent baseline > model_change_old_checks > reject and unchanged reload",
+      "expected": {
+        "status": 422,
+        "baselineCreated": 201,
+        "business": "切型号带未知旧检查key拒绝"
+      },
+      "assertions": [
+        "切型号带未知旧检查key拒绝",
+        "先创建独立合法baseline并记录真实ID",
+        "拒绝分支校验原工单数据及version不变"
+      ],
+      "modelIdResolution": "planned fresh demo ID; runtime resolves by catalogKey",
+      "snTemplate": "{prefix}-075-model_change_old_checks",
+      "inspection": "NotTested",
+      "expectedResult": "切型号带未知旧检查key拒绝"
+    },
+    {
+      "id": "C076",
+      "category": "fault",
+      "variant": "fault_optional",
+      "code": "fault_optional",
+      "account": "blair",
+      "sn": "JACKERY-SIM-20261030-076-fault_optional",
+      "catalogKey": "e1000pro-default",
+      "modelId": 3,
+      "version": "未标注版本",
+      "faultCodes": [],
+      "materials": [
+        {
+          "sku": "08-1031-160035",
+          "qty": 1,
+          "standardQty": 2
+        }
+      ],
+      "checks": {
+        "initial": {
+          "CHECK_01": "not_tested",
+          "CHECK_02": "pass",
+          "CHECK_03": "pass",
+          "CHECK_04": "pass",
+          "CHECK_05": "pass",
+          "CHECK_06": "pass",
+          "CHECK_07": "pass"
+        }
+      },
+      "outcome": "awp",
+      "scrapReason": "",
+      "language": "zh",
+      "path": "create legal independent baseline > fault_optional > actual field assertions and reload",
+      "expected": {
+        "status": 200,
+        "baselineCreated": 201,
+        "business": "不选故障可保存与重载"
+      },
+      "assertions": [
+        "不选故障可保存与重载",
+        "先创建独立合法baseline并记录真实ID",
+        "保存/重载校验实际字段值，不只校验HTTP"
+      ],
+      "modelIdResolution": "planned fresh demo ID; runtime resolves by catalogKey",
+      "snTemplate": "{prefix}-076-fault_optional",
+      "inspection": "NotTested",
+      "expectedResult": "不选故障可保存与重载"
+    },
+    {
+      "id": "C077",
+      "category": "fault",
+      "variant": "fault_all_f0_f9",
+      "code": "fault_all_f0_f9",
+      "account": "alex",
+      "sn": "JACKERY-SIM-20261030-077-fault_all_f0_f9",
+      "catalogKey": "e1000v2-costdown",
+      "modelId": 5,
+      "version": "降本版",
+      "faultCodes": [
+        "F0"
+      ],
+      "materials": [
+        {
+          "sku": "26-0008-000030",
+          "qty": 4,
+          "standardQty": 4
+        }
+      ],
+      "checks": {
+        "initial": {
+          "CHECK_01": "not_tested",
+          "CHECK_02": "pass",
+          "CHECK_03": "pass",
+          "CHECK_04": "pass",
+          "CHECK_05": "pass",
+          "CHECK_06": "pass",
+          "CHECK_07": "pass"
+        }
+      },
+      "outcome": "awp",
+      "scrapReason": "",
+      "language": "en",
+      "path": "create legal independent baseline > fault_all_f0_f9 > actual field assertions and reload",
+      "expected": {
+        "status": 200,
+        "baselineCreated": 201,
+        "business": "F0到F9全部多选可保存"
+      },
+      "assertions": [
+        "F0到F9全部多选可保存",
+        "先创建独立合法baseline并记录真实ID",
+        "保存/重载校验实际字段值，不只校验HTTP"
+      ],
+      "modelIdResolution": "planned fresh demo ID; runtime resolves by catalogKey",
+      "snTemplate": "{prefix}-077-fault_all_f0_f9",
+      "inspection": "NotTested",
+      "expectedResult": "F0到F9全部多选可保存"
+    },
+    {
+      "id": "C078",
+      "category": "fault",
+      "variant": "fault_unknown",
+      "code": "fault_unknown",
+      "account": "blair",
+      "sn": "JACKERY-SIM-20261030-078-fault_unknown",
+      "catalogKey": "e1000-default",
+      "modelId": 6,
+      "version": "未标注版本",
+      "faultCodes": [
+        "F9"
+      ],
+      "materials": [],
+      "checks": {
+        "initial": {
+          "CHECK_01": "not_tested",
+          "CHECK_02": "pass",
+          "CHECK_03": "pass",
+          "CHECK_04": "pass",
+          "CHECK_05": "pass",
+          "CHECK_06": "pass"
+        }
+      },
+      "outcome": "awp",
+      "scrapReason": "",
+      "language": "zh",
+      "path": "create legal independent baseline > fault_unknown > reject and unchanged reload",
+      "expected": {
+        "status": 422,
+        "baselineCreated": 201,
+        "business": "未知故障码拒绝且不写入"
+      },
+      "assertions": [
+        "未知故障码拒绝且不写入",
+        "先创建独立合法baseline并记录真实ID",
+        "拒绝分支校验原工单数据及version不变"
+      ],
+      "modelIdResolution": "planned fresh demo ID; runtime resolves by catalogKey",
+      "snTemplate": "{prefix}-078-fault_unknown",
+      "inspection": "NotTested",
+      "expectedResult": "未知故障码拒绝且不写入"
+    },
+    {
+      "id": "C079",
+      "category": "fault",
+      "variant": "fault_duplicate",
+      "code": "fault_duplicate",
+      "account": "alex",
+      "sn": "JACKERY-SIM-20261030-079-fault_duplicate",
+      "catalogKey": "e2000plus-b",
+      "modelId": 8,
+      "version": "B版",
+      "faultCodes": [
+        "F0",
+        "F8"
+      ],
+      "materials": [
+        {
+          "sku": "26-0008-000012",
+          "qty": 2,
+          "standardQty": 2
+        }
+      ],
+      "checks": {
+        "initial": {
+          "CHECK_01": "not_tested",
+          "CHECK_02": "pass",
+          "CHECK_03": "pass",
+          "CHECK_04": "pass",
+          "CHECK_05": "pass",
+          "CHECK_06": "pass",
+          "CHECK_07": "pass"
+        }
+      },
+      "outcome": "awp",
+      "scrapReason": "",
+      "language": "en",
+      "path": "create legal independent baseline > fault_duplicate > reject and unchanged reload",
+      "expected": {
+        "status": 422,
+        "baselineCreated": 201,
+        "business": "重复故障码拒绝"
+      },
+      "assertions": [
+        "重复故障码拒绝",
+        "先创建独立合法baseline并记录真实ID",
+        "拒绝分支校验原工单数据及version不变"
+      ],
+      "modelIdResolution": "planned fresh demo ID; runtime resolves by catalogKey",
+      "snTemplate": "{prefix}-079-fault_duplicate",
+      "inspection": "NotTested",
+      "expectedResult": "重复故障码拒绝"
+    },
+    {
+      "id": "C080",
+      "category": "fault",
+      "variant": "fault_nonarray",
+      "code": "fault_nonarray",
+      "account": "blair",
+      "sn": "JACKERY-SIM-20261030-080-fault_nonarray",
+      "catalogKey": "e2000pro-default",
+      "modelId": 9,
+      "version": "未标注版本",
+      "faultCodes": [
+        "F1",
+        "F3",
+        "F5"
+      ],
+      "materials": [
+        {
+          "sku": "08-1031-155788",
+          "qty": 1,
+          "standardQty": 2
+        }
+      ],
+      "checks": {
+        "initial": {
+          "CHECK_01": "not_tested",
+          "CHECK_02": "pass",
+          "CHECK_03": "pass",
+          "CHECK_04": "pass",
+          "CHECK_05": "pass",
+          "CHECK_06": "pass",
+          "CHECK_07": "pass",
+          "CHECK_08": "pass"
+        }
+      },
+      "outcome": "awp",
+      "scrapReason": "",
+      "language": "zh",
+      "path": "create legal independent baseline > fault_nonarray > reject and unchanged reload",
+      "expected": {
+        "status": 422,
+        "baselineCreated": 201,
+        "business": "故障非数组拒绝"
+      },
+      "assertions": [
+        "故障非数组拒绝",
+        "先创建独立合法baseline并记录真实ID",
+        "拒绝分支校验原工单数据及version不变"
+      ],
+      "modelIdResolution": "planned fresh demo ID; runtime resolves by catalogKey",
+      "snTemplate": "{prefix}-080-fault_nonarray",
+      "inspection": "NotTested",
+      "expectedResult": "故障非数组拒绝"
+    },
+    {
+      "id": "C081",
+      "category": "fault",
+      "variant": "fault_snapshot_original",
+      "code": "fault_snapshot_original",
+      "account": "alex",
+      "sn": "JACKERY-SIM-20261030-081-fault_snapshot_original",
+      "catalogKey": "e2000v2-original",
+      "modelId": 10,
+      "version": "原始版",
+      "faultCodes": [],
+      "materials": [
+        {
+          "sku": "26-0008-000037",
+          "qty": 4,
+          "standardQty": 4
+        }
+      ],
+      "checks": {
+        "initial": {
+          "CHECK_01": "not_tested",
+          "CHECK_02": "pass",
+          "CHECK_03": "pass",
+          "CHECK_04": "pass",
+          "CHECK_05": "pass",
+          "CHECK_06": "pass",
+          "CHECK_07": "pass",
+          "CHECK_08": "pass"
+        }
+      },
+      "outcome": "awp",
+      "scrapReason": "",
+      "language": "en",
+      "path": "create legal independent baseline > fault_snapshot_original > actual field assertions and reload",
+      "expected": {
+        "status": 200,
+        "baselineCreated": 201,
+        "business": "按型号故障原文snapshot逐字段一致"
+      },
+      "assertions": [
+        "按型号故障原文snapshot逐字段一致",
+        "先创建独立合法baseline并记录真实ID",
+        "保存/重载校验实际字段值，不只校验HTTP"
+      ],
+      "modelIdResolution": "planned fresh demo ID; runtime resolves by catalogKey",
+      "snTemplate": "{prefix}-081-fault_snapshot_original",
+      "inspection": "NotTested",
+      "expectedResult": "按型号故障原文snapshot逐字段一致"
+    },
+    {
+      "id": "C082",
+      "category": "fault",
+      "variant": "fault_snapshot_specialchars",
+      "code": "fault_snapshot_specialchars",
+      "account": "blair",
+      "sn": "JACKERY-SIM-20261030-082-fault_snapshot_specialchars",
+      "catalogKey": "e2000v2-costdown",
+      "modelId": 11,
+      "version": "降本版",
+      "faultCodes": [
+        "F0"
+      ],
+      "materials": [
+        {
+          "sku": "26-0008-000037",
+          "qty": 1,
+          "standardQty": 4
+        }
+      ],
+      "checks": {
+        "initial": {
+          "CHECK_01": "not_tested",
+          "CHECK_02": "pass",
+          "CHECK_03": "pass",
+          "CHECK_04": "pass",
+          "CHECK_05": "pass",
+          "CHECK_06": "pass",
+          "CHECK_07": "pass",
+          "CHECK_08": "pass"
+        }
+      },
+      "outcome": "awp",
+      "scrapReason": "",
+      "language": "zh",
+      "path": "create legal independent baseline > fault_snapshot_specialchars > actual field assertions and reload",
+      "expected": {
+        "status": 200,
+        "baselineCreated": 201,
+        "business": "隔离fixture特殊原文snapshot逐字保存与重载"
+      },
+      "assertions": [
+        "隔离fixture特殊原文snapshot逐字保存与重载",
+        "先创建独立合法baseline并记录真实ID",
+        "保存/重载校验实际字段值，不只校验HTTP"
+      ],
+      "modelIdResolution": "planned fresh demo ID; runtime resolves by catalogKey",
+      "snTemplate": "{prefix}-082-fault_snapshot_specialchars",
+      "inspection": "NotTested",
+      "expectedResult": "隔离fixture特殊原文snapshot逐字保存与重载"
+    },
+    {
+      "id": "C083",
+      "category": "fault",
+      "variant": "fault_model_switch",
+      "code": "fault_model_switch",
+      "account": "alex",
+      "sn": "JACKERY-SIM-20261030-083-fault_model_switch",
+      "catalogKey": "e1000pro-default",
+      "modelId": 3,
+      "version": "未标注版本",
+      "faultCodes": [
+        "F9"
+      ],
+      "materials": [
+        {
+          "sku": "08-1031-160035",
+          "qty": 2,
+          "standardQty": 2
+        }
+      ],
+      "checks": {
+        "initial": {
+          "CHECK_01": "not_tested",
+          "CHECK_02": "pass",
+          "CHECK_03": "pass",
+          "CHECK_04": "pass",
+          "CHECK_05": "pass",
+          "CHECK_06": "pass",
+          "CHECK_07": "pass"
+        }
+      },
+      "outcome": "awp",
+      "scrapReason": "",
+      "language": "en",
+      "path": "create legal independent baseline > fault_model_switch > actual field assertions and reload",
+      "expected": {
+        "status": 200,
+        "baselineCreated": 201,
+        "business": "切型号清空故障及snapshot"
+      },
+      "assertions": [
+        "切型号清空故障及snapshot",
+        "先创建独立合法baseline并记录真实ID",
+        "保存/重载校验实际字段值，不只校验HTTP"
+      ],
+      "modelIdResolution": "planned fresh demo ID; runtime resolves by catalogKey",
+      "snTemplate": "{prefix}-083-fault_model_switch",
+      "inspection": "NotTested",
+      "expectedResult": "切型号清空故障及snapshot"
+    },
+    {
+      "id": "C084",
+      "category": "fault",
+      "variant": "fault_order_preserved",
+      "code": "fault_order_preserved",
+      "account": "blair",
+      "sn": "JACKERY-SIM-20261030-084-fault_order_preserved",
+      "catalogKey": "e1000v2-costdown",
+      "modelId": 5,
+      "version": "降本版",
+      "faultCodes": [
+        "F0",
+        "F8"
+      ],
+      "materials": [
+        {
+          "sku": "26-0008-000030",
+          "qty": 1,
+          "standardQty": 4
+        }
+      ],
+      "checks": {
+        "initial": {
+          "CHECK_01": "not_tested",
+          "CHECK_02": "pass",
+          "CHECK_03": "pass",
+          "CHECK_04": "pass",
+          "CHECK_05": "pass",
+          "CHECK_06": "pass",
+          "CHECK_07": "pass"
+        }
+      },
+      "outcome": "awp",
+      "scrapReason": "",
+      "language": "zh",
+      "path": "create legal independent baseline > fault_order_preserved > actual field assertions and reload",
+      "expected": {
+        "status": 200,
+        "baselineCreated": 201,
+        "business": "故障多选顺序和原文快照一致"
+      },
+      "assertions": [
+        "故障多选顺序和原文快照一致",
+        "先创建独立合法baseline并记录真实ID",
+        "保存/重载校验实际字段值，不只校验HTTP"
+      ],
+      "modelIdResolution": "planned fresh demo ID; runtime resolves by catalogKey",
+      "snTemplate": "{prefix}-084-fault_order_preserved",
+      "inspection": "NotTested",
+      "expectedResult": "故障多选顺序和原文快照一致"
+    },
+    {
+      "id": "C085",
+      "category": "fault",
+      "variant": "fault_translation_notes",
+      "code": "fault_translation_notes",
+      "account": "alex",
+      "sn": "JACKERY-SIM-20261030-085-fault_translation_notes",
+      "catalogKey": "e1000-default",
+      "modelId": 6,
+      "version": "未标注版本",
+      "faultCodes": [
+        "F1",
+        "F3",
+        "F5"
+      ],
+      "materials": [],
+      "checks": {
+        "initial": {
+          "CHECK_01": "not_tested",
+          "CHECK_02": "pass",
+          "CHECK_03": "pass",
+          "CHECK_04": "pass",
+          "CHECK_05": "pass",
+          "CHECK_06": "pass"
+        }
+      },
+      "outcome": "awp",
+      "scrapReason": "",
+      "language": "en",
+      "path": "create legal independent baseline > fault_translation_notes > actual field assertions and reload",
+      "expected": {
+        "status": 200,
+        "baselineCreated": 201,
+        "business": "手工译文与故障原文独立保留"
+      },
+      "assertions": [
+        "手工译文与故障原文独立保留",
+        "先创建独立合法baseline并记录真实ID",
+        "保存/重载校验实际字段值，不只校验HTTP"
+      ],
+      "modelIdResolution": "planned fresh demo ID; runtime resolves by catalogKey",
+      "snTemplate": "{prefix}-085-fault_translation_notes",
+      "inspection": "NotTested",
+      "expectedResult": "手工译文与故障原文独立保留"
+    },
+    {
+      "id": "C086",
+      "category": "permission_audit",
+      "variant": "foreign_read",
+      "code": "foreign_read",
+      "account": "blair",
+      "sn": "JACKERY-SIM-20261030-086-foreign_read",
+      "catalogKey": "e1000pro-default",
+      "modelId": 3,
+      "version": "未标注版本",
+      "faultCodes": [],
+      "materials": [
+        {
+          "sku": "08-1031-160035",
+          "qty": 1,
+          "standardQty": 2
+        }
+      ],
+      "checks": {
+        "initial": {
+          "CHECK_01": "not_tested",
+          "CHECK_02": "pass",
+          "CHECK_03": "pass",
+          "CHECK_04": "pass",
+          "CHECK_05": "pass",
+          "CHECK_06": "pass",
+          "CHECK_07": "pass"
+        }
+      },
+      "outcome": "awp",
+      "scrapReason": "",
+      "language": "zh",
+      "path": "create legal independent baseline > foreign_read > reject and unchanged reload",
+      "expected": {
+        "status": 403,
+        "baselineCreated": 201,
+        "business": "他人记录直接读取403"
+      },
+      "assertions": [
+        "他人记录直接读取403",
+        "先创建独立合法baseline并记录真实ID",
+        "拒绝分支校验原工单数据及version不变"
+      ],
+      "modelIdResolution": "planned fresh demo ID; runtime resolves by catalogKey",
+      "snTemplate": "{prefix}-086-foreign_read",
+      "inspection": "NotTested",
+      "expectedResult": "他人记录直接读取403"
+    },
+    {
+      "id": "C087",
+      "category": "permission_audit",
+      "variant": "foreign_write",
+      "code": "foreign_write",
+      "account": "alex",
+      "sn": "JACKERY-SIM-20261030-087-foreign_write",
+      "catalogKey": "e1000v2-costdown",
+      "modelId": 5,
+      "version": "降本版",
+      "faultCodes": [
+        "F0"
+      ],
+      "materials": [
+        {
+          "sku": "26-0008-000030",
+          "qty": 4,
+          "standardQty": 4
+        }
+      ],
+      "checks": {
+        "initial": {
+          "CHECK_01": "not_tested",
+          "CHECK_02": "pass",
+          "CHECK_03": "pass",
+          "CHECK_04": "pass",
+          "CHECK_05": "pass",
+          "CHECK_06": "pass",
+          "CHECK_07": "pass"
+        }
+      },
+      "outcome": "awp",
+      "scrapReason": "",
+      "language": "en",
+      "path": "create legal independent baseline > foreign_write > reject and unchanged reload",
+      "expected": {
+        "status": 403,
+        "baselineCreated": 201,
+        "business": "他人记录写入403且原数据不变"
+      },
+      "assertions": [
+        "他人记录写入403且原数据不变",
+        "先创建独立合法baseline并记录真实ID",
+        "拒绝分支校验原工单数据及version不变"
+      ],
+      "modelIdResolution": "planned fresh demo ID; runtime resolves by catalogKey",
+      "snTemplate": "{prefix}-087-foreign_write",
+      "inspection": "NotTested",
+      "expectedResult": "他人记录写入403且原数据不变"
+    },
+    {
+      "id": "C088",
+      "category": "permission_audit",
+      "variant": "foreign_history_readonly",
+      "code": "foreign_history_readonly",
+      "account": "blair",
+      "sn": "JACKERY-SIM-20261030-088-foreign_history_readonly",
+      "catalogKey": "e1000-default",
+      "modelId": 6,
+      "version": "未标注版本",
+      "faultCodes": [
+        "F9"
+      ],
+      "materials": [],
+      "checks": {
+        "initial": {
+          "CHECK_01": "not_tested",
+          "CHECK_02": "pass",
+          "CHECK_03": "pass",
+          "CHECK_04": "pass",
+          "CHECK_05": "pass",
+          "CHECK_06": "pass"
+        }
+      },
+      "outcome": "awp",
+      "scrapReason": "",
+      "language": "zh",
+      "path": "create legal independent baseline > foreign_history_readonly > reject and unchanged reload",
+      "expected": {
+        "status": 403,
+        "baselineCreated": 201,
+        "business": "完整SN授权只读历史但写入仍403"
+      },
+      "assertions": [
+        "完整SN授权只读历史但写入仍403",
+        "先创建独立合法baseline并记录真实ID",
+        "拒绝分支校验原工单数据及version不变"
+      ],
+      "modelIdResolution": "planned fresh demo ID; runtime resolves by catalogKey",
+      "snTemplate": "{prefix}-088-foreign_history_readonly",
+      "inspection": "NotTested",
+      "expectedResult": "完整SN授权只读历史但写入仍403"
+    },
+    {
+      "id": "C089",
+      "category": "permission_audit",
+      "variant": "export_other_owner",
+      "code": "export_other_owner",
+      "account": "alex",
+      "sn": "JACKERY-SIM-20261030-089-export_other_owner",
+      "catalogKey": "e2000plus-b",
+      "modelId": 8,
+      "version": "B版",
+      "faultCodes": [
+        "F0",
+        "F8"
+      ],
+      "materials": [
+        {
+          "sku": "26-0008-000012",
+          "qty": 2,
+          "standardQty": 2
+        }
+      ],
+      "checks": {
+        "initial": {
+          "CHECK_01": "not_tested",
+          "CHECK_02": "pass",
+          "CHECK_03": "pass",
+          "CHECK_04": "pass",
+          "CHECK_05": "pass",
+          "CHECK_06": "pass",
+          "CHECK_07": "pass"
+        }
+      },
+      "outcome": "awp",
+      "scrapReason": "",
+      "language": "en",
+      "path": "create legal independent baseline > export_other_owner > reject and unchanged reload",
+      "expected": {
+        "status": 403,
+        "baselineCreated": 201,
+        "business": "作业员指定ownerId导出403"
+      },
+      "assertions": [
+        "作业员指定ownerId导出403",
+        "先创建独立合法baseline并记录真实ID",
+        "拒绝分支校验原工单数据及version不变"
+      ],
+      "modelIdResolution": "planned fresh demo ID; runtime resolves by catalogKey",
+      "snTemplate": "{prefix}-089-export_other_owner",
+      "inspection": "NotTested",
+      "expectedResult": "作业员指定ownerId导出403"
+    },
+    {
+      "id": "C090",
+      "category": "permission_audit",
+      "variant": "operator_admin",
+      "code": "operator_admin",
+      "account": "blair",
+      "sn": "JACKERY-SIM-20261030-090-operator_admin",
+      "catalogKey": "e2000pro-default",
+      "modelId": 9,
+      "version": "未标注版本",
+      "faultCodes": [
+        "F1",
+        "F3",
+        "F5"
+      ],
+      "materials": [
+        {
+          "sku": "08-1031-155788",
+          "qty": 1,
+          "standardQty": 2
+        }
+      ],
+      "checks": {
+        "initial": {
+          "CHECK_01": "not_tested",
+          "CHECK_02": "pass",
+          "CHECK_03": "pass",
+          "CHECK_04": "pass",
+          "CHECK_05": "pass",
+          "CHECK_06": "pass",
+          "CHECK_07": "pass",
+          "CHECK_08": "pass"
+        }
+      },
+      "outcome": "awp",
+      "scrapReason": "",
+      "language": "zh",
+      "path": "create legal independent baseline > operator_admin > reject and unchanged reload",
+      "expected": {
+        "status": 403,
+        "baselineCreated": 201,
+        "business": "作业员进入管理接口403"
+      },
+      "assertions": [
+        "作业员进入管理接口403",
+        "先创建独立合法baseline并记录真实ID",
+        "拒绝分支校验原工单数据及version不变"
+      ],
+      "modelIdResolution": "planned fresh demo ID; runtime resolves by catalogKey",
+      "snTemplate": "{prefix}-090-operator_admin",
+      "inspection": "NotTested",
+      "expectedResult": "作业员进入管理接口403"
+    },
+    {
+      "id": "C091",
+      "category": "permission_audit",
+      "variant": "csrf_invalid",
+      "code": "csrf_invalid",
+      "account": "alex",
+      "sn": "JACKERY-SIM-20261030-091-csrf_invalid",
+      "catalogKey": "e2000v2-original",
+      "modelId": 10,
+      "version": "原始版",
+      "faultCodes": [],
+      "materials": [
+        {
+          "sku": "26-0008-000037",
+          "qty": 4,
+          "standardQty": 4
+        }
+      ],
+      "checks": {
+        "initial": {
+          "CHECK_01": "not_tested",
+          "CHECK_02": "pass",
+          "CHECK_03": "pass",
+          "CHECK_04": "pass",
+          "CHECK_05": "pass",
+          "CHECK_06": "pass",
+          "CHECK_07": "pass",
+          "CHECK_08": "pass"
+        }
+      },
+      "outcome": "awp",
+      "scrapReason": "",
+      "language": "en",
+      "path": "create legal independent baseline > csrf_invalid > reject and unchanged reload",
+      "expected": {
+        "status": 403,
+        "baselineCreated": 201,
+        "business": "错误CSRF写入403且不变"
+      },
+      "assertions": [
+        "错误CSRF写入403且不变",
+        "先创建独立合法baseline并记录真实ID",
+        "拒绝分支校验原工单数据及version不变"
+      ],
+      "modelIdResolution": "planned fresh demo ID; runtime resolves by catalogKey",
+      "snTemplate": "{prefix}-091-csrf_invalid",
+      "inspection": "NotTested",
+      "expectedResult": "错误CSRF写入403且不变"
+    },
+    {
+      "id": "C092",
+      "category": "permission_audit",
+      "variant": "stale_version",
+      "code": "stale_version",
+      "account": "blair",
+      "sn": "JACKERY-SIM-20261030-092-stale_version",
+      "catalogKey": "e2000v2-costdown",
+      "modelId": 11,
+      "version": "降本版",
+      "faultCodes": [
+        "F0"
+      ],
+      "materials": [
+        {
+          "sku": "26-0008-000037",
+          "qty": 1,
+          "standardQty": 4
+        }
+      ],
+      "checks": {
+        "initial": {
+          "CHECK_01": "not_tested",
+          "CHECK_02": "pass",
+          "CHECK_03": "pass",
+          "CHECK_04": "pass",
+          "CHECK_05": "pass",
+          "CHECK_06": "pass",
+          "CHECK_07": "pass",
+          "CHECK_08": "pass"
+        }
+      },
+      "outcome": "awp",
+      "scrapReason": "",
+      "language": "zh",
+      "path": "create legal independent baseline > stale_version > reject and unchanged reload",
+      "expected": {
+        "status": 409,
+        "baselineCreated": 201,
+        "business": "陈旧版本409且原数据不变"
+      },
+      "assertions": [
+        "陈旧版本409且原数据不变",
+        "先创建独立合法baseline并记录真实ID",
+        "拒绝分支校验原工单数据及version不变"
+      ],
+      "modelIdResolution": "planned fresh demo ID; runtime resolves by catalogKey",
+      "snTemplate": "{prefix}-092-stale_version",
+      "inspection": "NotTested",
+      "expectedResult": "陈旧版本409且原数据不变"
+    },
+    {
+      "id": "C093",
+      "category": "permission_audit",
+      "variant": "completed_lock",
+      "code": "completed_lock",
+      "account": "alex",
+      "sn": "JACKERY-SIM-20261030-093-completed_lock",
+      "catalogKey": "e1000pro-default",
+      "modelId": 3,
+      "version": "未标注版本",
+      "faultCodes": [
+        "F9"
+      ],
+      "materials": [
+        {
+          "sku": "08-1031-160035",
+          "qty": 2,
+          "standardQty": 2
+        }
+      ],
+      "checks": {
+        "initial": {
+          "CHECK_01": "not_tested",
+          "CHECK_02": "pass",
+          "CHECK_03": "pass",
+          "CHECK_04": "pass",
+          "CHECK_05": "pass",
+          "CHECK_06": "pass",
+          "CHECK_07": "pass"
+        }
+      },
+      "outcome": "awp",
+      "scrapReason": "",
+      "language": "en",
+      "path": "create legal independent baseline > completed_lock > reject and unchanged reload",
+      "expected": {
+        "status": 403,
+        "baselineCreated": 201,
+        "business": "已完成记录作业员修改403"
+      },
+      "assertions": [
+        "已完成记录作业员修改403",
+        "先创建独立合法baseline并记录真实ID",
+        "拒绝分支校验原工单数据及version不变"
+      ],
+      "modelIdResolution": "planned fresh demo ID; runtime resolves by catalogKey",
+      "snTemplate": "{prefix}-093-completed_lock",
+      "inspection": "NotTested",
+      "expectedResult": "已完成记录作业员修改403"
+    },
+    {
+      "id": "C094",
+      "category": "permission_audit",
+      "variant": "correction_reason_required",
+      "code": "correction_reason_required",
+      "account": "blair",
+      "sn": "JACKERY-SIM-20261030-094-correction_reason_required",
+      "catalogKey": "e1000v2-costdown",
+      "modelId": 5,
+      "version": "降本版",
+      "faultCodes": [
+        "F0",
+        "F8"
+      ],
+      "materials": [
+        {
+          "sku": "26-0008-000030",
+          "qty": 1,
+          "standardQty": 4
+        }
+      ],
+      "checks": {
+        "initial": {
+          "CHECK_01": "not_tested",
+          "CHECK_02": "pass",
+          "CHECK_03": "pass",
+          "CHECK_04": "pass",
+          "CHECK_05": "pass",
+          "CHECK_06": "pass",
+          "CHECK_07": "pass"
+        }
+      },
+      "outcome": "awp",
+      "scrapReason": "",
+      "language": "zh",
+      "path": "create legal independent baseline > correction_reason_required > reject and unchanged reload",
+      "expected": {
+        "status": 422,
+        "baselineCreated": 201,
+        "business": "管理员更正缺原因422"
+      },
+      "assertions": [
+        "管理员更正缺原因422",
+        "先创建独立合法baseline并记录真实ID",
+        "拒绝分支校验原工单数据及version不变"
+      ],
+      "modelIdResolution": "planned fresh demo ID; runtime resolves by catalogKey",
+      "snTemplate": "{prefix}-094-correction_reason_required",
+      "inspection": "NotTested",
+      "expectedResult": "管理员更正缺原因422"
+    },
+    {
+      "id": "C095",
+      "category": "permission_audit",
+      "variant": "correction_audit",
+      "code": "correction_audit",
+      "account": "alex",
+      "sn": "JACKERY-SIM-20261030-095-correction_audit",
+      "catalogKey": "e1000-default",
+      "modelId": 6,
+      "version": "未标注版本",
+      "faultCodes": [
+        "F1",
+        "F3",
+        "F5"
+      ],
+      "materials": [],
+      "checks": {
+        "initial": {
+          "CHECK_01": "not_tested",
+          "CHECK_02": "pass",
+          "CHECK_03": "pass",
+          "CHECK_04": "pass",
+          "CHECK_05": "pass",
+          "CHECK_06": "pass"
+        }
+      },
+      "outcome": "awp",
+      "scrapReason": "",
+      "language": "en",
+      "path": "create legal independent baseline > correction_audit > actual field assertions and reload",
+      "expected": {
+        "status": 200,
+        "baselineCreated": 201,
+        "business": "管理员更正保留完成态并审计before/after/reason"
+      },
+      "assertions": [
+        "管理员更正保留完成态并审计before/after/reason",
+        "先创建独立合法baseline并记录真实ID",
+        "保存/重载校验实际字段值，不只校验HTTP"
+      ],
+      "modelIdResolution": "planned fresh demo ID; runtime resolves by catalogKey",
+      "snTemplate": "{prefix}-095-correction_audit",
+      "inspection": "NotTested",
+      "expectedResult": "管理员更正保留完成态并审计before/after/reason"
+    },
+    {
+      "id": "C096",
+      "category": "bilingual_export_attachment",
+      "variant": "language_en_export",
+      "code": "language_en_export",
+      "account": "blair",
+      "sn": "JACKERY-SIM-20261030-096-language_en_export",
+      "catalogKey": "e1000v2-costdown",
+      "modelId": 5,
+      "version": "降本版",
+      "faultCodes": [],
+      "materials": [
+        {
+          "sku": "26-0008-000030",
+          "qty": 1,
+          "standardQty": 4
+        }
+      ],
+      "checks": {
+        "initial": {
+          "CHECK_01": "not_tested",
+          "CHECK_02": "pass",
+          "CHECK_03": "pass",
+          "CHECK_04": "pass",
+          "CHECK_05": "pass",
+          "CHECK_06": "pass",
+          "CHECK_07": "pass"
+        }
+      },
+      "outcome": "awp",
+      "scrapReason": "",
+      "language": "zh",
+      "path": "create legal independent baseline > language_en_export > actual field assertions and reload",
+      "expected": {
+        "status": 200,
+        "baselineCreated": 201,
+        "business": "EN偏好保留，四表英文表头和实际值"
+      },
+      "assertions": [
+        "EN偏好保留，四表英文表头和实际值",
+        "先创建独立合法baseline并记录真实ID",
+        "保存/重载校验实际字段值，不只校验HTTP"
+      ],
+      "modelIdResolution": "planned fresh demo ID; runtime resolves by catalogKey",
+      "snTemplate": "{prefix}-096-language_en_export",
+      "inspection": "NotTested",
+      "expectedResult": "EN偏好保留，四表英文表头和实际值"
+    },
+    {
+      "id": "C097",
+      "category": "bilingual_export_attachment",
+      "variant": "language_zh_export",
+      "code": "language_zh_export",
+      "account": "alex",
+      "sn": "JACKERY-SIM-20261030-097-language_zh_export",
+      "catalogKey": "e1000-default",
+      "modelId": 6,
+      "version": "未标注版本",
+      "faultCodes": [
+        "F0"
+      ],
+      "materials": [],
+      "checks": {
+        "initial": {
+          "CHECK_01": "not_tested",
+          "CHECK_02": "pass",
+          "CHECK_03": "pass",
+          "CHECK_04": "pass",
+          "CHECK_05": "pass",
+          "CHECK_06": "pass"
+        }
+      },
+      "outcome": "awp",
+      "scrapReason": "",
+      "language": "en",
+      "path": "create legal independent baseline > language_zh_export > actual field assertions and reload",
+      "expected": {
+        "status": 200,
+        "baselineCreated": 201,
+        "business": "ZH偏好保留，四表中文表头和实际值"
+      },
+      "assertions": [
+        "ZH偏好保留，四表中文表头和实际值",
+        "先创建独立合法baseline并记录真实ID",
+        "保存/重载校验实际字段值，不只校验HTTP"
+      ],
+      "modelIdResolution": "planned fresh demo ID; runtime resolves by catalogKey",
+      "snTemplate": "{prefix}-097-language_zh_export",
+      "inspection": "NotTested",
+      "expectedResult": "ZH偏好保留，四表中文表头和实际值"
+    },
+    {
+      "id": "C098",
+      "category": "bilingual_export_attachment",
+      "variant": "notes_reference_export",
+      "code": "notes_reference_export",
+      "account": "blair",
+      "sn": "JACKERY-SIM-20261030-098-notes_reference_export",
+      "catalogKey": "e2000plus-b",
+      "modelId": 8,
+      "version": "B版",
+      "faultCodes": [
+        "F9"
+      ],
+      "materials": [
+        {
+          "sku": "26-0008-000012",
+          "qty": 1,
+          "standardQty": 2
+        }
+      ],
+      "checks": {
+        "initial": {
+          "CHECK_01": "not_tested",
+          "CHECK_02": "pass",
+          "CHECK_03": "pass",
+          "CHECK_04": "pass",
+          "CHECK_05": "pass",
+          "CHECK_06": "pass",
+          "CHECK_07": "pass"
+        }
+      },
+      "outcome": "awp",
+      "scrapReason": "",
+      "language": "zh",
+      "path": "create legal independent baseline > notes_reference_export > actual field assertions and reload",
+      "expected": {
+        "status": 200,
+        "baselineCreated": 201,
+        "business": "特殊原文/手工译文/旧参考字段中英文四表保留"
+      },
+      "assertions": [
+        "特殊原文/手工译文/旧参考字段中英文四表保留",
+        "先创建独立合法baseline并记录真实ID",
+        "保存/重载校验实际字段值，不只校验HTTP"
+      ],
+      "modelIdResolution": "planned fresh demo ID; runtime resolves by catalogKey",
+      "snTemplate": "{prefix}-098-notes_reference_export",
+      "inspection": "NotTested",
+      "expectedResult": "特殊原文/手工译文/旧参考字段中英文四表保留"
+    },
+    {
+      "id": "C099",
+      "category": "bilingual_export_attachment",
+      "variant": "photo_success_export",
+      "code": "photo_success_export",
+      "account": "alex",
+      "sn": "JACKERY-SIM-20261030-099-photo_success_export",
+      "catalogKey": "e2000pro-default",
+      "modelId": 9,
+      "version": "未标注版本",
+      "faultCodes": [
+        "F0",
+        "F8"
+      ],
+      "materials": [
+        {
+          "sku": "08-1031-155788",
+          "qty": 2,
+          "standardQty": 2
+        }
+      ],
+      "checks": {
+        "initial": {
+          "CHECK_01": "not_tested",
+          "CHECK_02": "pass",
+          "CHECK_03": "pass",
+          "CHECK_04": "pass",
+          "CHECK_05": "pass",
+          "CHECK_06": "pass",
+          "CHECK_07": "pass",
+          "CHECK_08": "pass"
+        }
+      },
+      "outcome": "awp",
+      "scrapReason": "",
+      "language": "en",
+      "path": "create legal independent baseline > photo_success_export > actual field assertions and reload",
+      "expected": {
+        "status": 200,
+        "baselineCreated": 201,
+        "business": "有效PNG上传下载字节一致，照片权限与四表PhotoIndex"
+      },
+      "assertions": [
+        "有效PNG上传下载字节一致，照片权限与四表PhotoIndex",
+        "先创建独立合法baseline并记录真实ID",
+        "保存/重载校验实际字段值，不只校验HTTP"
+      ],
+      "modelIdResolution": "planned fresh demo ID; runtime resolves by catalogKey",
+      "snTemplate": "{prefix}-099-photo_success_export",
+      "inspection": "NotTested",
+      "expectedResult": "有效PNG上传下载字节一致，照片权限与四表PhotoIndex"
+    },
+    {
+      "id": "C100",
+      "category": "bilingual_export_attachment",
+      "variant": "photo_failure_retry",
+      "code": "photo_failure_retry",
+      "account": "blair",
+      "sn": "JACKERY-SIM-20261030-100-photo_failure_retry",
+      "catalogKey": "e2000v2-original",
+      "modelId": 10,
+      "version": "原始版",
+      "faultCodes": [
+        "F1",
+        "F3",
+        "F5"
+      ],
+      "materials": [
+        {
+          "sku": "26-0008-000037",
+          "qty": 1,
+          "standardQty": 4
+        }
+      ],
+      "checks": {
+        "initial": {
+          "CHECK_01": "not_tested",
+          "CHECK_02": "pass",
+          "CHECK_03": "pass",
+          "CHECK_04": "pass",
+          "CHECK_05": "pass",
+          "CHECK_06": "pass",
+          "CHECK_07": "pass",
+          "CHECK_08": "pass"
+        }
+      },
+      "outcome": "awp",
+      "scrapReason": "",
+      "language": "zh",
+      "path": "create legal independent baseline > photo_failure_retry > actual field assertions and reload",
+      "expected": {
+        "status": 200,
+        "baselineCreated": 201,
+        "business": "非法图片422且工单不变，重试PNG成功并可导出"
+      },
+      "assertions": [
+        "非法图片422且工单不变，重试PNG成功并可导出",
+        "先创建独立合法baseline并记录真实ID",
+        "保存/重载校验实际字段值，不只校验HTTP"
+      ],
+      "modelIdResolution": "planned fresh demo ID; runtime resolves by catalogKey",
+      "snTemplate": "{prefix}-100-photo_failure_retry",
+      "inspection": "NotTested",
+      "expectedResult": "非法图片422且工单不变，重试PNG成功并可导出"
+    },
+    {
+      "id": "C101",
+      "category": "positive",
+      "variant": "positive_single_f5_requested",
+      "code": "positive_single_f5_requested",
+      "account": "alex",
+      "sn": "JACKERY-SIM-20261030-C101-single_f5_requested",
+      "catalogKey": "e1000pro-default",
+      "modelId": 3,
+      "version": "未标注版本",
+      "faultCodes": [
+        "F5"
+      ],
+      "materials": [
+        {
+          "sku": "08-1031-160035",
+          "qty": 1,
+          "standardQty": 2
+        }
+      ],
+      "checks": {
+        "initial": {
+          "CHECK_01": "fail",
+          "CHECK_02": "pass",
+          "CHECK_03": "pass",
+          "CHECK_04": "pass",
+          "CHECK_05": "pass",
+          "CHECK_06": "pass",
+          "CHECK_07": "pass"
+        }
+      },
+      "outcome": "rok",
+      "scrapReason": "",
+      "language": "en",
+      "path": "New Record > SN scan > Model > Fault Codes > BOM > Inspection > Save > Reload > Complete",
+      "expected": {
+        "status": 200,
+        "baselineCreated": 201,
+        "business": "单次检验AllPass；like_new合法结案锁定；故障/材料/原文保留；无final阶段"
+      },
+      "assertions": [
+        "指定故障组合F5准确保存/重载；双语BOM与硬上限不变；单次检验合法结案",
+        "选中故障代码及服务器原文快照逐项一致",
+        "英文上中文下，SN与Part SKU原码不变",
+        "仅checks.initial，无新增final"
+      ],
+      "modelIdResolution": "planned fresh demo ID; runtime resolves by catalogKey",
+      "snTemplate": "{prefix}-C101-single_f5_requested",
+      "inspection": "MixedFail",
+      "expectedResult": "指定故障组合F5准确保存/重载；双语BOM与硬上限不变；单次检验合法结案"
+    },
+    {
+      "id": "C102",
+      "category": "positive",
+      "variant": "positive_multi_f0_f3_f8_requested",
+      "code": "positive_multi_f0_f3_f8_requested",
+      "account": "blair",
+      "sn": "JACKERY-SIM-20261030-C102-multi_f0_f3_f8_requested",
+      "catalogKey": "e1000v2-costdown",
+      "modelId": 5,
+      "version": "降本版",
+      "faultCodes": [
+        "F0",
+        "F3",
+        "F8"
+      ],
+      "materials": [
+        {
+          "sku": "26-0008-000030",
+          "qty": 4,
+          "standardQty": 4
+        }
+      ],
+      "checks": {
+        "initial": {
+          "CHECK_01": "pass",
+          "CHECK_02": "pass",
+          "CHECK_03": "pass",
+          "CHECK_04": "pass",
+          "CHECK_05": "pass",
+          "CHECK_06": "pass",
+          "CHECK_07": "pass"
+        }
+      },
+      "outcome": "like_new",
+      "scrapReason": "",
+      "language": "zh",
+      "path": "New Record > SN scan > Model > Fault Codes > BOM > Inspection > Save > Reload > Complete",
+      "expected": {
+        "status": 200,
+        "baselineCreated": 201,
+        "business": "单次检验AllPass；like_new合法结案锁定；故障/材料/原文保留；无final阶段"
+      },
+      "assertions": [
+        "指定故障组合F0,F3,F8准确保存/重载；双语BOM与硬上限不变；单次检验合法结案",
+        "选中故障代码及服务器原文快照逐项一致",
+        "英文上中文下，SN与Part SKU原码不变",
+        "仅checks.initial，无新增final"
+      ],
+      "modelIdResolution": "planned fresh demo ID; runtime resolves by catalogKey",
+      "snTemplate": "{prefix}-C102-multi_f0_f3_f8_requested",
+      "inspection": "AllPass",
+      "expectedResult": "指定故障组合F0,F3,F8准确保存/重载；双语BOM与硬上限不变；单次检验合法结案"
+    },
+    {
+      "id": "C103",
+      "category": "positive",
+      "variant": "positive_multi_f2_f9_requested",
+      "code": "positive_multi_f2_f9_requested",
+      "account": "alex",
+      "sn": "JACKERY-SIM-20261030-C103-multi_f2_f9_requested",
+      "catalogKey": "e2000plus-b",
+      "modelId": 8,
+      "version": "B版",
+      "faultCodes": [
+        "F2",
+        "F9"
+      ],
+      "materials": [
+        {
+          "sku": "26-0008-000012",
+          "qty": 2,
+          "standardQty": 2
+        }
+      ],
+      "checks": {
+        "initial": {
+          "CHECK_01": "pass",
+          "CHECK_02": "pass",
+          "CHECK_03": "pass",
+          "CHECK_04": "pass",
+          "CHECK_05": "pass",
+          "CHECK_06": "pass",
+          "CHECK_07": "pass"
+        }
+      },
+      "outcome": "awp",
+      "scrapReason": "",
+      "language": "en",
+      "path": "New Record > SN scan > Model > Fault Codes > BOM > Inspection > Save > Reload > Complete",
+      "expected": {
+        "status": 200,
+        "baselineCreated": 201,
+        "business": "单次检验AllPass；like_new合法结案锁定；故障/材料/原文保留；无final阶段"
+      },
+      "assertions": [
+        "指定故障组合F2,F9准确保存/重载；双语BOM与硬上限不变；WFR保存续填后结案",
+        "选中故障代码及服务器原文快照逐项一致",
+        "英文上中文下，SN与Part SKU原码不变",
+        "仅checks.initial，无新增final"
+      ],
+      "modelIdResolution": "planned fresh demo ID; runtime resolves by catalogKey",
+      "snTemplate": "{prefix}-C103-multi_f2_f9_requested",
+      "inspection": "AllPass",
+      "expectedResult": "指定故障组合F2,F9准确保存/重载；双语BOM与硬上限不变；WFR保存续填后结案"
+    }
+  ],
+  "baselineCounts": {
+    "positive": 40,
+    "bom": 20,
+    "sn_model": 15,
+    "fault": 10,
+    "permission_audit": 10,
+    "bilingual_export_attachment": 5
+  },
+  "supplementaryCases": [
+    "C101",
+    "C102",
+    "C103"
+  ]
+}

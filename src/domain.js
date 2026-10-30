@@ -91,7 +91,7 @@ export function validateRecord(input,previous,catalog){
   if(!Array.isArray(faultCodes)||faultCodes.length>100||faultCodes.some(x=>typeof x!=='string')||new Set(faultCodes).size!==faultCodes.length)invalid('Fault code selections are invalid');
   const knowledge=(catalog.knowledge??[]).find(x=>x.id===v.modelId);
   v.faultCodes=[...faultCodes];v.faultSnapshot=faultCodes.map(code=>{
-    const prior=!modelChanged&&previous.faultSnapshot?.find(x=>x.code===code);
+    const prior=modelChanged?undefined:previous.faultSnapshot?.find(x=>x.code===code);
     const item=prior??knowledge?.faultCodes?.find(x=>x.code===code);if(!item)invalid('Fault code is outside the selected model');return structuredClone(item);
   });
   const known=new Set(v.modelSnapshot.checkItems.map(i=>i.code));
@@ -111,7 +111,7 @@ export function validateRecord(input,previous,catalog){
   v.materials=materials.map(item=>{
     if(!item||typeof item!=='object')invalid('BOM item is invalid');const id=positiveId(item.bomId,'BOM ID');
     if(used.has(id))invalid('Duplicate BOM material');used.add(id);
-    const old=!modelChanged&&previous.materials?.find(m=>m.bomId===id);
+    const old=modelChanged?undefined:previous.materials?.find(m=>m.bomId===id);
     const current=catalog.bom.find(b=>b.id===id&&b.modelId===v.modelId);
     const bom=old??(current?.active?current:null);if(!bom)invalid('Material is outside the model BOM');
     const quantity=item.quantity===undefined?1:item.quantity;

@@ -1,0 +1,9 @@
+{
+  "passed": true,
+  "workRecordsBefore": 4,
+  "workRecordsAfter": 4,
+  "photosUnchanged": true,
+  "rawWorkRecordJsonUnchanged": true,
+  "rawRecordSha256": "b3d70ad07442b2f5cbb4fb339c6dd70f7f9d30ee9efb527e7521a3540265c9b7",
+  "simulationWorkOrdersInSeparateDatabases": true
+}

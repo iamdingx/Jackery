@@ -1,0 +1,1188 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-30T03:22:23.348Z",
+  "recordIdentityRule": "Database path plus numeric record ID; numeric IDs alone must never be deduplicated across isolated databases.",
+  "summary": {
+    "scenarios": 103,
+    "passed": 103,
+    "failed": 0,
+    "independentUiBaselineRecords": 103,
+    "additionalBoundaryRecords": 4,
+    "totalCreatedScenarioRecords": 107,
+    "assertions": 2878,
+    "actualRequests": 1458,
+    "uncaughtPageErrors": 0
+  },
+  "execution": "Primary 100 and supplemental 3 ran serially in separate fresh databases after API primary simulation completed. No live data-demo work orders were written.",
+  "runs": [
+    {
+      "evidence": "BROWSER_RESULTS.json",
+      "prefix": "UI-R2-20261030",
+      "dataDir": "D:\\Codex\\JGPD\\huabao-service-v1\\tests\\.tmp\\batch-browser-ONXAv4",
+      "baseUrl": "http://127.0.0.1:49878",
+      "startedAt": "2026-10-30T03:19:00.245Z",
+      "finishedAt": "2026-10-30T03:20:39.273Z",
+      "counts": {
+        "planned": 100,
+        "executed": 100,
+        "passed": 100,
+        "failed": 0,
+        "independentBaselineRecords": 100,
+        "additionalBoundaryRecords": 4
+      },
+      "assertions": 2794,
+      "requests": 1418,
+      "elapsedCaseMs": 97587,
+      "maxCaseMs": 2018,
+      "records": [
+        {
+          "caseId": "C001",
+          "recordIdentity": {
+            "dataDir": "D:\\Codex\\JGPD\\huabao-service-v1\\tests\\.tmp\\batch-browser-ONXAv4",
+            "id": 3
+          },
+          "sn": "UI-R2-20261030-001-positive_like_new_1",
+          "additionalRecordIdentities": [],
+          "status": "passed"
+        },
+        {
+          "caseId": "C002",
+          "recordIdentity": {
+            "dataDir": "D:\\Codex\\JGPD\\huabao-service-v1\\tests\\.tmp\\batch-browser-ONXAv4",
+            "id": 4
+          },
+          "sn": "UI-R2-20261030-002-positive_good_1",
+          "additionalRecordIdentities": [],
+          "status": "passed"
+        },
+        {
+          "caseId": "C003",
+          "recordIdentity": {
+            "dataDir": "D:\\Codex\\JGPD\\huabao-service-v1\\tests\\.tmp\\batch-browser-ONXAv4",
+            "id": 5
+          },
+          "sn": "UI-R2-20261030-003-positive_acceptable_1",
+          "additionalRecordIdentities": [],
+          "status": "passed"
+        },
+        {
+          "caseId": "C004",
+          "recordIdentity": {
+            "dataDir": "D:\\Codex\\JGPD\\huabao-service-v1\\tests\\.tmp\\batch-browser-ONXAv4",
+            "id": 6
+          },
+          "sn": "UI-R2-20261030-004-positive_rok_1",
+          "additionalRecordIdentities": [],
+          "status": "passed"
+        },
+        {
+          "caseId": "C005",
+          "recordIdentity": {
+            "dataDir": "D:\\Codex\\JGPD\\huabao-service-v1\\tests\\.tmp\\batch-browser-ONXAv4",
+            "id": 7
+          },
+          "sn": "UI-R2-20261030-005-positive_scrap_1",
+          "additionalRecordIdentities": [],
+          "status": "passed"
+        },
+        {
+          "caseId": "C006",
+          "recordIdentity": {
+            "dataDir": "D:\\Codex\\JGPD\\huabao-service-v1\\tests\\.tmp\\batch-browser-ONXAv4",
+            "id": 8
+          },
+          "sn": "UI-R2-20261030-006-positive_awp_1",
+          "additionalRecordIdentities": [],
+          "status": "passed"
+        },
+        {
+          "caseId": "C007",
+          "recordIdentity": {
+            "dataDir": "D:\\Codex\\JGPD\\huabao-service-v1\\tests\\.tmp\\batch-browser-ONXAv4",
+            "id": 9
+          },
+          "sn": "UI-R2-20261030-007-positive_needs_analysis_1",
+          "additionalRecordIdentities": [],
+          "status": "passed"
+        },
+        {
+          "caseId": "C008",
+          "recordIdentity": {
+            "dataDir": "D:\\Codex\\JGPD\\huabao-service-v1\\tests\\.tmp\\batch-browser-ONXAv4",
+            "id": 10
+          },
+          "sn": "UI-R2-20261030-008-positive_like_new_2",
+          "additionalRecordIdentities": [],
+          "status": "passed"
+        },
+        {
+          "caseId": "C009",
+          "recordIdentity": {
+            "dataDir": "D:\\Codex\\JGPD\\huabao-service-v1\\tests\\.tmp\\batch-browser-ONXAv4",
+            "id": 11
+          },
+          "sn": "UI-R2-20261030-009-positive_good_2",
+          "additionalRecordIdentities": [],
+          "status": "passed"
+        },
+        {
+          "caseId": "C010",
+          "recordIdentity": {
+            "dataDir": "D:\\Codex\\JGPD\\huabao-service-v1\\tests\\.tmp\\batch-browser-ONXAv4",
+            "id": 12
+          },
+          "sn": "UI-R2-20261030-010-positive_acceptable_2",
+          "additionalRecordIdentities": [],
+          "status": "passed"
+        },
+        {
+          "caseId": "C011",
+          "recordIdentity": {
+            "dataDir": "D:\\Codex\\JGPD\\huabao-service-v1\\tests\\.tmp\\batch-browser-ONXAv4",
+            "id": 13
+          },
+          "sn": "UI-R2-20261030-011-positive_rok_2",
+          "additionalRecordIdentities": [],
+          "status": "passed"
+        },
+        {
+          "caseId": "C012",
+          "recordIdentity": {
+            "dataDir": "D:\\Codex\\JGPD\\huabao-service-v1\\tests\\.tmp\\batch-browser-ONXAv4",
+            "id": 14
+          },
+          "sn": "UI-R2-20261030-012-positive_scrap_2",
+          "additionalRecordIdentities": [],
+          "status": "passed"
+        },
+        {
+          "caseId": "C013",
+          "recordIdentity": {
+            "dataDir": "D:\\Codex\\JGPD\\huabao-service-v1\\tests\\.tmp\\batch-browser-ONXAv4",
+            "id": 15
+          },
+          "sn": "UI-R2-20261030-013-positive_awp_2",
+          "additionalRecordIdentities": [],
+          "status": "passed"
+        },
+        {
+          "caseId": "C014",
+          "recordIdentity": {
+            "dataDir": "D:\\Codex\\JGPD\\huabao-service-v1\\tests\\.tmp\\batch-browser-ONXAv4",
+            "id": 16
+          },
+          "sn": "UI-R2-20261030-014-positive_needs_analysis_2",
+          "additionalRecordIdentities": [],
+          "status": "passed"
+        },
+        {
+          "caseId": "C015",
+          "recordIdentity": {
+            "dataDir": "D:\\Codex\\JGPD\\huabao-service-v1\\tests\\.tmp\\batch-browser-ONXAv4",
+            "id": 17
+          },
+          "sn": "UI-R2-20261030-015-positive_like_new_3",
+          "additionalRecordIdentities": [],
+          "status": "passed"
+        },
+        {
+          "caseId": "C016",
+          "recordIdentity": {
+            "dataDir": "D:\\Codex\\JGPD\\huabao-service-v1\\tests\\.tmp\\batch-browser-ONXAv4",
+            "id": 18
+          },
+          "sn": "UI-R2-20261030-016-positive_good_3",
+          "additionalRecordIdentities": [],
+          "status": "passed"
+        },
+        {
+          "caseId": "C017",
+          "recordIdentity": {
+            "dataDir": "D:\\Codex\\JGPD\\huabao-service-v1\\tests\\.tmp\\batch-browser-ONXAv4",
+            "id": 19
+          },
+          "sn": "UI-R2-20261030-017-positive_acceptable_3",
+          "additionalRecordIdentities": [],
+          "status": "passed"
+        },
+        {
+          "caseId": "C018",
+          "recordIdentity": {
+            "dataDir": "D:\\Codex\\JGPD\\huabao-service-v1\\tests\\.tmp\\batch-browser-ONXAv4",
+            "id": 20
+          },
+          "sn": "UI-R2-20261030-018-positive_rok_3",
+          "additionalRecordIdentities": [],
+          "status": "passed"
+        },
+        {
+          "caseId": "C019",
+          "recordIdentity": {
+            "dataDir": "D:\\Codex\\JGPD\\huabao-service-v1\\tests\\.tmp\\batch-browser-ONXAv4",
+            "id": 21
+          },
+          "sn": "UI-R2-20261030-019-positive_scrap_3",
+          "additionalRecordIdentities": [],
+          "status": "passed"
+        },
+        {
+          "caseId": "C020",
+          "recordIdentity": {
+            "dataDir": "D:\\Codex\\JGPD\\huabao-service-v1\\tests\\.tmp\\batch-browser-ONXAv4",
+            "id": 22
+          },
+          "sn": "UI-R2-20261030-020-positive_awp_3",
+          "additionalRecordIdentities": [],
+          "status": "passed"
+        },
+        {
+          "caseId": "C021",
+          "recordIdentity": {
+            "dataDir": "D:\\Codex\\JGPD\\huabao-service-v1\\tests\\.tmp\\batch-browser-ONXAv4",
+            "id": 23
+          },
+          "sn": "UI-R2-20261030-021-positive_needs_analysis_3",
+          "additionalRecordIdentities": [],
+          "status": "passed"
+        },
+        {
+          "caseId": "C022",
+          "recordIdentity": {
+            "dataDir": "D:\\Codex\\JGPD\\huabao-service-v1\\tests\\.tmp\\batch-browser-ONXAv4",
+            "id": 24
+          },
+          "sn": "UI-R2-20261030-022-positive_like_new_4",
+          "additionalRecordIdentities": [],
+          "status": "passed"
+        },
+        {
+          "caseId": "C023",
+          "recordIdentity": {
+            "dataDir": "D:\\Codex\\JGPD\\huabao-service-v1\\tests\\.tmp\\batch-browser-ONXAv4",
+            "id": 25
+          },
+          "sn": "UI-R2-20261030-023-positive_good_4",
+          "additionalRecordIdentities": [],
+          "status": "passed"
+        },
+        {
+          "caseId": "C024",
+          "recordIdentity": {
+            "dataDir": "D:\\Codex\\JGPD\\huabao-service-v1\\tests\\.tmp\\batch-browser-ONXAv4",
+            "id": 26
+          },
+          "sn": "UI-R2-20261030-024-positive_acceptable_4",
+          "additionalRecordIdentities": [],
+          "status": "passed"
+        },
+        {
+          "caseId": "C025",
+          "recordIdentity": {
+            "dataDir": "D:\\Codex\\JGPD\\huabao-service-v1\\tests\\.tmp\\batch-browser-ONXAv4",
+            "id": 27
+          },
+          "sn": "UI-R2-20261030-025-positive_rok_4",
+          "additionalRecordIdentities": [],
+          "status": "passed"
+        },
+        {
+          "caseId": "C026",
+          "recordIdentity": {
+            "dataDir": "D:\\Codex\\JGPD\\huabao-service-v1\\tests\\.tmp\\batch-browser-ONXAv4",
+            "id": 28
+          },
+          "sn": "UI-R2-20261030-026-positive_scrap_4",
+          "additionalRecordIdentities": [],
+          "status": "passed"
+        },
+        {
+          "caseId": "C027",
+          "recordIdentity": {
+            "dataDir": "D:\\Codex\\JGPD\\huabao-service-v1\\tests\\.tmp\\batch-browser-ONXAv4",
+            "id": 29
+          },
+          "sn": "UI-R2-20261030-027-positive_awp_4",
+          "additionalRecordIdentities": [],
+          "status": "passed"
+        },
+        {
+          "caseId": "C028",
+          "recordIdentity": {
+            "dataDir": "D:\\Codex\\JGPD\\huabao-service-v1\\tests\\.tmp\\batch-browser-ONXAv4",
+            "id": 30
+          },
+          "sn": "UI-R2-20261030-028-positive_needs_analysis_4",
+          "additionalRecordIdentities": [],
+          "status": "passed"
+        },
+        {
+          "caseId": "C029",
+          "recordIdentity": {
+            "dataDir": "D:\\Codex\\JGPD\\huabao-service-v1\\tests\\.tmp\\batch-browser-ONXAv4",
+            "id": 31
+          },
+          "sn": "UI-R2-20261030-029-positive_like_new_5",
+          "additionalRecordIdentities": [],
+          "status": "passed"
+        },
+        {
+          "caseId": "C030",
+          "recordIdentity": {
+            "dataDir": "D:\\Codex\\JGPD\\huabao-service-v1\\tests\\.tmp\\batch-browser-ONXAv4",
+            "id": 32
+          },
+          "sn": "UI-R2-20261030-030-positive_good_5",
+          "additionalRecordIdentities": [],
+          "status": "passed"
+        },
+        {
+          "caseId": "C031",
+          "recordIdentity": {
+            "dataDir": "D:\\Codex\\JGPD\\huabao-service-v1\\tests\\.tmp\\batch-browser-ONXAv4",
+            "id": 33
+          },
+          "sn": "UI-R2-20261030-031-positive_acceptable_5",
+          "additionalRecordIdentities": [],
+          "status": "passed"
+        },
+        {
+          "caseId": "C032",
+          "recordIdentity": {
+            "dataDir": "D:\\Codex\\JGPD\\huabao-service-v1\\tests\\.tmp\\batch-browser-ONXAv4",
+            "id": 34
+          },
+          "sn": "UI-R2-20261030-032-positive_rok_5",
+          "additionalRecordIdentities": [],
+          "status": "passed"
+        },
+        {
+          "caseId": "C033",
+          "recordIdentity": {
+            "dataDir": "D:\\Codex\\JGPD\\huabao-service-v1\\tests\\.tmp\\batch-browser-ONXAv4",
+            "id": 35
+          },
+          "sn": "UI-R2-20261030-033-positive_scrap_5",
+          "additionalRecordIdentities": [],
+          "status": "passed"
+        },
+        {
+          "caseId": "C034",
+          "recordIdentity": {
+            "dataDir": "D:\\Codex\\JGPD\\huabao-service-v1\\tests\\.tmp\\batch-browser-ONXAv4",
+            "id": 36
+          },
+          "sn": "UI-R2-20261030-034-positive_awp_5",
+          "additionalRecordIdentities": [],
+          "status": "passed"
+        },
+        {
+          "caseId": "C035",
+          "recordIdentity": {
+            "dataDir": "D:\\Codex\\JGPD\\huabao-service-v1\\tests\\.tmp\\batch-browser-ONXAv4",
+            "id": 37
+          },
+          "sn": "UI-R2-20261030-035-positive_needs_analysis_5",
+          "additionalRecordIdentities": [],
+          "status": "passed"
+        },
+        {
+          "caseId": "C036",
+          "recordIdentity": {
+            "dataDir": "D:\\Codex\\JGPD\\huabao-service-v1\\tests\\.tmp\\batch-browser-ONXAv4",
+            "id": 38
+          },
+          "sn": "UI-R2-20261030-036-positive_like_new_6",
+          "additionalRecordIdentities": [],
+          "status": "passed"
+        },
+        {
+          "caseId": "C037",
+          "recordIdentity": {
+            "dataDir": "D:\\Codex\\JGPD\\huabao-service-v1\\tests\\.tmp\\batch-browser-ONXAv4",
+            "id": 39
+          },
+          "sn": "UI-R2-20261030-037-positive_good_6",
+          "additionalRecordIdentities": [],
+          "status": "passed"
+        },
+        {
+          "caseId": "C038",
+          "recordIdentity": {
+            "dataDir": "D:\\Codex\\JGPD\\huabao-service-v1\\tests\\.tmp\\batch-browser-ONXAv4",
+            "id": 40
+          },
+          "sn": "UI-R2-20261030-038-positive_acceptable_6",
+          "additionalRecordIdentities": [],
+          "status": "passed"
+        },
+        {
+          "caseId": "C039",
+          "recordIdentity": {
+            "dataDir": "D:\\Codex\\JGPD\\huabao-service-v1\\tests\\.tmp\\batch-browser-ONXAv4",
+            "id": 41
+          },
+          "sn": "UI-R2-20261030-039-positive_rok_6",
+          "additionalRecordIdentities": [],
+          "status": "passed"
+        },
+        {
+          "caseId": "C040",
+          "recordIdentity": {
+            "dataDir": "D:\\Codex\\JGPD\\huabao-service-v1\\tests\\.tmp\\batch-browser-ONXAv4",
+            "id": 42
+          },
+          "sn": "UI-R2-20261030-040-positive_scrap_6",
+          "additionalRecordIdentities": [],
+          "status": "passed"
+        },
+        {
+          "caseId": "C041",
+          "recordIdentity": {
+            "dataDir": "D:\\Codex\\JGPD\\huabao-service-v1\\tests\\.tmp\\batch-browser-ONXAv4",
+            "id": 43
+          },
+          "sn": "UI-R2-20261030-041-cap_save_over",
+          "additionalRecordIdentities": [],
+          "status": "passed"
+        },
+        {
+          "caseId": "C042",
+          "recordIdentity": {
+            "dataDir": "D:\\Codex\\JGPD\\huabao-service-v1\\tests\\.tmp\\batch-browser-ONXAv4",
+            "id": 44
+          },
+          "sn": "UI-R2-20261030-042-cap_complete_over",
+          "additionalRecordIdentities": [],
+          "status": "passed"
+        },
+        {
+          "caseId": "C043",
+          "recordIdentity": {
+            "dataDir": "D:\\Codex\\JGPD\\huabao-service-v1\\tests\\.tmp\\batch-browser-ONXAv4",
+            "id": 45
+          },
+          "sn": "UI-R2-20261030-043-cap_admin_over",
+          "additionalRecordIdentities": [],
+          "status": "passed"
+        },
+        {
+          "caseId": "C044",
+          "recordIdentity": {
+            "dataDir": "D:\\Codex\\JGPD\\huabao-service-v1\\tests\\.tmp\\batch-browser-ONXAv4",
+            "id": 46
+          },
+          "sn": "UI-R2-20261030-044-quantity_zero",
+          "additionalRecordIdentities": [],
+          "status": "passed"
+        },
+        {
+          "caseId": "C045",
+          "recordIdentity": {
+            "dataDir": "D:\\Codex\\JGPD\\huabao-service-v1\\tests\\.tmp\\batch-browser-ONXAv4",
+            "id": 47
+          },
+          "sn": "UI-R2-20261030-045-quantity_negative",
+          "additionalRecordIdentities": [],
+          "status": "passed"
+        },
+        {
+          "caseId": "C046",
+          "recordIdentity": {
+            "dataDir": "D:\\Codex\\JGPD\\huabao-service-v1\\tests\\.tmp\\batch-browser-ONXAv4",
+            "id": 48
+          },
+          "sn": "UI-R2-20261030-046-pcs_fraction",
+          "additionalRecordIdentities": [],
+          "status": "passed"
+        },
+        {
+          "caseId": "C047",
+          "recordIdentity": {
+            "dataDir": "D:\\Codex\\JGPD\\huabao-service-v1\\tests\\.tmp\\batch-browser-ONXAv4",
+            "id": 49
+          },
+          "sn": "UI-R2-20261030-047-quantity_string",
+          "additionalRecordIdentities": [],
+          "status": "passed"
+        },
+        {
+          "caseId": "C048",
+          "recordIdentity": {
+            "dataDir": "D:\\Codex\\JGPD\\huabao-service-v1\\tests\\.tmp\\batch-browser-ONXAv4",
+            "id": 50
+          },
+          "sn": "UI-R2-20261030-048-quantity_null",
+          "additionalRecordIdentities": [],
+          "status": "passed"
+        },
+        {
+          "caseId": "C049",
+          "recordIdentity": {
+            "dataDir": "D:\\Codex\\JGPD\\huabao-service-v1\\tests\\.tmp\\batch-browser-ONXAv4",
+            "id": 51
+          },
+          "sn": "UI-R2-20261030-049-duplicate_material",
+          "additionalRecordIdentities": [],
+          "status": "passed"
+        },
+        {
+          "caseId": "C050",
+          "recordIdentity": {
+            "dataDir": "D:\\Codex\\JGPD\\huabao-service-v1\\tests\\.tmp\\batch-browser-ONXAv4",
+            "id": 52
+          },
+          "sn": "UI-R2-20261030-050-foreign_model_material",
+          "additionalRecordIdentities": [],
+          "status": "passed"
+        },
+        {
+          "caseId": "C051",
+          "recordIdentity": {
+            "dataDir": "D:\\Codex\\JGPD\\huabao-service-v1\\tests\\.tmp\\batch-browser-ONXAv4",
+            "id": 53
+          },
+          "sn": "UI-R2-20261030-051-suspended_material",
+          "additionalRecordIdentities": [],
+          "status": "passed"
+        },
+        {
+          "caseId": "C052",
+          "recordIdentity": {
+            "dataDir": "D:\\Codex\\JGPD\\huabao-service-v1\\tests\\.tmp\\batch-browser-ONXAv4",
+            "id": 54
+          },
+          "sn": "UI-R2-20261030-052-unknown_bom",
+          "additionalRecordIdentities": [],
+          "status": "passed"
+        },
+        {
+          "caseId": "C053",
+          "recordIdentity": {
+            "dataDir": "D:\\Codex\\JGPD\\huabao-service-v1\\tests\\.tmp\\batch-browser-ONXAv4",
+            "id": 55
+          },
+          "sn": "UI-R2-20261030-053-cap_exact_save",
+          "additionalRecordIdentities": [],
+          "status": "passed"
+        },
+        {
+          "caseId": "C054",
+          "recordIdentity": {
+            "dataDir": "D:\\Codex\\JGPD\\huabao-service-v1\\tests\\.tmp\\batch-browser-ONXAv4",
+            "id": 56
+          },
+          "sn": "UI-R2-20261030-054-cap_lower_save",
+          "additionalRecordIdentities": [],
+          "status": "passed"
+        },
+        {
+          "caseId": "C055",
+          "recordIdentity": {
+            "dataDir": "D:\\Codex\\JGPD\\huabao-service-v1\\tests\\.tmp\\batch-browser-ONXAv4",
+            "id": 57
+          },
+          "sn": "UI-R2-20261030-055-wfr_repeated_not_accumulated",
+          "additionalRecordIdentities": [],
+          "status": "passed"
+        },
+        {
+          "caseId": "C056",
+          "recordIdentity": {
+            "dataDir": "D:\\Codex\\JGPD\\huabao-service-v1\\tests\\.tmp\\batch-browser-ONXAv4",
+            "id": 58
+          },
+          "sn": "UI-R2-20261030-056-catalog_counts",
+          "additionalRecordIdentities": [],
+          "status": "passed"
+        },
+        {
+          "caseId": "C057",
+          "recordIdentity": {
+            "dataDir": "D:\\Codex\\JGPD\\huabao-service-v1\\tests\\.tmp\\batch-browser-ONXAv4",
+            "id": 59
+          },
+          "sn": "UI-R2-20261030-057-suspended_original_create",
+          "additionalRecordIdentities": [],
+          "status": "passed"
+        },
+        {
+          "caseId": "C058",
+          "recordIdentity": {
+            "dataDir": "D:\\Codex\\JGPD\\huabao-service-v1\\tests\\.tmp\\batch-browser-ONXAv4",
+            "id": 60
+          },
+          "sn": "UI-R2-20261030-058-suspended_a_create",
+          "additionalRecordIdentities": [],
+          "status": "passed"
+        },
+        {
+          "caseId": "C059",
+          "recordIdentity": {
+            "dataDir": "D:\\Codex\\JGPD\\huabao-service-v1\\tests\\.tmp\\batch-browser-ONXAv4",
+            "id": 61
+          },
+          "sn": "UI-R2-20261030-059-e1000_no_consumption",
+          "additionalRecordIdentities": [],
+          "status": "passed"
+        },
+        {
+          "caseId": "C060",
+          "recordIdentity": {
+            "dataDir": "D:\\Codex\\JGPD\\huabao-service-v1\\tests\\.tmp\\batch-browser-ONXAv4",
+            "id": 62
+          },
+          "sn": "UI-R2-20261030-060-version_independent_cap",
+          "additionalRecordIdentities": [
+            {
+              "dataDir": "D:\\Codex\\JGPD\\huabao-service-v1\\tests\\.tmp\\batch-browser-ONXAv4",
+              "id": 63
+            }
+          ],
+          "status": "passed"
+        },
+        {
+          "caseId": "C061",
+          "recordIdentity": {
+            "dataDir": "D:\\Codex\\JGPD\\huabao-service-v1\\tests\\.tmp\\batch-browser-ONXAv4",
+            "id": 64
+          },
+          "sn": "UI-R2-20261030-061-blank_sn",
+          "additionalRecordIdentities": [],
+          "status": "passed"
+        },
+        {
+          "caseId": "C062",
+          "recordIdentity": {
+            "dataDir": "D:\\Codex\\JGPD\\huabao-service-v1\\tests\\.tmp\\batch-browser-ONXAv4",
+            "id": 65
+          },
+          "sn": "UI-R2-20261030-062-whitespace_sn",
+          "additionalRecordIdentities": [],
+          "status": "passed"
+        },
+        {
+          "caseId": "C063",
+          "recordIdentity": {
+            "dataDir": "D:\\Codex\\JGPD\\huabao-service-v1\\tests\\.tmp\\batch-browser-ONXAv4",
+            "id": 66
+          },
+          "sn": "UI-R2-20261030-063-overlength_sn",
+          "additionalRecordIdentities": [],
+          "status": "passed"
+        },
+        {
+          "caseId": "C064",
+          "recordIdentity": {
+            "dataDir": "D:\\Codex\\JGPD\\huabao-service-v1\\tests\\.tmp\\batch-browser-ONXAv4",
+            "id": 67
+          },
+          "sn": "UI-R2-20261030-064-numeric_sn",
+          "additionalRecordIdentities": [],
+          "status": "passed"
+        },
+        {
+          "caseId": "C065",
+          "recordIdentity": {
+            "dataDir": "D:\\Codex\\JGPD\\huabao-service-v1\\tests\\.tmp\\batch-browser-ONXAv4",
+            "id": 68
+          },
+          "sn": "UI-R2-20261030-065-control_sn",
+          "additionalRecordIdentities": [],
+          "status": "passed"
+        },
+        {
+          "caseId": "C066",
+          "recordIdentity": {
+            "dataDir": "D:\\Codex\\JGPD\\huabao-service-v1\\tests\\.tmp\\batch-browser-ONXAv4",
+            "id": 69
+          },
+          "sn": "UI-R2-20261030-066-sn_trim",
+          "additionalRecordIdentities": [
+            {
+              "dataDir": "D:\\Codex\\JGPD\\huabao-service-v1\\tests\\.tmp\\batch-browser-ONXAv4",
+              "id": 70
+            }
+          ],
+          "status": "passed"
+        },
+        {
+          "caseId": "C067",
+          "recordIdentity": {
+            "dataDir": "D:\\Codex\\JGPD\\huabao-service-v1\\tests\\.tmp\\batch-browser-ONXAv4",
+            "id": 71
+          },
+          "sn": "UI-R2-20261030-067-sn_special_chars",
+          "additionalRecordIdentities": [
+            {
+              "dataDir": "D:\\Codex\\JGPD\\huabao-service-v1\\tests\\.tmp\\batch-browser-ONXAv4",
+              "id": 72
+            }
+          ],
+          "status": "passed"
+        },
+        {
+          "caseId": "C068",
+          "recordIdentity": {
+            "dataDir": "D:\\Codex\\JGPD\\huabao-service-v1\\tests\\.tmp\\batch-browser-ONXAv4",
+            "id": 73
+          },
+          "sn": "UI-R2-20261030-068-exact_history",
+          "additionalRecordIdentities": [],
+          "status": "passed"
+        },
+        {
+          "caseId": "C069",
+          "recordIdentity": {
+            "dataDir": "D:\\Codex\\JGPD\\huabao-service-v1\\tests\\.tmp\\batch-browser-ONXAv4",
+            "id": 74
+          },
+          "sn": "UI-R2-20261030-069-partial_history_empty",
+          "additionalRecordIdentities": [],
+          "status": "passed"
+        },
+        {
+          "caseId": "C070",
+          "recordIdentity": {
+            "dataDir": "D:\\Codex\\JGPD\\huabao-service-v1\\tests\\.tmp\\batch-browser-ONXAv4",
+            "id": 75
+          },
+          "sn": "UI-R2-20261030-070-same_sn_second_record",
+          "additionalRecordIdentities": [
+            {
+              "dataDir": "D:\\Codex\\JGPD\\huabao-service-v1\\tests\\.tmp\\batch-browser-ONXAv4",
+              "id": 76
+            }
+          ],
+          "status": "passed"
+        },
+        {
+          "caseId": "C071",
+          "recordIdentity": {
+            "dataDir": "D:\\Codex\\JGPD\\huabao-service-v1\\tests\\.tmp\\batch-browser-ONXAv4",
+            "id": 77
+          },
+          "sn": "UI-R2-20261030-071-invalid_model",
+          "additionalRecordIdentities": [],
+          "status": "passed"
+        },
+        {
+          "caseId": "C072",
+          "recordIdentity": {
+            "dataDir": "D:\\Codex\\JGPD\\huabao-service-v1\\tests\\.tmp\\batch-browser-ONXAv4",
+            "id": 78
+          },
+          "sn": "UI-R2-20261030-072-string_model",
+          "additionalRecordIdentities": [],
+          "status": "passed"
+        },
+        {
+          "caseId": "C073",
+          "recordIdentity": {
+            "dataDir": "D:\\Codex\\JGPD\\huabao-service-v1\\tests\\.tmp\\batch-browser-ONXAv4",
+            "id": 79
+          },
+          "sn": "UI-R2-20261030-073-model_change_clears_context",
+          "additionalRecordIdentities": [],
+          "status": "passed"
+        },
+        {
+          "caseId": "C074",
+          "recordIdentity": {
+            "dataDir": "D:\\Codex\\JGPD\\huabao-service-v1\\tests\\.tmp\\batch-browser-ONXAv4",
+            "id": 80
+          },
+          "sn": "UI-R2-20261030-074-model_change_foreign_material",
+          "additionalRecordIdentities": [],
+          "status": "passed"
+        },
+        {
+          "caseId": "C075",
+          "recordIdentity": {
+            "dataDir": "D:\\Codex\\JGPD\\huabao-service-v1\\tests\\.tmp\\batch-browser-ONXAv4",
+            "id": 81
+          },
+          "sn": "UI-R2-20261030-075-model_change_old_checks",
+          "additionalRecordIdentities": [],
+          "status": "passed"
+        },
+        {
+          "caseId": "C076",
+          "recordIdentity": {
+            "dataDir": "D:\\Codex\\JGPD\\huabao-service-v1\\tests\\.tmp\\batch-browser-ONXAv4",
+            "id": 82
+          },
+          "sn": "UI-R2-20261030-076-fault_optional",
+          "additionalRecordIdentities": [],
+          "status": "passed"
+        },
+        {
+          "caseId": "C077",
+          "recordIdentity": {
+            "dataDir": "D:\\Codex\\JGPD\\huabao-service-v1\\tests\\.tmp\\batch-browser-ONXAv4",
+            "id": 83
+          },
+          "sn": "UI-R2-20261030-077-fault_all_f0_f9",
+          "additionalRecordIdentities": [],
+          "status": "passed"
+        },
+        {
+          "caseId": "C078",
+          "recordIdentity": {
+            "dataDir": "D:\\Codex\\JGPD\\huabao-service-v1\\tests\\.tmp\\batch-browser-ONXAv4",
+            "id": 84
+          },
+          "sn": "UI-R2-20261030-078-fault_unknown",
+          "additionalRecordIdentities": [],
+          "status": "passed"
+        },
+        {
+          "caseId": "C079",
+          "recordIdentity": {
+            "dataDir": "D:\\Codex\\JGPD\\huabao-service-v1\\tests\\.tmp\\batch-browser-ONXAv4",
+            "id": 85
+          },
+          "sn": "UI-R2-20261030-079-fault_duplicate",
+          "additionalRecordIdentities": [],
+          "status": "passed"
+        },
+        {
+          "caseId": "C080",
+          "recordIdentity": {
+            "dataDir": "D:\\Codex\\JGPD\\huabao-service-v1\\tests\\.tmp\\batch-browser-ONXAv4",
+            "id": 86
+          },
+          "sn": "UI-R2-20261030-080-fault_nonarray",
+          "additionalRecordIdentities": [],
+          "status": "passed"
+        },
+        {
+          "caseId": "C081",
+          "recordIdentity": {
+            "dataDir": "D:\\Codex\\JGPD\\huabao-service-v1\\tests\\.tmp\\batch-browser-ONXAv4",
+            "id": 87
+          },
+          "sn": "UI-R2-20261030-081-fault_snapshot_original",
+          "additionalRecordIdentities": [],
+          "status": "passed"
+        },
+        {
+          "caseId": "C082",
+          "recordIdentity": {
+            "dataDir": "D:\\Codex\\JGPD\\huabao-service-v1\\tests\\.tmp\\batch-browser-ONXAv4",
+            "id": 88
+          },
+          "sn": "UI-R2-20261030-082-fault_snapshot_specialchars",
+          "additionalRecordIdentities": [],
+          "status": "passed"
+        },
+        {
+          "caseId": "C083",
+          "recordIdentity": {
+            "dataDir": "D:\\Codex\\JGPD\\huabao-service-v1\\tests\\.tmp\\batch-browser-ONXAv4",
+            "id": 89
+          },
+          "sn": "UI-R2-20261030-083-fault_model_switch",
+          "additionalRecordIdentities": [],
+          "status": "passed"
+        },
+        {
+          "caseId": "C084",
+          "recordIdentity": {
+            "dataDir": "D:\\Codex\\JGPD\\huabao-service-v1\\tests\\.tmp\\batch-browser-ONXAv4",
+            "id": 90
+          },
+          "sn": "UI-R2-20261030-084-fault_order_preserved",
+          "additionalRecordIdentities": [],
+          "status": "passed"
+        },
+        {
+          "caseId": "C085",
+          "recordIdentity": {
+            "dataDir": "D:\\Codex\\JGPD\\huabao-service-v1\\tests\\.tmp\\batch-browser-ONXAv4",
+            "id": 91
+          },
+          "sn": "UI-R2-20261030-085-fault_translation_notes",
+          "additionalRecordIdentities": [],
+          "status": "passed"
+        },
+        {
+          "caseId": "C086",
+          "recordIdentity": {
+            "dataDir": "D:\\Codex\\JGPD\\huabao-service-v1\\tests\\.tmp\\batch-browser-ONXAv4",
+            "id": 92
+          },
+          "sn": "UI-R2-20261030-086-foreign_read",
+          "additionalRecordIdentities": [],
+          "status": "passed"
+        },
+        {
+          "caseId": "C087",
+          "recordIdentity": {
+            "dataDir": "D:\\Codex\\JGPD\\huabao-service-v1\\tests\\.tmp\\batch-browser-ONXAv4",
+            "id": 93
+          },
+          "sn": "UI-R2-20261030-087-foreign_write",
+          "additionalRecordIdentities": [],
+          "status": "passed"
+        },
+        {
+          "caseId": "C088",
+          "recordIdentity": {
+            "dataDir": "D:\\Codex\\JGPD\\huabao-service-v1\\tests\\.tmp\\batch-browser-ONXAv4",
+            "id": 94
+          },
+          "sn": "UI-R2-20261030-088-foreign_history_readonly",
+          "additionalRecordIdentities": [],
+          "status": "passed"
+        },
+        {
+          "caseId": "C089",
+          "recordIdentity": {
+            "dataDir": "D:\\Codex\\JGPD\\huabao-service-v1\\tests\\.tmp\\batch-browser-ONXAv4",
+            "id": 95
+          },
+          "sn": "UI-R2-20261030-089-export_other_owner",
+          "additionalRecordIdentities": [],
+          "status": "passed"
+        },
+        {
+          "caseId": "C090",
+          "recordIdentity": {
+            "dataDir": "D:\\Codex\\JGPD\\huabao-service-v1\\tests\\.tmp\\batch-browser-ONXAv4",
+            "id": 96
+          },
+          "sn": "UI-R2-20261030-090-operator_admin",
+          "additionalRecordIdentities": [],
+          "status": "passed"
+        },
+        {
+          "caseId": "C091",
+          "recordIdentity": {
+            "dataDir": "D:\\Codex\\JGPD\\huabao-service-v1\\tests\\.tmp\\batch-browser-ONXAv4",
+            "id": 97
+          },
+          "sn": "UI-R2-20261030-091-csrf_invalid",
+          "additionalRecordIdentities": [],
+          "status": "passed"
+        },
+        {
+          "caseId": "C092",
+          "recordIdentity": {
+            "dataDir": "D:\\Codex\\JGPD\\huabao-service-v1\\tests\\.tmp\\batch-browser-ONXAv4",
+            "id": 98
+          },
+          "sn": "UI-R2-20261030-092-stale_version",
+          "additionalRecordIdentities": [],
+          "status": "passed"
+        },
+        {
+          "caseId": "C093",
+          "recordIdentity": {
+            "dataDir": "D:\\Codex\\JGPD\\huabao-service-v1\\tests\\.tmp\\batch-browser-ONXAv4",
+            "id": 99
+          },
+          "sn": "UI-R2-20261030-093-completed_lock",
+          "additionalRecordIdentities": [],
+          "status": "passed"
+        },
+        {
+          "caseId": "C094",
+          "recordIdentity": {
+            "dataDir": "D:\\Codex\\JGPD\\huabao-service-v1\\tests\\.tmp\\batch-browser-ONXAv4",
+            "id": 100
+          },
+          "sn": "UI-R2-20261030-094-correction_reason_required",
+          "additionalRecordIdentities": [],
+          "status": "passed"
+        },
+        {
+          "caseId": "C095",
+          "recordIdentity": {
+            "dataDir": "D:\\Codex\\JGPD\\huabao-service-v1\\tests\\.tmp\\batch-browser-ONXAv4",
+            "id": 101
+          },
+          "sn": "UI-R2-20261030-095-correction_audit",
+          "additionalRecordIdentities": [],
+          "status": "passed"
+        },
+        {
+          "caseId": "C096",
+          "recordIdentity": {
+            "dataDir": "D:\\Codex\\JGPD\\huabao-service-v1\\tests\\.tmp\\batch-browser-ONXAv4",
+            "id": 102
+          },
+          "sn": "UI-R2-20261030-096-language_en_export",
+          "additionalRecordIdentities": [],
+          "status": "passed"
+        },
+        {
+          "caseId": "C097",
+          "recordIdentity": {
+            "dataDir": "D:\\Codex\\JGPD\\huabao-service-v1\\tests\\.tmp\\batch-browser-ONXAv4",
+            "id": 103
+          },
+          "sn": "UI-R2-20261030-097-language_zh_export",
+          "additionalRecordIdentities": [],
+          "status": "passed"
+        },
+        {
+          "caseId": "C098",
+          "recordIdentity": {
+            "dataDir": "D:\\Codex\\JGPD\\huabao-service-v1\\tests\\.tmp\\batch-browser-ONXAv4",
+            "id": 104
+          },
+          "sn": "UI-R2-20261030-098-notes_reference_export",
+          "additionalRecordIdentities": [],
+          "status": "passed"
+        },
+        {
+          "caseId": "C099",
+          "recordIdentity": {
+            "dataDir": "D:\\Codex\\JGPD\\huabao-service-v1\\tests\\.tmp\\batch-browser-ONXAv4",
+            "id": 105
+          },
+          "sn": "UI-R2-20261030-099-photo_success_export",
+          "additionalRecordIdentities": [],
+          "status": "passed"
+        },
+        {
+          "caseId": "C100",
+          "recordIdentity": {
+            "dataDir": "D:\\Codex\\JGPD\\huabao-service-v1\\tests\\.tmp\\batch-browser-ONXAv4",
+            "id": 106
+          },
+          "sn": "UI-R2-20261030-100-photo_failure_retry",
+          "additionalRecordIdentities": [],
+          "status": "passed"
+        }
+      ],
+      "coverage": [
+        "login:alex",
+        "login:blair",
+        "login:admin",
+        "My Records/new record",
+        "account language",
+        "fault selector",
+        "BOM drawer",
+        "Current Record/reload",
+        "front-end validation",
+        "Administration/users",
+        "Administration/models",
+        "Administration/appearance",
+        "Administration/bom",
+        "CSV import form",
+        "CSV template",
+        "password dialog",
+        "SN History",
+        "model switch context reset",
+        "fault source detail/guides",
+        "foreign SN History",
+        "stale version recovery",
+        "reasoned admin correction/audit",
+        "Excel export en",
+        "Excel export zh",
+        "photos upload/retry",
+        "logout"
+      ]
+    },
+    {
+      "evidence": "supplementary-browser/BROWSER_RESULTS.json",
+      "prefix": "UI-EXTRA-20261030",
+      "dataDir": "D:\\Codex\\JGPD\\huabao-service-v1\\tests\\.tmp\\batch-browser-kYPp8i",
+      "baseUrl": "http://127.0.0.1:52538",
+      "startedAt": "2026-10-30T03:21:24.336Z",
+      "finishedAt": "2026-10-30T03:21:29.286Z",
+      "counts": {
+        "planned": 3,
+        "executed": 3,
+        "passed": 3,
+        "failed": 0,
+        "independentBaselineRecords": 3,
+        "additionalBoundaryRecords": 0
+      },
+      "assertions": 84,
+      "requests": 40,
+      "elapsedCaseMs": 3502,
+      "maxCaseMs": 1251,
+      "records": [
+        {
+          "caseId": "C101",
+          "recordIdentity": {
+            "dataDir": "D:\\Codex\\JGPD\\huabao-service-v1\\tests\\.tmp\\batch-browser-kYPp8i",
+            "id": 3
+          },
+          "sn": "UI-EXTRA-20261030-C101-single_f5_requested",
+          "additionalRecordIdentities": [],
+          "status": "passed"
+        },
+        {
+          "caseId": "C102",
+          "recordIdentity": {
+            "dataDir": "D:\\Codex\\JGPD\\huabao-service-v1\\tests\\.tmp\\batch-browser-kYPp8i",
+            "id": 4
+          },
+          "sn": "UI-EXTRA-20261030-C102-multi_f0_f3_f8_requested",
+          "additionalRecordIdentities": [],
+          "status": "passed"
+        },
+        {
+          "caseId": "C103",
+          "recordIdentity": {
+            "dataDir": "D:\\Codex\\JGPD\\huabao-service-v1\\tests\\.tmp\\batch-browser-kYPp8i",
+            "id": 5
+          },
+          "sn": "UI-EXTRA-20261030-C103-multi_f2_f9_requested",
+          "additionalRecordIdentities": [],
+          "status": "passed"
+        }
+      ],
+      "coverage": [
+        "login:alex",
+        "login:blair",
+        "login:admin",
+        "My Records/new record",
+        "account language",
+        "fault selector",
+        "BOM drawer",
+        "Current Record/reload",
+        "Current Record menu",
+        "logout"
+      ]
+    }
+  ],
+  "coverage": [
+    "login:alex",
+    "login:blair",
+    "login:admin",
+    "My Records/new record",
+    "account language",
+    "fault selector",
+    "BOM drawer",
+    "Current Record/reload",
+    "front-end validation",
+    "Administration/users",
+    "Administration/models",
+    "Administration/appearance",
+    "Administration/bom",
+    "CSV import form",
+    "CSV template",
+    "password dialog",
+    "SN History",
+    "model switch context reset",
+    "fault source detail/guides",
+    "foreign SN History",
+    "stale version recovery",
+    "reasoned admin correction/audit",
+    "Excel export en",
+    "Excel export zh",
+    "photos upload/retry",
+    "logout",
+    "Current Record menu"
+  ],
+  "priorFailedRuns": "Original browser R1 had two test-harness defects; full original 100-case evidence remains in primary BROWSER_RESULTS.json.priorRuns. R2 repaired these steps and passed 100/100.",
+  "explicitFixtures": [
+    "C082: special-character fault text in an isolated copy; source catalog unchanged.",
+    "C097: one additional source-backed untranslated BOM fixture in the temporary database; source 404-row catalog unchanged.",
+    "C100: first photo POST explicitly aborted once; actual retry persisted one real attachment."
+  ]
+}
