@@ -1,0 +1,31 @@
+{
+  "status": "UPDATED_AND_UPGRADED",
+  "appCommit": "e2a4defdbb1a3f6e749a52a4dcabd718b952a42f",
+  "candidate": "d9fd98503862fbc22e6baa0f1b70b9ec55647d65495ac4a6189741bf38425d81",
+  "release": "/opt/jackery/releases/e2a4def-model-sku-20261030",
+  "previousRelease": "/opt/jackery/releases/38996b1-reviewed-copy-20261030",
+  "runtimeArchiveSha256": "dc0458d81ba71aa415b53c57638a0537d9edc3d46538c1536af9e281c1b76b46",
+  "masterUpdateBackup": "/var/backups/jackery/model-sku-20261030T125737Z-2794985",
+  "applicationUpgradeBackup": "/var/backups/jackery/guidance-update-20261030T125758Z-2795064",
+  "masterChanges": [
+    {"modelId": 4, "catalogKey": "e1000-default", "before": "", "after": "70-1000-EUO001"},
+    {"modelId": 5, "catalogKey": "e2000plus-a", "before": "21-0001-000037", "after": "21-0001-00037"}
+  ],
+  "referenceMappings": 11,
+  "configuredModelsMatched": 9,
+  "pendingSourceModels": ["e1000plus-a", "e1000plus-b"],
+  "modelIdsAndActivationUnchanged": true,
+  "businessTablesUnchangedDuringMasterUpdate": true,
+  "bomAndKnowledgeUnchanged": true,
+  "allPersistentTablesUnchangedDuringApplicationUpgrade": true,
+  "tableCounts": {"records": 6, "photos": 5, "users": 3, "models": 9, "bom": 404, "model_knowledge": 9, "meta": 3, "audits": 31, "appearance": 0},
+  "masterUpdateVerifiedAt": "2026-10-30T12:57:37.874808+00:00",
+  "applicationUpgradeVerifiedAt": "2026-10-30T12:57:59.843070+00:00",
+  "publicUrl": "http://221.224.86.238:800/",
+  "publicHealth": "200; production",
+  "localRegression": {"core": 136, "browser": 35, "pass": 171, "fail": 0},
+  "productionWorkRecordsWrittenByTests": 0,
+  "authenticatedProductionBrowserTest": "Not attempted; isolated browser data used; no production password reset",
+  "productionReadOnlyMasterCheck": {"checkedModels": 9, "correctProductSkus": 9, "activeModels": 7},
+  "linuxCore": {"tests": 136, "pass": 136, "fail": 0, "skipped": 0, "cancelled": 0, "log": "/home/sagacity/jackery-sku-linux-core-e2a4def.log"}
+}
