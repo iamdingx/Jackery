@@ -4,25 +4,27 @@ This is the binding frontend/backend interface. New internal API: no prior consu
 
 ## DTOs
 
-`User = {id,username,displayName,role:'admin'|'operator',active}`.
+`User = {id,username,displayName,role:'admin'|'operator',active,language:'en'|'zh'}`.
 
 `CheckItem = {code,labelEn,labelZh}`. `Model = {id,nameEn,nameZh,productSku,active,checkItems:CheckItem[]}`.
 
 `AppearanceOption = {code,labelEn,labelZh,active}`. `BomItem = {id,modelId,sku,descriptionEn,descriptionZh,unit,active}`.
 
-`Record = {id,workOrder,sn,modelId,modelSnapshot:Model,productSku,ownerId,ownerName,sourcePallet,storagePallet,workDate,status:'draft'|'wfr'|'completed',outcome:null|'like_new'|'good'|'acceptable'|'rok'|'scrap'|'awp'|'needs_analysis',outcomeGroup:null|'refurbishment'|'repair'|'wfr',appearanceCodes:string[],appearanceSnapshot:AppearanceOption[],appearanceNotes,issueNotes,scrapReason,checks:{initial:{[checkCode]:'not_tested'|'pass'|'fail'},final?:{[checkCode]:same}},materials:{bomId,sku,descriptionEn,descriptionZh,unit,quantity}[],photos:Photo[],version:number,createdAt,updatedAt,completedAt:null|string}`.
+`Record = {id,workOrder,sn,modelId,modelSnapshot:Model,productSku,ownerId,ownerName,sourcePallet,storagePallet,workDate,status:'draft'|'wfr'|'completed',outcome:null|'like_new'|'good'|'acceptable'|'rok'|'scrap'|'awp'|'needs_analysis',outcomeGroup:null|'refurbishment'|'repair'|'wfr',appearanceCodes:string[],appearanceSnapshot:AppearanceOption[],appearanceNotes,issueNotes,translatedAppearanceNotes,translatedIssueNotes,receivingSku,postSortSku,receivingOrderNo,receivingStatus,productNameVerification,skuVerification,parentRecord,unspecifiedTextField,scrapReason,checks:{initial:{[checkCode]:'not_tested'|'pass'|'fail'},final:{[checkCode]:same}},materials:{bomId,sku,descriptionEn,descriptionZh,unit,quantity}[],photos:Photo[],version:number,createdAt,updatedAt,completedAt:null|string}`.
 
 `Photo = {id,recordId,filename,mime,size,width,height,url,uploadedAt,uploadedBy}`; URL relative `/api/photos/:id`. Append `?sn=<exact SN>` to photo URLs when viewing someone else's exact-SN history.
 
-`RecordInput = {version,sn,modelId,productSku,sourcePallet,storagePallet,workDate,outcome,appearanceCodes,appearanceNotes,issueNotes,scrapReason,checks,materials:{bomId,quantity}[],action:'save'|'complete'}`. Ignore/reject attempts to alter server-owned owner/ID/snapshot/label fields; NEVER trust client snapshots or descriptions. `action=save` yields status wfr for waiting outcomes, otherwise draft. `complete` requires final eligible outcome and validates before committing. A completed record is not unlocked by a normal save.
+`RecordInput = {version,sn,modelId,productSku,sourcePallet,storagePallet,workDate,outcome,appearanceCodes,appearanceNotes,issueNotes,translatedAppearanceNotes,translatedIssueNotes,receivingSku,postSortSku,receivingOrderNo,receivingStatus,productNameVerification,skuVerification,parentRecord,unspecifiedTextField,scrapReason,checks,materials:{bomId,quantity}[],action:'save'|'complete'}`. Ignore/reject attempts to alter server-owned owner/ID/snapshot/label fields; NEVER trust client snapshots or descriptions. `action=save` yields status wfr for waiting outcomes, otherwise draft. `complete` requires final eligible outcome and validates before committing. A completed record is not unlocked by a normal save.
 
-## Single-inspection revision — 2026-10-30
+## v0.3 acceptance restoration — 2026-10-30
 
-- `checks.initial` is the one canonical inspection (neutral UI label Inspection Result). New records and UI writes contain only `initial`. Every item uses not_tested/pass/fail radio choices.
-- `checks.final` is optional legacy archival evidence only. Existing stored values remain unchanged, even if an old client sends different final values; new final values are ignored. Never create a final map for new records. No destructive database migration. Bundled UI and API validation change together; no external consumers identified.
-- Refurbishment completion requires every inspection item pass. ROK requires every item assessed (pass or fail), retaining originally observed failures without a second test. SCRAP reason and WFR incompletion unchanged.
-- Previously completed ROK with legacy final data can receive admin corrections if their single inspection and model are unchanged; this preserves historical completion without fabricating results. Changed inspections must satisfy the current ROK rule. Admin authorization, correction reason, optimistic version and audit remain mandatory.
-- Functional Checks exports exactly one `stage=inspection` row per function for every outcome. Legacy final evidence appears separately as Legacy Post-work Checks JSON in Work Summary.
+Latest explicit user instruction restores v0.3/v0.1 dual-stage repair checks, superseding the single-inspection revision. POTENTIALLY BREAKING behavior correction; bundled UI/tests updated together, no external consumers identified.
+
+- `checks.initial` and `checks.final` are separate editable maps on unfinished records. An omitted map preserves saved values; missing values default not_tested, never fabricated pass. Refurbishment needs initial all-pass; ROK needs final all-pass. SCRAP reason mandatory; WFR cannot complete. Completed admin corrections revalidate the same rules.
+- ROK error: `Complete all final tests with a Pass result before selecting ROK for completion.` SCRAP error: `Enter a scrap reason before completing this record.`
+- New optional original/manual-translation/reference strings default empty. Original notes and translated notes each max 10,000 chars; new references max 2,000. Nonempty translation without corresponding nonempty original is rejected. No translator or external workflow. UI reference fields are view-only; no automatic generated SKU or associated work order.
+- Per-account language defaults en. Existing user table upgraded idempotently with language column, existing record JSON not rewritten. Added optional response field is backward compatible.
+- Export language selects literal header dictionaries; four sheet names remain stable. Repair/WFR exports both stages; refurbishment one. Human-readable export formatting is documented with final QA report; free-text originals and SKU remain exact.
 
 ## Session
 
@@ -30,6 +32,7 @@ This is the binding frontend/backend interface. New internal API: no prior consu
 - `GET /api/session` -> `{user:User|null,csrfToken:string|null,demo:boolean}` (200 when logged out).
 - `POST /api/login` `{username,password}` -> session object, Set-Cookie.
 - `POST /api/logout` -> `{ok:true}` and expire cookie.
+- `PUT /api/account/language` `{language:'en'|'zh'}` -> `{user:User}`; authenticated + CSRF, persists only the signed-in account.
 - `POST /api/account/password` `{currentPassword,newPassword}` -> `{ok:true}`.
 
 ## Catalog
@@ -64,7 +67,7 @@ This is the binding frontend/backend interface. New internal API: no prior consu
 
 ## Export
 
-- `GET /api/export` same record filters (no page) -> XLSX attachment, four sheets: `Work Summary`, `Functional Checks`, `Material Usage`, `Photo Index`.
+- `GET /api/export?language=en|zh` (default en) same record filters (no page) -> XLSX attachment, four sheets: `Work Summary`, `Functional Checks`, `Material Usage`, `Photo Index`.
 - Operators own only, admin filtered/all. Full business fields including notes, labels, snapshots, state and relevant timestamps; no secrets. Four sheets relate by workOrder plus SN. Photo hyperlinks point to authenticated application endpoints. Row text is inert XML strings, never formulas. Explicit cap error rather than truncation.
 
 ## Integration signatures
@@ -88,3 +91,7 @@ Demo only: admin / `HuabaoAdmin!2026`; alex / `HuabaoAlex!2026`; blair / `Huabao
 - Node.js test runner: https://nodejs.org/docs/latest-v24.x/api/test.html
 
 Use tested Node 24 APIs, not unpinned main/Node 26 aliases.
+
+## Readable export values
+
+Work Summary Status has In Progress/Completed (localized for zh), with separate Status Code preserving draft/wfr/completed. Functional Checks Stage and Result show Initial Test/Final Test and Pass/Fail/Not Tested (localized for zh), with separate Stage Code and Result Code preserving raw values. Material Usage header Part SKU remains distinct from Product SKU. This is an XLSX header/value formatting change for bundled consumers; free originals, stored codes, relationships and four-sheet count are unchanged. No external consumers identified.

@@ -1,6 +1,6 @@
 # Pure helpers verification — 2026-10-29
 
-Historical implementation report. The single-inspection revision dated 2026-10-30 supersedes any two-stage testing rules below; current behavior and verification are in PRODUCT_CONTRACT.md, API_CONTRACT.md and TEST_REPORT.md.
+Historical implementation report. Current v0.3 deep-QA restoration supersedes prior single-inspection behavior. See PRODUCT_CONTRACT.md, API_CONTRACT.md and qa-v03/FINAL_REPORT.md for current acceptance and verification.
 
 Scope: `src/zip.js`, `src/xlsx.js`, `src/images.js`, `src/csv.js` and their four matching test files. No runtime npm dependencies, filesystem writes, network access or application-state changes in helper implementations. No commits made; root owns integration.
 

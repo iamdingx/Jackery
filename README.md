@@ -61,19 +61,23 @@ PACK-001,Packing Box,包装盒,pcs
 
 - 新单结果初始为空。先保存后可由原作业员续填；同 SN 独立返修创建新作业单。
 - 普通列表及导出仅本人；管理员全部。输入完整精确 SN 可只读查看该 SN 他人历史，不能修改或转交。
-- 功能检查只记录一次，每项使用 Not tested／Pass／Fail（未检查／正常／异常）单选点，取消作业后复测和下拉框。
-- 翻新：该份检验全部 Pass 后选 Like New／Good／Acceptable。
-- 维修 ROK：所有功能项完成检验（Pass 或 Fail）；保留检验发现的异常，不再补填复测。SCRAP 必填原因。
+- 按最新 v0.3 验收基线：翻新保留一份初检；维修分开 Initial Test／Final Test，每项 Pass／Fail／Not Tested 单选，默认未检查。
+- 翻新：初检全部 Pass 后选 Like New／Good／Acceptable。
+- 维修 ROK：Final Test 全部 Pass；原始异常初检保留。SCRAP 必填原因。
 - WFR（AWP／Needs Analysis）：保存等待，保持未完成，不能当成已结案。
 - 所耗物料从型号 BOM 选择，默认数量 1；重复选择不会自动多记；支持三位小数，无耗料也可完成。
 - 完成后作业员只读；管理员更正需原因，并保留修改前后值和操作者。
 - PNG／JPEG 图片选填，单张最多 8 MiB、40MP，每单最多 20 张；权限随记录，不生成公共图片链接。
 
+账号语言偏好保存在本账号，其他账号不继承。Translated Appearance Notes／Translated Issue Notes 是独立手工译文，不会自动生成；原文为空时译文保持为空。Reference Details 中旧表SKU、校验、订单、父记录和文本9仅参考，不触发仓库或审批。
+
+本轮深度测试计划、两轮缺陷闭环和最终报告见 docs/qa-v03/。
+
 ## 导出
 
 Export 生成一个 XLSX 文件，包含 **Work Summary、Functional Checks、Material Usage、Photo Index** 四表，按 Work Order 关联。图片以链接查看，打开时需要同系统账号权限。外部没有账号的人不会自动获得图片访问权。历史导出不会随之后更正自动变化。
 
-Functional Checks 每个功能项只导出一行 Inspection；旧版已有复测证据仍在原库及审计中保留，导出放在 Work Summary 的 Legacy Post-work Checks JSON 列，不覆盖、不虚构新检验结果。旧版已完成 ROK 若检验不变，允许管理员带原因更正备注。
+导出按当前 EN/ZH 界面选择表头，原中文、原SKU、手工译文保持原值。维修/WFR 功能项按初检和复测分别输出，翻新只输出初检。上一轮单次检验版本已有记录不迁移、不补造复测 Pass；若旧已完成 ROK 缺复测，管理员更正仍需满足本轮复测门禁。
 
 系统对极端大型导出明确报错，不静默截断；详细上限见开发报告。未完成／WFR 状态保留，不混作已完成台数。
 

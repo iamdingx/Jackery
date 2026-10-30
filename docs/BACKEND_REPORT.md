@@ -1,6 +1,6 @@
 # Backend implementation and verification
 
-Historical implementation report. The single-inspection revision dated 2026-10-30 supersedes any two-stage testing rules below; current behavior and verification are in PRODUCT_CONTRACT.md, API_CONTRACT.md and TEST_REPORT.md.
+Historical implementation report. Current v0.3 deep-QA restoration supersedes prior single-inspection behavior. See PRODUCT_CONTRACT.md, API_CONTRACT.md and qa-v03/FINAL_REPORT.md for current acceptance and verification.
 
 2026-10-29. Owner lane: `server.js`, `src/domain.js`, `src/store.js`, `src/export.js`, `tests/api.test.js`, `tests/domain.test.js`. Helper modules and browser UI are separate integration lanes.
 

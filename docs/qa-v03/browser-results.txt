@@ -1,0 +1,28 @@
+✔ real browser operator, BOM, WFR, checks, photo, history and admin workflows (8071.7174ms)
+✔ review regression: password change is blocked while a work record is unsaved (3467.7538ms)
+✔ review regression: fresh production administrator can change password and sign in again (16727.4915ms)
+✔ review regression: admin filters and cached state do not carry into another operator login (1598.2128ms)
+✔ review regression: saved model and selected appearance labels use their historical snapshots (3515.4866ms)
+✔ review regression: reloading warns before discarding a selected but not uploaded photo (2250.0686ms)
+✔ review regression: other-owner exact-SN history photos render with one authorized SN parameter (3346.3507ms)
+✔ v0.3 dual inspection radios persist initial failures and final Pass for ROK (5527.3323ms)
+✔ v03 Module4 UI: admin corrects foreign WFR without completion and owner resumes own history (3639.3408ms)
+✔ v03 Module5 UI: failed upload precise copy, retained file retry, size/format validation (2932.597ms)
+✔ v03 Module2/3 UI: long English labels, 100 consumption rows and export locale (2179.6945ms)
+✔ v03 exact English fields, separate translations, final gate and draft language retention (3681.4686ms)
+✔ v03 BOM keeps pending quantities across languages, warns missing English and locates duplicate (2431.5627ms)
+✔ v03 SN automatic found hint and account language preferences isolate users (2329.6665ms)
+✔ v03 exact SN allows a new visit and history resumes only own unfinished record (1907.9156ms)
+✔ v03 rapid SN input and logout cancel history lookup and finish the final language save (3367.841ms)
+✔ v03 sign-out aborts an in-flight SN lookup before another account starts work (1795.6467ms)
+✔ v03 custom photo picker exposes English controls and preserves original filename across languages (1567.5965ms)
+✔ v03 delayed broad BOM response cannot replace a newer target search (1733.4406ms)
+✔ v03 closing an in-flight BOM request cannot mutate a newly opened drawer or throw after close (2589.2783ms)
+ℹ tests 20
+ℹ suites 0
+ℹ pass 20
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 22129.8579

@@ -37,3 +37,7 @@ Track root cause, reproduction, fix round 1..5, focused check, previous green-su
 - Targeted domain/client/browser tests passed after implementation. Full regression before export-specific addition: 80 core + 8 browser passed. Added explicit export row-count and legacy-evidence coverage; final counts and fingerprint in TEST_REPORT.md and VERIFICATION_SUMMARY.json.
 - Independent read-only review found no critical or important functional issues. No root cause reached five failed repairs.
 - Existing demo backed up online before restart; no record migration or deletion.
+
+## v0.3 deep QA restoration — 2026-10-30
+
+User explicitly selected v0.3 as sole acceptance baseline and restored final all-Pass ROK despite the preceding single-inspection request. Original reference docs preserved; current contract and tests updated together. Backend new tests RED0/7→GREEN7/7; frontend state RED0/2→GREEN2/2 and browser RED0/3→GREEN. Original AC01–18 coverage retained. Added ordered five-module API execution, real browser admin unfinished correction/resume, upload503 retry, 100-row three-width layout and independent bilingual XLSX reader. Found late SN lookup401 and OS-language native file picker; reproduced and fixed in round2. Current full-suite evidence is stored in artifacts/verification and docs/qa-v03. Tests use isolated temporary data, no migration or external publication.

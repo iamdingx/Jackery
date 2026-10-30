@@ -117,7 +117,7 @@ test('AC-04 WFR resume retains notes, checks and same work order', async t => {
   const waiting = await c.req(`/api/records/${r.id}`, 'PUT', input(r, { outcome: 'awp', issueNotes: 'Waiting for specific board' }));
   assert.equal(waiting.status, 200);
   assert.equal(waiting.data.record.status, 'wfr');
-  const final = await c.req(`/api/records/${r.id}`, 'PUT', input(waiting.data.record, { outcome: 'rok', checks: { initial: passes(r) }, action: 'complete' }));
+  const final = await c.req(`/api/records/${r.id}`, 'PUT', input(waiting.data.record, { outcome: 'rok', checks: { initial: passes(r), final: passes(r) }, action: 'complete' }));
   assert.equal(final.status, 200, final.bytes.toString());
   assert.equal(final.data.record.id, r.id);
   assert.equal(final.data.record.workOrder, r.workOrder);
@@ -166,13 +166,13 @@ test('AC-09 incomplete or failed refurbishment checks block completion', async t
 test('AC-10 failed initial test survives successful ROK completion', async t => {
   const app = await fixture(t), c = await client(app), r = await create(c);
   const initial = passes(r); initial.ac_output = 'fail';
-  const done = await c.req(`/api/records/${r.id}`, 'PUT', input(r, { outcome: 'rok', checks: { initial }, action: 'complete' }));
+  const done = await c.req(`/api/records/${r.id}`, 'PUT', input(r, { outcome: 'rok', checks: { initial, final: passes(r) }, action: 'complete' }));
   assert.equal(done.status, 200, done.bytes.toString());
   assert.equal(done.data.record.checks.initial.ac_output, 'fail');
-  assert.equal(Object.hasOwn(done.data.record.checks,'final'), false);
+  assert.deepEqual(done.data.record.checks.final, passes(r));
 });
 
-test('AC-11 ROK cannot complete without every inspection assessed', async t => {
+test('AC-11 ROK cannot complete without every final test passing', async t => {
   const app = await fixture(t), c = await client(app), r = await create(c);
   const bad = await c.req(`/api/records/${r.id}`, 'PUT', input(r, { outcome: 'rok', action: 'complete' }));
   assert.equal(bad.status, 422);

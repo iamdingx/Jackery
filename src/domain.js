@@ -58,6 +58,8 @@ export function validateRecord(input,previous,catalog){
   const modelChanged=modelId!==previous.modelId;
   v.sn=textValue(input.sn??previous.sn??'','SN',200,true).trim();
   for(const [field,max] of [['productSku',200],['sourcePallet',200],['storagePallet',200],['appearanceNotes',10000],['issueNotes',10000],['scrapReason',3000]])v[field]=textValue(input[field]??previous[field]??'',field,max);
+  for(const field of ['translatedAppearanceNotes','translatedIssueNotes','receivingSku','postSortSku','receivingOrderNo','receivingStatus','productNameVerification','skuVerification','parentRecord','unspecifiedTextField'])v[field]=textValue(input[field]===undefined?previous[field]??'':input[field],field,field.startsWith('translated')?10000:2000);
+  for(const [original,translation] of [['appearanceNotes','translatedAppearanceNotes'],['issueNotes','translatedIssueNotes']])if(v[translation].trim()&&!v[original].trim())invalid(`${translation} requires non-empty original ${original}`);
   v.workDate=isoDate(input.workDate??previous.workDate??new Date().toISOString().slice(0,10));
   const outcome=input.outcome===undefined?previous.outcome:input.outcome;
   const definition=outcomes.find(o=>o.code===outcome);
@@ -72,11 +74,9 @@ export function validateRecord(input,previous,catalog){
   const known=new Set(v.modelSnapshot.checkItems.map(i=>i.code));
   const supplied=input.checks??(modelChanged?{}:previous.checks)??{};
   if(!supplied||typeof supplied!=='object'||Array.isArray(supplied)||Object.keys(supplied).some(k=>!['initial','final'].includes(k)))invalid('Invalid check stages');
-  v.checks={initial:{}};
-  // Older post-work results are archival evidence, never a second editable inspection.
-  if(previous.checks?.final)v.checks.final=structuredClone(previous.checks.final);
-  for(const stage of ['initial']){
-    const stageInput=supplied[stage]??{};
+  v.checks={initial:{},final:{}};
+  for(const stage of ['initial','final']){
+    const stageInput=supplied[stage]??(!modelChanged?previous.checks?.[stage]:undefined)??{};
     if(typeof stageInput!=='object'||!stageInput||Array.isArray(stageInput)||Object.keys(stageInput).some(k=>!known.has(k)))invalid('Unknown check code');
     for(const code of known){const state=stageInput[code]??'not_tested';if(!['not_tested','pass','fail'].includes(state))invalid('Invalid check state');v.checks[stage][code]=state;}
   }
@@ -96,9 +96,8 @@ export function validateRecord(input,previous,catalog){
   if(action==='complete'){
     if(!definition||definition.group==='wfr')invalid('A final eligible outcome is required; waiting outcomes cannot complete');
     if(definition.group==='refurbishment'&&!Object.values(v.checks.initial).every(s=>s==='pass'))invalid('All inspection results must pass for refurbishment');
-    const unchangedLegacyRepair=previous.status==='completed'&&previous.outcome==='rok'&&previous.checks?.final&&!modelChanged&&[...known].every(code=>v.checks.initial[code]===previous.checks?.initial?.[code]);
-    if(v.outcome==='rok'&&!unchangedLegacyRepair&&!Object.values(v.checks.initial).every(s=>s==='pass'||s==='fail'))invalid('Complete the inspection for every function before ROK');
-    if(v.outcome==='scrap'&&!v.scrapReason.trim())invalid('A scrap reason is required');
+    if(v.outcome==='rok'&&!Object.values(v.checks.final).every(s=>s==='pass'))invalid('Complete all final tests with a Pass result before selecting ROK for completion.');
+    if(v.outcome==='scrap'&&!v.scrapReason.trim())invalid('Enter a scrap reason before completing this record.');
     v.status='completed';
   }else v.status=definition?.group==='wfr'?'wfr':'draft';
   return v;

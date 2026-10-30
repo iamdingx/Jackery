@@ -7,13 +7,13 @@ import {ApiError} from './domain.js';
 export const hashToken=token=>createHash('sha256').update(token).digest('hex');
 export function passwordHash(password){const salt=randomBytes(16).toString('hex');return `${salt}:${scryptSync(password,salt,64).toString('hex')}`;}
 export function passwordMatches(password,stored){try{const [salt,hash]=stored.split(':');const actual=scryptSync(password,salt,64);const expected=Buffer.from(hash,'hex');return expected.length===actual.length&&timingSafeEqual(actual,expected);}catch{return false;}}
-export const userDto=row=>({id:row.id,username:row.username,displayName:row.display_name,role:row.role,active:Boolean(row.active)});
+export const userDto=row=>({id:row.id,username:row.username,displayName:row.display_name,role:row.role,active:Boolean(row.active),language:row.language??'en'});
 export function openStore(dataDir,demo){
   mkdirSync(dataDir,{recursive:true});mkdirSync(path.join(dataDir,'photos'),{recursive:true});
   const db=new DatabaseSync(path.join(dataDir,'huabao.sqlite'));
   db.exec(`PRAGMA journal_mode=WAL; PRAGMA foreign_keys=ON; PRAGMA busy_timeout=5000;
     CREATE TABLE IF NOT EXISTS meta (key TEXT PRIMARY KEY,value TEXT NOT NULL);
-    CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY,username TEXT NOT NULL UNIQUE,display_name TEXT NOT NULL,role TEXT NOT NULL,active INTEGER NOT NULL DEFAULT 1,password_hash TEXT NOT NULL);
+    CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY,username TEXT NOT NULL UNIQUE,display_name TEXT NOT NULL,role TEXT NOT NULL,active INTEGER NOT NULL DEFAULT 1,password_hash TEXT NOT NULL,language TEXT NOT NULL DEFAULT 'en');
     CREATE TABLE IF NOT EXISTS sessions (token_hash TEXT PRIMARY KEY,user_id INTEGER NOT NULL REFERENCES users(id),csrf TEXT NOT NULL,expires_at INTEGER NOT NULL);
     CREATE TABLE IF NOT EXISTS models (id INTEGER PRIMARY KEY,data TEXT NOT NULL);
     CREATE TABLE IF NOT EXISTS appearance (code TEXT PRIMARY KEY,data TEXT NOT NULL);
@@ -24,6 +24,7 @@ export function openStore(dataDir,demo){
   `);
   const mode=db.prepare("SELECT value FROM meta WHERE key='mode'").get();
   if(mode&&mode.value!==(demo?'demo':'production')){db.close();throw new Error('Data directory mode mismatch: use separate demo and production directories');}
+  if(!db.prepare('PRAGMA table_info(users)').all().some(column=>column.name==='language'))db.exec("ALTER TABLE users ADD COLUMN language TEXT NOT NULL DEFAULT 'en'");
   const tx=fn=>{db.exec('BEGIN IMMEDIATE');try{const result=fn();db.exec('COMMIT');return result;}catch(e){db.exec('ROLLBACK');throw e;}};
   const get=(table,id)=>{const row=db.prepare(`SELECT data FROM ${table} WHERE ${table==='appearance'?'code':'id'}=?`).get(id);return row?JSON.parse(row.data):null;};
   const all=table=>db.prepare(`SELECT data FROM ${table}`).all().map(r=>JSON.parse(r.data));

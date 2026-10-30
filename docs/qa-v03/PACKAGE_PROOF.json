@@ -1,0 +1,10 @@
+{
+  "passed": true,
+  "extractedSource": "D:\\Codex\\JGPD\\huabao-service-v1\\artifacts\\package-v03-qa\\Huabao-Service-V1",
+  "noRuntimeNpmInstall": true,
+  "finalFailBlocked": true,
+  "finalPassCompleted": true,
+  "initialFailureRetained": true,
+  "sourceTranslationReferenceRetained": true,
+  "languageAndRecordPersistAfterRestart": true
+}

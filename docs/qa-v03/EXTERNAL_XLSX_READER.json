@@ -1,0 +1,38 @@
+{
+  "passed": true,
+  "reader": "openpyxl",
+  "reports": [
+    {
+      "language": "en",
+      "sheets": [
+        "Work Summary",
+        "Functional Checks",
+        "Material Usage",
+        "Photo Index"
+      ],
+      "summaryRows": 7,
+      "functionalRows": 42,
+      "distinctSameSnWorkOrders": 2,
+      "mappedReferenceAndTranslationHeaders": true,
+      "originalAndManualTranslationPreserved": true,
+      "readableEnumsWithRawCodes": true,
+      "formulaCells": 0
+    },
+    {
+      "language": "zh",
+      "sheets": [
+        "Work Summary",
+        "Functional Checks",
+        "Material Usage",
+        "Photo Index"
+      ],
+      "summaryRows": 7,
+      "functionalRows": 42,
+      "distinctSameSnWorkOrders": 2,
+      "mappedReferenceAndTranslationHeaders": true,
+      "originalAndManualTranslationPreserved": true,
+      "readableEnumsWithRawCodes": true,
+      "formulaCells": 0
+    }
+  ]
+}

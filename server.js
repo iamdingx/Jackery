@@ -45,7 +45,7 @@ export async function startServer({dataDir=path.join(root,'data'),demo=false,por
   function auth(req){
     const token=(req.headers.cookie??'').split(';').map(x=>x.trim()).find(x=>x.startsWith('hb_session='))?.slice(11);
     if(!token||!/^[a-f0-9]{64}$/.test(token))return null;
-    const row=db.prepare('SELECT s.*,u.id,u.username,u.display_name,u.role,u.active FROM sessions s JOIN users u ON u.id=s.user_id WHERE s.token_hash=?').get(hashToken(token));
+    const row=db.prepare('SELECT s.*,u.id,u.username,u.display_name,u.role,u.active,u.language FROM sessions s JOIN users u ON u.id=s.user_id WHERE s.token_hash=?').get(hashToken(token));
     if(!row||!row.active||row.expires_at<Date.now())return null;return {user:userDto(row),csrfToken:row.csrf,tokenHash:row.token_hash};
   }
   function sessionDto(session){return {user:session?.user??null,csrfToken:session?.csrfToken??null,demo};}
@@ -93,6 +93,11 @@ export async function startServer({dataDir=path.join(root,'data'),demo=false,por
       }
       if(route.startsWith('/api/admin/')&&user.role!=='admin')forbidden('Administrator access required');
       if(method==='POST'&&route==='/api/logout'){db.prepare('DELETE FROM sessions WHERE token_hash=?').run(session.tokenHash);return send(200,{ok:true},{'Set-Cookie':expireCookie});}
+      if(method==='PUT'&&route==='/api/account/language'){
+        const input=await body(req);if(!['en','zh'].includes(input.language))invalid('Language must be en or zh');
+        db.prepare('UPDATE users SET language=? WHERE id=?').run(input.language,user.id);
+        return send(200,{user:userDto(db.prepare('SELECT * FROM users WHERE id=?').get(user.id))});
+      }
       if(method==='POST'&&route==='/api/account/password'){
         const input=await body(req),row=db.prepare('SELECT * FROM users WHERE id=?').get(user.id);
         if(typeof input.currentPassword!=='string'||input.currentPassword.length>128||!passwordMatches(input.currentPassword,row.password_hash))throw new ApiError(403,'INVALID_PASSWORD','Current password is incorrect');
@@ -107,7 +112,7 @@ export async function startServer({dataDir=path.join(root,'data'),demo=false,por
         const modelId=Number(match[1]);if(!store.get('models',modelId))absent('Model not found');
         const inactive=params.get('includeInactive')==='1';if(inactive&&user.role!=='admin')forbidden();
         const {page,pageSize}=pagination(params,50),q=params.get('q')??'';textValue(q,'Search',200);const lower=q.toLocaleLowerCase();
-        const items=store.all('bom').filter(b=>b.modelId===modelId&&(inactive||b.active)&&(!q||b.sku.toLocaleLowerCase().includes(lower)||b.descriptionEn.toLocaleLowerCase().includes(lower)||b.descriptionZh.toLocaleLowerCase().includes(lower))).sort((a,b)=>Number(b.sku===q)-Number(a.sku===q)||a.sku.localeCompare(b.sku));
+        const items=store.all('bom').filter(b=>b.modelId===modelId&&(inactive||b.active)&&(!q||[b.sku,b.descriptionEn,b.descriptionZh].some(value=>(value??'').toLocaleLowerCase().includes(lower)))).sort((a,b)=>Number(b.sku===q)-Number(a.sku===q)||a.sku.localeCompare(b.sku)).map(b=>({...b,missingEnglish:!b.descriptionEn?.trim()}));
         return send(200,{items:items.slice((page-1)*pageSize,page*pageSize),total:items.length,page,pageSize});
       }
       if(method==='GET'&&route==='/api/records'){const {page,pageSize}=pagination(params,20),items=filteredRecords(store,user,params);return send(200,{items:items.slice((page-1)*pageSize,page*pageSize),total:items.length,page,pageSize});}
@@ -168,7 +173,8 @@ export async function startServer({dataDir=path.join(root,'data'),demo=false,por
         }
       }
       if(method==='GET'&&route==='/api/export'){
-        const records=filteredRecords(store,user,params);const bytes=exportRecords(records,publicBaseUrl??baseUrl);return send(200,bytes,{'Content-Type':'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet','Content-Disposition':`attachment; filename="huabao-${new Date().toISOString().slice(0,10)}.xlsx"`});
+        const language=params.get('language')??'en';if(!['en','zh'].includes(language))invalid('Language must be en or zh');
+        const records=filteredRecords(store,user,params);const bytes=exportRecords(records,publicBaseUrl??baseUrl,language);return send(200,bytes,{'Content-Type':'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet','Content-Disposition':`attachment; filename="huabao-${new Date().toISOString().slice(0,10)}.xlsx"`});
       }
       if(method==='GET'&&route==='/api/admin/users')return send(200,{items:db.prepare('SELECT * FROM users ORDER BY id').all().map(userDto)});
       if(method==='POST'&&route==='/api/admin/users'){

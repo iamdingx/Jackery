@@ -1,6 +1,6 @@
 # Final independent review closure
 
-Historical implementation report. The single-inspection revision dated 2026-10-30 supersedes any two-stage testing rules below; current behavior and verification are in PRODUCT_CONTRACT.md, API_CONTRACT.md and TEST_REPORT.md.
+Historical implementation report. Current v0.3 deep-QA restoration supersedes prior single-inspection behavior. See PRODUCT_CONTRACT.md, API_CONTRACT.md and qa-v03/FINAL_REPORT.md for current acceptance and verification.
 
 Reviewed initial full implementation commit a9f0a63 against the approved V1 contract and visual. No Critical finding; three Important findings reproduced and fixed by root with new regression cases:
 
