@@ -1,0 +1,19 @@
+{
+  "status": "UPGRADED",
+  "appCommit": "32ab97e6b4fb4f9b3eb9406d27b71f6741b83709",
+  "candidate": "c0fc978cf052d0b3a1ecb7af3db01ded820f5025c01e157c934b3f13726debf2",
+  "previousRelease": "/opt/jackery/releases/df6b4c9-fixed-panels-20261030",
+  "release": "/opt/jackery/releases/32ab97e-left-column-20261030",
+  "runtimeArchiveSha256": "a25b557bbbe90af8253d490b7ec5adb31085b0eea2324cedd5741ee0d08676f6",
+  "backup": "/var/backups/jackery/guidance-update-20261030T090419Z-2788159",
+  "allPersistentTablesUnchanged": true,
+  "tableCounts": {"records": 6, "photos": 5, "users": 3, "models": 9, "bom": 404, "model_knowledge": 9, "meta": 2, "audits": 31},
+  "verifiedAt": "2026-10-30T09:04:20.926677+00:00",
+  "productionWorkRecordsWrittenByTests": 0,
+  "authenticatedProductionBrowserTest": "Not attempted; current production password unavailable; isolated browser tests used; no password reset",
+  "localRegression": {"core": 133, "browser": 33, "pass": 166, "fail": 0},
+  "publicHealth": "200; production",
+  "publicAssetHashesMatchVerifiedCandidate": true,
+  "translationChangesApplied": false,
+  "linuxCore": {"tests": 133, "pass": 133, "fail": 0, "skipped": 0, "cancelled": 0, "log": "/home/sagacity/jackery-layout-linux-core-32ab97e.log"}
+}
