@@ -1,0 +1,104 @@
+{
+  "batchKey": "jackery-eu-20261030",
+  "digest": "8e82d98c07b208baf615899ee31c71ac1c12a65a0dc284b136539e9d16172419",
+  "models": 9,
+  "activeModels": 7,
+  "materials": 404,
+  "activeMaterials": 261,
+  "heldMaterials": 143,
+  "faultCodes": 90,
+  "repairGuides": 45,
+  "excludedRows": 10,
+  "sourceFiles": 27,
+  "modelMappings": [
+    {
+      "catalogKey": "e1000pro-default",
+      "modelId": 3,
+      "baseModelCode": "E1000pro",
+      "bomVersion": "未标注版本",
+      "productSku": "70-1000-DEOR01",
+      "active": true,
+      "reviewReasons": []
+    },
+    {
+      "catalogKey": "e1000v2-original",
+      "modelId": 4,
+      "baseModelCode": "E1000V2",
+      "bomVersion": "原始版",
+      "productSku": "21-0001-000221",
+      "active": false,
+      "reviewReasons": [
+        "filename_model_conflicts_with_source_model:E1000V2/E2000V2"
+      ]
+    },
+    {
+      "catalogKey": "e1000v2-costdown",
+      "modelId": 5,
+      "baseModelCode": "E1000V2",
+      "bomVersion": "降本版",
+      "productSku": "21-0001-000221",
+      "active": true,
+      "reviewReasons": []
+    },
+    {
+      "catalogKey": "e1000-default",
+      "modelId": 6,
+      "baseModelCode": "E1000",
+      "bomVersion": "未标注版本",
+      "productSku": "",
+      "active": true,
+      "reviewReasons": [
+        "incomplete_bom_no_product_sku_or_quantities:knowledge_and_fault_recording_only"
+      ]
+    },
+    {
+      "catalogKey": "e2000plus-a",
+      "modelId": 7,
+      "baseModelCode": "E2000plus",
+      "bomVersion": "A版",
+      "productSku": "21-0001-000037",
+      "active": false,
+      "reviewReasons": [
+        "root_specification_marked_停用"
+      ]
+    },
+    {
+      "catalogKey": "e2000plus-b",
+      "modelId": 8,
+      "baseModelCode": "E2000plus",
+      "bomVersion": "B版",
+      "productSku": "21-0001-000184",
+      "active": true,
+      "reviewReasons": []
+    },
+    {
+      "catalogKey": "e2000pro-default",
+      "modelId": 9,
+      "baseModelCode": "E2000pro",
+      "bomVersion": "未标注版本",
+      "productSku": "70-2000-EUOR01",
+      "active": true,
+      "reviewReasons": []
+    },
+    {
+      "catalogKey": "e2000v2-original",
+      "modelId": 10,
+      "baseModelCode": "E2000V2",
+      "bomVersion": "原始版",
+      "productSku": "21-0001-000267",
+      "active": true,
+      "reviewReasons": []
+    },
+    {
+      "catalogKey": "e2000v2-costdown",
+      "modelId": 11,
+      "baseModelCode": "E2000V2",
+      "bomVersion": "降本版",
+      "productSku": "21-0001-000267",
+      "active": true,
+      "reviewReasons": []
+    }
+  ],
+  "importedAt": "2026-10-30T02:32:49.235Z",
+  "alreadyImported": false
+}

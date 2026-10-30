@@ -1,0 +1,47 @@
+{
+  "sourceBomRows": 414,
+  "bomSourcesVerified": 9,
+  "models": 9,
+  "baseModels": 6,
+  "activeModels": 7,
+  "physicalCandidateRows": 404,
+  "activePhysicalRows": 261,
+  "suspendedPhysicalRows": 143,
+  "excludedRows": 10,
+  "exclusionReasons": {
+    "product_root_not_physical_part": 8,
+    "software_not_physical_part": 2
+  },
+  "knowledgePerBaseModel": {
+    "E1000pro": {
+      "faultCodes": 10,
+      "repairGuides": 5,
+      "notices": 2
+    },
+    "E1000V2": {
+      "faultCodes": 10,
+      "repairGuides": 5,
+      "notices": 2
+    },
+    "E1000": {
+      "faultCodes": 10,
+      "repairGuides": 5,
+      "notices": 2
+    },
+    "E2000plus": {
+      "faultCodes": 10,
+      "repairGuides": 5,
+      "notices": 2
+    },
+    "E2000pro": {
+      "faultCodes": 10,
+      "repairGuides": 5,
+      "notices": 2
+    },
+    "E2000V2": {
+      "faultCodes": 10,
+      "repairGuides": 5,
+      "notices": 2
+    }
+  }
+}

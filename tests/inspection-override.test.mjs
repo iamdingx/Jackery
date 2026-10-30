@@ -8,7 +8,7 @@ test('latest user override: every outcome has one inspection of radio choices an
  await mkdir('tests/.tmp',{recursive:true});const app=await startServer({dataDir:await mkdtemp(path.resolve('tests/.tmp/inspection-override-')),demo:true});let browser;
  try{
   browser=await chromium.launch({headless:true,executablePath:'C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe'});const page=await browser.newPage({viewport:{width:1680,height:1100}});await page.goto(app.baseUrl);
-  await page.locator('#username').fill('alex');await page.locator('#password').fill('HuabaoAlex!2026');await page.locator('#login-form button').click();await page.locator('#new-record').click();await page.locator('#sn').fill('LATEST-SINGLE-001');
+  await page.locator('#username').fill('alex');await page.locator('#password').fill('JackeryAlex!2026');await page.locator('#login-form button').click();await page.locator('#new-record').click();await page.locator('#sn').fill('LATEST-SINGLE-001');
   for(const outcome of ['awp','like_new','good','acceptable','scrap','needs_analysis','rok']){
    await page.locator(`[name=outcome][value=${outcome}]`).check();assert.equal(await page.locator('.checks input[type=radio]').count(),9,outcome);assert.equal(await page.locator('.checks select').count(),0);assert.equal(await page.locator('[data-check-phase=final]').count(),0);
    assert.equal(await page.getByRole('columnheader',{name:'Inspection Result',exact:true}).count(),1);assert.equal(await page.getByRole('columnheader',{name:'Initial Test',exact:true}).count(),0);assert.equal(await page.getByRole('columnheader',{name:'Final Test',exact:true}).count(),0);

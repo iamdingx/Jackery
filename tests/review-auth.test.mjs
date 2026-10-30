@@ -16,7 +16,7 @@ async function fixture(t,demo=true){
 }
 
 test('review regression: password change is blocked while a work record is unsaved', {timeout:60000},async t=>{
-  const {page,login}=await fixture(t);await login('alex','HuabaoAlex!2026');await page.locator('#new-record').click();
+  const {page,login}=await fixture(t);await login('alex','JackeryAlex!2026');await page.locator('#new-record').click();
   await page.locator('#sn').fill('PASSWORD-DIRTY-001');await page.locator('#issueNotes').fill('Unsaved owner work must survive');
   await page.locator('#account').click();
   assert.equal(await page.locator('#password-dialog[open]').count(),0,'Do not revoke a session needed by dirty work');
@@ -38,11 +38,11 @@ test('review regression: fresh production administrator can change password and 
 });
 
 test('review regression: admin filters and cached state do not carry into another operator login', {timeout:60000},async t=>{
-  const {page,login}=await fixture(t);await login('admin','HuabaoAdmin!2026');await page.locator('#filter-ownerId').fill('3');
+  const {page,login}=await fixture(t);await login('admin','JackeryAdmin!2026');await page.locator('#filter-ownerId').fill('3');
   await page.locator('#filters').getByRole('button',{name:'Search',exact:true}).click();await page.locator('[data-open-record]').first().waitFor();
   await page.locator('#logout').click();await page.locator('#username').waitFor();
   const response=page.waitForResponse(r=>r.url().includes('/api/records?'));
-  await login('alex','HuabaoAlex!2026');assert.equal((await response).status(),200,'Operator list must not reuse forbidden admin owner filter');
+  await login('alex','JackeryAlex!2026');assert.equal((await response).status(),200,'Operator list must not reuse forbidden admin owner filter');
   await page.locator('#new-record').waitFor();assert.equal(await page.locator('#filter-q').inputValue(),'');
   assert.equal(await page.locator('#filter-ownerId').count(),0);
   assert.equal(await page.locator('#current-nav').isDisabled(),true,'Previous account current-record state must be cleared');

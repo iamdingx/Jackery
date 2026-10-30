@@ -21,14 +21,14 @@
 
 ## 本轮明确的双语与参考字段
 
-账号默认英文，可记住各账号 EN/ZH 偏好。切语言不改检查、结果、耗料数量、未保存文字及文件。原文与手工译文分开，原文空则译文空，不提供自动翻译。旧表 Receiving SKU、Post-Sort SKU、Receiving Order No.、Receiving Status、Product Name Verification、SKU Verification、Parent Record、Unspecified Text Field 仅保存/展示/导出原值参考；Product SKU 只读参考，Part SKU 仅从型号 BOM 计耗。无入库/审批/父子单自动生成。四表支持中文/英文表头，保留原始自由文字。
+账号默认英文，可记住各账号 EN/ZH 偏好。切语言不改检查、结果、耗料数量、未保存文字及文件。原文与手工译文分开，原文空则译文空，不提供自动翻译。旧表 Receiving SKU、Post-Sort SKU、Receiving Order No.、Receiving Status、Product Name Verification、SKU Verification、Parent Record、Unspecified Text Field 仅保存/导出原值参考（Reference Details可见块已取消）；Product SKU 只读参考，Part SKU 仅从型号 BOM 计耗。无入库/审批/父子单自动生成。四表支持中文/英文表头，保留原始自由文字。
 
 ## 自主默认决定
 
 - 单机集中部署：Node.js 24、原生 HTTP、SQLite WAL，原生 ES modules 前端，不依赖运行时第三方 npm 包。默认仅监听 127.0.0.1:4310，局域网部署可配置 HOST；不自动发布互联网。
-- 演示和真实数据分开：`--demo` 使用 `data-demo` 及明确标识的虚构样例；普通启动使用空 `data`，初次随机生成管理员口令，不混入假业务数据。
+- 演示和真实数据分开：`--demo` 使用 `data-demo` 及明确标识的虚构样例；普通启动使用 `data` 并幂等导入随包真实目录，初次随机生成管理员口令，不混入假业务数据。
 - 同一型号中 SKU 唯一；CSV 重复／冲突原子拒绝并报告行号，不静默去重。正式 BOM 和英语描述通过管理员提供，不把演示描述当真实资料。
-- 数量大于 0、最多三位小数、上限 1,000,000；无耗料可结案。重复选择只定位已有行，不静默加数量。外观 no_defect 与缺陷互斥。
+- 真实Jackery BOM标准量为保存/结案/管理员更正的硬上限，pcs整数；旧非目录物料保留原数量兼容；无耗料可结案。重复选择只定位已有行，不静默加数量。外观 no_defect 与缺陷互斥。
 - SN 去首尾空白、大小写敏感；查询完整精确匹配。单号独立。UTC 系统时间，浏览器按本地显示；Work Date 单独 ISO 日期，默认当天。
 - Product SKU／Source Pallet／Storage Pallet 为可选文本上下文，不触发仓库流程。其他旧表关联、入库、校验字段不扩展业务。
 - 所有保存显式按钮；编辑离开提示；乐观 version 防止并发标签页或管理员覆盖；错误保留表单。WFR 选中时显示 Save WFR，不显示可结案的误导操作。
@@ -39,3 +39,5 @@
 ## 交付与终止
 
 交付完整源码包、Windows 启动入口、启动/备份/导入文档、明确的演示测试账号、单元/API/浏览器 E2E 证据、已知限制。所有 V1 验收用例通过才标记开发完成；失败计数按问题根因记录，达到连续五轮按用户要求停止。
+
+当前新增规则与实际导入依据：`docs/jackery-release/PLAN.md`、`SOURCE_REPORT.md`和`IMPORT_REPORT.json`；标准量限制、型号故障知识及紧凑布局已获用户授权。

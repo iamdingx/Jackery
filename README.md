@@ -1,4 +1,4 @@
-# 华宝翻新／维修记录系统 V1
+# Jackery 翻新／维修记录系统 V1
 
 电脑端网页，英文／中文切换，同页作业，EN2 BOM 宽抽屉多选，Refurbishment／Repair／WFR 三栏全局单选。记录耗用，不管理库存。
 
@@ -10,11 +10,11 @@
 
 | 演示账号 | 密码 | 权限 |
 |---|---|---|
-| admin | HuabaoAdmin!2026 | 管理员：全部记录、基础资料、账号及更正 |
-| alex | HuabaoAlex!2026 | 作业员：本人记录，精确 SN 历史只读 |
-| blair | HuabaoBlair!2026 | 另一作业员，用于验证数据隔离 |
+| admin | JackeryAdmin!2026 | 管理员：全部记录、基础资料、账号及更正 |
+| alex | JackeryAlex!2026 | 作业员：本人记录，精确 SN 历史只读 |
+| blair | JackeryBlair!2026 | 另一作业员，用于验证数据隔离 |
 
-演示数据均明确标识 DEMO，包括 820 项型号 A BOM。试查 `DEMO-HISTORY-001` 查看他人历史，`DEMO-WFR-001` 可由 alex 继续填写。演示数据只存于 **data-demo/**，不得当作真实型号或正式 BOM。
+启动会幂等加载随包的 **Jackery EU真实目录**：9个型号版本、404行物理候选，启用7个型号配置、261行物料，143行保留挂起不可选。原虚构DEMO型号及BOM停用，历史演示作业保留。演示账号与作业仅用于测试；真实目录不等于正式业务记录，演示数据仍存于 **data-demo/**。
 
 ## 运行环境
 
@@ -37,25 +37,30 @@ macOS／Linux：安装 Node.js 24 后执行 `sh start.sh --demo` 或 `sh start.s
 1. 停止演示服务（启动窗口按 Ctrl+C），双击 **Start.cmd**。
 2. 普通模式存于 **data/**，首次生成随机管理员密码；本地读取 **data/first-run-accounts.json**，其中 `admin.username` 和 `admin.password` 为初始账号。该文件不在网页公开目录中，不要对外分享。
 3. 管理员登录后修改自己的密码，为每个作业员建立独立账号。
-4. 在 Administration 中维护正式型号与功能检查项目、外观选项、BOM，并导入真实英文物料描述。正式模式没有虚构业务目录，不会自动导入演示数据或飞书历史。
+4. 首次启动自动事务导入随包Jackery EU目录（幂等、不覆盖存量记录）。普通模式不生成虚构工单、样例目录或飞书历史；管理员在Administration核对基础资料，并提供经审核英文名称。
 5. 使用正式 SN 试录并核对报表后开始业务。照片选填；未知 AWP 的内部定义仍按业务代码使用，不由系统猜测。
 
 演示／正式模式的数据目录禁止混用，系统会校验模式。不要把 data-demo 改名冒充 data。
 
-## BOM 导入
+## BOM与故障知识导入
 
-管理员进入 Administration → BOM，选择型号，下载 CSV 模板；也可将 UTF-8 CSV 内容粘贴到导入框。
+随包目录 `catalogs/jackery-eu-20261030.json` 来自27份原始资料：9份BOM、6份故障代码、6份常见故障、6份功能检查SOP。逐行保留源文件、行/页与SHA256。启动自动导入同批次一次；同批内容改变会报错，禁止静默覆盖。
 
-```csv
-sku,descriptionEn,descriptionZh,unit
-PART-001,Control Board,控制板,pcs
-PACK-001,Packing Box,包装盒,pcs
+需要显式导入时，先停止服务并备份，再运行：
+
+```text
+node scripts/backup.mjs --demo
+node scripts/import-jackery-catalog.mjs --demo --report artifacts/import-report.json
 ```
 
-- 必填 SKU 和英文描述；相同型号中 SKU 唯一。名称中有逗号、换行或双引号时按标准 CSV 引号转义。
-- 最多 5000 行；同次导入或已存在的重复 SKU 会报告行号，整批拒绝，不会静默去重或部分写入。
-- 包材只要在该型号 BOM 内就按普通物料计耗，不另设通用耗材清单。
-- 型号检查代码和英语标签应稳定；字典修改不改写已保存作业快照。
+正式目录去掉 `--demo`；也可使用 `--data-dir` 和 `--source` 指定位置。此脚本不会重置已存在自定义密码、不会改写存量工单；只将未修改的旧默认演示密码改为上表Jackery密码。普通模式的随机初始密码保持不变。
+
+- SN扫码后人工选择型号及版本，BOM和故障知识按modelId关联。型号显示Original / Cost-down / Version A / Version B，避免版本混用。
+- **标准用量是每条作业单、每种BOM物料的硬上限**，保存/WFR/结案/管理员更正同样校验。相同物料只有一行；续存更新实际耗量，不累加保存次数。原始pcs物料数量必须为整数；默认1，不能超过上限。
+- 缺少标准量不补1。E1000的25行缺量；E1000V2原始版型号冲突、E2000plus A版停用冲突及个别源状态异常，合计143行已导入为挂起，不能选用。详见 `docs/jackery-release/SOURCE_REPORT.md`。
+- BOM包材按物料计耗，整机根与软件不当作实物耗用（共排除10行）。不管理库存或自动入库。
+- 英文物料/功能项/故障资料缺失时明确提示并显示来源中文，不自动生成翻译。F0–F9按型号提供；常见故障方案单独显示原表，不捏造F代码与方案的一一对应。
+- 后续管理CSV模板为 `sku,descriptionEn,descriptionZh,unit,standardQty`，如 `PART-001,Control Board,控制板,pcs,1`。同型号SKU唯一，最多5000行，整批校验后写入。兼容历史4列表头，但Jackery源型号新增启用项必须有标准量。管理员BOM编辑提供标准量字段；检查清单仍为一行一项，源名称中的换行、竖线、反斜杠分别用 `\n`、`\p`、`\\`可逆显示，保存恢复原值。
 
 ## 作业规则
 
@@ -65,19 +70,19 @@ PACK-001,Packing Box,包装盒,pcs
 - 翻新：本次检验全部 Pass 后选 Like New／Good／Acceptable。
 - 维修 ROK：所有功能项已检验（Pass或Fail），保留发现的异常，不要求复测。SCRAP 必填原因。
 - WFR（AWP／Needs Analysis）：保存等待，保持未完成，不能当成已结案。
-- 所耗物料从型号 BOM 选择，默认数量 1；重复选择不会自动多记；支持三位小数，无耗料也可完成。
+- 所耗物料从当前型号BOM选择，默认1；重复选择定位已有行。真实目录按标准量硬限，pcs整数，无耗料可完成。历史未设标准的非目录物料保留三位小数兼容。
 - 完成后作业员只读；管理员更正需原因，并保留修改前后值和操作者。
 - PNG／JPEG 图片选填，单张最多 8 MiB、40MP，每单最多 20 张；权限随记录，不生成公共图片链接。
 
-账号语言偏好保存在本账号，其他账号不继承。Translated Appearance Notes／Translated Issue Notes 是独立手工译文，不会自动生成；原文为空时译文保持为空。Reference Details 中旧表SKU、校验、订单、父记录和文本9仅参考，不触发仓库或审批。
+账号语言偏好保存在本账号，其他账号不继承。Translated Appearance Notes／Translated Issue Notes 是独立手工译文，不会自动生成；原文为空时译文保持为空。Reference Details功能块已移除；旧表SKU、校验、订单、父记录和文本9仍原样保存在存量记录及导出中。电脑常用尺寸1366×768及1536×864保持结果和保存按钮可见，长检查/物料列表局部滚动，手工译文和照片按需展开。
 
-本轮深度测试计划、两轮缺陷闭环和最终报告见 docs/qa-v03/。
+当前改版与真实导入报告见 docs/jackery-release/；docs/qa-v03/仅作旧版测试档案。
 
 ## 导出
 
 Export 生成一个 XLSX 文件，包含 **Work Summary、Functional Checks、Material Usage、Photo Index** 四表，按 Work Order 关联。图片以链接查看，打开时需要同系统账号权限。外部没有账号的人不会自动获得图片访问权。历史导出不会随之后更正自动变化。
 
-导出按当前 EN/ZH 界面选择表头，原中文、原SKU、手工译文保持原值。所有功能项只输出一次检验。旧记录复测数据仅在 Legacy Post-work Checks JSON 存档列保留，不能在编辑界面更改，也不用于ROK复测门禁。
+导出按当前 EN/ZH 界面选择表头，原中文、原SKU、手工译文保持原值。所有功能项只输出一次检验；作业汇总增加故障代码和原文快照，物料耗用增加标准用量上限及控制规则。旧记录复测数据仅在 Legacy Post-work Checks JSON 存档列保留，不能在编辑界面更改，也不用于ROK复测门禁。
 
 系统对极端大型导出明确报错，不静默截断；详细上限见开发报告。未完成／WFR 状态保留，不混作已完成台数。
 
@@ -114,7 +119,7 @@ node scripts/backup.mjs
 
 浏览器：开发环境安装 Playwright 1.62.1（仅测试依赖）并具备 Chromium／Edge 后执行 `node --test tests/*.test.mjs`。本次脚本使用 Windows 已安装 Edge 的标准路径；其他浏览器或平台需相应调整测试 launch 配置。测试使用新临时配置，不使用日常登录配置。
 
-完整回归：`node scripts/verify.mjs`。日志与结果 JSON 写到 artifacts/verification/，按当前源代码指纹验证，失败不打包。实际结果见 docs/TEST_REPORT.md。
+完整回归：`node scripts/verify.mjs`。日志与结果 JSON 写到 artifacts/verification/，按当前源代码指纹验证，失败不打包。实际结果见 docs/TEST_REPORT.md及docs/jackery-release/REPORT.md。
 
 受限沙箱若禁止 localhost 或浏览器进程，测试必须在允许本机网络的测试环境运行，不能把环境 EACCES 误认为业务通过或忽略浏览器测试。
 
@@ -127,4 +132,4 @@ node scripts/backup.mjs
 - tests/：单元、API、独立需求验收与真实浏览器 E2E。
 - docs/：契约、计划、实施／测试报告、截图与业务依据。
 
-V1 不包含库存、价格结算、飞书历史迁移、自动翻译、ERP/WMS/华宝接口、入库审批或离线同步。正式 BOM、功能清单及翻新等级标准仍由业务资料维护；演示内容不是华宝正式标准。
+V1 不包含库存、价格结算、飞书历史迁移、自动翻译、ERP/WMS/华宝接口、入库审批或离线同步。随包目录只表示已提供资料，不证明当前供货可用性；挂起项、英文名称及版本适用性仍需来源补齐。

@@ -1,6 +1,7 @@
 import http from 'node:http';
 import path from 'node:path';
 import {fileURLToPath} from 'node:url';
+import {existsSync} from 'node:fs';
 import {readFile,writeFile,unlink} from 'node:fs/promises';
 import {randomBytes,timingSafeEqual} from 'node:crypto';
 import {openStore,passwordHash,passwordMatches,hashToken,userDto} from './src/store.js';
@@ -9,6 +10,7 @@ import {validateImage} from './src/images.js';
 import {parseBomCsv} from './src/csv.js';
 import {exportRecords} from './src/export.js';
 import {listenForBrowser} from './src/ports.js';
+import {importJackeryCatalog} from './src/catalog-import.js';
 
 const root=path.dirname(fileURLToPath(import.meta.url));
 const MAX_BODY=12*1024*1024;
@@ -37,9 +39,10 @@ async function body(req){
   try{const result=JSON.parse(Buffer.concat(parts).toString('utf8')||'{}');if(!isObject(result))throw new Error();return result;}catch{throw new ApiError(400,'INVALID_JSON','Body must be a JSON object');}
 }
 
-export async function startServer({dataDir=path.join(root,'data'),demo=false,port=0,host='127.0.0.1',publicBaseUrl}={}){
+export async function startServer({dataDir=path.join(root,'data'),demo=false,port=0,host='127.0.0.1',publicBaseUrl,catalogPath}={}){
   if(publicBaseUrl){const parsed=new URL(publicBaseUrl);if(!['http:','https:'].includes(parsed.protocol)||parsed.username||parsed.password||parsed.pathname!=='/'||parsed.search||parsed.hash)throw new Error('PUBLIC_BASE_URL must be an HTTP(S) origin');publicBaseUrl=parsed.origin;}
   const store=openStore(path.resolve(dataDir),demo),{db}=store;
+  if(catalogPath){try{importJackeryCatalog(store,JSON.parse(await readFile(path.resolve(catalogPath),'utf8')),{deactivateSamples:true});}catch(error){db.close();throw error;}}
   const throttles=new Map();
   const dummyHash=passwordHash(randomBytes(24).toString('hex'));
   function auth(req){
@@ -107,7 +110,12 @@ export async function startServer({dataDir=path.join(root,'data'),demo=false,por
         const inactive=params.get('includeInactive')==='1';if(inactive&&user.role!=='admin')forbidden();
         const c=store.catalog();return send(200,{models:c.models.filter(m=>inactive||m.active),appearanceOptions:c.appearanceOptions.filter(m=>inactive||m.active),outcomes});
       }
-      let match=route.match(/^\/api\/models\/(\d+)\/bom$/);
+      let match=route.match(/^\/api\/models\/(\d+)\/knowledge$/);
+      if(method==='GET'&&match){
+        const id=Number(match[1]);if(!store.get('models',id))absent('Model not found');
+        const knowledge=store.get('model_knowledge',id);return send(200,knowledge?{faultCodes:knowledge.faultCodes??[],repairGuides:knowledge.repairGuides??[],notices:knowledge.notices??[]}:{faultCodes:[],repairGuides:[],notices:[]});
+      }
+      match=route.match(/^\/api\/models\/(\d+)\/bom$/);
       if(method==='GET'&&match){
         const modelId=Number(match[1]);if(!store.get('models',modelId))absent('Model not found');
         const inactive=params.get('includeInactive')==='1';if(inactive&&user.role!=='admin')forbidden();
@@ -174,7 +182,7 @@ export async function startServer({dataDir=path.join(root,'data'),demo=false,por
       }
       if(method==='GET'&&route==='/api/export'){
         const language=params.get('language')??'en';if(!['en','zh'].includes(language))invalid('Language must be en or zh');
-        const records=filteredRecords(store,user,params);const bytes=exportRecords(records,publicBaseUrl??baseUrl,language);return send(200,bytes,{'Content-Type':'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet','Content-Disposition':`attachment; filename="huabao-${new Date().toISOString().slice(0,10)}.xlsx"`});
+        const records=filteredRecords(store,user,params);const bytes=exportRecords(records,publicBaseUrl??baseUrl,language);return send(200,bytes,{'Content-Type':'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet','Content-Disposition':`attachment; filename="jackery-${new Date().toISOString().slice(0,10)}.xlsx"`});
       }
       if(method==='GET'&&route==='/api/admin/users')return send(200,{items:db.prepare('SELECT * FROM users ORDER BY id').all().map(userDto)});
       if(method==='POST'&&route==='/api/admin/users'){
@@ -195,13 +203,13 @@ export async function startServer({dataDir=path.join(root,'data'),demo=false,por
       }
       match=route.match(/^\/api\/admin\/models(?:\/(\d+))?$/);
       if(match&&((method==='POST'&&!match[1])||(method==='PUT'&&match[1]))){
-        const input=await body(req),id=match[1]?Number(match[1]):store.next('models');if(match[1]&&!store.get('models',id))absent('Model not found');const model=validateModel(input,id);store.put('models',model);return send(method==='POST'?201:200,{model});
+        const input=await body(req),id=match[1]?Number(match[1]):store.next('models');if(match[1]&&!store.get('models',id))absent('Model not found');const model=validateModel({...store.get('models',id),...input},id);store.put('models',model);return send(method==='POST'?201:200,{model});
       }
       match=route.match(/^\/api\/admin\/appearance(?:\/([A-Za-z0-9_-]+))?$/);
       if(match&&((method==='POST'&&!match[1])||(method==='PUT'&&match[1]))){
         const input=await body(req),option=validateAppearance(input,match[1]);if(method==='POST'&&store.get('appearance',option.code))invalid('Appearance code already exists');if(method==='PUT'&&!store.get('appearance',option.code))absent('Appearance option not found');store.put('appearance',option);return send(method==='POST'?201:200,{option});
       }
-      if(method==='GET'&&route==='/api/admin/bom/template')return send(200,Buffer.from('\uFEFFsku,descriptionEn,descriptionZh,unit\r\n'),{'Content-Type':'text/csv; charset=utf-8','Content-Disposition':'attachment; filename="bom-template.csv"'});
+      if(method==='GET'&&route==='/api/admin/bom/template')return send(200,Buffer.from('\uFEFFsku,descriptionEn,descriptionZh,unit,standardQty\r\n'),{'Content-Type':'text/csv; charset=utf-8','Content-Disposition':'attachment; filename="bom-template.csv"'});
       if(method==='POST'&&route==='/api/admin/bom/import'){
         const input=await body(req),modelId=positiveId(input.modelId,'Model ID');if(!store.get('models',modelId))invalid('Model does not exist');let rows;try{rows=parseBomCsv(input.csv);}catch(e){throw new ApiError(e.code==='CSV_TOO_LARGE'?413:422,e.code??'INVALID_CSV',e.message,e.details);}
         const created=store.tx(()=>{
@@ -213,7 +221,7 @@ export async function startServer({dataDir=path.join(root,'data'),demo=false,por
       }
       match=route.match(/^\/api\/admin\/bom(?:\/(\d+))?$/);
       if(match&&((method==='POST'&&!match[1])||(method==='PUT'&&match[1]))){
-        const input=await body(req),id=match[1]?Number(match[1]):store.next('bom');if(match[1]&&!store.get('bom',id))absent('BOM item not found');const item=validateBom(input,id,store.all('models'));if(store.all('bom').some(b=>b.modelId===item.modelId&&b.sku===item.sku&&b.id!==id))invalid('SKU already exists in this model');store.put('bom',item);return send(method==='POST'?201:200,{item});
+        const input=await body(req),id=match[1]?Number(match[1]):store.next('bom');if(match[1]&&!store.get('bom',id))absent('BOM item not found');const item=validateBom({...store.get('bom',id),...input},id,store.all('models'));if(store.all('bom').some(b=>b.modelId===item.modelId&&b.sku===item.sku&&b.id!==id))invalid('SKU already exists in this model');store.put('bom',item);return send(method==='POST'?201:200,{item});
       }
       absent('API route not found');
     }catch(e){
@@ -233,8 +241,10 @@ export async function startServer({dataDir=path.join(root,'data'),demo=false,por
 if(process.argv[1]&&path.resolve(process.argv[1])===fileURLToPath(import.meta.url)){
   const demo=process.argv.includes('--demo');
   const port=Number(process.env.PORT??4310);if(!Number.isInteger(port)||port<0||port>65535)throw new Error('PORT must be 0–65535');
-  startServer({dataDir:process.env.HB_DATA_DIR??path.join(root,demo?'data-demo':'data'),demo,port,host:process.env.HOST??'127.0.0.1',publicBaseUrl:process.env.PUBLIC_BASE_URL}).then(app=>{
-    console.log(`Huabao V1 ${demo?'DEMO':'production'}: ${app.baseUrl}`);
+  const catalogIndex=process.argv.indexOf('--catalog'),bundled=path.join(root,'catalogs','jackery-eu-20261030.json');
+  const catalogPath=catalogIndex>=0?process.argv[catalogIndex+1]:(existsSync(bundled)?bundled:undefined);
+  startServer({dataDir:process.env.JACKERY_DATA_DIR??process.env.HB_DATA_DIR??path.join(root,demo?'data-demo':'data'),demo,port,host:process.env.HOST??'127.0.0.1',publicBaseUrl:process.env.PUBLIC_BASE_URL,catalogPath}).then(app=>{
+    console.log(`Jackery V1 ${demo?'TEST':'production'}: ${app.baseUrl}`);
     for(const signal of ['SIGINT','SIGTERM'])process.once(signal,()=>{app.close().then(()=>process.exit(0)).catch(()=>process.exit(1));});
   }).catch(e=>{console.error('Startup failed:',e.message);process.exitCode=1;});
 }

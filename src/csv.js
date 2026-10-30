@@ -44,12 +44,14 @@ export function parseBomCsv(csv) {
   if (value !== '' || fields.length || state === 'closed') emitRecord();
   const expected = ['sku', 'descriptionEn', 'descriptionZh', 'unit'];
   const header = records.shift();
-  if (!header || header.fields.length !== 4 || header.fields.some((field, index) => field !== expected[index])) {
-    fail('CSV_INVALID_HEADERS', 'Expected headers: sku,descriptionEn,descriptionZh,unit', [{ row: header?.row ?? 1, message: 'Invalid or duplicate headers' }]);
+  const withQuantity=header?.fields.length===5;
+  if(withQuantity)expected.push('standardQty');
+  if (!header || header.fields.length !== expected.length || header.fields.some((field, index) => field !== expected[index])) {
+    fail('CSV_INVALID_HEADERS', 'Expected headers: sku,descriptionEn,descriptionZh,unit[,standardQty]', [{ row: header?.row ?? 1, message: 'Invalid or duplicate headers' }]);
   }
   const details = [], rows = [], skus = new Map();
   for (const record of records) {
-    if (record.fields.length !== 4) { details.push({ row: record.row, message: 'Expected 4 fields' }); continue; }
+    if (record.fields.length !== expected.length) { details.push({ row: record.row, message: `Expected ${expected.length} fields` }); continue; }
     const row = Object.fromEntries(expected.map((key, index) => [key, record.fields[index].trim()]));
     // Retain provenance for backend model/existing-SKU checks without changing DTO keys.
     Object.defineProperty(row, 'sourceRow', { value: record.row, enumerable: false });
@@ -57,6 +59,7 @@ export function parseBomCsv(csv) {
       if (!row[key]) details.push({ row: record.row, field: key, message: `${key} is required` });
     }
     if (Object.values(row).some(text => /[\x00-\x08\x0b\x0c\x0e-\x1f\x7f]/u.test(text))) details.push({ row: record.row, message: 'Invalid control character' });
+    if(withQuantity){const value=Number(row.standardQty);if(!row.standardQty||!Number.isFinite(value)||value<=0||value>1000000)details.push({row:record.row,field:'standardQty',message:'A positive standard quantity is required'});row.standardQty=value;}
     if (skus.has(row.sku)) details.push({ row: record.row, field: 'sku', message: `Duplicate SKU (first at row ${skus.get(row.sku)})` });
     else skus.set(row.sku, record.row);
     rows.push(row);

@@ -16,7 +16,7 @@ test('real browser operator, BOM, WFR, checks, photo, history and admin workflow
   const byId=id=>page.locator('#'+id);
   const login=async(name,password)=>{await byId('username').fill(name);await byId('password').fill(password);await page.getByRole('button',{name:'Sign in',exact:true}).click();await byId('new-record').waitFor();};
   try {
-    await page.goto(app.baseUrl);await login('alex','HuabaoAlex!2026');
+    await page.goto(app.baseUrl);await login('alex','JackeryAlex!2026');
     assert.equal(await page.getByText('DEMO-HISTORY-001',{exact:true}).count(),0,'ordinary list must not expose Blair history');
     await byId('new-record').click();await byId('sn').fill('E2E-UI-001');await byId('modelId').selectOption('1');
     await byId('appearanceNotes').fill('scratch <script>never execute</script>');await byId('issueNotes').fill('AC failure');
@@ -38,6 +38,7 @@ test('real browser operator, BOM, WFR, checks, photo, history and admin workflow
     await page.locator('[data-check-phase=initial][data-check-code=ac_output][value=fail]').check();
     await byId('language').click();assert.equal(await byId('issueNotes').inputValue(),'AC failure');await byId('language').click();
     await byId('save-record').click();await page.getByText('Saved successfully',{exact:true}).waitFor();
+    await page.locator('.evidence-section summary').click();
     await byId('photo-file').setInputFiles({name:'tiny.png',mimeType:'image/png',buffer:Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAIAAAADCAIAAAA2iEnWAAAAEUlEQVR4nGP8zwACTGASRgEAFEABBVDVLjgAAAAASUVORK5CYII=','base64')});
     await byId('language').click();await byId('language').click();
     await byId('upload-photo').click();await byId('photos').locator('img').waitFor();
@@ -54,7 +55,7 @@ test('real browser operator, BOM, WFR, checks, photo, history and admin workflow
     await byId('complete-record').click();await page.waitForFunction(()=>document.querySelector('#issueNotes')?.disabled&&document.querySelector('.heading')?.textContent.includes('Completed'));
     await byId('history-nav').click();await byId('history-sn').fill('DEMO-HISTORY-001');await byId('history-form').getByRole('button',{name:'Search',exact:true}).click();await page.locator('[data-history-record]').first().click();
     assert.equal(await byId('issueNotes').isDisabled(),true);await byId('view-audit').click();await byId('audit-dialog').waitFor();await byId('audit-close').click();
-    await byId('logout').click();await login('admin','HuabaoAdmin!2026');
+    await byId('logout').click();await login('admin','JackeryAdmin!2026');
     await byId('admin-nav').click();await byId('admin-section').selectOption('models');await byId('admin-new').click();
     await byId('admin-nameEn').fill('E2E UI Model');await byId('admin-nameZh').fill('界面测试型号');await byId('admin-checkItems').fill('power|Power on|开机');
     await byId('language').click();assert.equal(await byId('admin-nameEn').inputValue(),'E2E UI Model');await byId('language').click();await byId('admin-save').click();await page.getByText('Saved successfully',{exact:true}).waitFor();

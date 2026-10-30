@@ -1,4 +1,4 @@
-# Huabao V1 development ledger
+# Jackery V1 development ledger
 
 Plan: docs/superpowers/plans/2026-10-29-huabao-v1.md
 
@@ -45,3 +45,7 @@ User explicitly selected v0.3 as sole acceptance baseline and restored final all
 ## Single-inspection regression correction
 
 User reported the previously approved single-inspection UI had regressed. Root cause: deepQA v0.3 template reinstated legacy final-test rules and changed the tests to confirm that behavior. Latest explicit correction now governs CURRENT_RULES.md; old source documents remain historical. New independent regression reproduced 0/6, then all6 passed after restoring one inspection/radios, single payload, ROK assessed items, immutable legacy archive and one export row perfunction. All unrelated v0.3 improvements retained. Real BOM import/quantity policy remain unapproved and untouched.
+
+## 2026-10-30 用户授权目录与页面改版
+
+见jackery-release/REPORT.md；真实目录已备份后导入，单次检验保持，140项全量通过。旧目录名/原来源路径和历史报告仅为追溯，不作为当前英文品牌。

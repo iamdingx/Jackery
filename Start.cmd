@@ -16,7 +16,7 @@ if errorlevel 1 (
   pause
   exit /b 1
 )
-echo Huabao V1. Leave this window open. Press Ctrl+C to stop.
+echo Jackery V1. Leave this window open. Press Ctrl+C to stop.
 "%HB_NODE%" server.js %*
 if errorlevel 1 pause
 endlocal

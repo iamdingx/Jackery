@@ -6,7 +6,7 @@ import { makeZip } from '../src/zip.js';
 import { candidateFingerprint, root } from './project.mjs';
 
 const ignored = new Set(['.git','.superpowers','.codex','node_modules','runtime','data','data-demo','backups','artifacts','.tmp','release']);
-const sourceDirectories = new Set(['src','public','tests','docs','scripts']);
+const sourceDirectories = new Set(['src','public','tests','docs','scripts','catalogs']);
 const sourceRootFiles = new Set(['.gitignore','server.js','package.json','package-lock.json','README.md','PRODUCT_CONTRACT.md','Start.cmd','Start-Demo.cmd','start.sh']);
 export function collectPackageFiles(projectRoot = root) {
   const result = [], resolvedRoot=path.resolve(projectRoot);
@@ -32,10 +32,10 @@ export function buildDelivery({ projectRoot = root, outputDir = path.join(root, 
   if (proof.candidate !== candidate) throw new Error('Verified candidate is stale: source changed after verification');
   const files = collectPackageFiles(projectRoot);
   for(const required of ['server.js','package.json','public/index.html'])if(!files.some(file=>file.relative===required))throw new Error('Required source missing from package: '+required);
-  const bytes = makeZip(files.map(f => ({ name: 'Huabao-Service-V1/' + f.relative, data: readFileSync(f.absolute) })));
+  const bytes = makeZip(files.map(f => ({ name: 'Jackery-Service-V1/' + f.relative, data: readFileSync(f.absolute) })));
   const sha256 = createHash('sha256').update(bytes).digest('hex');
   mkdirSync(outputDir, { recursive: true });
-  const zipPath = path.join(outputDir, 'Huabao_Service_V1.zip'), manifestPath = path.join(outputDir, 'Huabao_Service_V1.sha256.json');
+  const zipPath = path.join(outputDir, 'Jackery_Service_V1.zip'), manifestPath = path.join(outputDir, 'Jackery_Service_V1.sha256.json');
   writeFileSync(zipPath, bytes);
   writeFileSync(manifestPath, JSON.stringify({ package: path.basename(zipPath), version: '1.0.0', sha256, bytes: bytes.length, candidate, createdAt: new Date().toISOString(), files: files.map(f => f.relative), verification: proof }, null, 2) + '\n');
   return { zipPath, manifestPath, sha256, bytes: bytes.length, files: files.length };

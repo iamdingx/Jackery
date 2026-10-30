@@ -9,27 +9,28 @@ async function fixture(t){
   await mkdir('tests/.tmp',{recursive:true});await mkdir('artifacts/qa-v03',{recursive:true});const app=await startServer({dataDir:await mkdtemp(path.resolve('tests/.tmp/v03-interactions-')),demo:true});
   const browser=await chromium.launch({headless:true,executablePath:'C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe'}),page=await browser.newPage({viewport:{width:1366,height:864}}),errors=[];page.on('pageerror',e=>errors.push(e.message));
   t.after(async()=>{await browser.close();await app.close();assert.deepEqual(errors,[]);});
-  async function client(name='alex',password='HuabaoAlex!2026'){const login=await fetch(app.baseUrl+'/api/login',{method:'POST',headers:{'Content-Type':'application/json',Origin:app.baseUrl},body:JSON.stringify({username:name,password})});const data=await login.json(),headers={Cookie:login.headers.get('set-cookie').split(';')[0],'X-CSRF-Token':data.csrfToken,'Content-Type':'application/json',Origin:app.baseUrl};return async(route,method='GET',body)=>{const res=await fetch(app.baseUrl+route,{method,headers,body:body===undefined?undefined:JSON.stringify(body)});assert.ok(res.ok,await res.clone().text());return res.json();};}
-  async function login(name='alex',password='HuabaoAlex!2026'){await page.goto(app.baseUrl);await page.locator('#username').fill(name);await page.locator('#password').fill(password);await page.locator('#login-form button').click();await page.locator('#new-record').waitFor();}
+  async function client(name='alex',password='JackeryAlex!2026'){const login=await fetch(app.baseUrl+'/api/login',{method:'POST',headers:{'Content-Type':'application/json',Origin:app.baseUrl},body:JSON.stringify({username:name,password})});const data=await login.json(),headers={Cookie:login.headers.get('set-cookie').split(';')[0],'X-CSRF-Token':data.csrfToken,'Content-Type':'application/json',Origin:app.baseUrl};return async(route,method='GET',body)=>{const res=await fetch(app.baseUrl+route,{method,headers,body:body===undefined?undefined:JSON.stringify(body)});assert.ok(res.ok,await res.clone().text());return res.json();};}
+  async function login(name='alex',password='JackeryAlex!2026'){await page.goto(app.baseUrl);await page.locator('#username').fill(name);await page.locator('#password').fill(password);await page.locator('#login-form button').click();await page.locator('#new-record').waitFor();}
   async function open(sn){await page.locator('#filter-q').fill(sn);const loaded=page.waitForResponse(res=>res.url().includes('/api/records?')&&res.request().method()==='GET');await page.locator('#filters button').click();await loaded;await page.locator('[data-open-record]').first().click();await page.waitForFunction(value=>document.querySelector('#sn')?.value===value,sn);}
   return {app,page,client,login,open};
 }
 
 test('v03 Module4 UI: admin corrects foreign WFR without completion and owner resumes own history',{timeout:60000},async t=>{
-  const {page,client,login,open}=await fixture(t),alex=await client(),admin=await client('admin','HuabaoAdmin!2026');
+  const {page,client,login,open}=await fixture(t),alex=await client(),admin=await client('admin','JackeryAdmin!2026');
   const refs={receivingSku:'原入库SKU',postSortSku:'SORT-original',receivingOrderNo:'原单号001',receivingStatus:'原等待状态',productNameVerification:'原名称校验',skuVerification:'原SKU校验',parentRecord:'原父记录文本',unspecifiedTextField:'文本9原值'};
   let record=(await alex('/api/records','POST',{sn:'DEEP-V03-ADMIN-WFR',modelId:1,...refs})).record;record=(await alex(`/api/records/${record.id}`,'PUT',{version:record.version,outcome:'awp',issueNotes:'Waiting note'})).record;
-  await login('admin','HuabaoAdmin!2026');await open(record.sn);for(const [key,value] of Object.entries(refs)){assert.equal(await page.locator('#'+key).inputValue(),value);assert.equal(await page.locator('#'+key).isDisabled(),true);}
+  await login('admin','JackeryAdmin!2026');await open(record.sn);for(const key of Object.keys(refs))assert.equal(await page.locator('#'+key).count(),0,'Removed Reference Details field: '+key);
   await page.locator('#start-correction').click();await page.locator('#issueNotes').fill('Waiting corrected / 等待中更正');await page.locator('#correctionReason').fill('核对原文 / checked source');await page.locator('#save-correction').click();await page.getByText('Saved successfully',{exact:true}).waitFor();
   const corrected=(await admin(`/api/records/${record.id}`)).record;assert.equal(corrected.status,'wfr');assert.equal(corrected.ownerId,record.ownerId);assert.equal(corrected.issueNotes,'Waiting corrected / 等待中更正');assert.ok((await admin(`/api/records/${record.id}/audit`)).items.some(a=>a.reason==='核对原文 / checked source'&&a.before&&a.after));
   await page.locator('#logout').click();await login();await page.locator('#history-nav').click();await page.locator('#history-sn').fill(record.sn);await page.locator('#history-form button').click();await page.locator('[data-history-record]').first().click();assert.equal(await page.locator('#issueNotes').isDisabled(),true);
   await page.locator('#resume-record').click();await page.waitForFunction(()=>document.querySelector('#issueNotes')?.disabled===false);assert.equal(await page.locator('#issueNotes').isEnabled(),true);assert.equal(await page.locator('#complete-record').count(),0);await page.locator('#issueNotes').fill('Resumed same record');await page.locator('#save-record').click();await page.getByText('Saved successfully',{exact:true}).waitFor();
-  const resumed=(await alex(`/api/records/${record.id}`)).record;assert.equal(resumed.id,record.id);assert.equal(resumed.workOrder,record.workOrder);assert.equal(resumed.status,'wfr');
+  const resumed=(await alex(`/api/records/${record.id}`)).record;assert.equal(resumed.id,record.id);assert.equal(resumed.workOrder,record.workOrder);assert.equal(resumed.status,'wfr');for(const [key,value] of Object.entries(refs))assert.equal(resumed[key],value,'Historical source mapping is preserved: '+key);
   await writeFile('artifacts/qa-v03/admin-resume-ui.json',JSON.stringify({passed:true,adminCorrectionRetainedOwnerAndWfr:true,ownerResumeSameRecord:true},null,2));
 });
 
 test('v03 Module5 UI: failed upload precise copy, retained file retry, size/format validation',{timeout:60000},async t=>{
   const {page,client,login}=await fixture(t),alex=await client();await login();await page.locator('#new-record').click();await page.locator('#sn').fill('DEEP-V03-PHOTO-RETRY');await page.locator('#issueNotes').fill('Original English issue');
+  await page.locator('.evidence-section summary').click();
   await page.route('**/api/records/*/photos',route=>route.fulfill({status:503,json:{error:{code:'TEST_UPLOAD_FAILURE',message:'Injected failure'}}}));
   await page.locator('#photo-file').setInputFiles({name:'evidence.png',mimeType:'image/png',buffer:png});await page.locator('#upload-photo').click();await page.getByText('Upload failed. Your photo has not been saved. Please try again.',{exact:true}).waitFor();
   let r=(await alex('/api/records?q=DEEP-V03-PHOTO-RETRY')).items[0];assert.equal(r.photos.length,0);assert.equal(r.issueNotes,'Original English issue');await page.unroute('**/api/records/*/photos');
@@ -41,7 +42,7 @@ test('v03 Module5 UI: failed upload precise copy, retained file retry, size/form
 });
 
 test('v03 Module2/3 UI: long English labels, 100 consumption rows and export locale',{timeout:60000},async t=>{
-  const {page,client,login,open}=await fixture(t),alex=await client(),admin=await client('admin','HuabaoAdmin!2026');
+  const {page,client,login,open}=await fixture(t),alex=await client(),admin=await client('admin','JackeryAdmin!2026');
   const cat=await admin('/api/catalog?includeInactive=1'),model=cat.models.find(m=>m.id===1);model.checkItems[0].labelEn='AC output voltage, frequency and protection under sustained load';await admin('/api/admin/models/1','PUT',model);
   let r=(await alex('/api/records','POST',{sn:'DEEP-V03-LONG-LIST',modelId:1})).record;const parts=(await alex('/api/models/1/bom?pageSize=100')).items;
   r=(await alex(`/api/records/${r.id}`,'PUT',{version:r.version,materials:parts.map((p,i)=>({bomId:p.id,quantity:i+1})),outcome:'needs_analysis'})).record;

@@ -31,10 +31,13 @@ export function validateModel(input,id){
     if(!item||typeof item!=='object')invalid('Check item is invalid');
     const code=textValue(item.code,'Check code',80,true).trim();
     if(!/^[a-zA-Z0-9_-]+$/.test(code)||codes.has(code)||['__proto__','constructor','prototype'].includes(code))invalid('Check codes must be unique safe keys');codes.add(code);
-    return {code,labelEn:textValue(item.labelEn,'English check label',300,true).trim(),labelZh:textValue(item.labelZh??'','Chinese check label',300).trim()};
+    const originalSource=Boolean(input.catalogKey&&item.source&&item.labelZh?.trim());
+    return {code,labelEn:textValue(item.labelEn??'','English check label',300,!originalSource).trim(),labelZh:textValue(item.labelZh??'','Chinese check label',300).trim(),...(originalSource?{source:structuredClone(item.source)}:{})};
   });
   if(input.active!==undefined&&typeof input.active!=='boolean')invalid('Active must be boolean');
-  return {id,nameEn:textValue(input.nameEn,'English model name',200,true).trim(),nameZh:textValue(input.nameZh??'','Chinese model name',200).trim(),productSku:textValue(input.productSku??'','Product SKU',200).trim(),active:input.active??true,checkItems};
+  const metadata={};for(const field of ['catalogKey','baseModelCode','bomVersion','market'])if(input[field]!==undefined)metadata[field]=textValue(input[field],field,200);
+  if(input.reviewReasons!==undefined){if(!Array.isArray(input.reviewReasons)||input.reviewReasons.some(x=>typeof x!=='string'))invalid('Invalid model review reasons');metadata.reviewReasons=[...input.reviewReasons];}
+  return {id,nameEn:textValue(input.nameEn,'English model name',200,true).trim(),nameZh:textValue(input.nameZh??'','Chinese model name',200).trim(),productSku:textValue(input.productSku??'','Product SKU',200).trim(),active:input.active??true,checkItems,...metadata};
 }
 export function validateAppearance(input,code){
   code=textValue(code??input.code,'Appearance code',80,true).trim();
@@ -43,9 +46,22 @@ export function validateAppearance(input,code){
   return {code,labelEn:textValue(input.labelEn,'English appearance label',200,true).trim(),labelZh:textValue(input.labelZh??'','Chinese appearance label',200).trim(),active:input.active??true};
 }
 export function validateBom(input,id,models){
-  const modelId=positiveId(input.modelId,'Model ID');if(!models.some(m=>m.id===modelId))invalid('Model does not exist');
+  const modelId=positiveId(input.modelId,'Model ID'),model=models.find(m=>m.id===modelId);if(!model)invalid('Model does not exist');
   if(input.active!==undefined&&typeof input.active!=='boolean')invalid('Active must be boolean');
-  return {id,modelId,sku:textValue(input.sku,'SKU',200,true).trim(),descriptionEn:textValue(input.descriptionEn,'English description',1000,true).trim(),descriptionZh:textValue(input.descriptionZh??'','Chinese description',1000).trim(),unit:textValue(input.unit??'pc','Unit',40,true).trim(),active:input.active??true};
+  const control=model.catalogKey?{quantityControl:'standard_hard_cap'}:{};
+  if(input.standardQty!==undefined){
+    if(input.standardQty!==null&&(typeof input.standardQty!=='number'||!Number.isFinite(input.standardQty)||input.standardQty<=0||input.standardQty>1000000))invalid('BOM standard quantity must be a positive number');
+    control.standardQty=input.standardQty;control.quantityControl='standard_hard_cap';
+  }
+  if(input.quantityControl!==undefined&&input.quantityControl!=='standard_hard_cap')invalid('Invalid BOM quantity control');
+  if(input.quantityControl==='standard_hard_cap')control.quantityControl=input.quantityControl;
+  if(control.quantityControl&&!(control.standardQty>0)&&input.active!==false)invalid('An active BOM item requires a confirmed standard quantity');
+  if(input.source!==undefined)control.source=structuredClone(input.source);
+  if(input.reviewReasons!==undefined)control.reviewReasons=structuredClone(input.reviewReasons);
+  const unit=textValue(input.unit??'pc','Unit',40,true).trim();
+  if(control.quantityControl&&/^pcs?$/i.test(unit)&&control.standardQty!=null&&!Number.isInteger(control.standardQty))invalid('Piece standard quantities must be whole integers');
+  const originalSource=Boolean(input.source&&input.descriptionZh?.trim());
+  return {id,modelId,sku:textValue(input.sku,'SKU',200,true).trim(),descriptionEn:textValue(input.descriptionEn??'','English description',1000,!originalSource).trim(),descriptionZh:textValue(input.descriptionZh??'','Chinese description',4000).trim(),unit,active:input.active??true,...control};
 }
 export function validateRecord(input,previous,catalog){
   if(!input||typeof input!=='object'||Array.isArray(input))invalid('Record input must be an object');
@@ -71,6 +87,13 @@ export function validateRecord(input,previous,catalog){
     const old=previous.appearanceSnapshot?.find(a=>a.code===code);
     const option=old??catalog.appearanceOptions.find(a=>a.code===code&&a.active);if(!option)invalid('Invalid appearance option');return structuredClone(option);
   });v.appearanceCodes=[...codes];
+  const faultCodes=input.faultCodes??(modelChanged?[]:previous.faultCodes)??[];
+  if(!Array.isArray(faultCodes)||faultCodes.length>100||faultCodes.some(x=>typeof x!=='string')||new Set(faultCodes).size!==faultCodes.length)invalid('Fault code selections are invalid');
+  const knowledge=(catalog.knowledge??[]).find(x=>x.id===v.modelId);
+  v.faultCodes=[...faultCodes];v.faultSnapshot=faultCodes.map(code=>{
+    const prior=!modelChanged&&previous.faultSnapshot?.find(x=>x.code===code);
+    const item=prior??knowledge?.faultCodes?.find(x=>x.code===code);if(!item)invalid('Fault code is outside the selected model');return structuredClone(item);
+  });
   const known=new Set(v.modelSnapshot.checkItems.map(i=>i.code));
   const supplied=input.checks??(modelChanged?{}:previous.checks)??{};
   if(!supplied||typeof supplied!=='object'||Array.isArray(supplied)||Object.keys(supplied).some(k=>!['initial','final'].includes(k)))invalid('Invalid check stages');
@@ -89,10 +112,18 @@ export function validateRecord(input,previous,catalog){
     if(!item||typeof item!=='object')invalid('BOM item is invalid');const id=positiveId(item.bomId,'BOM ID');
     if(used.has(id))invalid('Duplicate BOM material');used.add(id);
     const old=!modelChanged&&previous.materials?.find(m=>m.bomId===id);
-    const bom=old??catalog.bom.find(b=>b.id===id&&b.modelId===v.modelId&&b.active);if(!bom)invalid('Material is outside the model BOM');
+    const current=catalog.bom.find(b=>b.id===id&&b.modelId===v.modelId);
+    const bom=old??(current?.active?current:null);if(!bom)invalid('Material is outside the model BOM');
     const quantity=item.quantity===undefined?1:item.quantity;
     if(typeof quantity!=='number'||!Number.isFinite(quantity)||quantity<=0||quantity>1000000||!/^\d+(?:\.\d{1,3})?$/.test(String(quantity)))invalid('Material quantity must be > 0, at most 1,000,000 and have at most three decimals');
-    return {bomId:id,sku:bom.sku,descriptionEn:bom.descriptionEn,descriptionZh:bom.descriptionZh,unit:bom.unit,quantity};
+    const controlled=bom.quantityControl==='standard_hard_cap'||current?.quantityControl==='standard_hard_cap';
+    const standardQty=bom.standardQty??current?.standardQty;
+    if(controlled){
+      if(!(typeof standardQty==='number'&&Number.isFinite(standardQty)&&standardQty>0))invalid('BOM standard quantity is not confirmed for this item');
+      if(quantity>standardQty)throw new ApiError(422,'BOM_QUANTITY_LIMIT',`Quantity exceeds the BOM standard usage limit of ${standardQty}.`,{bomId:id,sku:bom.sku,standardQty,quantity});
+      if(/^pcs?$/i.test(bom.unit)&&!Number.isInteger(quantity))invalid('Piece quantities must be whole integers');
+    }
+    return {bomId:id,sku:bom.sku,descriptionEn:bom.descriptionEn,descriptionZh:bom.descriptionZh,unit:bom.unit,quantity,...(controlled?{standardQty,quantityControl:'standard_hard_cap'}:{} )};
   });
   const action=input.action??'save';if(!['save','complete'].includes(action))invalid('Invalid action');
   if(action==='complete'){

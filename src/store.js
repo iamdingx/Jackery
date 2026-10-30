@@ -18,6 +18,7 @@ export function openStore(dataDir,demo){
     CREATE TABLE IF NOT EXISTS models (id INTEGER PRIMARY KEY,data TEXT NOT NULL);
     CREATE TABLE IF NOT EXISTS appearance (code TEXT PRIMARY KEY,data TEXT NOT NULL);
     CREATE TABLE IF NOT EXISTS bom (id INTEGER PRIMARY KEY,model_id INTEGER NOT NULL REFERENCES models(id),sku TEXT NOT NULL,data TEXT NOT NULL,UNIQUE(model_id,sku));
+    CREATE TABLE IF NOT EXISTS model_knowledge (id INTEGER PRIMARY KEY REFERENCES models(id),data TEXT NOT NULL);
     CREATE TABLE IF NOT EXISTS records (id INTEGER PRIMARY KEY,data TEXT NOT NULL);
     CREATE TABLE IF NOT EXISTS photos (id TEXT PRIMARY KEY,record_id INTEGER NOT NULL REFERENCES records(id),data TEXT NOT NULL,physical_name TEXT NOT NULL,removed INTEGER NOT NULL DEFAULT 0);
     CREATE TABLE IF NOT EXISTS audits (id INTEGER PRIMARY KEY,record_id INTEGER NOT NULL REFERENCES records(id),data TEXT NOT NULL);
@@ -35,7 +36,7 @@ export function openStore(dataDir,demo){
       db.prepare('INSERT INTO meta(key,value) VALUES(?,?)').run('mode',demo?'demo':'production');
       const add=(username,name,role,password)=>db.prepare('INSERT INTO users(username,display_name,role,password_hash) VALUES(?,?,?,?)').run(username,name,role,passwordHash(password));
       if(demo){
-        add('admin','Demo Admin','admin','HuabaoAdmin!2026');add('alex','Alex Operator','operator','HuabaoAlex!2026');add('blair','Blair Operator','operator','HuabaoBlair!2026');
+        add('admin','Demo Admin','admin','JackeryAdmin!2026');add('alex','Alex Operator','operator','JackeryAlex!2026');add('blair','Blair Operator','operator','JackeryBlair!2026');
         const checkItems=[{code:'ac_output',labelEn:'AC Output',labelZh:'交流输出'},{code:'dc_output',labelEn:'DC Output',labelZh:'直流输出'},{code:'charging',labelEn:'Charging',labelZh:'充电'}];
         for(const id of [1,2])put('models',{id,nameEn:`Sample Model ${id===1?'A':'B'}`,nameZh:`演示型号${id===1?'甲':'乙'}`,productSku:`DEMO-PRODUCT-${id}`,active:true,checkItems:structuredClone(checkItems)});
         for(const [code,labelEn,labelZh] of [['no_defect','No Defect','无缺陷'],['scratches','Scratches','划痕'],['cracks','Cracks','裂纹'],['dents','Dents','凹痕']])put('appearance',{code,labelEn,labelZh,active:true});
@@ -54,7 +55,7 @@ export function openStore(dataDir,demo){
       }
     });
   }
-  const catalog=()=>({models:all('models'),appearanceOptions:all('appearance'),bom:all('bom')});
+  const catalog=()=>({models:all('models'),appearanceOptions:all('appearance'),bom:all('bom'),knowledge:all('model_knowledge')});
   const record=id=>{const r=get('records',id);if(!r)throw new ApiError(404,'NOT_FOUND','Record not found');r.photos=db.prepare('SELECT data FROM photos WHERE record_id=? AND removed=0 ORDER BY rowid').all(id).map(p=>JSON.parse(p.data));return r;};
   const audit=(recordId,action,actor,reason,before,after)=>{const id=next('audits');db.prepare('INSERT INTO audits(id,record_id,data) VALUES(?,?,?)').run(id,recordId,JSON.stringify({id,recordId,action,actorId:actor.id,actorName:actor.displayName,reason:reason??'',before,after,createdAt:new Date().toISOString()}));};
   return {db,tx,get,all,put,next,catalog,record,audit,dataDir};

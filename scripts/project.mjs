@@ -15,7 +15,7 @@ export function walk(folder, ignore = new Set()) {
   return result.sort();
 }
 export function candidateFingerprint(projectRoot = root) {
-  const files = ['server.js', 'package.json', ...['Start.cmd','Start-Demo.cmd','start.sh'].filter(name=>existsSync(path.join(projectRoot,name))), ...['src', 'public', 'tests', 'scripts'].filter(dir=>existsSync(path.join(projectRoot,dir))).flatMap(dir => walk(path.join(projectRoot, dir), new Set(['.tmp'])).map(file => path.relative(projectRoot, file)))].sort();
+  const files = ['server.js', 'package.json', ...['Start.cmd','Start-Demo.cmd','start.sh'].filter(name=>existsSync(path.join(projectRoot,name))), ...['src', 'public', 'tests', 'scripts','catalogs'].filter(dir=>existsSync(path.join(projectRoot,dir))).flatMap(dir => walk(path.join(projectRoot, dir), new Set(['.tmp'])).map(file => path.relative(projectRoot, file)))].sort();
   const hash = createHash('sha256');
   for (const name of files) hash.update(name.replaceAll('\\', '/') + '\0').update(readFileSync(path.join(projectRoot, name))).update('\0');
   return hash.digest('hex');

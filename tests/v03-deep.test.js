@@ -14,7 +14,7 @@ test('v03 five modules execute in order with actual API and export evidence',{ti
   const note=(id,expected,actual)=>{log.push({id,expected,actual,result:'符合'});};
   async function client(name,password){const l=await fetch(app.baseUrl+'/api/login',{method:'POST',headers:{'Content-Type':'application/json',Origin:app.baseUrl},body:JSON.stringify({username:name,password})});assert.equal(l.status,200);const session=await l.json(),headers={Cookie:l.headers.get('set-cookie').split(';')[0],'X-CSRF-Token':session.csrfToken,Origin:app.baseUrl,'Content-Type':'application/json'};return async(route,method='GET',body)=>{const response=await fetch(app.baseUrl+route,{method,headers,body:body===undefined?undefined:JSON.stringify(body)});const bytes=Buffer.from(await response.arrayBuffer());let data;try{data=JSON.parse(bytes);}catch{}return {status:response.status,data,bytes};};}
   try{
-    const alex=await client('alex','HuabaoAlex!2026'),blair=await client('blair','HuabaoBlair!2026'),admin=await client('admin','HuabaoAdmin!2026');let r;
+    const alex=await client('alex','JackeryAlex!2026'),blair=await client('blair','JackeryBlair!2026'),admin=await client('admin','JackeryAdmin!2026');let r;
     await t.test('Module 1: main flow, single inspection, WFR, ROK, scrap and lock',async()=>{
       const created=await alex('/api/records','POST',{sn:'DEEP-V03-REPEAT',modelId:1,workDate:'2026-09-01',...refs});assert.equal(created.status,201);r=created.data.record;assert.equal(r.outcome,null);assert.equal(Object.hasOwn(r.checks,'final'),false);note('M1.01','新单无预选结果，按型号检查','201；3项检验均Not Tested，无复测输入');
       const bom=(await alex('/api/models/1/bom?q=Packing')).data.items;assert.ok(bom.length);const chosen=bom[0];

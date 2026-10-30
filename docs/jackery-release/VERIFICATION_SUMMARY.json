@@ -1,0 +1,29 @@
+{
+  "startedAt": "2026-10-30T02:44:57.837Z",
+  "node": "v24.22.1",
+  "candidate": "655f6a26143fb9ead9ffc2900a6a94b0856b52ee6a3403233c29340237a723aa",
+  "passed": true,
+  "stages": [
+    {
+      "name": "core",
+      "code": 0,
+      "tests": 116,
+      "pass": 116,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "log": "artifacts/verification/core.log"
+    },
+    {
+      "name": "browser-e2e",
+      "code": 0,
+      "tests": 24,
+      "pass": 24,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "log": "artifacts/verification/browser-e2e.log"
+    }
+  ],
+  "finishedAt": "2026-10-30T02:45:23.771Z"
+}

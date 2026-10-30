@@ -10,7 +10,7 @@ async function fixture(t){
   const browser=await chromium.launch({headless:true,executablePath:'C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe'});const page=await browser.newPage({viewport:{width:1680,height:1100}});
   const errors=[];page.on('pageerror',err=>errors.push(err.message));
   t.after(async()=>{await browser.close();await app.close();assert.deepEqual(errors,[]);});
-  const login=async(name='alex',password='HuabaoAlex!2026')=>{await page.locator('#username').fill(name);await page.locator('#password').fill(password);await page.locator('#login-form button').click();await page.locator('#new-record').waitFor();};
+  const login=async(name='alex',password='JackeryAlex!2026')=>{await page.locator('#username').fill(name);await page.locator('#password').fill(password);await page.locator('#login-form button').click();await page.locator('#new-record').waitFor();};
   await page.goto(app.baseUrl);await login();return {app,page,login};
 }
 
@@ -20,16 +20,18 @@ test('v03 exact English fields, separate translations, inspection gate and draft
   for(const name of ['Initial Test','Final Test'])assert.equal(await page.getByRole('columnheader',{name,exact:true}).count(),0);
   assert.equal(await page.locator('.checks input[type=radio]').count(),9);
   assert.equal(await page.locator('.checks select').count(),0);
-  for(const [id,name] of Object.entries({translatedAppearanceNotes:'Translated Appearance Notes',translatedIssueNotes:'Translated Issue Notes',receivingSku:'Receiving SKU',postSortSku:'Post-Sort SKU',receivingOrderNo:'Receiving Order No.',receivingStatus:'Receiving Status',productNameVerification:'Product Name Verification',skuVerification:'SKU Verification',parentRecord:'Parent Record',unspecifiedTextField:'Unspecified Text Field'})){
+  for(const [id,name] of Object.entries({translatedAppearanceNotes:'Translated Appearance Notes',translatedIssueNotes:'Translated Issue Notes'})){
     assert.equal(await page.getByLabel(name,{exact:true}).count(),1,id);assert.equal(await page.locator('#'+id).isDisabled(),true,id);
   }
   assert.equal(await page.locator('#productSku').isDisabled(),true);
-  assert.equal(await page.getByRole('heading',{name:'Evidence Photos',exact:true}).count(),1);assert.ok(await page.getByText('Optional',{exact:true}).count());
+  for(const id of ['receivingSku','postSortSku','receivingOrderNo','receivingStatus','productNameVerification','skuVerification','parentRecord','unspecifiedTextField'])assert.equal(await page.locator('#'+id).count(),0);
+  assert.match(await page.locator('.evidence-section summary').textContent(),/Evidence Photos/);assert.ok(await page.getByText('Optional',{exact:true}).count());
+  await page.locator('.evidence-section summary').click();
   assert.equal(await page.locator('#language').textContent(),'ZH');assert.equal(await page.locator('#language').getAttribute('aria-label'),'Switch to Chinese');
   assert.equal(await page.getByRole('button',{name:'Choose Photo',exact:true}).count(),1);assert.equal(await page.locator('#photo-file').getAttribute('class'),'sr-only');
   const fileBounds=await page.locator('#photo-file').boundingBox();assert.ok(fileBounds.width<=1&&fileBounds.height<=1,'The native OS-language file control must be visually hidden');
   await page.locator('#sn').fill('V03-DRAFT');await page.locator('#appearanceNotes').fill('原外观');await page.locator('#issueNotes').fill('Original issue');
-  await page.locator('#translatedAppearanceNotes').fill('Manual appearance');await page.locator('#translatedIssueNotes').fill('Manual issue');
+  await page.locator('.translations summary').click();await page.locator('#translatedAppearanceNotes').fill('Manual appearance');await page.locator('#translatedIssueNotes').fill('Manual issue');
   await page.locator('[data-check-phase=initial][data-check-code=ac_output][value=fail]').check();await page.locator('[name=outcome][value=rok]').check();await page.locator('#complete-record').click();
   assert.equal(await page.locator('#form-error').textContent(),'Complete all inspection items. Refurbishment requires all results to pass.');
   await page.locator('#language').click();await page.locator('#language').click();
@@ -66,7 +68,7 @@ test('v03 SN automatic found hint and account language preferences isolate users
   const {page,login}=await fixture(t);await page.locator('#new-record').click();await page.locator('#sn').fill('DEMO-HISTORY-001');
   await page.getByText('Previous records found for this SN. Records owned by others are view-only.',{exact:true}).waitFor();
   assert.equal(await page.locator('#sn').isEnabled(),true);const preference=page.waitForResponse(r=>r.url().endsWith('/api/account/language')&&r.request().method()==='PUT');await page.locator('#language').click();await preference;
-  page.on('dialog',d=>d.accept());await page.locator('#logout').click();await login('blair','HuabaoBlair!2026');assert.equal(await page.locator('html').getAttribute('lang'),'en');
+  page.on('dialog',d=>d.accept());await page.locator('#logout').click();await login('blair','JackeryBlair!2026');assert.equal(await page.locator('html').getAttribute('lang'),'en');
   await page.locator('#logout').click();await login();assert.equal(await page.locator('html').getAttribute('lang'),'zh');
   await page.reload();await page.locator('#new-record').waitFor();assert.equal(await page.locator('html').getAttribute('lang'),'zh');
 });
@@ -91,7 +93,7 @@ test('v03 rapid SN input and logout cancel history lookup and finish the final l
   signingOut=false;await login();
   await page.route('**/api/account/language',async route=>{await new Promise(resolve=>setTimeout(resolve,150));await route.continue();});
   await page.locator('#language').click();await page.locator('#language').click();await page.locator('#language').click();await page.locator('#logout').click();await page.locator('#username').waitFor();
-  await login('blair','HuabaoBlair!2026');assert.equal(await page.locator('html').getAttribute('lang'),'en');await page.locator('#logout').click();await page.locator('#username').waitFor();
+  await login('blair','JackeryBlair!2026');assert.equal(await page.locator('html').getAttribute('lang'),'en');await page.locator('#logout').click();await page.locator('#username').waitFor();
   await login();assert.equal(await page.locator('html').getAttribute('lang'),'zh','Sign-out must finish the last queued preference save');
   assert.deepEqual(consoleErrors,[]);
 });
@@ -101,12 +103,12 @@ test('v03 sign-out aborts an in-flight SN lookup before another account starts w
   await page.route('**/api/sn-history?*',async route=>{await new Promise(resolve=>setTimeout(resolve,700));await route.fulfill({json:{items:[{id:999}]}}).catch(()=>{});});
   await page.locator('#new-record').click();const started=page.waitForRequest(r=>r.url().includes('/api/sn-history?'));await page.locator('#sn').fill('IN-FLIGHT-LOOKUP');await started;
   const aborted=page.waitForEvent('requestfailed',r=>r.url().includes('/api/sn-history?'));page.once('dialog',d=>d.accept());await page.locator('#logout').click();await page.locator('#username').waitFor();
-  assert.match((await aborted).failure().errorText,/ABORTED|CANCELLED/i);await login('blair','HuabaoBlair!2026');await page.locator('#new-record').click();
+  assert.match((await aborted).failure().errorText,/ABORTED|CANCELLED/i);await login('blair','JackeryBlair!2026');await page.locator('#new-record').click();
   assert.equal(await page.locator('#sn').inputValue(),'');assert.equal(await page.getByText('Previous records found for this SN. Records owned by others are view-only.',{exact:true}).count(),0);assert.deepEqual(consoleErrors,[]);
 });
 
 test('v03 custom photo picker exposes English controls and preserves original filename across languages',{timeout:60000},async t=>{
-  const {page}=await fixture(t);await page.locator('#new-record').click();assert.equal(await page.locator('#photo-selection').textContent(),'No photo selected');
+  const {page}=await fixture(t);await page.locator('#new-record').click();await page.locator('.evidence-section summary').click();assert.equal(await page.locator('#photo-selection').textContent(),'No photo selected');
   const chooser=page.waitForEvent('filechooser');await page.getByRole('button',{name:'Choose Photo',exact:true}).click();await (await chooser).setFiles({name:'原始 Evidence.png',mimeType:'image/png',buffer:Buffer.from('source bytes')});
   assert.equal(await page.locator('#photo-selection').textContent(),'Selected: 原始 Evidence.png');await page.locator('#language').click();assert.equal(await page.locator('#language').textContent(),'EN');await page.locator('#language').click();assert.equal(await page.locator('#photo-selection').textContent(),'Selected: 原始 Evidence.png');
 });

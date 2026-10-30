@@ -83,18 +83,18 @@ test('v0.3 exports one inspection for all outcomes, legacy archive, references a
   assert.match(zh.get('xl/workbook.xml'),/Work Summary.*Functional Checks.*Material Usage.*Photo Index/);
 });
 
-async function harness(t){const dir=await mkdtemp(path.join(tmpdir(),'hb-v03-'));let app=await startServer({dataDir:dir,demo:true});t.after(async()=>{await app.close();await rm(dir,{recursive:true,force:true});});function client(){let cookie='',csrf='';return {async req(route,method='GET',body,headers={}){const response=await fetch(app.baseUrl+route,{method,headers:{Cookie:cookie,'X-CSRF-Token':csrf,...(body?{'Content-Type':'application/json'}:{}),...headers},body:body?JSON.stringify(body):undefined});if(response.headers.get('set-cookie'))cookie=response.headers.get('set-cookie').split(';')[0];const bytes=Buffer.from(await response.arrayBuffer());let data;try{data=JSON.parse(bytes);}catch{}if(data?.csrfToken)csrf=data.csrfToken;return {status:response.status,data,bytes};},login(username='alex',password='HuabaoAlex!2026'){return this.req('/api/login','POST',{username,password});}};}return {dir,client,restart:async()=>{await app.close();app=await startServer({dataDir:dir,demo:true});}};}
+async function harness(t){const dir=await mkdtemp(path.join(tmpdir(),'hb-v03-'));let app=await startServer({dataDir:dir,demo:true});t.after(async()=>{await app.close();await rm(dir,{recursive:true,force:true});});function client(){let cookie='',csrf='';return {async req(route,method='GET',body,headers={}){const response=await fetch(app.baseUrl+route,{method,headers:{Cookie:cookie,'X-CSRF-Token':csrf,...(body?{'Content-Type':'application/json'}:{}),...headers},body:body?JSON.stringify(body):undefined});if(response.headers.get('set-cookie'))cookie=response.headers.get('set-cookie').split(';')[0];const bytes=Buffer.from(await response.arrayBuffer());let data;try{data=JSON.parse(bytes);}catch{}if(data?.csrfToken)csrf=data.csrfToken;return {status:response.status,data,bytes};},login(username='alex',password='JackeryAlex!2026'){return this.req('/api/login','POST',{username,password});}};}return {dir,client,restart:async()=>{await app.close();app=await startServer({dataDir:dir,demo:true});}};}
 
 test('v0.3 account language is authenticated, CSRF checked, persistent per-account across sessions/restarts',async t=>{
   const h=await harness(t),a=h.client(),b=h.client(),other=h.client(),anon=h.client();
   assert.equal((await anon.req('/api/account/language','PUT',{language:'zh'})).status,401);
-  assert.equal((await a.login()).data.user.language,'en');await b.login();await other.login('blair','HuabaoBlair!2026');
+  assert.equal((await a.login()).data.user.language,'en');await b.login();await other.login('blair','JackeryBlair!2026');
   assert.equal((await a.req('/api/account/language','PUT',{language:'zh'},{'X-CSRF-Token':'wrong'})).status,403);
   assert.equal((await a.req('/api/account/language','PUT',{language:'fr'})).status,422);
   const changed=await a.req('/api/account/language','PUT',{language:'zh'});assert.equal(changed.status,200);assert.equal(changed.data.user.language,'zh');
   assert.equal((await b.req('/api/session')).data.user.language,'zh');assert.equal((await other.req('/api/session')).data.user.language,'en');
   await h.restart();assert.equal((await a.login()).data.user.language,'zh');
-  const admin=h.client();await admin.login('admin','HuabaoAdmin!2026');
+  const admin=h.client();await admin.login('admin','JackeryAdmin!2026');
   assert.equal((await admin.req('/api/admin/users','POST',{username:'new-account',displayName:'New',role:'operator',password:'LongPassword!2026'})).data.user.language,'en');
 });
 

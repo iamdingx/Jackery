@@ -22,7 +22,7 @@ async function fixture(t, demo = true) {
   return { ...app, dir };
 }
 
-async function client(app, username = 'alex', password = 'HuabaoAlex!2026') {
+async function client(app, username = 'alex', password = 'JackeryAlex!2026') {
   let cookie = '', csrf = '';
   async function req(route, method = 'GET', body, extra = {}) {
     const headers = { Origin: app.baseUrl, ...extra };
@@ -81,7 +81,7 @@ function zipFiles(buffer) {
 test('AC-01 unauthenticated requests and own-only lists', async t => {
   const app = await fixture(t);
   assert.equal((await fetch(app.baseUrl + '/api/records')).status, 401);
-  const alex = await client(app), blair = await client(app, 'blair', 'HuabaoBlair!2026');
+  const alex = await client(app), blair = await client(app, 'blair', 'JackeryBlair!2026');
   const foreign = await create(blair, 'PRIVATE-FOREIGN-SN');
   const mine = await create(alex, 'MY-ONLY-SN');
   const list = await alex.req('/api/records?pageSize=100');
@@ -92,7 +92,7 @@ test('AC-01 unauthenticated requests and own-only lists', async t => {
 });
 
 test('AC-02 exact SN read-only exception never grants editing or broad search', async t => {
-  const app = await fixture(t), alex = await client(app), blair = await client(app, 'blair', 'HuabaoBlair!2026');
+  const app = await fixture(t), alex = await client(app), blair = await client(app, 'blair', 'JackeryBlair!2026');
   const r = await create(blair, 'EXACT-SN-REF-001');
   const history = await alex.req('/api/sn-history?sn=EXACT-SN-REF-001');
   assert.equal(history.status, 200);
@@ -196,14 +196,14 @@ test('AC-13 exactly one outcome is supported; WFR cannot complete', async t => {
 });
 
 test('AC-14 completed owner cannot edit; administrator correction needs reason', async t => {
-  const app = await fixture(t), c = await client(app), admin = await client(app, 'admin', 'HuabaoAdmin!2026'), r = await create(c);
+  const app = await fixture(t), c = await client(app), admin = await client(app, 'admin', 'JackeryAdmin!2026'), r = await create(c);
   const done = (await c.req(`/api/records/${r.id}`, 'PUT', input(r, { outcome: 'scrap', scrapReason: 'Damaged case', action: 'complete' }))).data.record;
   assert.equal((await c.req(`/api/records/${r.id}`, 'PUT', input(done, { issueNotes: 'cannot edit' }))).status, 403);
   assert.equal((await admin.req(`/api/records/${r.id}/corrections`, 'POST', { version: done.version, reason: '', changes: input(done, { issueNotes: 'adjust' }) })).status, 422);
 });
 
 test('AC-15 corrections retain before/after/actor/reason and original owner', async t => {
-  const app = await fixture(t), c = await client(app), admin = await client(app, 'admin', 'HuabaoAdmin!2026'), r = await create(c);
+  const app = await fixture(t), c = await client(app), admin = await client(app, 'admin', 'JackeryAdmin!2026'), r = await create(c);
   const fixed = await admin.req(`/api/records/${r.id}/corrections`, 'POST', { version: r.version, reason: 'Correct transcription', changes: input(r, { issueNotes: 'Corrected issue text' }) });
   assert.equal(fixed.status, 200, fixed.bytes.toString());
   assert.equal(fixed.data.record.ownerId, r.ownerId);
@@ -215,7 +215,7 @@ test('AC-15 corrections retain before/after/actor/reason and original owner', as
 });
 
 test('AC-16 four-sheet export is complete, inert and permission scoped', async t => {
-  const app = await fixture(t), c = await client(app), other = await client(app, 'blair', 'HuabaoBlair!2026');
+  const app = await fixture(t), c = await client(app), other = await client(app, 'blair', 'JackeryBlair!2026');
   const r = await create(c, 'EXPORT-MINE-001');
   await c.req(`/api/records/${r.id}`, 'PUT', input(r, { issueNotes: '=HYPERLINK("https://bad.invalid") <tag> & text', outcome: 'awp' }));
   await create(other, 'EXPORT-FOREIGN-SECRET');
@@ -234,7 +234,7 @@ test('AC-16 four-sheet export is complete, inert and permission scoped', async t
 });
 
 test('AC-17 catalog edits preserve a saved record model/BOM snapshot', async t => {
-  const app = await fixture(t), c = await client(app), admin = await client(app, 'admin', 'HuabaoAdmin!2026'), r = await create(c);
+  const app = await fixture(t), c = await client(app), admin = await client(app, 'admin', 'JackeryAdmin!2026'), r = await create(c);
   const part = (await c.req('/api/models/1/bom')).data.items[0];
   const saved = (await c.req(`/api/records/${r.id}`, 'PUT', input(r, { materials: [{ bomId: part.id, quantity: 1 }], outcome: 'awp' }))).data.record;
   const oldName = saved.materials[0].descriptionEn;
@@ -269,7 +269,7 @@ test('SEC operators cannot administer users, roles or dictionaries', async t => 
 });
 
 test('ADMIN CSV import is atomic for duplicate/missing rows, accepts quoted cells', async t => {
-  const app = await fixture(t), c = await client(app, 'admin', 'HuabaoAdmin!2026');
+  const app = await fixture(t), c = await client(app, 'admin', 'JackeryAdmin!2026');
   const initial = (await c.req('/api/models/1/bom')).data.total;
   const bad = await c.req('/api/admin/bom/import', 'POST', { modelId: 1, csv: 'sku,descriptionEn,descriptionZh,unit\nIMPORT-NEW,Valid,,pcs\nIMPORT-NEW,Duplicate,,pcs' });
   assert.equal(bad.status, 422);
@@ -281,7 +281,7 @@ test('ADMIN CSV import is atomic for duplicate/missing rows, accepts quoted cell
 });
 
 test('ADMIN user deactivation invalidates previously issued sessions', async t => {
-  const app = await fixture(t), c = await client(app), admin = await client(app, 'admin', 'HuabaoAdmin!2026');
+  const app = await fixture(t), c = await client(app), admin = await client(app, 'admin', 'JackeryAdmin!2026');
   const users = (await admin.req('/api/admin/users')).data.items;
   const alex = users.find(u => u.username === 'alex');
   assert.ok(alex);
@@ -291,7 +291,7 @@ test('ADMIN user deactivation invalidates previously issued sessions', async t =
 });
 
 test('ADMIN last active administrator is protected', async t => {
-  const app = await fixture(t), admin = await client(app, 'admin', 'HuabaoAdmin!2026');
+  const app = await fixture(t), admin = await client(app, 'admin', 'JackeryAdmin!2026');
   const users = (await admin.req('/api/admin/users')).data.items;
   const current = users.find(u => u.username === 'admin');
   const changed = await admin.req(`/api/admin/users/${current.id}`, 'PUT', { displayName: current.displayName, role: 'operator', active: false });
@@ -299,7 +299,7 @@ test('ADMIN last active administrator is protected', async t => {
 });
 
 test('DATA invalid numeric quantities and missing English BOM names are rejected', async t => {
-  const app = await fixture(t), c = await client(app), admin = await client(app, 'admin', 'HuabaoAdmin!2026'), r = await create(c);
+  const app = await fixture(t), c = await client(app), admin = await client(app, 'admin', 'JackeryAdmin!2026'), r = await create(c);
   const part = (await c.req('/api/models/1/bom')).data.items[0];
   for (const q of [0, -1, 'NaN', 1000001, 0.00001]) {
     assert.equal((await c.req(`/api/records/${r.id}`, 'PUT', input(r, { materials: [{ bomId: part.id, quantity: q }] }))).status, 422, `quantity ${q}`);

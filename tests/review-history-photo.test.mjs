@@ -14,7 +14,7 @@ test('review regression: other-owner exact-SN history photos render with one aut
       const r = await fetch(app.baseUrl+route,{method:'POST',headers:{Origin:app.baseUrl,'Content-Type':'application/json',...headers},body:JSON.stringify(body)});
       return {response:r, data:await r.json()};
     };
-    const login=await post('/api/login',{username:'blair',password:'HuabaoBlair!2026'});
+    const login=await post('/api/login',{username:'blair',password:'JackeryBlair!2026'});
     const headers={Cookie:login.response.headers.get('set-cookie').split(';')[0],'X-CSRF-Token':login.data.csrfToken};
     const created=await post('/api/records',{sn:'OTHER-OWNER-PHOTO-001',modelId:1},headers);
     assert.equal(created.response.status,201);
@@ -23,11 +23,12 @@ test('review regression: other-owner exact-SN history photos render with one aut
     browser=await chromium.launch({headless:true,executablePath:'C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe'});
     const page=await browser.newPage();
     await page.goto(app.baseUrl);
-    await page.locator('#username').fill('alex');await page.locator('#password').fill('HuabaoAlex!2026');
+    await page.locator('#username').fill('alex');await page.locator('#password').fill('JackeryAlex!2026');
     await page.getByRole('button',{name:'Sign in',exact:true}).click();await page.locator('#new-record').waitFor();
     await page.locator('#history-nav').click();await page.locator('#history-sn').fill('OTHER-OWNER-PHOTO-001');
     await page.locator('#history-form').getByRole('button',{name:'Search',exact:true}).click();
     await page.locator('[data-history-record]').first().click();
+    await page.locator('.evidence-section summary').click();
     const image=page.locator('#photos img').first();await image.waitFor();
     const src=await image.getAttribute('src'),url=new URL(src,app.baseUrl);
     assert.equal(url.searchParams.get('sn'),'OTHER-OWNER-PHOTO-001','History image has exactly the requested SN');

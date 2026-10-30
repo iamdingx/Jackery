@@ -6,7 +6,7 @@ This is the binding frontend/backend interface. New internal API: no prior consu
 
 `User = {id,username,displayName,role:'admin'|'operator',active,language:'en'|'zh'}`.
 
-`CheckItem = {code,labelEn,labelZh}`. `Model = {id,nameEn,nameZh,productSku,active,checkItems:CheckItem[]}`.
+`CheckItem = {code,labelEn,labelZh,source?}`（有来源中文的目录检查项允许英文为空）. `Model = {id,nameEn,nameZh,productSku,active,checkItems:CheckItem[]}`.
 
 `AppearanceOption = {code,labelEn,labelZh,active}`. `BomItem = {id,modelId,sku,descriptionEn,descriptionZh,unit,active}`.
 
@@ -59,10 +59,10 @@ CURRENT_RULES.md supersedes v0.3 final-test requirements. Bundled UI and API upd
 - `POST /api/admin/users` `{username,displayName,role,password}` -> `{user}` (201).
 - `PUT /api/admin/users/:id` `{displayName,role,active}` -> `{user}`. Cannot deactivate/demote last active admin. Operator cannot self-promote. Deactivation revokes sessions.
 - `POST /api/admin/users/:id/password` `{password}` -> `{ok:true}`, revoke old sessions.
-- `POST /api/admin/models` Model minus id -> `{model}` (201); `PUT /api/admin/models/:id` -> `{model}`. checkItems codes unique, labelEn required; changing catalogs never overwrites record snapshots.
+- `POST /api/admin/models` Model minus id -> `{model}` (201); `PUT /api/admin/models/:id` -> `{model}`. checkItems codes unique, labelEn required except source-backed catalog original Chinese; changing catalogs never overwrites record snapshots.
 - `POST /api/admin/appearance` AppearanceOption -> `{option}` (201); `PUT /api/admin/appearance/:code` -> `{option}`. no_defect reserved compatible key.
-- `POST /api/admin/bom` BomItem minus id -> `{item}` (201); `PUT /api/admin/bom/:id` -> `{item}`. Unique model+SKU. label/descriptionEn required. Disable instead of deleting.
-- `GET /api/admin/bom/template` -> UTF-8 CSV `sku,descriptionEn,descriptionZh,unit`.
+- `POST /api/admin/bom` BomItem minus id -> `{item}` (201); `PUT /api/admin/bom/:id` -> `{item}`. Unique model+SKU. descriptionEn required except source-backed original Chinese. Disable instead of deleting.
+- `GET /api/admin/bom/template` -> UTF-8 CSV `sku,descriptionEn,descriptionZh,unit,standardQty`.
 - `POST /api/admin/bom/import` `{modelId,csv}` -> `{created:number}` (201). All rows validate first; at most 5000 rows; reject duplicate/incomplete SKU with row errors atomically, no silent dedup/overwrite. CSV parser supports BOM, quoting, commas, CRLF, quoted multiline cells.
 
 ## Export
@@ -72,7 +72,7 @@ CURRENT_RULES.md supersedes v0.3 final-test requirements. Bundled UI and API upd
 
 ## Integration signatures
 
-Backend owner exports from `server.js`: `async startServer({dataDir,demo=false,port=0,host='127.0.0.1',publicBaseUrl?}) -> {server,baseUrl,close:async()=>void}`. CLI reads `--demo`, `HB_DATA_DIR`, `HOST`, `PORT` (4310 default), `PUBLIC_BASE_URL`. No external runtime packages.
+Backend owner exports from `server.js`: `async startServer({dataDir,demo=false,port=0,host='127.0.0.1',publicBaseUrl?,catalogPath?}) -> {server,baseUrl,close:async()=>void}`. CLI reads `--demo`, `--catalog <path>`, `JACKERY_DATA_DIR` (legacy `HB_DATA_DIR` supported), `HOST`, `PORT` (4310 default), `PUBLIC_BASE_URL`. No external runtime packages.
 
 Helpers owner exports `buildWorkbook(sheets)` from `src/xlsx.js`: sheets = `[{name,columns:[{key,label,width?}],rows:object[],hyperlinks?:[{row:1-based DATA row,column:key,url}]}]`; returns XLSX Buffer. XML escape every cell/control character; numeric finite numbers stay numeric; plain strings not formulas. `makeZip(entries)` from `src/zip.js`: entries = `[{name,data:Buffer|string}]`, returns ZIP Buffer. `crc32(buffer)` exported.
 
@@ -82,7 +82,7 @@ Helpers owner exports `parseBomCsv(csv) -> [{sku,descriptionEn,descriptionZh,uni
 
 ## Demo fixtures
 
-Demo only: admin / `HuabaoAdmin!2026`; alex / `HuabaoAlex!2026`; blair / `HuabaoBlair!2026`. Display names Demo Admin, Alex Operator, Blair Operator. Models: `id=1` Sample Model A, `id=2` Sample Model B. Model 1 initial check codes `ac_output`, `dc_output`, `charging`, at least 800 clearly marked demo BOM items, including a Packing Box. Appearance `no_defect`,`scratches`,`cracks`,`dents`. Include one Blair completed historical record with SN `DEMO-HISTORY-001`, one Alex WFR SN `DEMO-WFR-001`; do not preselect outcomes on a new record. Fresh real mode has no fictitious business catalogs/records and writes a random initial admin password to private data-dir first-run credentials file.
+Demo only: admin / `JackeryAdmin!2026`; alex / `JackeryAlex!2026`; blair / `JackeryBlair!2026`. Display names Demo Admin, Alex Operator, Blair Operator. Models: `id=1` Sample Model A, `id=2` Sample Model B. Model 1 initial check codes `ac_output`, `dc_output`, `charging`, at least 800 clearly marked demo BOM items, including a Packing Box. Appearance `no_defect`,`scratches`,`cracks`,`dents`. Include one Blair completed historical record with SN `DEMO-HISTORY-001`, one Alex WFR SN `DEMO-WFR-001`; do not preselect outcomes on a new record. Direct openStore test fixtures omit the source catalog. CLI imports the supplied source catalog in both modes, disables sample models/BOM, and retains sample historical records in demo only. Fresh real mode has no fictitious catalogs/records and writes a random initial admin password to private data-dir first-run credentials file.
 
 ## Primary references checked 2026-10-29
 
@@ -95,3 +95,16 @@ Use tested Node 24 APIs, not unpinned main/Node 26 aliases.
 ## Readable export values
 
 Work Summary Status has In Progress/Completed (localized for zh), with separate Status Code preserving draft/wfr/completed. Functional Checks Stage and Result show Inspection Result and Pass/Fail/Not Tested (localized for zh), with separate Stage Code and Result Code preserving raw values. Material Usage header Part SKU remains distinct from Product SKU. This is an XLSX header/value formatting change for bundled consumers; free originals, stored codes, relationships and four-sheet count are unchanged. No external consumers identified.
+
+## 2026-10-30 Jackery source catalog extension
+
+Current authority is CURRENT_RULES.md and jackery-release/PLAN.md. Source batch is jackery-eu-20261030. CLI loads the bundled catalog on start; library startServer imports only when catalogPath is supplied, allowing isolated legacy fixtures. DB file/session-cookie identifiers are retained for compatibility; all visible English branding and export/package names use Jackery.
+
+- Model adds catalogKey/baseModelCode/bomVersion/market/reviewReasons. Version association is explicit; SN does not resolve model automatically.
+- BomItem adds standardQty:number|null, quantityControl:standard_hard_cap, source, original, reviewReasons. Imported rows without usable quantities are inactive. Active source-model manual/CSV additions must have a positive cap. Piece caps and usage are integers. Legacy uncapped noncatalog rows remain readable and compatible.
+- GET /api/models/:id/knowledge requires authentication, returns {faultCodes,repairGuides,notices}; nonexistent model is 404. All content is source text, no external translation or fabricated F-code-to-solution links.
+- RecordInput adds optional faultCodes:string[]. Record adds faultCodes:[] and server-generated faultSnapshot:[]. Unknown/cross-model codes or duplicates are 422; client snapshot labels ignored. Existing source snapshots preserved on resume/correction. Model change clears current faults/materials/checks in UI.
+- All material mutations validate cap, including save, complete and admin correction; overage returns 422 {error:{code:BOM_QUANTITY_LIMIT,message,details:{bomId,sku,standardQty,quantity}}}. No admin override. Snapshot standardQty preserves the source/version used for this work record. WFR repeated saves replace the quantity, never add quantities per save.
+- Reference Details UI removed only; existing source/reference fields and four-sheet export stay. Export adds Fault Codes / Fault Snapshot JSON and BOM Standard Qty / Quantity Control with Chinese headers. Functional Checks remains one inspection.
+- Template has five columns; parser remains compatible with four-column legacy files. Importing into source catalog models enforces confirmed standardQty. Admin PUT retains metadata from existing items; source-backed missing English does not force fabricated text during maintenance.
+- Importer transactions preserve source/record data, deactivate fictitious sample models and BOM only, and record a digest in meta; same digest reimport is a no-op, changed same-batch digest rejected. No external system called.

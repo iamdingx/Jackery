@@ -14,12 +14,12 @@ async function fixture(t){
     return async(route,method='GET',body)=>{const r=await fetch(app.baseUrl+route,{method,headers,body:body===undefined?undefined:JSON.stringify(body)});assert.ok(r.ok,await r.clone().text());return r.json();};
   };
   browser=await chromium.launch({headless:true,executablePath:'C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe'});const page=await browser.newPage();
-  const login=async()=>{await page.goto(app.baseUrl);await page.locator('#username').fill('alex');await page.locator('#password').fill('HuabaoAlex!2026');await page.getByRole('button',{name:'Sign in',exact:true}).click();await page.locator('#new-record').waitFor();};
+  const login=async()=>{await page.goto(app.baseUrl);await page.locator('#username').fill('alex');await page.locator('#password').fill('JackeryAlex!2026');await page.getByRole('button',{name:'Sign in',exact:true}).click();await page.locator('#new-record').waitFor();};
   return {app,page,client,login};
 }
 
 test('review regression: saved model and selected appearance labels use their historical snapshots', {timeout:60000},async t=>{
-  const {page,client,login}=await fixture(t),alex=await client('alex','HuabaoAlex!2026'),admin=await client('admin','HuabaoAdmin!2026');
+  const {page,client,login}=await fixture(t),alex=await client('alex','JackeryAlex!2026'),admin=await client('admin','JackeryAdmin!2026');
   const created=(await alex('/api/records','POST',{sn:'SNAPSHOT-LABEL-001',modelId:1})).record;
   await alex(`/api/records/${created.id}`,'PUT',{version:created.version,appearanceCodes:['scratches'],outcome:'awp',action:'save'});
   const catalog=await admin('/api/catalog?includeInactive=1'),model=catalog.models.find(m=>m.id===1),appearance=catalog.appearanceOptions.find(a=>a.code==='scratches');

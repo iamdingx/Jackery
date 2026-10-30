@@ -1,0 +1,9 @@
+{
+  "passed": true,
+  "recordsBefore": 4,
+  "recordsAfter": 4,
+  "rawRecordJsonUnchanged": true,
+  "photosUnchanged": true,
+  "idempotent": true,
+  "backup": "backups/jackery-2026-10-30T02-32-37-936Z-19924"
+}
