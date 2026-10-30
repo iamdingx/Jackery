@@ -1,0 +1,22 @@
+[Unit]
+Description=Jackery refurbishment and repair records
+After=network.target
+
+[Service]
+Type=simple
+User=jackery
+Group=jackery
+WorkingDirectory=/opt/jackery/current
+EnvironmentFile=/etc/jackery/jackery.env
+ExecStart=@@NODE_BIN@@ server.js
+Restart=on-failure
+RestartSec=3
+UMask=0027
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectHome=true
+ProtectSystem=strict
+ReadWritePaths=/var/lib/jackery
+
+[Install]
+WantedBy=multi-user.target

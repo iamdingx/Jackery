@@ -1,0 +1,5 @@
+NODE_ENV=production
+JACKERY_DATA_DIR=/var/lib/jackery
+HOST=127.0.0.1
+PORT=14310
+PUBLIC_BASE_URL=http://221.224.86.238

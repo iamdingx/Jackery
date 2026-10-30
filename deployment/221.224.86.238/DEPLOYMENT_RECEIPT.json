@@ -1,0 +1,56 @@
+{
+  "status": "DEPLOYED_VERIFIED",
+  "url": "http://221.224.86.238/",
+  "applicationCommit": "abb8df951b96a65040548f432282777c25db0d6a",
+  "verifiedCandidate": "84b855ad13e879837a2cad8cbef061a23f97d2af7d1c1cab721423b97e288bf5",
+  "runtime": "Node.js v24.22.2 linux-x64",
+  "runtimeOfficialSource": "https://nodejs.org/en/blog/release/v24.22.2",
+  "linuxCoreTests": {
+    "tests": 123,
+    "passed": 123,
+    "failed": 0,
+    "skipped": 0,
+    "exitCode": 0
+  },
+  "service": {
+    "name": "jackery",
+    "active": true,
+    "enabled": true,
+    "user": "jackery",
+    "upstream": "127.0.0.1:14310"
+  },
+  "proxy": {
+    "nginxActive": true,
+    "nginxEnabled": true,
+    "configValidated": true,
+    "port": 80,
+    "httpsConfigured": false
+  },
+  "initialBackup": "/var/backups/jackery/jackery-2026-10-30T04-09-56-467Z-2764389",
+  "credentialExportApprovedByUser": true,
+  "credentialFileExcludedFromReportsAndPackages": true,
+  "localCredentialPrivateAcl": true,
+  "publicAcceptance": {
+    "baseUrl": "http://221.224.86.238",
+    "checkedAt": "2026-10-30T04:14:23.274Z",
+    "production": true,
+    "passed": true,
+    "adminLogin": true,
+    "sourceModels": 9,
+    "activeModels": 7,
+    "bomRows": 404,
+    "activeBomRows": 261,
+    "heldBomRows": 143,
+    "bomTranslations": 242,
+    "englishAboveOriginalChinese": true,
+    "sourceSkuAndCapRetained": true,
+    "optionalModelFaultCodes": 10,
+    "languageDraftRetention": true,
+    "singleInspectionOnly": true,
+    "exportDownloaded": true,
+    "productionRecordsBefore": 0,
+    "productionRecordsAfter": 0,
+    "pageErrors": []
+  },
+  "recordedAt": "2026-10-30T04:21:17.631061+00:00"
+}
