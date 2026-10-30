@@ -30,11 +30,11 @@ test('v03 Module4 UI: admin corrects foreign WFR without completion and owner re
 
 test('v03 Module5 UI: failed upload precise copy, retained file retry, size/format validation',{timeout:60000},async t=>{
   const {page,client,login}=await fixture(t),alex=await client();await login();await page.locator('#new-record').click();await page.locator('#modelId').selectOption('1');await page.locator('#sn').fill('DEEP-V03-PHOTO-RETRY');await page.locator('#issueNotes').fill('Original English issue');
-  await page.locator('.evidence-section summary').click();
+
   await page.route('**/api/records/*/photos',route=>route.fulfill({status:503,json:{error:{code:'TEST_UPLOAD_FAILURE',message:'Injected failure'}}}));
   await page.locator('#photo-file').setInputFiles({name:'evidence.png',mimeType:'image/png',buffer:png});await page.locator('#upload-photo').click();await page.getByText('Upload failed. Your photo has not been saved. Please try again.',{exact:true}).waitFor();
   let r=(await alex('/api/records?q=DEEP-V03-PHOTO-RETRY')).items[0];assert.equal(r.photos.length,0);assert.equal(r.issueNotes,'Original English issue');await page.unroute('**/api/records/*/photos');
-  await page.locator('#language').click();await page.locator('#language').click();assert.ok((await page.locator('.photo-tools').textContent()).includes('evidence.png'));await page.locator('#upload-photo').click();await page.locator('#photos img').waitFor();assert.equal(await page.locator('#photos img').evaluate(i=>i.complete&&i.naturalWidth>0),true);
+  await page.locator('#language').click();await page.locator('#language').click();assert.ok((await page.locator('.photo-tools').textContent()).includes('Photo selected'));await page.locator('#upload-photo').click();await page.locator('#photos img').waitFor();assert.equal(await page.locator('#photos img').evaluate(i=>i.complete&&i.naturalWidth>0),true);
   r=(await alex(`/api/records/${r.id}`)).record;assert.equal(r.photos.length,1);
   await page.locator('#photo-file').setInputFiles({name:'invalid.svg',mimeType:'image/svg+xml',buffer:Buffer.from('<svg/>')});await page.locator('#upload-photo').click();await page.getByText('File must be PNG or JPEG and at most 8 MiB.',{exact:true}).waitFor();
   await page.locator('#photo-file').setInputFiles({name:'large.png',mimeType:'image/png',buffer:Buffer.alloc(8388609)});await page.locator('#upload-photo').click();assert.equal(await page.locator('#form-error').textContent(),'File must be PNG or JPEG and at most 8 MiB.');assert.equal((await alex(`/api/records/${r.id}`)).record.photos.length,1);

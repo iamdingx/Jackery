@@ -1,3 +1,4 @@
+import {currentModelChecklist} from './checklists.js';
 export class ApiError extends Error {
   constructor(status,code,message,details){super(message);this.status=status;this.code=code;this.details=details;}
 }
@@ -71,6 +72,7 @@ export function validateRecord(input,previous,catalog){
     const model=catalog.models.find(m=>m.id===modelId&&m.active);if(!model||!model.checkItems?.length)invalid('Select an active model with a check list');
     v.modelId=model.id;v.modelSnapshot=structuredClone(model);
   }
+  if(previous.status!=='completed')v.modelSnapshot=currentModelChecklist(v.modelSnapshot);
   const modelChanged=modelId!==previous.modelId;
   v.sn=textValue(input.sn??previous.sn??'','SN',200,true).trim();
   for(const [field,max] of [['productSku',200],['sourcePallet',200],['storagePallet',200],['appearanceNotes',10000],['issueNotes',10000],['scrapReason',3000]])v[field]=textValue(input[field]??previous[field]??'',field,max);

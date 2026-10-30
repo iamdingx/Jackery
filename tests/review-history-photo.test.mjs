@@ -28,7 +28,7 @@ test('review regression: other-owner exact-SN history photos render with one aut
     await page.locator('#history-nav').click();await page.locator('#history-sn').fill('OTHER-OWNER-PHOTO-001');
     await page.locator('#history-form').getByRole('button',{name:'Search',exact:true}).click();
     await page.locator('[data-history-record]').first().click();
-    await page.locator('.evidence-section summary').click();
+
     const image=page.locator('#photos img').first();await image.waitFor();
     const src=await image.getAttribute('src'),url=new URL(src,app.baseUrl);
     assert.equal(url.searchParams.get('sn'),'OTHER-OWNER-PHOTO-001','History image has exactly the requested SN');

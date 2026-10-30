@@ -44,3 +44,11 @@
 ## JPEG结束兼容修复
 
 完整JPEG主码流在EOI后可以保留原文件附加数据，不再强制EOI恰好等于文件末尾。仍校验完整主图结构、全文件8MiB与像素上限；原照片字节不转换、不裁切。附件以image/jpeg及nosniff私有返回，权限、锁定与审计规则保持。附加部分不作视频解析或播放。
+
+## Bluetooth与固定备注、照片区
+
+- 用户新增Bluetooth检验，应用到现有9个真实来源型号，每型号追加一次 `bluetooth / Bluetooth / 蓝牙`，默认Not Tested；不添加独立检验阶段。未完成单按当前清单显示、保存，ROK需其已检查、翻新需其Pass。已完成历史及其管理员更正仍用已完成时的清单。
+- 蓝牙清单由用户配置层追加，原始来源目录、数据库型号与未完成历史不在启动时批量重写。旧未完成记录第一次实际保存才写入新增清单，版本正常递增并保留原始before审计；导出检查明细可显示未检验Bluetooth，但原快照JSON保持原样。
+- 功能检查下方固定Defect remark单文本框；右侧并列Condition & Notes，保留Appearance Notes及预设缺陷、取消Issue Notes显示标签。Defect remark沿用内部issueNotes存储及原报表字段；不会把旧译文冒充缺陷原文。
+- 原Manual translations区及两个译文输入取消；已有translatedAppearanceNotes/translatedIssueNotes继续存储、保存及四表导出，语言切换不覆盖或丢失。
+- Evidence Photos为独立常驻面板，非折叠下拉。缩略图、待选状态及替代文本不显示文件名；源文件名仍作为内部照片元数据和报表证据保留。照片选填、JPEG兼容修复、上传重试、权限及原字节保存不变。

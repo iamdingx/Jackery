@@ -38,7 +38,7 @@ test('real browser operator, BOM, WFR, checks, photo, history and admin workflow
     await page.locator('[data-check-phase=initial][data-check-code=ac_output][value=fail]').check();
     await byId('language').click();assert.equal(await byId('issueNotes').inputValue(),'AC failure');await byId('language').click();
     await byId('save-record').click();await page.getByText('Saved successfully',{exact:true}).waitFor();
-    await page.locator('.evidence-section summary').click();
+
     await byId('photo-file').setInputFiles({name:'tiny.png',mimeType:'image/png',buffer:Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAIAAAADCAIAAAA2iEnWAAAAEUlEQVR4nGP8zwACTGASRgEAFEABBVDVLjgAAAAASUVORK5CYII=','base64')});
     await byId('language').click();await byId('language').click();
     await byId('upload-photo').click();await byId('photos').locator('img').waitFor();

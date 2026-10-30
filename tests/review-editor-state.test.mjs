@@ -41,5 +41,5 @@ test('review regression: reloading warns before discarding a selected but not up
   const dialogs=[];page.on('dialog',async d=>{dialogs.push(d.message());await d.dismiss();});
   await page.locator('#reload-record').click();
   assert.equal(dialogs.length,1,'Reload must warn even after record fields were saved if a photo is still pending');
-  assert.ok((await page.locator('.photo-tools').textContent()).includes('pending.png'),'Dismissing reload keeps selected photo');
+  assert.ok((await page.locator('.photo-tools').textContent()).includes('Photo selected'),'Dismissing reload keeps selected photo');
 });

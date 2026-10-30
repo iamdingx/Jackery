@@ -1,5 +1,7 @@
 # Jackery 翻新／维修记录系统 V1
 
+当前界面：真实型号包含Bluetooth检验；Defect remark、Condition & Notes及Evidence Photos为独立固定区，照片不显示文件名。旧译文字段与已完成历史保留，详见[本轮说明](docs/FIXED_PANELS_REPORT.md)。
+
 电脑端网页，英文／中文切换，同页作业，EN2 BOM 宽抽屉多选，Refurbishment／Repair／WFR 三栏全局单选。记录耗用，不管理库存。
 
 ## 快速启动：先体验演示

@@ -1,5 +1,7 @@
 # 当前测试报告
 
+最新Bluetooth与固定区改版：133+33=166/166全量回归通过，见[当前改版报告](./FIXED_PANELS_REPORT.md)及[机器证据](./fixed-panels/VERIFICATION_SUMMARY.json)。以下是此前版本测试记录。
+
 JPEG结束兼容修复：131+32=163/163全量回归通过，详见[JPEG报告](./JPEG_UPLOAD_FIX_REPORT.md)与[证据](./jpeg-upload/VERIFICATION_SUMMARY.json)。以下记录为此前版本历史。
 
 最新：无默认型号、取消选型确认与Jackery字标，129+31=160/160全量回归通过，详见[本轮报告](./MODEL_ENTRY_UPLOAD_REPORT.md)和[证据](./model-entry/VERIFICATION_SUMMARY.json)。上传原失败文件原因仍待真实重试诊断，未宣称原问题已解决。

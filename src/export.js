@@ -1,3 +1,4 @@
+import {currentRecordChecklist} from './checklists.js';
 import {buildWorkbook} from './xlsx.js';
 import {ApiError,outcomes} from './domain.js';
 import {translateSourceFields} from './source-translations.js';
@@ -17,13 +18,13 @@ export function exportRecords(records,baseUrl='',language='en',{sourceTranslatio
   const labels=displayLabels[language];
   const columns=labels=>labels.map(([key,label,width])=>({key,label:language==='zh'?chineseHeaders[label]:label,width:width??22}));
   if(records.length>10000)throw new ApiError(413,'EXPORT_LIMIT','Export supports at most 10,000 records; narrow the filters');
-  const rowCount=records.reduce((n,r)=>n+1+stagesFor(r).length*r.modelSnapshot.checkItems.length+r.materials.length+r.photos.length,0);
+  const rowCount=records.reduce((n,r)=>n+1+stagesFor(r).length*currentRecordChecklist(r).modelSnapshot.checkItems.length+r.materials.length+r.photos.length,0);
   if(rowCount>200000)throw new ApiError(413,'EXPORT_LIMIT','Export exceeds 200,000 rows; narrow the filters');
   const summary=[],checks=[],materials=[],photos=[],hyperlinks=[];
   for(const r of records){
     const outcome=outcomes.find(o=>o.code===r.outcome);
     summary.push({...r,faultCodes:(r.faultCodes??[]).join('; '),faultSnapshot:JSON.stringify(r.faultSnapshot??[]),statusLabel:labels.status[r.status]??r.status,finalChecks:r.checks.final?JSON.stringify(r.checks.final):'',modelNameEn:r.modelSnapshot.nameEn,modelNameZh:r.modelSnapshot.nameZh,outcomeLabelEn:outcome?.labelEn??'',outcomeLabelZh:outcome?.labelZh??'',appearanceCodes:r.appearanceCodes.join('; '),appearanceLabelsEn:r.appearanceSnapshot.map(a=>a.labelEn).join('; '),appearanceLabelsZh:r.appearanceSnapshot.map(a=>a.labelZh).join('; '),modelSnapshot:JSON.stringify(r.modelSnapshot),appearanceSnapshot:JSON.stringify(r.appearanceSnapshot),photoCount:r.photos.length,materialLineCount:r.materials.length});
-    for(const stage of stagesFor(r))for(const original of r.modelSnapshot.checkItems){
+    for(const stage of stagesFor(r))for(const original of currentRecordChecklist(r).modelSnapshot.checkItems){
       const item=translateSourceFields(original,sourceTranslations);
       const state=r.checks.initial?.[item.code]??'not_tested';
       checks.push({workOrder:r.workOrder,sn:r.sn,modelId:r.modelId,stage,stageLabel:labels.stage[stage],code:item.code,labelEn:item.labelEn,labelZh:item.labelZh,state,stateLabel:labels.result[state]??state});

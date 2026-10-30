@@ -13,6 +13,7 @@ import {listenForBrowser} from './src/ports.js';
 import {importJackeryCatalog} from './src/catalog-import.js';
 import {loadBomTranslations,translateBom} from './src/bom-translations.js';
 import {loadSourceTranslations,translateModel,translateKnowledge} from './src/source-translations.js';
+import {currentModelChecklist,currentRecordChecklist} from './src/checklists.js';
 
 const root=path.dirname(fileURLToPath(import.meta.url));
 const MAX_BODY=12*1024*1024;
@@ -48,7 +49,7 @@ export async function startServer({dataDir=path.join(root,'data'),demo=false,por
   const sourceTranslations=await loadSourceTranslations(sourceTranslationsPath??(existsSync(bundledSourceTranslations)?bundledSourceTranslations:undefined));
   if(publicBaseUrl){const parsed=new URL(publicBaseUrl);if(!['http:','https:'].includes(parsed.protocol)||parsed.username||parsed.password||parsed.pathname!=='/'||parsed.search||parsed.hash)throw new Error('PUBLIC_BASE_URL must be an HTTP(S) origin');publicBaseUrl=parsed.origin;}
   const store=openStore(path.resolve(dataDir),demo),{db}=store;
-  const recordCatalog=()=>{const c=store.catalog();return {...c,models:c.models.map(m=>translateModel(m,sourceTranslations)),bom:c.bom.map(b=>translateBom(b,bomTranslations)),knowledge:c.knowledge.map(k=>translateKnowledge(k,sourceTranslations))};};
+  const recordCatalog=()=>{const c=store.catalog();return {...c,models:c.models.map(m=>currentModelChecklist(translateModel(m,sourceTranslations))),bom:c.bom.map(b=>translateBom(b,bomTranslations)),knowledge:c.knowledge.map(k=>translateKnowledge(k,sourceTranslations))};};
   if(catalogPath){try{importJackeryCatalog(store,JSON.parse(await readFile(path.resolve(catalogPath),'utf8')),{deactivateSamples:true});}catch(error){db.close();throw error;}}
   const throttles=new Map();
   const dummyHash=passwordHash(randomBytes(24).toString('hex'));
@@ -62,7 +63,7 @@ export async function startServer({dataDir=path.join(root,'data'),demo=false,por
   function persistRecord(record,actor,action,reason,before){store.put('records',record);store.audit(record.id,action,actor,reason,before,record);return record;}
   const server=http.createServer(async(req,res)=>{
     const common={'X-Content-Type-Options':'nosniff','Referrer-Policy':'same-origin','X-Frame-Options':'DENY','Cache-Control':'no-store'};
-    function send(status,data,headers={}){res.writeHead(status,{...common,'Content-Type':'application/json; charset=utf-8',...headers});res.end(Buffer.isBuffer(data)?data:JSON.stringify(data));}
+    function send(status,data,headers={}){if(data?.record)data={...data,record:currentRecordChecklist(data.record)};if(Array.isArray(data?.items))data={...data,items:data.items.map(item=>currentRecordChecklist(item))};res.writeHead(status,{...common,'Content-Type':'application/json; charset=utf-8',...headers});res.end(Buffer.isBuffer(data)?data:JSON.stringify(data));}
     try{
       const url=new URL(req.url,'http://localhost'),route=url.pathname,params=url.searchParams,method=req.method;
       if(!route.startsWith('/api/')){
@@ -115,7 +116,7 @@ export async function startServer({dataDir=path.join(root,'data'),demo=false,por
       }
       if(method==='GET'&&route==='/api/catalog'){
         const inactive=params.get('includeInactive')==='1';if(inactive&&user.role!=='admin')forbidden();
-        const c=store.catalog();return send(200,{models:c.models.filter(m=>inactive||m.active).map(m=>translateModel(m,sourceTranslations)),appearanceOptions:c.appearanceOptions.filter(m=>inactive||m.active),outcomes,bomTranslations,sourceTranslations});
+        const c=store.catalog();return send(200,{models:c.models.filter(m=>inactive||m.active).map(m=>currentModelChecklist(translateModel(m,sourceTranslations))),appearanceOptions:c.appearanceOptions.filter(m=>inactive||m.active),outcomes,bomTranslations,sourceTranslations});
       }
       let match=route.match(/^\/api\/models\/(\d+)\/knowledge$/);
       if(method==='GET'&&match){
@@ -138,7 +139,7 @@ export async function startServer({dataDir=path.join(root,'data'),demo=false,por
       if(method==='POST'&&route==='/api/records'){
         const input=await body(req);
         const record=store.tx(()=>{
-          const model=translateModel(store.get('models',positiveId(input.modelId,'Model ID')),sourceTranslations);if(!model?.active||!model.checkItems.length)invalid('Select an active model with a check list');
+          const model=currentModelChecklist(translateModel(store.get('models',positiveId(input.modelId,'Model ID')),sourceTranslations));if(!model?.active||!model.checkItems.length)invalid('Select an active model with a check list');
           const id=store.next('records'),now=new Date().toISOString();
           const validated=validateRecord({...input,outcome:null,appearanceCodes:[],checks:{},materials:[],action:'save'},{modelId:model.id,modelSnapshot:model,productSku:model.productSku},recordCatalog());
           const r={...validated,id,workOrder:`HB-${now.slice(0,10).replaceAll('-','')}-${String(id).padStart(6,'0')}`,ownerId:user.id,ownerName:user.displayName,photos:[],version:1,createdAt:now,updatedAt:now,completedAt:null};return persistRecord(r,user,'create','',null);
