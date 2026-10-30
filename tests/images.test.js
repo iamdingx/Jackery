@@ -30,6 +30,25 @@ test('every proper prefix is rejected rather than accepted from dimensions alone
   }
 });
 
+test('complete JPEG codestream remains a valid photo when source data follows its end marker', async () => {
+  const { validateImage } = await import('../src/images.js');
+  for (const tail of [Buffer.alloc(24),Buffer.from('Camera source metadata'),Buffer.from([0,0,0,24,102,116,121,112,109,112,52,50])]) {
+    const original=Buffer.concat([jpeg,tail]);
+    assert.deepEqual(validateImage(original),{mime:'image/jpeg',extension:'jpg',width:2,height:3});
+    assert.deepEqual(original.subarray(jpeg.length),tail,'Validation does not rewrite original evidence');
+    assert.throws(()=>validateImage(original,{maxBytes:original.length-1}),error=>error.code==='IMAGE_TOO_LARGE','All source bytes count toward the upload size');
+  }
+});
+
+test('JPEG end markers inside metadata do not hide corrupt or truncated actual image data', async () => {
+  const { validateImage } = await import('../src/images.js');
+  const comment=Buffer.from([255,254,0,6,255,217,0,0]);
+  const withComment=Buffer.concat([jpeg.subarray(0,2),comment,jpeg.subarray(2)]);
+  assert.deepEqual(validateImage(withComment),{mime:'image/jpeg',extension:'jpg',width:2,height:3});
+  assert.throws(()=>validateImage(withComment.subarray(0,-2)),error=>error.code==='IMAGE_INVALID');
+  assert.throws(()=>validateImage(Buffer.from([255,216,255,217,0,0])),error=>error.code==='IMAGE_INVALID');
+});
+
 test('JPEG frame dimensions and segment lengths are checked before acceptance', async () => {
   const { validateImage } = await import('../src/images.js');
   const zero = Buffer.from(jpeg), frame = zero.indexOf(Buffer.from([0xff, 0xc0]));
@@ -37,7 +56,9 @@ test('JPEG frame dimensions and segment lengths are checked before acceptance', 
   assert.throws(() => validateImage(zero), error => error.code === 'IMAGE_DIMENSIONS');
   const broken = Buffer.from(jpeg); broken.writeUInt16BE(65535, 4);
   assert.throws(() => validateImage(broken), error => error.code === 'IMAGE_INVALID');
-  assert.throws(() => validateImage(Buffer.concat([jpeg, Buffer.from('<script>')])), error => error.code === 'IMAGE_INVALID');
+  // Trailer bytes do not invalidate a complete JPEG codestream. The attachment
+  // endpoint's image MIME, nosniff and access controls are verified in-browser.
+  assert.deepEqual(validateImage(Buffer.concat([jpeg, Buffer.from('<script>')])),{mime:'image/jpeg',extension:'jpg',width:2,height:3});
 });
 
 test('JPEG requires valid quantization and Huffman tables and matching scan components', async () => {

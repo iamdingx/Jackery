@@ -86,7 +86,10 @@ function jpegInfo(buffer, maxPixels) {
     if (offset >= buffer.length) invalid();
     const marker = buffer[offset++];
     if (marker === 0xd9) {
-      if (!width || !sawScan || !sawPixels || offset !== buffer.length) invalid('Invalid JPEG ending');
+      // EOI terminates the primary JPEG codestream, not necessarily its file.
+      // Camera containers may append metadata, gain maps or motion-photo data.
+      // Validate the complete primary stream and preserve all original bytes.
+      if (!width || !sawScan || !sawPixels) invalid('Invalid JPEG ending');
       return { mime: 'image/jpeg', extension: 'jpg', width, height };
     }
     if (marker === 0x00 || marker === 0xd8 || marker === 0x01 || (marker >= 0xd0 && marker <= 0xd7)) invalid('Unexpected JPEG marker');
