@@ -9,6 +9,15 @@ tests/.tmp/
 *.log
 *.sqlite*
 .env
+.env.*
+!.env.example
+PRODUCTION_LOGIN.json
+first-run-accounts.json
+first-run-credentials.json
+*.pem
+*.key
+id_rsa
+id_ed25519
 release/
 __pycache__/
 
