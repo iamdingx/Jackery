@@ -1,0 +1,27 @@
+{
+  "checkedAt": "2026-11-02T09:41:03.928677+08:00",
+  "baseUrl": "http://221.224.86.238:800",
+  "assets": {
+    "app.js": {
+      "status": 200,
+      "sha256": "11aee8b0382cb07de4332ebc4c6456a847f790a70d4d6647bb1a32bd43891d7d",
+      "matchesVerifiedLocal": true
+    },
+    "styles.css": {
+      "status": 200,
+      "sha256": "2492ef9e36f8003e133a88df2b1951ef64896ae559597d6ead45faab707f7eb2",
+      "matchesVerifiedLocal": true
+    },
+    "state.js": {
+      "status": 200,
+      "sha256": "6f4c702fc44bc299f6547027253f9477ec2eebfcea8cacf087e36f465aa92994",
+      "matchesVerifiedLocal": true
+    }
+  },
+  "healthStatus": 200,
+  "health": {
+    "ok": true,
+    "version": "1.0.0",
+    "demo": false
+  }
+}

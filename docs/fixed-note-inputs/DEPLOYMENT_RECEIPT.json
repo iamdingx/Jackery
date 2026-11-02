@@ -1,0 +1,18 @@
+{
+  "status": "UPGRADED",
+  "appCommit": "42f66cc652a634fa86a6c0cf5282c40e9094d1ca",
+  "candidate": "5f4d12517c2fac6c1236d97f2237b82728459455fed517f235d5e91ae49a98ef",
+  "release": "/opt/jackery/releases/42f66cc-fixed-note-inputs-20261102",
+  "previousRelease": "/opt/jackery/releases/f43eede-sku-revision-20261102",
+  "runtimeArchiveSha256": "acc4c079d6d52f6219faa3e69e4a0d25d0fa00b7c2aa3ef950fa8e5ac401b165",
+  "backup": "/var/backups/jackery/guidance-update-20261102T014014Z-2960372",
+  "verifiedAt": "2026-11-02T01:40:15.745037+00:00",
+  "allPersistentTablesUnchanged": true,
+  "tableCounts": {"records": 6, "photos": 5, "users": 3, "models": 9, "bom": 404, "model_knowledge": 9, "meta": 5, "audits": 31},
+  "regression": {"core": 142, "browser": 36, "pass": 178, "fail": 0},
+  "publicUrl": "http://221.224.86.238:800/",
+  "publicHealth": "200; production",
+  "publicAssetHashesMatchVerifiedCandidate": true,
+  "productionWorkRecordsWrittenByTests": 0,
+  "authenticatedProductionBrowserTest": "Not attempted; actual text editing, mouse drag, layout, bilingual, save and reload verified with isolated browser data"
+}
