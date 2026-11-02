@@ -1,0 +1,24 @@
+{
+  "archive": "Jackery_NoteAlignment_40a6481.zip",
+  "archiveSha256": "789978cb263d0d0dc35b593ed98940cf5243c67507c734fbdde4512d27755260",
+  "commit": "40a6481555fd18cef0bd592ae354790b65fd9ec7",
+  "candidate": "dbc0b4c8af40edcaa6ee621e634c816f116c8a01d1c04e177d81edd12493011b",
+  "releaseName": "40a6481-note-alignment-20261102",
+  "bytes": 194016,
+  "status": "UPGRADED",
+  "previousRelease": "/opt/jackery/releases/42f66cc-fixed-note-inputs-20261102",
+  "release": "/opt/jackery/releases/40a6481-note-alignment-20261102",
+  "backup": "/var/backups/jackery/guidance-update-20261102T021701Z-2961228",
+  "allPersistentTablesUnchanged": true,
+  "tableCounts": {
+    "records": 6,
+    "photos": 5,
+    "users": 3,
+    "models": 9,
+    "bom": 404,
+    "model_knowledge": 9,
+    "meta": 5,
+    "audits": 31
+  },
+  "verifiedAt": "2026-11-02T02:17:02.807853+00:00"
+}
