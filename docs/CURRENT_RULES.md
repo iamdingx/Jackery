@@ -102,3 +102,8 @@
 - Defect remark及外观区的textarea仅在这两个区块内设置resize:none，取消右下角拖动缩放；同一视口两框保持相同固定高度，长内容通过框内滚动查看。其他区块文本框不受影响。
 - Condition & Notes标题改为Appearance condition，中文为外观状况。Appearance Notes输入标签及appearanceNotes存储字段保留；Defect remark仍保存到issueNotes。原记录、自由备注和旧译文不回写。
 - 保持两块并排、合计不超出Functional Checks宽度，照片仍位于其下；1366×768、1536×864、2048×1000均验证输入无裁切、不能拖动改变高度、结果与操作区可见。
+
+## 2026-11-02外观备注去掉小字并对齐顶边
+
+- Appearance condition下不再显示Appearance Notes/外观备注小字，改为仅有无障碍名称的原appearanceNotes文本框。该文本框紧接标题，外观预设选项放到文本框下方，避免预设选项或标签把右框向下推。
+- 两个标题采用一致行高、两个输入区采用一致上间距；较窄的并排布局统一标题最小高度以容纳换行，确保输入框顶边同高。等高、不可拖动和内部滚动规则继续保持；不改保存/导出字段。

@@ -23,12 +23,14 @@
 /* Fixed work panels: inspect above defect, appearance beside defect, photos always visible. */
 .editor-grid{grid-template-columns:minmax(0,1fr) minmax(0,1fr) minmax(350px,2.6fr);grid-template-areas:"checks checks materials" "defect appearance materials" "photos photos materials"}.checks{grid-area:checks}.materials{grid-area:materials}.defect-panel{grid-area:defect}.notes-panel{grid-area:appearance}.evidence-section{grid-area:photos;margin:0;min-height:0;overflow:auto}.defect-panel .stack,.notes-panel>.stack{grid-template-columns:1fr;margin-top:6px}.evidence-section .photo-tools{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.evidence-section .photos{margin-top:6px}.photo small{display:none}
 .defect-panel textarea,.notes-panel textarea{resize:none;height:64px;min-height:64px;max-height:64px;overflow-y:auto}
+.defect-panel h2,.notes-panel h2{font-size:16px;line-height:24px}
+@media(min-width:801px) and (max-width:1100px){.defect-panel h2,.notes-panel h2{min-height:48px}}
 @media(min-width:1101px) and (min-height:650px){
  .editor-shell .editor-grid{grid-template-columns:minmax(220px,.5fr) minmax(220px,.5fr) minmax(450px,1.35fr);grid-template-rows:minmax(75px,1fr) 130px 92px;grid-template-areas:"checks checks materials" "defect appearance materials" "photos photos materials";gap:6px}
  .editor-shell .defect-panel,.editor-shell .notes-panel{min-height:0;overflow:auto;padding:6px 8px}
  .editor-shell .defect-panel h2,.editor-shell .notes-panel h2{font-size:14px;line-height:18px}
  .editor-shell .defect-panel textarea,.editor-shell .notes-panel textarea{height:44px;min-height:44px;max-height:44px;font-size:12px;line-height:1.25}
- .editor-shell .notes-panel .appearances{gap:3px 6px;margin:0}.editor-shell .notes-panel .appearances label{font-size:11px;gap:4px}.editor-shell .notes-panel .appearances input{width:14px;height:14px}.editor-shell .notes-panel>.stack{margin-top:0}.editor-shell .notes-panel>.stack label{font-size:11px;line-height:14px}.editor-shell .notes-panel label>textarea{margin-top:0}
+ .editor-shell .notes-panel .appearances{gap:3px 6px;margin:0}.editor-shell .notes-panel .appearances label{font-size:11px;gap:4px}.editor-shell .notes-panel .appearances input{width:14px;height:14px}
  .editor-shell .evidence-section{display:grid;grid-template-columns:minmax(0,1fr) 132px;grid-template-rows:auto minmax(0,1fr);grid-template-areas:"heading tools" "gallery tools";gap:3px 8px;padding:6px 8px;overflow:hidden}
  .editor-shell .evidence-section>.panel-head{grid-area:heading;margin:0}.editor-shell .evidence-section h2{font-size:14px;line-height:18px}
  .editor-shell .evidence-section>small{display:none}
