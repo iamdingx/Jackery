@@ -12,7 +12,8 @@ const source=path.resolve(arg('--source')??path.join(root,'catalogs','jackery-eu
 const dataset=JSON.parse(await readFile(source,'utf8')),store=openStore(dataDir,process.argv.includes('--demo'));
 try{
   const report=importJackeryCatalog(store,dataset,{deactivateSamples:true});
-  const modelSkuUpdate=applyModelSkuMapping(store,JSON.parse(await readFile(path.join(root,'catalogs','jackery-model-sku-20261030.json'),'utf8')));
+  applyModelSkuMapping(store,JSON.parse(await readFile(path.join(root,'catalogs','jackery-model-sku-20261030.json'),'utf8')));
+  const modelSkuUpdate=applyModelSkuMapping(store,JSON.parse(await readFile(path.join(root,'catalogs','jackery-model-sku-20261102.json'),'utf8')));
   const availabilityUpdate=applyE2000PlusAAvailability(store);
   if(arg('--report')){const target=path.resolve(arg('--report'));await mkdir(path.dirname(target),{recursive:true});await writeFile(target,JSON.stringify(report,null,2)+'\n');}
   console.log(JSON.stringify({...report,modelSkuUpdate,availabilityUpdate},null,2));

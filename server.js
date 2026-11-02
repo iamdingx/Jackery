@@ -52,7 +52,7 @@ export async function startServer({dataDir=path.join(root,'data'),demo=false,por
   if(publicBaseUrl){const parsed=new URL(publicBaseUrl);if(!['http:','https:'].includes(parsed.protocol)||parsed.username||parsed.password||parsed.pathname!=='/'||parsed.search||parsed.hash)throw new Error('PUBLIC_BASE_URL must be an HTTP(S) origin');publicBaseUrl=parsed.origin;}
   const store=openStore(path.resolve(dataDir),demo),{db}=store;
   const recordCatalog=()=>{const c=store.catalog();return {...c,models:c.models.map(m=>currentModelChecklist(translateModel(m,sourceTranslations))),bom:c.bom.map(b=>translateBom(b,bomTranslations)),knowledge:c.knowledge.map(k=>translateKnowledge(k,sourceTranslations))};};
-  if(catalogPath){try{importJackeryCatalog(store,JSON.parse(await readFile(path.resolve(catalogPath),'utf8')),{deactivateSamples:true});const mapping=path.join(root,'catalogs','jackery-model-sku-20261030.json');if(existsSync(mapping))applyModelSkuMapping(store,JSON.parse(await readFile(mapping,'utf8')));applyE2000PlusAAvailability(store);}catch(error){db.close();throw error;}}
+  if(catalogPath){try{importJackeryCatalog(store,JSON.parse(await readFile(path.resolve(catalogPath),'utf8')),{deactivateSamples:true});for(const filename of ['jackery-model-sku-20261030.json','jackery-model-sku-20261102.json']){const mapping=path.join(root,'catalogs',filename);if(existsSync(mapping))applyModelSkuMapping(store,JSON.parse(await readFile(mapping,'utf8')));}applyE2000PlusAAvailability(store);}catch(error){db.close();throw error;}}
   const throttles=new Map();
   const dummyHash=passwordHash(randomBytes(24).toString('hex'));
   function auth(req){

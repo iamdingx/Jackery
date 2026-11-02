@@ -1,0 +1,105 @@
+{
+  "schemaVersion": 1,
+  "referenceId": "jackery-eu-bom-confirmed-20261102",
+  "source": "User confirmation on 2026-11-02: E1000 associates by filename; E2000plus A Product SKU follows workbook sku column.",
+  "models": [
+    {
+      "catalogKey": "e1000plus-a",
+      "model": "欧盟-E1000plus-A版本",
+      "productSku": "21-0001-000029",
+      "notesZh": "A和B版本设备本体完全一样，区别只在包材，包材物料可以仓库有哪个版本就用哪个版本，后续补充包材物料时，只补充B版本的。"
+    },
+    {
+      "catalogKey": "e1000plus-b",
+      "model": "欧盟-E1000plus-B版本",
+      "productSku": "21-0001-000183",
+      "notesZh": "A和B版本设备本体完全一样，区别只在包材，包材物料可以仓库有哪个版本就用哪个版本，后续补充包材物料时，只补充B版本的。"
+    },
+    {
+      "catalogKey": "e1000pro-default",
+      "model": "欧盟-E1000pro",
+      "productSku": "70-1000-DEOR01",
+      "expectedProductSkus": [
+        "70-1000-DEOR01"
+      ]
+    },
+    {
+      "catalogKey": "e1000v2-costdown",
+      "model": "欧盟-E1000V2-降本版本",
+      "productSku": "21-0001-000221",
+      "expectedProductSkus": [
+        "21-0001-000221"
+      ],
+      "notesZh": "两个版本SKU一致，但实际内部配件不同，需要操作人员现场通过上位机做区分"
+    },
+    {
+      "catalogKey": "e1000v2-original",
+      "model": "欧盟-E1000V2-原始版本",
+      "productSku": "21-0001-000221",
+      "expectedProductSkus": [
+        "21-0001-000221"
+      ],
+      "notesZh": "两个版本SKU一致，但实际内部配件不同，需要操作人员现场通过上位机做区分"
+    },
+    {
+      "catalogKey": "e1000-default",
+      "model": "欧盟-E1000",
+      "productSku": "70-1000-EUO001",
+      "expectedProductSkus": [
+        "",
+        "70-1000-EUO001"
+      ],
+      "associationBasis": "filename",
+      "sourceFile": "欧盟-E1000-70-1000-EUO001黑橙色BOM.xlsx"
+    },
+    {
+      "catalogKey": "e2000plus-a",
+      "model": "欧盟-E2000plus-A版本",
+      "productSku": "21-0001-000037",
+      "expectedProductSkus": [
+        "21-0001-00037",
+        "21-0001-000037"
+      ],
+      "notesZh": "A和B版本设备本体完全一样，区别只在包材，包材物料可以仓库有哪个版本就用哪个版本，后续补充包材物料时，只补充B版本的。",
+      "associationBasis": "workbook_product_sku",
+      "sourceFile": "欧盟-E2000plus-A版本-21-0001-00037黑橙色BOM.xlsx",
+      "sourceSheet": "树形单据体",
+      "sourceCell": "B2"
+    },
+    {
+      "catalogKey": "e2000plus-b",
+      "model": "欧盟-E2000plus-B版本",
+      "productSku": "21-0001-000184",
+      "expectedProductSkus": [
+        "21-0001-000184"
+      ],
+      "notesZh": "A和B版本设备本体完全一样，区别只在包材，包材物料可以仓库有哪个版本就用哪个版本，后续补充包材物料时，只补充B版本的。"
+    },
+    {
+      "catalogKey": "e2000pro-default",
+      "model": "欧盟-E2000pro",
+      "productSku": "70-2000-EUOR01",
+      "expectedProductSkus": [
+        "70-2000-EUOR01"
+      ]
+    },
+    {
+      "catalogKey": "e2000v2-costdown",
+      "model": "欧盟-E2000V2-降本版本",
+      "productSku": "21-0001-000267",
+      "expectedProductSkus": [
+        "21-0001-000267"
+      ],
+      "notesZh": "两个版本SKU一致，但实际内部配件不同，需要操作人员现场通过上位机做区分"
+    },
+    {
+      "catalogKey": "e2000v2-original",
+      "model": "欧盟-E2000V2-原始版本",
+      "productSku": "21-0001-000267",
+      "expectedProductSkus": [
+        "21-0001-000267"
+      ],
+      "notesZh": "两个版本SKU一致，但实际内部配件不同，需要操作人员现场通过上位机做区分"
+    }
+  ]
+}
