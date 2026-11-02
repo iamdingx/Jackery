@@ -1,0 +1,15 @@
+{
+  "checkedAt": "2026-11-02T09:15:14.314623+08:00",
+  "baseUrl": "http://221.224.86.238:800",
+  "healthStatus": 200,
+  "health": {
+    "ok": true,
+    "version": "1.0.0",
+    "demo": false
+  },
+  "homepageStatus": 200,
+  "originCheck": {
+    "status": 401,
+    "code": "INVALID_LOGIN"
+  }
+}
