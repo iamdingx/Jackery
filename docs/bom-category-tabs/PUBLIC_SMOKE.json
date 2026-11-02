@@ -1,0 +1,49 @@
+{
+  "verifiedAt": "2026-11-02T05:26:49.615378+00:00",
+  "baseUrl": "http://221.224.86.238:800",
+  "checks": [
+    {
+      "path": "/api/health",
+      "status": 200,
+      "body": {
+        "ok": true,
+        "version": "1.0.0",
+        "demo": false
+      }
+    },
+    {
+      "path": "/app.js",
+      "status": 200,
+      "sha256": "d696d4ff75da6132a7d4f5af6ecd3d3df7f00525cbb1da2515bb00ca152e112d",
+      "matchesLocal": true
+    },
+    {
+      "path": "/styles.css",
+      "status": 200,
+      "sha256": "32088c3f5b3c3d12984ec799931b24f2e42fa0f9b79e77d7b1addbe587ff2de8",
+      "matchesLocal": true
+    },
+    {
+      "path": "/state.js",
+      "status": 200,
+      "sha256": "6f4c702fc44bc299f6547027253f9477ec2eebfcea8cacf087e36f465aa92994",
+      "matchesLocal": true
+    },
+    {
+      "path": "/api/models/1/bom?category=core",
+      "status": 401,
+      "authenticationRequired": true
+    },
+    {
+      "path": "/api/login",
+      "origin": "http://221.224.86.238:800",
+      "status": 401,
+      "body": {
+        "error": {
+          "code": "INVALID_LOGIN",
+          "message": "Invalid username or password"
+        }
+      }
+    }
+  ]
+}

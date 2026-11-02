@@ -1,0 +1,25 @@
+{
+  "archive": "Jackery_BomCategoryTabs_ad85d0e.zip",
+  "archiveSha256": "9edf27bf513a06ed5b91b2f75b78f629f03a0974908938ca07cd48413af0b097",
+  "commit": "ad85d0e197e6a6832b662de6efcae1ff8b2249da",
+  "candidate": "ba96f7861c51c24109c6ce4fac8a29ccc54d4203efe00f10bed2b9311a552343",
+  "releaseName": "ad85d0e-bom-category-tabs-20261102",
+  "bytes": 195243,
+  "status": "UPGRADED",
+  "previousRelease": "/opt/jackery/releases/40a6481-note-alignment-20261102",
+  "release": "/opt/jackery/releases/ad85d0e-bom-category-tabs-20261102",
+  "backup": "/var/backups/jackery/guidance-update-20261102T052618Z-2964860",
+  "allPersistentTablesUnchanged": true,
+  "tableCounts": {
+    "records": 6,
+    "photos": 5,
+    "users": 3,
+    "models": 9,
+    "bom": 404,
+    "model_knowledge": 9,
+    "meta": 5,
+    "audits": 31
+  },
+  "verifiedAt": "2026-11-02T05:26:19.906943+00:00",
+  "bomImportExecuted": false
+}
