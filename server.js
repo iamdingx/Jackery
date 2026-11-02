@@ -130,8 +130,11 @@ export async function startServer({dataDir=path.join(root,'data'),demo=false,por
         const modelId=Number(match[1]);if(!store.get('models',modelId))absent('Model not found');
         const inactive=params.get('includeInactive')==='1';if(inactive&&user.role!=='admin')forbidden();
         const {page,pageSize}=pagination(params,50),q=params.get('q')??'';textValue(q,'Search',200);const lower=q.toLocaleLowerCase();
-        const items=store.all('bom').map(b=>translateBom(b,bomTranslations)).filter(b=>b.modelId===modelId&&(inactive||b.active)&&(!q||[b.sku,b.descriptionEn,b.descriptionZh].some(value=>(value??'').toLocaleLowerCase().includes(lower)))).sort((a,b)=>Number(b.sku===q)-Number(a.sku===q)||a.sku.localeCompare(b.sku)).map(b=>({...b,missingEnglish:!b.descriptionEn?.trim()}));
-        return send(200,{items:items.slice((page-1)*pageSize,page*pageSize),total:items.length,page,pageSize});
+        const category=params.get('category')??'all',categories=['core','non_core','packaging'];if(category!=='all'&&!categories.includes(category))invalid('Invalid BOM category');
+        const modelItems=store.all('bom').filter(b=>b.modelId===modelId&&(inactive||b.active)),categoryCounts={all:modelItems.length,core:0,non_core:0,packaging:0,uncategorized:0};
+        for(const item of modelItems)categoryCounts[categories.includes(item.category)?item.category:'uncategorized']++;
+        const items=modelItems.filter(b=>category==='all'||b.category===category).map(b=>translateBom(b,bomTranslations)).filter(b=>!q||[b.sku,b.descriptionEn,b.descriptionZh].some(value=>(value??'').toLocaleLowerCase().includes(lower))).sort((a,b)=>Number(b.sku===q)-Number(a.sku===q)||a.sku.localeCompare(b.sku)).map(b=>({...b,missingEnglish:!b.descriptionEn?.trim()}));
+        return send(200,{items:items.slice((page-1)*pageSize,page*pageSize),total:items.length,page,pageSize,categoryCounts});
       }
       if(method==='GET'&&route==='/api/records'){const {page,pageSize}=pagination(params,20),items=filteredRecords(store,user,params);return send(200,{items:items.slice((page-1)*pageSize,page*pageSize),total:items.length,page,pageSize});}
       if(method==='GET'&&route==='/api/sn-history'){
