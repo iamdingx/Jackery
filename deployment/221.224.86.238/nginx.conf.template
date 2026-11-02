@@ -5,6 +5,11 @@ server {
     server_tokens off;
     client_max_body_size 16m;
 
+    # Keep legacy port-80 bookmarks on the canonical browser origin.
+    if ($http_host ~ "^221[.]224[.]86[.]238(:80)?$") {
+        return 302 http://221.224.86.238:800$request_uri;
+    }
+
     location / {
         proxy_pass http://127.0.0.1:14310;
         proxy_http_version 1.1;
