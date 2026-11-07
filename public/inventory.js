@@ -1,12 +1,16 @@
 import {escapeHtml as e} from './state.js';
 import {readStockFile} from './stock-file.js';
 import {materialsZh,renderMaterialPanel} from './materials.js';
+import {ledgerZh,renderInventoryLedger} from './inventory-ledger.js';
 
 const base='/api/admin/inventory';
-const sections={query:'Stock Query',open:'Import Opening Stock',adjust:'Stock Adjustment',history:'Usage History',materials:'Material Management'};
+const sections={query:'Stock Query',open:'Import Opening Stock',adjust:'Stock Adjustment',ledger:'Stock Change History',history:'Usage History',materials:'Material Management'};
+const importHint=kind=>kind==='receipt'?'Use sku,quantity to add received stock. A new SKU is initialized and an existing balance is increased.':'Use sku,quantity for opening stock. A SKU can be initialized once.';
+const ledgerState={mode:'batches',kind:'all',sku:'',batch:null,page:1};
 
 export const inventoryZh={
   ...materialsZh,
+  ...ledgerZh,
   'Material Inventory':'物料库存','Stock Query':'库存查询','Import Opening Stock':'新增导入','Stock Adjustment':'库存调整',
   'Usage History':'历史耗用','Current Stock':'当前库存','Export Stock':'导出当前库存','Item Details':'物料详情',
   'Select a row to see its details.':'选择物料查看详情。','Last Stock Update':'最近库存更新','View Usage History':'查看历史耗用',
@@ -36,14 +40,17 @@ export function renderInventory({state,shell,api,t,date,partName}){
   const byId=id=>document.getElementById(id);
   const stock=n=>`<strong class="${n<0?'danger':'stock-value'}">${e(n)}</strong>`;
   shell(`<div id="${shellId}" class="inventory-layout"><aside class="panel inventory-nav"><h2>${tr('Material Inventory')}</h2><nav aria-label="${tr('Material Inventory')}">${Object.entries(sections).map(([key,label])=>`<button type="button" data-stock-section="${key}" ${key===section?'aria-current="page"':''}>${tr(label)}</button>`).join('')}</nav></aside><section class="panel inventory-main"><div class="panel-head"><h1>${tr(sections[section])}</h1>${section==='query'?`<a class="button" href="${base}/export?language=${state.lang}">${tr('Export Stock')}</a>`:''}</div><div id="stock-error" class="error-box" role="alert" hidden></div>
-    ${section==='materials'?'<div id="material-panel"></div>':listing?`<form id="stock-search" class="search-row">
+    ${section==='materials'?'<div id="material-panel"></div>':section==='ledger'?'<div id="ledger-panel"></div>':listing?`<form id="stock-search" class="search-row">
       <label class="grow">${tr(history?'Search SKU, work order, or serial number':'Search part SKU or description')}<input id="stock-q" value="${e(filters.q)}" maxlength="200"></label>
       ${history?`<label>${tr('From')}<input id="stock-from" type="date" value="${e(filters.from)}"></label><label>${tr('To')}<input id="stock-to" type="date" value="${e(filters.to)}"></label>`:''}
       <button>${tr('Search')}</button>
     </form>${history&&filters.sku?`<p class="stock-filter"><span class="badge">${e(filters.sku)}</span> <button id="stock-clear" type="button">${tr('Clear SKU filter')}</button></p>`:''}
     <div class="${history?'':'stock-query-grid'}"><div id="stock-results" aria-live="polite"></div>${history?'':`<aside id="stock-detail" class="panel stock-detail"></aside>`}</div>`:
-    `<p class="muted">${tr(section==='open'?'Use sku,quantity for opening stock. A SKU can be initialized once.':'Use sku,delta for adjustments. Positive quantities add stock and negative quantities subtract it.')}</p>
-      <form id="stock-upload" class="search-row"><label class="grow">${tr('Choose stock file')}<input id="stock-file" type="file" accept=".xlsx,.csv"></label><a class="button" href="${base}/template?kind=${section}&format=xlsx">${tr('Excel Template')}</a><button class="primary">${tr('Preview List')}</button></form>
+    `<p id="stock-import-hint" class="muted">${tr(section==='open'?importHint(batch.kind):'Use sku,delta for adjustments. Positive quantities add stock and negative quantities subtract it.')}</p>
+      <form id="stock-upload" class="search-row">${section==='open'?`<label>${tr('Import type')}<select id="stock-kind">
+        <option value="open" ${batch.kind!=='receipt'?'selected':''}>${tr('Opening stock')}</option>
+        <option value="receipt" ${batch.kind==='receipt'?'selected':''}>${tr('Stock receipt')}</option>
+      </select></label>`:''}<label class="grow">${tr('Choose stock file')}<input id="stock-file" type="file" accept=".xlsx,.csv"></label><a class="button" href="${base}/template?kind=${section}&format=xlsx">${tr('Excel Template')}</a><button class="primary">${tr('Preview List')}</button></form>
       <p id="stock-file-status" class="muted" role="status">${e(batch.filename??'')}</p>
       <button id="stock-materials-link" type="button" hidden>${tr('Material Management')}</button><div id="stock-preview"></div>`}
     </section></div>`);
@@ -66,6 +73,10 @@ export function renderInventory({state,shell,api,t,date,partName}){
     renderMaterialPanel({root:byId('material-panel'),api,t,partName,state:s});
     return;
   }
+  if(section==='ledger'){
+    renderInventoryLedger({root:byId('ledger-panel'),api,t,date,ledger:s.ledger??={...ledgerState}});
+    return;
+  }
   bind('stock-materials-link','click',()=>{
     s.materials??={q:'',status:'all',page:1};
     s.materials.importOpen=true;
@@ -78,8 +89,10 @@ export function renderInventory({state,shell,api,t,date,partName}){
       if(history)return;
       byId('stock-detail').innerHTML=`<h2>${tr('Item Details')}</h2>${item?`<p><strong>${e(item.sku)}</strong></p><p>${partName(item)}</p>
         <dl><dt>${tr('Current Stock')}</dt><dd>${stock(item.quantity)} ${e(item.unit??'')}</dd><dt>${tr('Last Stock Update')}</dt><dd>${e(item.updatedAt?date(item.updatedAt):'—')}</dd></dl>
-        <button id="stock-view-history" type="button">${tr('View Usage History')}</button>`:`<p class="muted">${tr('Select a row to see its details.')}</p>`}`;
+        <div class="row"><button id="stock-view-history" type="button">${tr('View Usage History')}</button>
+        <button id="stock-view-ledger" type="button">${tr('View stock changes')}</button></div>`:`<p class="muted">${tr('Select a row to see its details.')}</p>`}`;
       bind('stock-view-history','click',()=>{s.history={q:'',sku:item.sku,from:'',to:'',page:1};go('history');});
+      bind('stock-view-ledger','click',()=>{s.ledger={...ledgerState,mode:'movements',sku:item.sku};go('ledger');});
     }
     async function load(){
       const request=++sequence;
@@ -116,13 +129,15 @@ export function renderInventory({state,shell,api,t,date,partName}){
 
   function preview(){
     byId('stock-preview').innerHTML=batch.preview?table(['Part SKU','Part Name','Before','Change','After'],batch.preview.rows.map(row=>`<tr><td>${e(row.sku)}</td><td>${partName(row)}</td><td>${e(row.before)}</td><td>${row.delta>0?'+':''}${e(row.delta)}</td><td>${stock(row.after)}</td></tr>`).join(''))+`<button type="button" class="primary stock-confirm" id="stock-confirm" ${batch.busy?'disabled':''}>${tr(section==='open'?'Confirm Import':'Confirm Adjustment')}</button>`:
-      batch.receipt?`<p class="banner" role="status">${tr('Rows updated')} · ${e(batch.receipt.updated)}</p>`:'';
+      batch.receipt?`<p class="banner" role="status">${tr('Rows updated')} · ${e(batch.receipt.updated)}</p>
+        <button id="stock-receipt-ledger" type="button">${tr('View batch details')}</button>`:'';
+    bind('stock-receipt-ledger','click',()=>{s.ledger={...ledgerState,batch:batch.receipt};go('ledger');});
     bind('stock-confirm','click',async()=>{
       if(batch.busy)return;
       batch.busy=true;
       preview();
       try{
-        batch.receipt=await api(base+'/commit',{method:'POST',body:{kind:section,csv:batch.csv,previewHash:batch.preview.previewHash,requestId:batch.requestId}});
+        batch.receipt=await api(base+'/commit',{method:'POST',body:{kind:batch.previewKind,csv:batch.csv,previewHash:batch.preview.previewHash,requestId:batch.requestId,sourceName:batch.filename??''}});
         delete batch.preview;delete batch.csv;delete batch.filename;
         if(isCurrent()){byId('stock-file').value='';byId('stock-file-status').textContent='';}
       }catch(error){
@@ -135,6 +150,15 @@ export function renderInventory({state,shell,api,t,date,partName}){
       }
     });
   }
+  bind('stock-kind','change',ev=>{
+    if(batch.busy){ev.target.value=batch.kind??'open';return;}
+    batch.kind=ev.target.value;
+    delete batch.preview;delete batch.receipt;
+    byId('stock-import-hint').textContent=t(importHint(batch.kind));
+    byId('stock-error').hidden=true;
+    byId('stock-materials-link').hidden=true;
+    preview();
+  });
   bind('stock-file','change',()=>{
     if(batch.busy)return;
     delete batch.preview;delete batch.receipt;delete batch.csv;delete batch.filename;
@@ -155,7 +179,8 @@ export function renderInventory({state,shell,api,t,date,partName}){
       const csv=file?await readStockFile(file):batch.csv;
       batch.filename=file?.name??batch.filename;
       batch.csv=csv;
-      batch.preview=await api(base+'/preview',{method:'POST',body:{kind:section,csv}});
+      batch.previewKind=section==='open'?(batch.kind??'open'):section;
+      batch.preview=await api(base+'/preview',{method:'POST',body:{kind:batch.previewKind,csv}});
       batch.requestId=Array.from(crypto.getRandomValues(new Uint8Array(16)),b=>b.toString(16).padStart(2,'0')).join('');
       delete batch.receipt;
     }catch(error){delete batch.preview;showError(error);}

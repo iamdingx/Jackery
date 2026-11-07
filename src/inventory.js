@@ -27,11 +27,11 @@ export function usageHistory(store,params){
 }
 
 export function previewStockBatch(store,{kind,csv}){
-  if(!['open','adjust'].includes(kind))invalid('Invalid inventory operation');
+  if(!['open','receipt','adjust'].includes(kind))invalid('Invalid inventory operation');
   let records;
   try{records=parseCsvRecords(csv);}catch(error){throw new ApiError(422,error.code??'CSV_INVALID',error.message,error.details);}
   const headers=records.shift()?.fields.map(x=>x.trim());
-  if(headers?.length!==2||headers[0]!=='sku'||headers[1]!== (kind==='open'?'quantity':'delta'))invalid(kind==='open'?'Expected CSV headers: sku,quantity':'Expected CSV headers: sku,delta');
+  if(headers?.length!==2||headers[0]!=='sku'||headers[1]!== (kind==='adjust'?'delta':'quantity'))invalid(kind==='adjust'?'Expected CSV headers: sku,delta':'Expected CSV headers: sku,quantity');
   if(!records.length)invalid('The stock list is empty');
   const balances=readBalances(store),parts=materialIndex(store),seen=new Set(),errors=[],rows=[];
   const products=new Set(store.all('models').map(model=>model.productSku));
@@ -42,14 +42,14 @@ export function previewStockBatch(store,{kind,csv}){
     else if(!parts.has(sku))message=products.has(sku)?'Product SKU is not a material':'Unknown Part SKU';
     else if(!parts.get(sku).active)message='Part SKU is inactive';
     else if(seen.has(sku))message='Duplicate Part SKU';
-    else if(!/^[+-]?\d+$/.test(raw)||!Number.isSafeInteger(amount)||kind==='open'&&amount<0)message='Invalid stock quantity';
+    else if(!/^[+-]?\d+$/.test(raw)||!Number.isSafeInteger(amount)||kind!=='adjust'&&amount<0)message='Invalid stock quantity';
     else if(kind==='open'&&current)message='Stock already imported; use adjustment';
     else if(kind==='adjust'&&!current)message='Import opening stock first';
     const after=(current?.quantity??0)+amount;
     if(!message&&!Number.isSafeInteger(after))message='Stock balance is outside the supported range';
     seen.add(sku);
     if(message)errors.push({row:record.row,sku,message});
-    else rows.push({sku,descriptionZh:parts.get(sku)?.descriptionZh??'',descriptionEn:parts.get(sku)?.descriptionEn??'',before:current?.quantity??0,delta:amount,after,updatedAt:current?.updated_at??null});
+    else rows.push({sku,descriptionZh:parts.get(sku)?.descriptionZh??'',descriptionEn:parts.get(sku)?.descriptionEn??'',before:current?.quantity??0,delta:amount,after,updatedAt:current?.updated_at??null,...(kind==='receipt'?{movementKind:current?'receipt':'open'}:{})});
   }
   if(errors.length)throw new ApiError(422,'STOCK_BATCH_INVALID','Inventory list rejected',errors);
   return {rows,previewHash:hash({kind,rows})};
@@ -63,18 +63,56 @@ function writeMovement(store,sku,delta,balance,kind,reference,actorId,now){
 export function commitStockBatch(store,input,user){
   const {requestId,previewHash,kind,csv}=input;
   if(typeof requestId!=='string'||!/^[a-f0-9]{32}$/.test(requestId))invalid('Invalid inventory batch ID');
-  const inputHash=hash({kind,csv});
+  const sourceName=textValue(input.sourceName??'','Source file',255).trim();
+  const inputHash=hash({kind,csv,...(sourceName?{sourceName}:{})});
   return store.tx(()=>{
     const old=store.db.prepare('SELECT * FROM inventory_batches WHERE id=?').get(requestId);
     if(old){if(old.input_hash!==inputHash)invalid('Inventory batch ID already used for a different file');return JSON.parse(old.receipt);}
     const planned=previewStockBatch(store,input);
     if(planned.previewHash!==previewHash)throw new ApiError(409,'STOCK_PREVIEW_STALE','Inventory changed. Preview the list again.');
     const now=new Date().toISOString();
-    for(const row of planned.rows)writeMovement(store,row.sku,row.delta,row.after,kind,requestId,user.id,now);
-    const receipt={requestId,kind,updated:planned.rows.length,appliedAt:now};
+    for(const row of planned.rows)writeMovement(store,row.sku,row.delta,row.after,row.movementKind??kind,requestId,user.id,now);
+    const receipt={requestId,kind,updated:planned.rows.length,appliedAt:now,sourceName,actorName:user.displayName??''};
     store.db.prepare('INSERT INTO inventory_batches(id,input_hash,receipt) VALUES(?,?,?)').run(requestId,inputHash,JSON.stringify(receipt));
     return receipt;
   });
+}
+
+export function inventoryBatches(store,params,{page,pageSize}){
+  const kind=params.get('kind')??'all';
+  if(!['all','import','adjust'].includes(kind))invalid('Invalid inventory operation');
+  const where=kind==='all'?'':`WHERE json_extract(b.receipt,'$.kind') ${kind==='adjust'?"= 'adjust'":"IN ('open','receipt')"}`;
+  const from=`FROM inventory_batches b ${where}`;
+  const total=store.db.prepare(`SELECT count(*) AS n ${from}`).get().n;
+  const rows=store.db.prepare(`SELECT b.receipt,
+    (SELECT u.display_name FROM inventory_events e LEFT JOIN users u ON u.id=e.actor_id WHERE e.reference=b.id ORDER BY e.id LIMIT 1) AS actor
+    ${from} ORDER BY b.rowid DESC LIMIT ? OFFSET ?`).all(pageSize,(page-1)*pageSize);
+  const items=rows.map(row=>{
+    const {requestId,kind,updated,appliedAt,sourceName,actorName}=JSON.parse(row.receipt);
+    return {requestId,kind,updated,appliedAt,sourceName:sourceName??'',actorName:actorName||row.actor||''};
+  });
+  return {items,total,page,pageSize};
+}
+
+export function inventoryMovements(store,params,{page,pageSize}){
+  const sku=textValue(params.get('sku')??'','Part SKU',200).trim();
+  const batch=params.get('batch')??'';
+  if(batch&&!/^[a-f0-9]{32}$/.test(batch))invalid('Invalid inventory batch ID');
+  const conditions=[],args=[];
+  if(sku){conditions.push('e.sku=?');args.push(sku);}
+  if(batch){conditions.push('e.reference=?');args.push(batch);}
+  const where=conditions.length?'WHERE '+conditions.join(' AND '):'';
+  const total=store.db.prepare(`SELECT count(*) AS n FROM inventory_events e ${where}`).get(...args).n;
+  const rows=store.db.prepare(`SELECT e.*, u.display_name, b.receipt FROM inventory_events e
+    LEFT JOIN users u ON u.id=e.actor_id LEFT JOIN inventory_batches b ON b.id=e.reference
+    ${where} ORDER BY e.id DESC LIMIT ? OFFSET ?`).all(...args,pageSize,(page-1)*pageSize);
+  const items=rows.map(row=>{
+    const batch=row.receipt?JSON.parse(row.receipt):null;
+    return {sku:row.sku,kind:row.kind,before:row.balance-row.delta,delta:row.delta,after:row.balance,reference:row.reference,
+      batchId:batch?.requestId??null,batchKind:batch?.kind??null,sourceName:batch?.sourceName??'',
+      actorName:batch?.actorName||row.display_name||'',createdAt:row.created_at};
+  });
+  return {items,total,page,pageSize};
 }
 
 // Called inside the same transaction that saves the work record and audit.
@@ -108,5 +146,5 @@ export function exportInventory(store,lang,translations){
 }
 
 export function stockTemplate(kind){
-  return buildWorkbook([{name:'Stock',columns:[{key:'sku',width:24},{key:kind==='open'?'quantity':'delta',width:14}],rows:[]}]);
+  return buildWorkbook([{name:'Stock',columns:[{key:'sku',width:24},{key:kind==='adjust'?'delta':'quantity',width:14}],rows:[]}]);
 }

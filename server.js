@@ -16,7 +16,7 @@ import {loadSourceTranslations,translateModel,translateKnowledge} from './src/so
 import {currentModelChecklist,currentRecordChecklist} from './src/checklists.js';
 import {applyModelSkuMapping} from './src/model-sku.js';
 import {applyE2000PlusAAvailability} from './src/model-availability.js';
-import {stockQuantities,inventoryList,usageHistory,previewStockBatch,commitStockBatch,applyCompletedUsage,exportInventory,stockTemplate} from './src/inventory.js';
+import {stockQuantities,inventoryList,usageHistory,previewStockBatch,commitStockBatch,inventoryBatches,inventoryMovements,applyCompletedUsage,exportInventory,stockTemplate} from './src/inventory.js';
 import {materialList,materialTemplate,previewMaterialImport,commitMaterialImport,setMaterialActive,disabledMaterials} from './src/materials.js';
 
 const root=path.dirname(fileURLToPath(import.meta.url));
@@ -208,9 +208,9 @@ export async function startServer({dataDir=path.join(root,'data'),demo=false,por
         return send(200,{items:items.slice((page-1)*pageSize,page*pageSize),total:items.length,page,pageSize});
       }
       if(method==='GET'&&route==='/api/admin/inventory/template'){
-        const kind=params.get('kind');if(!['open','adjust'].includes(kind))invalid('Invalid inventory operation');
+        const kind=params.get('kind');if(!['open','receipt','adjust'].includes(kind))invalid('Invalid inventory operation');
         if(params.get('format')==='xlsx')return send(200,stockTemplate(kind),{'Content-Type':'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet','Content-Disposition':`attachment; filename="jackery-stock-${kind}.xlsx"`});
-        return send(200,Buffer.from(kind==='open'?'\uFEFFsku,quantity\r\n':'\uFEFFsku,delta\r\n'),{'Content-Type':'text/csv; charset=utf-8','Content-Disposition':`attachment; filename="jackery-stock-${kind}.csv"`});
+        return send(200,Buffer.from(kind==='adjust'?'\uFEFFsku,delta\r\n':'\uFEFFsku,quantity\r\n'),{'Content-Type':'text/csv; charset=utf-8','Content-Disposition':`attachment; filename="jackery-stock-${kind}.csv"`});
       }
       if(method==='GET'&&route==='/api/admin/inventory/export'){
         const lang=params.get('language')??'en';if(!['en','zh'].includes(lang))invalid('Language must be en or zh');
@@ -218,6 +218,8 @@ export async function startServer({dataDir=path.join(root,'data'),demo=false,por
       }
       if(method==='POST'&&route==='/api/admin/inventory/preview')return send(200,previewStockBatch(store,await body(req)));
       if(method==='POST'&&route==='/api/admin/inventory/commit')return send(200,commitStockBatch(store,await body(req),user));
+      if(method==='GET'&&route==='/api/admin/inventory/batches')return send(200,inventoryBatches(store,params,pagination(params,30)));
+      if(method==='GET'&&route==='/api/admin/inventory/movements')return send(200,inventoryMovements(store,params,pagination(params,30)));
       if(method==='GET'&&route==='/api/admin/materials'){
         const {page,pageSize}=pagination(params,30);
         const items=materialList(store,{q:params.get('q')??'',status:params.get('status')??'all'},bomTranslations);

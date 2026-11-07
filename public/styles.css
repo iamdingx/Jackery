@@ -89,3 +89,6 @@
 .material-import summary{cursor:pointer;font-weight:700}
 .material-import[open] summary{margin-bottom:10px}
 #stock-materials-link[hidden]{display:none}
+.ledger-summary{margin-top:12px;overflow-wrap:anywhere}
+.ledger-summary button{margin-top:8px}
+.ledger-reference{overflow-wrap:anywhere;min-width:10ch}

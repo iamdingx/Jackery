@@ -16,6 +16,44 @@ async function harness(t,demo=true) {
 }
 const passChecks={initial:{ac_output:'pass',dc_output:'pass',charging:'pass'},final:{ac_output:'pass',dc_output:'pass',charging:'pass'}};
 
+test('stock receipts add overlapping SKUs and expose dated batch and per-SKU inventory history',async t=>{
+  const h=await harness(t),admin=h.client(),operator=h.client(),base='/api/admin/inventory';
+  await admin.login('admin','JackeryAdmin!2026');await operator.login('alex','JackeryAlex!2026');
+  const commit=async (kind,csv,sourceName,requestId)=>{
+    const preview=await admin.req(base+'/preview','POST',{kind,csv});
+    assert.equal(preview.status,200,JSON.stringify(preview.data));
+    const input={kind,csv,sourceName,requestId,previewHash:preview.data.previewHash};
+    const result=await admin.req(base+'/commit','POST',input);
+    assert.equal(result.status,200,JSON.stringify(result.data));
+    return {input,receipt:result.data};
+  };
+  const sku='DEMO-A-0001';
+  const first=await commit('receipt','sku,quantity\n'+sku+',20','转运库存.xlsx','1'.repeat(32));
+  const second=await commit('receipt','sku,quantity\n'+sku+',10\nDEMO-A-0002,0','国内发运物料.xlsx','2'.repeat(32));
+  const adjustment=await commit('adjust','sku,delta\n'+sku+',-2','调整.xlsx','3'.repeat(32));
+  assert.equal(first.receipt.updated,1);
+  assert.equal(second.receipt.updated,2);
+  assert.deepEqual((await admin.req(base+'/commit','POST',second.input)).data,second.receipt);
+  assert.equal((await admin.req(base+'/commit','POST',{...second.input,sourceName:'other.xlsx'})).status,422);
+  assert.equal((await admin.req(base+'/preview','POST',{kind:'receipt',csv:'sku,quantity\n'+sku+',-1'})).status,422);
+  assert.equal((await operator.req(base+'/batches')).status,403);
+  assert.equal((await operator.req(base+'/movements')).status,403);
+  const list=(await admin.req(base+'/batches?kind=import')).data;
+  assert.equal(list.total,2);
+  assert.deepEqual(list.items.map(x=>x.sourceName),['国内发运物料.xlsx','转运库存.xlsx']);
+  assert.equal(list.items[0].actorName,'Demo Admin');
+  assert.ok(list.items[0].appliedAt);
+  assert.equal((await admin.req(base+'/batches?kind=adjust')).data.items[0].requestId,adjustment.receipt.requestId);
+  const sequence=(await admin.req(base+'/movements?sku='+sku)).data.items;
+  assert.deepEqual(sequence.map(x=>[x.kind,x.before,x.delta,x.after]),[['adjust',30,-2,28],['receipt',20,10,30],['open',0,20,20]]);
+  const detail=(await admin.req(base+'/movements?batch='+second.receipt.requestId)).data;
+  assert.equal(detail.total,2);
+  assert.ok(detail.items.every(x=>x.sourceName==='国内发运物料.xlsx'&&x.batchId===second.receipt.requestId));
+  assert.ok(detail.items.some(x=>x.kind==='open'&&x.delta===0));
+  await h.restart();
+  assert.equal((await admin.req(base+'/movements?sku='+sku)).data.items[0].after,28);
+});
+
 test('material master registers unknown inventory SKUs and enforces global status without removing BOM snapshots',async t=>{
   const h=await harness(t),admin=h.client(),operator=h.client();
   await admin.login('admin','JackeryAdmin!2026');await operator.login('alex','JackeryAlex!2026');

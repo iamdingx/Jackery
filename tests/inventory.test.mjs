@@ -44,6 +44,15 @@ test('inventory sidebar imports and adjusts stock; picker and grade guidance pre
   await page.locator('#stock-search button').click();
   await page.locator('#stock-detail .danger').waitFor();
   assert.equal(await page.locator('#stock-detail .danger').innerText(),'-1');
+  await page.locator('#stock-view-ledger').click();
+  await page.locator('#ledger-results').getByRole('cell',{name:/^adjustment\.xlsx/}).waitFor();
+  assert.match(await page.locator('#ledger-results').innerText(),/-3/);
+  await page.locator('#ledger-batches').click();
+  const adjustBatch=page.locator('#ledger-results tr').filter({hasText:'adjustment.xlsx'});
+  await adjustBatch.getByRole('button',{name:'View batch details'}).click();
+  await page.locator('#ledger-results').getByText(material.sku,{exact:true}).waitFor();
+  assert.equal(await page.locator('#ledger-results tbody tr').count(),1);
+  await page.locator('[data-stock-section=query]').click();
   await page.locator('#stock-view-history').click();
   await page.locator('#stock-clear').waitFor();
   assert.match(await page.locator('.stock-filter').innerText(),new RegExp(material.sku));
