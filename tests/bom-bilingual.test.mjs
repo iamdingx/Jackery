@@ -5,7 +5,7 @@ import path from 'node:path';
 import {chromium} from 'playwright';
 import {startServer} from '../server.js';
 
-test('BOM drawer shows names in both languages and keeps full descriptions searchable and saved',{timeout:60000},async()=>{
+test('BOM selection and usage show bilingual part names while full descriptions stay searchable and saved',{timeout:60000},async()=>{
  await mkdir('tests/.tmp',{recursive:true});const dataDir=await mkdtemp(path.resolve('tests/.tmp/bom-bilingual-'));
  const source=JSON.parse(await readFile('catalogs/jackery-eu-20261030.json','utf8')),sourceModel=source.models.find(m=>m.catalogKey==='e1000v2-costdown'),known=sourceModel.bom.find(b=>b.active),unknown=sourceModel.bom.find(b=>b.active&&b.descriptionZh!==known.descriptionZh);
  const englishName='Verified test part name',expected=englishName+' | SPEC-FIXTURE-ONLY',translationsPath=path.join(dataDir,'translations.json');
@@ -26,9 +26,16 @@ test('BOM drawer shows names in both languages and keeps full descriptions searc
   let row=await search('SPEC-FIXTURE-ONLY',known.sku);await bilingual(row,englishName,knownName);assert.equal(await page.locator('#bom-dialog').getByRole('columnheader',{name:'Part Name',exact:true}).count(),1);await row.locator('[data-bom-select]').check();await bilingual(page.locator('.pending-item').filter({hasText:known.sku}),englishName,knownName);
   await page.locator('#bom-language').click();await page.waitForFunction(()=>document.documentElement.lang==='zh');row=await search(known.sku);await bilingual(row,englishName,knownName);await bilingual(page.locator('.pending-item').filter({hasText:known.sku}),englishName,knownName);
   row=await search(unknown.sku);assert.match(await row.locator('.part-description-en').innerText(),/缺少英文描述/);assert.equal(await row.locator('.part-description-zh').textContent(),unknownName);await page.locator('#bom-language').click();await page.waitForFunction(()=>document.documentElement.lang==='en');row=await search(unknown.sku);assert.match(await row.locator('.part-description-en').innerText(),/English description missing/);assert.equal(await row.locator('.part-description-zh').textContent(),unknownName);
-  await row.locator('[data-bom-select]').check();await page.locator('#bom-add').click();await bilingual(page.locator('#material-rows tr').filter({hasText:known.sku}),expected,known.descriptionZh);
+  await row.locator('[data-bom-select]').check();await page.locator('#bom-add').click();
+  const usedPart=page.locator('#material-rows tr').filter({hasText:known.sku});
+  await bilingual(usedPart,englishName,knownName);
+  assert.equal(await page.locator('.materials').getByRole('columnheader',{name:'Part Name',exact:true}).count(),1);
   await page.locator('[name=outcome][value=awp]').check();const save=page.waitForResponse(r=>r.request().method()==='PUT'&&/\/api\/records\/\d+$/.test(r.url()));await page.locator('#save-record').click();const saved=(await(await save).json()).record;assert.equal(saved.materials.find(m=>m.sku===known.sku).descriptionEn,expected);assert.equal(saved.materials.find(m=>m.sku===known.sku).descriptionZh,known.descriptionZh);assert.equal(saved.materials.find(m=>m.sku===unknown.sku).descriptionEn,'');
-  await page.locator('#language').click();await bilingual(page.locator('#material-rows tr').filter({hasText:known.sku}),expected,known.descriptionZh);assert.match(await page.locator('#material-rows tr').filter({hasText:unknown.sku}).locator('.part-description-en').innerText(),/缺少英文描述/);
+  const reload=page.waitForResponse(r=>r.request().method()==='GET'&&r.url().endsWith('/api/records/'+saved.id));
+  await page.locator('#reload-record').click();await reload;
+  await page.locator('#language').click();await bilingual(usedPart,englishName,knownName);
+  assert.equal(await page.locator('.materials').getByRole('columnheader',{name:'物料名称',exact:true}).count(),1);
+  assert.match(await page.locator('#material-rows tr').filter({hasText:unknown.sku}).locator('.part-description-en').innerText(),/缺少英文描述/);
   await page.locator('#logout').click();await login('admin');await page.locator('#admin-nav').click();await page.locator('#admin-section').selectOption('bom');await page.locator('#admin-model-filter').selectOption(String(model.id));
   const adminSearch=async sku=>{await page.locator('#admin-bom-search').fill(sku);const response=page.waitForResponse(r=>r.url().includes('/bom?')&&r.url().includes(sku));await page.locator('#admin-bom-search-form button').click();await response;return page.locator('.admin-table tr').filter({hasText:sku});};
   await bilingual(await adminSearch(known.sku),expected,known.descriptionZh);await page.locator('#language').click();await bilingual(await adminSearch(known.sku),expected,known.descriptionZh);
