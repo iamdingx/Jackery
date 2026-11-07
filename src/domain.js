@@ -124,6 +124,9 @@ export function validateRecord(input,previous,catalog){
     const bom=old??(current?.active?current:null);if(!bom)invalid('Material is outside the model BOM');
     const quantity=item.quantity===undefined?1:item.quantity;
     if(typeof quantity!=='number'||!Number.isFinite(quantity)||quantity<=0||quantity>1000000||!/^\d+(?:\.\d{1,3})?$/.test(String(quantity)))invalid('Material quantity must be > 0, at most 1,000,000 and have at most three decimals');
+    if(catalog.disabledMaterials?.has(bom.sku)&&(!old||quantity>old.quantity)){
+      throw new ApiError(422,'MATERIAL_INACTIVE','Part SKU is inactive',{sku:bom.sku});
+    }
     const controlled=bom.quantityControl==='standard_hard_cap'||current?.quantityControl==='standard_hard_cap';
     const standardQty=bom.standardQty??current?.standardQty;
     if(controlled){

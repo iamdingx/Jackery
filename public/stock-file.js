@@ -58,7 +58,7 @@ const children=(node,name)=>Array.from(node.children).filter(child=>child.localN
 const strings=node=>Array.from(node.getElementsByTagNameNS('*','t'),item=>item.textContent).join('');
 const csvCell=value=>'"'+value.replaceAll('"','""')+'"';
 
-async function worksheetCsv(file){
+async function worksheetCsv(file,columnLimit){
   const zip=zipEntries(new Uint8Array(await file.arrayBuffer()));
   const sheets=[...zip.entries.keys()].filter(name=>/^xl\/worksheets\/sheet\d+\.xml$/i.test(name));
   if(sheets.length!==1)invalid();
@@ -70,16 +70,17 @@ async function worksheetCsv(file){
   for(const row of children(data,'row')){
     const number=Number(row.getAttribute('r'));
     if(!Number.isInteger(number)||number<=lines.length||number>5001)invalid();
-    const fields=['',''],seen=new Set();
+    const fields=Array(columnLimit).fill(''),seen=new Set();
     for(const cell of children(row,'c')){
       const type=cell.getAttribute('t')||'n',position=cell.getAttribute('r')??'';
       const value=children(cell,'v')[0]?.textContent??'',inline=children(cell,'is')[0];
       if(children(cell,'f').length)invalid();
       if(!value&&!inline)continue;
-      const column=position.match(/^([AB])([1-9]\d*)$/);
+      const column=position.match(/^([A-Z]{1,2})([1-9]\d*)$/);
       if(!column||Number(column[2])!==number||seen.has(column[1]))invalid();
       seen.add(column[1]);
-      const index=column[1]==='A'?0:1;
+      const index=Array.from(column[1]).reduce((value,letter)=>value*26+letter.charCodeAt(0)-64,0)-1;
+      if(index>=columnLimit)invalid();
       if(type==='s'){
         if(!/^\d+$/.test(value)||shared[Number(value)]===undefined)invalid();
         fields[index]=shared[Number(value)];
@@ -93,9 +94,12 @@ async function worksheetCsv(file){
   return lines.join('\n');
 }
 
-export async function readStockFile(file){
+export async function readStockFile(file,{material=false}={}){
   if(!/\.(?:xlsx|csv)$/i.test(file.name)||file.size>maxFileBytes)throw new Error('Choose an XLSX or UTF-8 CSV file up to 2 MiB.');
   if(/\.csv$/i.test(file.name))return file.text();
-  try{return await worksheetCsv(file);}
-  catch{invalid();}
+  try{return await worksheetCsv(file,material?64:2);}
+  catch{
+    if(material)throw new Error('Use a single-sheet material XLSX file without formulas, or a UTF-8 CSV file.');
+    invalid();
+  }
 }

@@ -1,10 +1,12 @@
 import {escapeHtml as e} from './state.js';
 import {readStockFile} from './stock-file.js';
+import {materialsZh,renderMaterialPanel} from './materials.js';
 
 const base='/api/admin/inventory';
-const sections={query:'Stock Query',open:'Import Opening Stock',adjust:'Stock Adjustment',history:'Usage History'};
+const sections={query:'Stock Query',open:'Import Opening Stock',adjust:'Stock Adjustment',history:'Usage History',materials:'Material Management'};
 
 export const inventoryZh={
+  ...materialsZh,
   'Material Inventory':'物料库存','Stock Query':'库存查询','Import Opening Stock':'新增导入','Stock Adjustment':'库存调整',
   'Usage History':'历史耗用','Current Stock':'当前库存','Export Stock':'导出当前库存','Item Details':'物料详情',
   'Select a row to see its details.':'选择物料查看详情。','Last Stock Update':'最近库存更新','View Usage History':'查看历史耗用',
@@ -34,7 +36,7 @@ export function renderInventory({state,shell,api,t,date,partName}){
   const byId=id=>document.getElementById(id);
   const stock=n=>`<strong class="${n<0?'danger':'stock-value'}">${e(n)}</strong>`;
   shell(`<div id="${shellId}" class="inventory-layout"><aside class="panel inventory-nav"><h2>${tr('Material Inventory')}</h2><nav aria-label="${tr('Material Inventory')}">${Object.entries(sections).map(([key,label])=>`<button type="button" data-stock-section="${key}" ${key===section?'aria-current="page"':''}>${tr(label)}</button>`).join('')}</nav></aside><section class="panel inventory-main"><div class="panel-head"><h1>${tr(sections[section])}</h1>${section==='query'?`<a class="button" href="${base}/export?language=${state.lang}">${tr('Export Stock')}</a>`:''}</div><div id="stock-error" class="error-box" role="alert" hidden></div>
-    ${listing?`<form id="stock-search" class="search-row">
+    ${section==='materials'?'<div id="material-panel"></div>':listing?`<form id="stock-search" class="search-row">
       <label class="grow">${tr(history?'Search SKU, work order, or serial number':'Search part SKU or description')}<input id="stock-q" value="${e(filters.q)}" maxlength="200"></label>
       ${history?`<label>${tr('From')}<input id="stock-from" type="date" value="${e(filters.from)}"></label><label>${tr('To')}<input id="stock-to" type="date" value="${e(filters.to)}"></label>`:''}
       <button>${tr('Search')}</button>
@@ -42,7 +44,8 @@ export function renderInventory({state,shell,api,t,date,partName}){
     <div class="${history?'':'stock-query-grid'}"><div id="stock-results" aria-live="polite"></div>${history?'':`<aside id="stock-detail" class="panel stock-detail"></aside>`}</div>`:
     `<p class="muted">${tr(section==='open'?'Use sku,quantity for opening stock. A SKU can be initialized once.':'Use sku,delta for adjustments. Positive quantities add stock and negative quantities subtract it.')}</p>
       <form id="stock-upload" class="search-row"><label class="grow">${tr('Choose stock file')}<input id="stock-file" type="file" accept=".xlsx,.csv"></label><a class="button" href="${base}/template?kind=${section}&format=xlsx">${tr('Excel Template')}</a><button class="primary">${tr('Preview List')}</button></form>
-      <p id="stock-file-status" class="muted" role="status">${e(batch.filename??'')}</p><div id="stock-preview"></div>`}
+      <p id="stock-file-status" class="muted" role="status">${e(batch.filename??'')}</p>
+      <button id="stock-materials-link" type="button" hidden>${tr('Material Management')}</button><div id="stock-preview"></div>`}
     </section></div>`);
   const workspace=byId(shellId),isCurrent=()=>byId(shellId)===workspace;
   function showError(error){
@@ -50,6 +53,8 @@ export function renderInventory({state,shell,api,t,date,partName}){
     const message=byId('stock-error');
     message.hidden=false;
     message.textContent=[t(error.message),...(Array.isArray(error.details)?error.details.map(x=>`${t('Row')} ${x.row}${x.sku?` · ${x.sku}`:''} · ${t(x.message)}`):[])].join('\n');
+    const link=byId('stock-materials-link');
+    if(link)link.hidden=!Array.isArray(error.details)||!error.details.some(row=>['Unknown Part SKU','Part SKU is inactive'].includes(row.message));
   }
   const bind=(id,event,fn)=>byId(id)?.addEventListener(event,ev=>Promise.resolve().then(()=>fn(ev)).catch(showError));
   function go(next){
@@ -57,6 +62,15 @@ export function renderInventory({state,shell,api,t,date,partName}){
     renderInventory({state,shell,api,t,date,partName});
   }
   workspace.querySelectorAll('[data-stock-section]').forEach(btn=>btn.addEventListener('click',()=>go(btn.dataset.stockSection)));
+  if(section==='materials'){
+    renderMaterialPanel({root:byId('material-panel'),api,t,partName,state:s});
+    return;
+  }
+  bind('stock-materials-link','click',()=>{
+    s.materials??={q:'',status:'all',page:1};
+    s.materials.importOpen=true;
+    go('materials');
+  });
 
   if(listing){
     let sequence=0;
@@ -125,6 +139,7 @@ export function renderInventory({state,shell,api,t,date,partName}){
     if(batch.busy)return;
     delete batch.preview;delete batch.receipt;delete batch.csv;delete batch.filename;
     byId('stock-error').hidden=true;
+    byId('stock-materials-link').hidden=true;
     byId('stock-file-status').textContent='';
     preview();
   });
@@ -136,10 +151,11 @@ export function renderInventory({state,shell,api,t,date,partName}){
       const file=byId('stock-file').files[0];
       if(!file&&!batch.csv)throw new Error('Choose an XLSX or UTF-8 CSV file up to 2 MiB.');
       byId('stock-error').hidden=true;
+      byId('stock-materials-link').hidden=true;
       const csv=file?await readStockFile(file):batch.csv;
-      batch.preview=await api(base+'/preview',{method:'POST',body:{kind:section,csv}});
       batch.filename=file?.name??batch.filename;
       batch.csv=csv;
+      batch.preview=await api(base+'/preview',{method:'POST',body:{kind:section,csv}});
       batch.requestId=Array.from(crypto.getRandomValues(new Uint8Array(16)),b=>b.toString(16).padStart(2,'0')).join('');
       delete batch.receipt;
     }catch(error){delete batch.preview;showError(error);}

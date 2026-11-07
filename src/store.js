@@ -26,6 +26,7 @@ export function openStore(dataDir,demo){
     CREATE TABLE IF NOT EXISTS inventory_events (id INTEGER PRIMARY KEY,sku TEXT NOT NULL REFERENCES inventory(sku),delta INTEGER NOT NULL,balance INTEGER NOT NULL,kind TEXT NOT NULL,reference TEXT NOT NULL,actor_id INTEGER NOT NULL,created_at TEXT NOT NULL);
     CREATE UNIQUE INDEX IF NOT EXISTS inventory_open_events ON inventory_events(sku) WHERE kind='open';
     CREATE TABLE IF NOT EXISTS inventory_batches (id TEXT PRIMARY KEY,input_hash TEXT NOT NULL,receipt TEXT NOT NULL);
+    CREATE TABLE IF NOT EXISTS materials (sku TEXT PRIMARY KEY,description_zh TEXT,description_en TEXT,unit TEXT,active INTEGER NOT NULL CHECK(active IN (0,1)));
   `);
   const mode=db.prepare("SELECT value FROM meta WHERE key='mode'").get();
   if(mode&&mode.value!==(demo?'demo':'production')){db.close();throw new Error('Data directory mode mismatch: use separate demo and production directories');}

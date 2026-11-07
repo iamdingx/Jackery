@@ -3,21 +3,15 @@ import {ApiError,invalid,textValue,isoDate} from './domain.js';
 import {parseCsvRecords} from './csv.js';
 import {buildWorkbook} from './xlsx.js';
 import {translateBom} from './bom-translations.js';
+import {materialIndex} from './materials.js';
 
 const hash=value=>createHash('sha256').update(JSON.stringify(value)).digest('hex');
 const readBalances=store=>new Map(store.db.prepare('SELECT * FROM inventory').all().map(row=>[row.sku,row]));
 export const stockQuantities=store=>new Map(store.db.prepare('SELECT sku,quantity FROM inventory').all().map(row=>[row.sku,row.quantity]));
 
-function partIndex(store){
-  const parts=new Map();
-  for(const p of store.all('bom'))if(!parts.has(p.sku)||p.active&&!parts.get(p.sku).active)parts.set(p.sku,p);
-  return parts;
-}
-
 export function inventoryList(store,search='',translations={}){
   const q=textValue(search,'Search',200).trim().toLowerCase(),balances=readBalances(store);
-  const parts=partIndex(store);
-  for(const sku of balances.keys())if(!parts.has(sku))parts.set(sku,{sku,descriptionZh:'',descriptionEn:'',unit:''});
+  const parts=materialIndex(store);
   return [...parts.values()].map(p=>translateBom(p,translations)).filter(p=>[p.sku,p.descriptionZh,p.descriptionEn].some(value=>value?.toLowerCase().includes(q)))
     .sort((a,b)=>a.sku.localeCompare(b.sku)).map(p=>({sku:p.sku,descriptionZh:p.descriptionZh,descriptionEn:p.descriptionEn,unit:p.unit,quantity:balances.get(p.sku)?.quantity??0,updatedAt:balances.get(p.sku)?.updated_at??null}));
 }
@@ -39,12 +33,14 @@ export function previewStockBatch(store,{kind,csv}){
   const headers=records.shift()?.fields.map(x=>x.trim());
   if(headers?.length!==2||headers[0]!=='sku'||headers[1]!== (kind==='open'?'quantity':'delta'))invalid(kind==='open'?'Expected CSV headers: sku,quantity':'Expected CSV headers: sku,delta');
   if(!records.length)invalid('The stock list is empty');
-  const balances=readBalances(store),parts=partIndex(store),seen=new Set(),errors=[],rows=[];
+  const balances=readBalances(store),parts=materialIndex(store),seen=new Set(),errors=[],rows=[];
+  const products=new Set(store.all('models').map(model=>model.productSku));
   for(const record of records){
     const [sku='',raw='']=record.fields.map(x=>x.trim()),current=balances.get(sku),amount=Number(raw);
     let message;
     if(record.fields.length!==2)message='Expected two columns';
-    else if(!parts.has(sku)&&!current)message='Unknown Part SKU';
+    else if(!parts.has(sku))message=products.has(sku)?'Product SKU is not a material':'Unknown Part SKU';
+    else if(!parts.get(sku).active)message='Part SKU is inactive';
     else if(seen.has(sku))message='Duplicate Part SKU';
     else if(!/^[+-]?\d+$/.test(raw)||!Number.isSafeInteger(amount)||kind==='open'&&amount<0)message='Invalid stock quantity';
     else if(kind==='open'&&current)message='Stock already imported; use adjustment';

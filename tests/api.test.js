@@ -16,6 +16,55 @@ async function harness(t,demo=true) {
 }
 const passChecks={initial:{ac_output:'pass',dc_output:'pass',charging:'pass'},final:{ac_output:'pass',dc_output:'pass',charging:'pass'}};
 
+test('material master registers unknown inventory SKUs and enforces global status without removing BOM snapshots',async t=>{
+  const h=await harness(t),admin=h.client(),operator=h.client();
+  await admin.login('admin','JackeryAdmin!2026');await operator.login('alex','JackeryAlex!2026');
+  const base='/api/admin/materials',sku='WAREHOUSE-SPARE-01',bomSku='DEMO-A-0001';
+  const stockCsv='sku,quantity\n'+sku+',5';
+  const previewStock=()=>admin.req('/api/admin/inventory/preview','POST',{kind:'open',csv:stockCsv});
+  const status=(sku,active,client=admin)=>client.req(base+'/status','PUT',{sku,active});
+  const stockBefore=await previewStock();
+  assert.equal(stockBefore.data.error.details[0].message,'Unknown Part SKU');
+  assert.equal((await operator.req(base)).status,403);
+  assert.equal((await status(bomSku,false,operator)).status,403);
+  const invalid=await admin.req(base+'/preview','POST',{csv:'sku,descriptionZh\nNEW-01,零件\nNEW-01,重复'});
+  assert.equal(invalid.data.error.details[0].message,'Duplicate Part SKU');
+  const csv='SKU,Product Name/产品名称,Available Inventory/可用库存\n'+sku+',备件,5\n'+bomSku+',现有,2\nDEMO-PRODUCT-1,整机,3';
+  const preview=await admin.req(base+'/preview','POST',{csv});
+  assert.equal(preview.status,200,JSON.stringify(preview.data));
+  assert.deepEqual(preview.data.rows.map(row=>row.status),['new','existing','product']);
+  assert.equal((await previewStock()).status,422);
+  const input={csv,previewHash:preview.data.previewHash};
+  const applied=await admin.req(base+'/import','POST',input);
+  assert.deepEqual(applied.data,{created:1,skipped:2});
+  assert.equal((await admin.req(base+'/import','POST',input)).status,409);
+  assert.equal((await admin.req('/api/admin/inventory?q='+sku)).data.items[0].quantity,0);
+  assert.equal((await operator.req('/api/models/1/bom?q='+sku)).data.total,0);
+  const opening=await previewStock();
+  assert.equal(opening.status,200);
+  assert.equal((await status(sku,false)).status,200);
+  assert.equal((await previewStock()).data.error.details[0].message,'Part SKU is inactive');
+  assert.equal((await admin.req(base+'?status=inactive&q='+sku)).data.total,1);
+  assert.equal((await admin.req('/api/admin/inventory/commit','POST',{kind:'open',csv:stockCsv,requestId:'e'.repeat(32),previewHash:opening.data.previewHash})).status,422);
+  await status(sku,true);
+  assert.equal((await admin.req('/api/admin/inventory/commit','POST',{kind:'open',csv:stockCsv,requestId:'e'.repeat(32),previewHash:opening.data.previewHash})).status,200);
+  await admin.req('/api/admin/bom','POST',{modelId:2,sku:bomSku,descriptionEn:'Shared box',unit:'pc'});
+  const r=(await operator.req('/api/records','POST',{sn:'MATERIAL-STATUS-DRAFT',modelId:1})).data.record;
+  const save=(version,quantity)=>operator.req('/api/records/'+r.id,'PUT',{version,action:'save',materials:[{bomId:1,quantity}]});
+  const draft=(await save(r.version,1)).data.record;
+  await status(bomSku,false);
+  assert.equal((await operator.req('/api/models/1/bom?q='+bomSku)).data.total,0);
+  assert.equal((await operator.req('/api/models/2/bom?q='+bomSku)).data.total,0);
+  assert.equal((await admin.req('/api/models/1/bom?includeInactive=1&q='+bomSku)).data.items[0].active,true);
+  assert.equal((await save(draft.version,2)).data.error.code,'MATERIAL_INACTIVE');
+  assert.equal((await save(draft.version,1)).status,200);
+  await h.restart();
+  assert.equal((await admin.req(base+'?status=inactive&q='+bomSku)).data.total,1);
+  await status(bomSku,true);
+  assert.equal((await operator.req('/api/models/2/bom?q='+bomSku)).data.total,1);
+  assert.equal((await admin.req('/api/admin/inventory?q='+sku)).data.items[0].quantity,5);
+});
+
 test('stock initializes per SKU, deducts once on completion, permits negatives and posts correction deltas',async t=>{
   const h=await harness(t),admin=h.client(),operator=h.client();
   await admin.login('admin','JackeryAdmin!2026');await operator.login('alex','JackeryAlex!2026');

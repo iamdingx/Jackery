@@ -17,6 +17,7 @@ import {currentModelChecklist,currentRecordChecklist} from './src/checklists.js'
 import {applyModelSkuMapping} from './src/model-sku.js';
 import {applyE2000PlusAAvailability} from './src/model-availability.js';
 import {stockQuantities,inventoryList,usageHistory,previewStockBatch,commitStockBatch,applyCompletedUsage,exportInventory,stockTemplate} from './src/inventory.js';
+import {materialList,materialTemplate,previewMaterialImport,commitMaterialImport,setMaterialActive,disabledMaterials} from './src/materials.js';
 
 const root=path.dirname(fileURLToPath(import.meta.url));
 const MAX_BODY=12*1024*1024;
@@ -52,7 +53,7 @@ export async function startServer({dataDir=path.join(root,'data'),demo=false,por
   const sourceTranslations=await loadSourceTranslations(sourceTranslationsPath??(existsSync(bundledSourceTranslations)?bundledSourceTranslations:undefined));
   if(publicBaseUrl){const parsed=new URL(publicBaseUrl);if(!['http:','https:'].includes(parsed.protocol)||parsed.username||parsed.password||parsed.pathname!=='/'||parsed.search||parsed.hash)throw new Error('PUBLIC_BASE_URL must be an HTTP(S) origin');publicBaseUrl=parsed.origin;}
   const store=openStore(path.resolve(dataDir),demo),{db}=store;
-  const recordCatalog=()=>{const c=store.catalog();return {...c,models:c.models.map(m=>currentModelChecklist(translateModel(m,sourceTranslations))),bom:c.bom.map(b=>translateBom(b,bomTranslations)),knowledge:c.knowledge.map(k=>translateKnowledge(k,sourceTranslations))};};
+  const recordCatalog=()=>{const c=store.catalog();return {...c,disabledMaterials:disabledMaterials(store),models:c.models.map(m=>currentModelChecklist(translateModel(m,sourceTranslations))),bom:c.bom.map(b=>translateBom(b,bomTranslations)),knowledge:c.knowledge.map(k=>translateKnowledge(k,sourceTranslations))};};
   if(catalogPath){try{importJackeryCatalog(store,JSON.parse(await readFile(path.resolve(catalogPath),'utf8')),{deactivateSamples:true});for(const filename of ['jackery-model-sku-20261030.json','jackery-model-sku-20261102.json']){const mapping=path.join(root,'catalogs',filename);if(existsSync(mapping))applyModelSkuMapping(store,JSON.parse(await readFile(mapping,'utf8')));}applyE2000PlusAAvailability(store);}catch(error){db.close();throw error;}}
   const throttles=new Map();
   const dummyHash=passwordHash(randomBytes(24).toString('hex'));
@@ -132,7 +133,8 @@ export async function startServer({dataDir=path.join(root,'data'),demo=false,por
         const inactive=params.get('includeInactive')==='1';if(inactive&&user.role!=='admin')forbidden();
         const {page,pageSize}=pagination(params,50),q=params.get('q')??'';textValue(q,'Search',200);const lower=q.toLocaleLowerCase();
         const category=params.get('category')??'all',categories=['core','non_core','packaging'];if(category!=='all'&&!categories.includes(category))invalid('Invalid BOM category');
-        const modelItems=store.all('bom').filter(b=>b.modelId===modelId&&(inactive||b.active)),categoryCounts={all:modelItems.length,core:0,non_core:0,packaging:0,uncategorized:0};
+        const disabled=disabledMaterials(store);
+        const modelItems=store.all('bom').filter(b=>b.modelId===modelId&&(inactive||b.active&&!disabled.has(b.sku))),categoryCounts={all:modelItems.length,core:0,non_core:0,packaging:0,uncategorized:0};
         for(const item of modelItems)if(!item.allOnly)categoryCounts[categories.includes(item.category)?item.category:'uncategorized']++;
         const stock=stockQuantities(store);
         const items=modelItems.filter(b=>category==='all'||b.category===category).map(b=>translateBom(b,bomTranslations)).filter(b=>!q||[b.sku,b.descriptionEn,b.descriptionZh].some(value=>(value??'').toLocaleLowerCase().includes(lower))).sort((a,b)=>Number(b.sku===q)-Number(a.sku===q)||a.sku.localeCompare(b.sku)).map(b=>({...b,missingEnglish:!b.descriptionEn?.trim(),stockQuantity:stock.get(b.sku)??0}));
@@ -216,6 +218,17 @@ export async function startServer({dataDir=path.join(root,'data'),demo=false,por
       }
       if(method==='POST'&&route==='/api/admin/inventory/preview')return send(200,previewStockBatch(store,await body(req)));
       if(method==='POST'&&route==='/api/admin/inventory/commit')return send(200,commitStockBatch(store,await body(req),user));
+      if(method==='GET'&&route==='/api/admin/materials'){
+        const {page,pageSize}=pagination(params,30);
+        const items=materialList(store,{q:params.get('q')??'',status:params.get('status')??'all'},bomTranslations);
+        return send(200,{items:items.slice((page-1)*pageSize,page*pageSize),total:items.length,page,pageSize});
+      }
+      if(method==='GET'&&route==='/api/admin/materials/template'){
+        return send(200,materialTemplate(),{'Content-Type':'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet','Content-Disposition':'attachment; filename="jackery-materials-template.xlsx"'});
+      }
+      if(method==='POST'&&route==='/api/admin/materials/preview')return send(200,previewMaterialImport(store,(await body(req)).csv));
+      if(method==='POST'&&route==='/api/admin/materials/import')return send(200,commitMaterialImport(store,await body(req)));
+      if(method==='PUT'&&route==='/api/admin/materials/status')return send(200,setMaterialActive(store,await body(req)));
       if(method==='GET'&&route==='/api/admin/users')return send(200,{items:db.prepare('SELECT * FROM users ORDER BY id').all().map(userDto)});
       if(method==='POST'&&route==='/api/admin/users'){
         const input=await body(req),username=textValue(input.username??'','Username',80,true).trim();if(!/^[A-Za-z0-9_.-]+$/.test(username))invalid('Username allows letters, digits, underscore, dot and hyphen');

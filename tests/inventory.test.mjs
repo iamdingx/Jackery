@@ -76,3 +76,53 @@ test('inventory sidebar imports and adjusts stock; picker and grade guidance pre
   assert.match(await page.locator('#bom-dialog thead').innerText(),/当前库存/);
   assert.deepEqual(errors,[]);
 });
+
+test('material management imports OMS names and retries a previously rejected stock file',{timeout:60000},async t=>{
+  const dataDir=await mkdtemp(path.join(tmpdir(),'jackery-material-ui-'));
+  const app=await startServer({dataDir,demo:true});
+  let browser;
+  t.after(async()=>{await browser?.close();await app.close();await rm(dataDir,{recursive:true,force:true});});
+  browser=await chromium.launch({headless:true,executablePath:'C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe'});
+  const page=await browser.newPage();
+  page.setDefaultTimeout(5000);
+  const errors=[];
+  page.on('pageerror',error=>errors.push(error.message));
+  await page.goto(app.baseUrl);
+  await page.locator('#username').fill('admin');
+  await page.locator('#password').fill('JackeryAdmin!2026');
+  await page.locator('#login-form button').click();
+  await page.locator('#inventory-nav').click();
+  await page.locator('[data-stock-section=open]').click();
+  const sku='WAREHOUSE-NEW-001';
+  await page.locator('#stock-file').setInputFiles({name:'stock.csv',mimeType:'text/csv',buffer:Buffer.from('sku,quantity\n'+sku+',9')});
+  await page.locator('#stock-upload button').click();
+  await page.locator('#stock-materials-link').click();
+  await page.locator('.material-import[open]').waitFor();
+  const xlsx=buildWorkbook([{name:'OMS',columns:[
+    {key:'sku',label:'SKU'},{key:'name',label:'Product Name/产品名称'},
+    ...Array.from({length:24},(_,i)=>({key:'extra'+i})),{key:'quantity',label:'Total Stock/总库存'},
+  ],rows:[{sku,name:'仓库新零件',quantity:88}]}]);
+  await page.locator('#material-file').setInputFiles({name:'oms.xlsx',mimeType:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',buffer:xlsx});
+  await page.locator('#material-upload button').click();
+  await page.locator('#material-preview').getByText('仓库新零件',{exact:true}).waitFor();
+  await page.locator('#material-confirm').click();
+  await page.locator('#material-preview [role=status]').waitFor();
+  assert.match(await page.locator('#material-preview').innerText(),/Created rows · 1/);
+  await page.locator('#material-q').fill(sku);
+  await page.locator('#material-search button').click();
+  const row=page.locator('#material-list tr').filter({hasText:sku});
+  await row.getByRole('button',{name:'Disable',exact:true}).click();
+  await row.getByRole('button',{name:'Enable',exact:true}).click();
+  await row.getByRole('button',{name:'Disable',exact:true}).waitFor();
+  await page.locator('[data-stock-section=open]').click();
+  await page.locator('#stock-upload button').click();
+  await page.locator('#stock-confirm').click();
+  await page.locator('#stock-preview [role=status]').waitFor();
+  assert.match(await page.locator('#stock-preview').innerText(),/Rows updated · 1/);
+  await page.locator('[data-stock-section=query]').click();
+  await page.locator('#stock-q').fill(sku);
+  await page.locator('#stock-search button').click();
+  await page.locator('#stock-detail').getByText(sku,{exact:true}).waitFor();
+  assert.equal(await page.locator('#stock-detail .stock-value').innerText(),'9');
+  assert.deepEqual(errors,[]);
+});
