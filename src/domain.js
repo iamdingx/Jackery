@@ -59,6 +59,12 @@ export function validateBom(input,id,models){
   if(control.quantityControl&&!(control.standardQty>0)&&input.active!==false)invalid('An active BOM item requires a confirmed standard quantity');
   if(input.source!==undefined)control.source=structuredClone(input.source);
   if(input.reviewReasons!==undefined)control.reviewReasons=structuredClone(input.reviewReasons);
+  if(input.category!==undefined){
+    if(![null,'core','non_core','packaging'].includes(input.category))invalid('Invalid BOM category');
+    control.category=input.category;
+  }
+  if(input.allOnly===true&&input.category===null)control.allOnly=true;
+  if(input.categoryBasis!==undefined)control.categoryBasis=textValue(input.categoryBasis,'Category source',1000);
   const unit=textValue(input.unit??'pc','Unit',40,true).trim();
   if(control.quantityControl&&/^pcs?$/i.test(unit)&&control.standardQty!=null&&!Number.isInteger(control.standardQty))invalid('Piece standard quantities must be whole integers');
   const originalSource=Boolean(input.source&&input.descriptionZh?.trim());

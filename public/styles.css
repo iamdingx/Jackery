@@ -56,3 +56,32 @@
  .editor-shell .photo{flex:0 0 56px;width:56px;min-width:0}.editor-shell .photo img{width:56px;height:32px}.editor-shell .photo button{min-height:18px;font-size:10px;padding:1px 2px;width:100%}
 }
 @media(max-width:800px){.editor-grid{grid-template-columns:1fr;grid-template-areas:"checks" "defect" "appearance" "materials" "photos"}}
+.editor-shell .outcome-group h3{position:relative}
+#grade-criteria-button{position:absolute;inset-inline-end:4px;top:1px;min-height:20px;padding:0 6px;font-size:11px;color:var(--green)}
+.grade-criteria{position:fixed;inset:auto auto var(--grade-bottom,16px) min(var(--grade-left,12px),max(12px,calc(100vw - 475px)));margin:0;width:min(460px,calc(100vw - 24px));max-height:min(var(--grade-height,280px),calc(100vh - 24px));overflow:auto;padding:14px 16px;border:1px solid var(--border);border-radius:8px;box-shadow:0 8px 25px #243b5340;color:inherit;background:white}
+.grade-criteria ul{padding-inline-start:20px;margin:0 0 8px}
+.grade-criteria li+li{margin-top:4px}
+.grade-criteria p+p{margin-top:5px}
+.grade-criteria button{min-height:28px;padding:0 8px}
+#bom-dialog .bom-stock{white-space:nowrap;font-variant-numeric:tabular-nums}
+#bom-dialog .bom-stock:not(.danger){color:var(--green)}
+.inventory-layout{display:grid;grid-template-columns:minmax(150px,210px) minmax(0,1fr);gap:16px;align-items:start}
+.inventory-nav{position:sticky;top:12px}
+.inventory-nav nav{display:grid;gap:6px;margin-top:12px}
+.inventory-nav nav button{justify-content:flex-start;min-height:40px;border-radius:5px;text-align:left}
+.inventory-nav button[aria-current=page]{background:var(--light);color:var(--green);box-shadow:inset 3px 0 var(--green)}
+.inventory-main .panel-head{flex-wrap:wrap}
+.inventory-main .search-row{margin:14px 0}
+.stock-query-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(180px,250px);gap:14px;align-items:start}
+.stock-detail{background:#f6f9f8;overflow-wrap:anywhere}
+.stock-detail h2{margin-bottom:8px}
+.stock-detail dd{margin:0 0 6px}
+.stock-detail dt{color:var(--muted);font-size:13px}
+.stock-value{color:var(--green);font-variant-numeric:tabular-nums}
+.stock-table{max-height:55vh;overflow:auto}
+.stock-table th{position:sticky;top:0}
+.stock-table td:first-child{white-space:nowrap}
+.stock-filter,.stock-confirm,#stock-file-status{margin-bottom:10px}
+.stock-confirm{margin-top:12px}
+@media(max-width:980px){.stock-query-grid{grid-template-columns:minmax(0,1fr)}}
+@media(max-width:650px){.inventory-layout{grid-template-columns:minmax(0,1fr)}.inventory-nav{position:static}.inventory-nav nav{grid-template-columns:repeat(2,minmax(0,1fr))}#grade-criteria-button{position:static;margin-inline-start:4px}}

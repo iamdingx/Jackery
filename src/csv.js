@@ -3,7 +3,7 @@ function fail(code, message, details) {
 }
 
 /** Strict RFC4180-style CSV. Diagnostic rows use physical starting line numbers. */
-export function parseBomCsv(csv) {
+export function parseCsvRecords(csv) {
   if (typeof csv !== 'string') fail('CSV_INVALID', 'CSV must be text', [{ row: 1, message: 'Expected text' }]);
   csv = csv.replace(/^\ufeff/u, '');
   const records = [];
@@ -42,6 +42,11 @@ export function parseBomCsv(csv) {
   }
   if (state === 'quoted') fail('CSV_INVALID', 'Unterminated CSV quoted field', [{ row: startLine, message: 'Unterminated quoted field' }]);
   if (value !== '' || fields.length || state === 'closed') emitRecord();
+  return records;
+}
+
+export function parseBomCsv(csv) {
+  const records=parseCsvRecords(csv);
   const expected = ['sku', 'descriptionEn', 'descriptionZh', 'unit'];
   const header = records.shift();
   const withQuantity=header?.fields.length===5;

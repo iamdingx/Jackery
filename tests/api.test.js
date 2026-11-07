@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import {mkdtemp,rm,readFile,readdir} from 'node:fs/promises';
 import {tmpdir} from 'node:os';
 import path from 'node:path';
+import {inflateRawSync} from 'node:zlib';
 
 const nodeServer = () => import('../server.js').catch(() => ({}));
 async function harness(t,demo=true) {
@@ -14,6 +15,65 @@ async function harness(t,demo=true) {
   return {dir,client,restart:async()=>{await app.close();app=await startServer({dataDir:dir,demo});}};
 }
 const passChecks={initial:{ac_output:'pass',dc_output:'pass',charging:'pass'},final:{ac_output:'pass',dc_output:'pass',charging:'pass'}};
+
+test('stock initializes per SKU, deducts once on completion, permits negatives and posts correction deltas',async t=>{
+  const h=await harness(t),admin=h.client(),operator=h.client();
+  await admin.login('admin','JackeryAdmin!2026');await operator.login('alex','JackeryAlex!2026');
+  const base='/api/admin/inventory',sku='DEMO-A-0001';
+  const stock=async()=> (await operator.req('/api/models/1/bom?q='+sku)).data.items[0].stockQuantity;
+  const create=async sn=>(await operator.req('/api/records','POST',{sn,modelId:1})).data.record;
+  const save=(r,action,quantity)=>operator.req('/api/records/'+r.id,'PUT',{version:r.version,action,outcome:action==='complete'?'rok':'awp',checks:passChecks,materials:[{bomId:1,quantity}]});
+  const preview=(kind,csv)=>admin.req(base+'/preview','POST',{kind,csv});
+  const commit=(kind,csv,previewHash,id)=>admin.req(base+'/commit','POST',{kind,csv,previewHash,requestId:id.repeat(32)});
+  assert.equal((await operator.req(base)).status,403);
+  assert.equal(await stock(),0);
+  const legacy=(await save(await create('STOCK-BEFORE-OPENING'),'complete',1)).data.record;
+  const draft=(await save(await create('STOCK-WFR'),'save',3)).data.record;
+  assert.equal((await preview('adjust','sku,delta\n'+sku+',2')).status,422);
+  assert.equal((await preview('open','sku,quantity\n'+sku+',2\n'+sku+',3')).status,422);
+  assert.equal((await preview('open','sku,quantity\n'+sku+',2\nUNKNOWN,1')).status,422);
+  assert.equal((await preview('open','sku,quantity\n'+sku+',1.2')).status,422);
+  assert.equal(await stock(),0);
+  const initial='sku,quantity\n'+sku+',2',opening=(await preview('open',initial)).data;
+  assert.equal((await commit('open',initial,opening.previewHash,'a')).status,200);
+  assert.equal(await stock(),2);
+  const correction=(r,quantity)=>admin.req('/api/records/'+r.id+'/corrections','POST',{version:r.version,reason:'Counted again',changes:{materials:[{bomId:1,quantity}]}});
+  assert.equal((await correction(legacy,2)).status,200);
+  assert.equal(await stock(),2);
+  const same=(await save(draft,'save',3)).data.record;
+  assert.equal(await stock(),2);
+  const complete=await save(same,'complete',3);
+  assert.equal(complete.status,200);
+  assert.equal(await stock(),-1);
+  assert.equal((await save(same,'complete',3)).status,403);
+  assert.equal(await stock(),-1);
+  assert.equal((await correction(complete.data.record,2)).status,200);
+  assert.equal(await stock(),0);
+  const csv='sku,delta\n'+sku+',-4',adjustment=(await preview('adjust',csv)).data;
+  assert.deepEqual(adjustment.rows.map(({before,delta,after})=>({before,delta,after})),[{before:0,delta:-4,after:-4}]);
+  const bump='sku,delta\n'+sku+',+3',bumpPreview=(await preview('adjust',bump)).data;
+  const applied=await commit('adjust',bump,bumpPreview.previewHash,'b');
+  assert.equal(applied.status,200);
+  assert.deepEqual((await commit('adjust',bump,bumpPreview.previewHash,'b')).data,applied.data);
+  assert.equal((await commit('adjust',csv,adjustment.previewHash,'c')).data.error.code,'STOCK_PREVIEW_STALE');
+  assert.equal((await commit('adjust',csv,(await preview('adjust',csv)).data.previewHash,'d')).status,200);
+  assert.equal(await stock(),-1);
+  await admin.req('/api/admin/bom','POST',{modelId:2,sku,descriptionEn:'Shared box',descriptionZh:'共用纸箱',unit:'pc'});
+  assert.equal((await operator.req('/api/models/2/bom?q='+sku)).data.items[0].stockQuantity,-1);
+  const history=await admin.req(base+'/history?sku='+sku+'&q=STOCK-WFR');
+  assert.deepEqual(history.data.items.map(x=>[x.sn,x.quantity]),[['STOCK-WFR',2]]);
+  const xlsx=await admin.req(base+'/export?language=zh');
+  assert.equal(xlsx.status,200);
+  let xml='';
+  for(let offset=0;xlsx.bytes.readUInt32LE(offset)===0x04034b50;){
+    const size=xlsx.bytes.readUInt32LE(offset+18),length=xlsx.bytes.readUInt16LE(offset+26),start=offset+30+length+xlsx.bytes.readUInt16LE(offset+28);
+    if(xlsx.bytes.toString('utf8',offset+30,offset+30+length)==='xl/worksheets/sheet1.xml')xml=inflateRawSync(xlsx.bytes.subarray(start,start+size)).toString();
+    offset=start+size;
+  }
+  assert.match(xml,/>当前库存</);assert.match(xml,/<v>-1<\/v>/);
+  await h.restart();
+  assert.equal(await stock(),-1);
+});
 
 test('authentication, CSRF, own-only list and full-SN history cannot grant writes or export',async t=>{
   const h=await harness(t), alex=h.client(), blair=h.client(), anonymous=h.client();

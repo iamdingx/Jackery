@@ -16,6 +16,7 @@ import {loadSourceTranslations,translateModel,translateKnowledge} from './src/so
 import {currentModelChecklist,currentRecordChecklist} from './src/checklists.js';
 import {applyModelSkuMapping} from './src/model-sku.js';
 import {applyE2000PlusAAvailability} from './src/model-availability.js';
+import {stockQuantities,inventoryList,usageHistory,previewStockBatch,commitStockBatch,applyCompletedUsage,exportInventory,stockTemplate} from './src/inventory.js';
 
 const root=path.dirname(fileURLToPath(import.meta.url));
 const MAX_BODY=12*1024*1024;
@@ -132,8 +133,9 @@ export async function startServer({dataDir=path.join(root,'data'),demo=false,por
         const {page,pageSize}=pagination(params,50),q=params.get('q')??'';textValue(q,'Search',200);const lower=q.toLocaleLowerCase();
         const category=params.get('category')??'all',categories=['core','non_core','packaging'];if(category!=='all'&&!categories.includes(category))invalid('Invalid BOM category');
         const modelItems=store.all('bom').filter(b=>b.modelId===modelId&&(inactive||b.active)),categoryCounts={all:modelItems.length,core:0,non_core:0,packaging:0,uncategorized:0};
-        for(const item of modelItems)categoryCounts[categories.includes(item.category)?item.category:'uncategorized']++;
-        const items=modelItems.filter(b=>category==='all'||b.category===category).map(b=>translateBom(b,bomTranslations)).filter(b=>!q||[b.sku,b.descriptionEn,b.descriptionZh].some(value=>(value??'').toLocaleLowerCase().includes(lower))).sort((a,b)=>Number(b.sku===q)-Number(a.sku===q)||a.sku.localeCompare(b.sku)).map(b=>({...b,missingEnglish:!b.descriptionEn?.trim()}));
+        for(const item of modelItems)if(!item.allOnly)categoryCounts[categories.includes(item.category)?item.category:'uncategorized']++;
+        const stock=stockQuantities(store);
+        const items=modelItems.filter(b=>category==='all'||b.category===category).map(b=>translateBom(b,bomTranslations)).filter(b=>!q||[b.sku,b.descriptionEn,b.descriptionZh].some(value=>(value??'').toLocaleLowerCase().includes(lower))).sort((a,b)=>Number(b.sku===q)-Number(a.sku===q)||a.sku.localeCompare(b.sku)).map(b=>({...b,missingEnglish:!b.descriptionEn?.trim(),stockQuantity:stock.get(b.sku)??0}));
         return send(200,{items:items.slice((page-1)*pageSize,page*pageSize),total:items.length,page,pageSize,categoryCounts});
       }
       if(method==='GET'&&route==='/api/records'){const {page,pageSize}=pagination(params,20),items=filteredRecords(store,user,params);return send(200,{items:items.slice((page-1)*pageSize,page*pageSize),total:items.length,page,pageSize});}
@@ -164,6 +166,7 @@ export async function startServer({dataDir=path.join(root,'data'),demo=false,por
             const changes=correction?input.changes:input;if(!isObject(changes))invalid('Changes must be a record input');
             const after=validateRecord({...changes,...(correction&&before.status==='completed'?{action:'complete'}:{})},before,recordCatalog());
             after.version=before.version+1;after.updatedAt=new Date().toISOString();after.completedAt=after.status==='completed'?(before.completedAt??after.updatedAt):null;
+            applyCompletedUsage(store,before,after,user);
             return persistRecord(after,user,correction?'correction':after.status==='completed'?'complete':'save',correction?input.reason.trim():'',before);
           });return send(200,{record});
         }
@@ -197,6 +200,22 @@ export async function startServer({dataDir=path.join(root,'data'),demo=false,por
         const language=params.get('language')??'en';if(!['en','zh'].includes(language))invalid('Language must be en or zh');
         const records=filteredRecords(store,user,params);const bytes=exportRecords(records,publicBaseUrl??baseUrl,language,{sourceTranslations,bomTranslations});return send(200,bytes,{'Content-Type':'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet','Content-Disposition':`attachment; filename="jackery-${new Date().toISOString().slice(0,10)}.xlsx"`});
       }
+      if(method==='GET'&&['/api/admin/inventory','/api/admin/inventory/history'].includes(route)){
+        const {page,pageSize}=pagination(params,30);
+        const items=route.endsWith('/history')?usageHistory(store,params):inventoryList(store,params.get('q')??'',bomTranslations);
+        return send(200,{items:items.slice((page-1)*pageSize,page*pageSize),total:items.length,page,pageSize});
+      }
+      if(method==='GET'&&route==='/api/admin/inventory/template'){
+        const kind=params.get('kind');if(!['open','adjust'].includes(kind))invalid('Invalid inventory operation');
+        if(params.get('format')==='xlsx')return send(200,stockTemplate(kind),{'Content-Type':'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet','Content-Disposition':`attachment; filename="jackery-stock-${kind}.xlsx"`});
+        return send(200,Buffer.from(kind==='open'?'\uFEFFsku,quantity\r\n':'\uFEFFsku,delta\r\n'),{'Content-Type':'text/csv; charset=utf-8','Content-Disposition':`attachment; filename="jackery-stock-${kind}.csv"`});
+      }
+      if(method==='GET'&&route==='/api/admin/inventory/export'){
+        const lang=params.get('language')??'en';if(!['en','zh'].includes(lang))invalid('Language must be en or zh');
+        return send(200,exportInventory(store,lang,bomTranslations),{'Content-Type':'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet','Content-Disposition':'attachment; filename="jackery-stock.xlsx"'});
+      }
+      if(method==='POST'&&route==='/api/admin/inventory/preview')return send(200,previewStockBatch(store,await body(req)));
+      if(method==='POST'&&route==='/api/admin/inventory/commit')return send(200,commitStockBatch(store,await body(req),user));
       if(method==='GET'&&route==='/api/admin/users')return send(200,{items:db.prepare('SELECT * FROM users ORDER BY id').all().map(userDto)});
       if(method==='POST'&&route==='/api/admin/users'){
         const input=await body(req),username=textValue(input.username??'','Username',80,true).trim();if(!/^[A-Za-z0-9_.-]+$/.test(username))invalid('Username allows letters, digits, underscore, dot and hyphen');

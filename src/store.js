@@ -22,6 +22,10 @@ export function openStore(dataDir,demo){
     CREATE TABLE IF NOT EXISTS records (id INTEGER PRIMARY KEY,data TEXT NOT NULL);
     CREATE TABLE IF NOT EXISTS photos (id TEXT PRIMARY KEY,record_id INTEGER NOT NULL REFERENCES records(id),data TEXT NOT NULL,physical_name TEXT NOT NULL,removed INTEGER NOT NULL DEFAULT 0);
     CREATE TABLE IF NOT EXISTS audits (id INTEGER PRIMARY KEY,record_id INTEGER NOT NULL REFERENCES records(id),data TEXT NOT NULL);
+    CREATE TABLE IF NOT EXISTS inventory (sku TEXT PRIMARY KEY, quantity INTEGER NOT NULL, opened_at TEXT NOT NULL, updated_at TEXT NOT NULL);
+    CREATE TABLE IF NOT EXISTS inventory_events (id INTEGER PRIMARY KEY,sku TEXT NOT NULL REFERENCES inventory(sku),delta INTEGER NOT NULL,balance INTEGER NOT NULL,kind TEXT NOT NULL,reference TEXT NOT NULL,actor_id INTEGER NOT NULL,created_at TEXT NOT NULL);
+    CREATE UNIQUE INDEX IF NOT EXISTS inventory_open_events ON inventory_events(sku) WHERE kind='open';
+    CREATE TABLE IF NOT EXISTS inventory_batches (id TEXT PRIMARY KEY,input_hash TEXT NOT NULL,receipt TEXT NOT NULL);
   `);
   const mode=db.prepare("SELECT value FROM meta WHERE key='mode'").get();
   if(mode&&mode.value!==(demo?'demo':'production')){db.close();throw new Error('Data directory mode mismatch: use separate demo and production directories');}
