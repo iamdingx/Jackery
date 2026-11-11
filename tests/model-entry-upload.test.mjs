@@ -97,6 +97,61 @@ test('desktop photo upload stays inside its panel when the pending status wraps'
  await page.locator('#upload-photo').click();
  assert.match(await page.locator('#photo-error').textContent(),/Enter or scan a serial number/);
 });
+test('mobile upload sends and stores a resized copy of a large camera photo',{timeout:60000},async t=>{
+ const {page,app,login}=await fixture(t);
+ await page.setViewportSize({width:390,height:844});
+ await login();
+ await page.locator('#new-record').click();
+ await page.locator('#sn').fill('PHOTO-COMPRESSED-001');
+ await page.locator('#modelId').selectOption('1');
+ const encoded=await page.evaluate(()=>{
+  const canvas=document.createElement('canvas');
+  canvas.width=2400;canvas.height=1600;
+  const ctx=canvas.getContext('2d');
+  const image=ctx.createImageData(canvas.width,canvas.height);
+  let value=12345;
+  for(let i=0;i<image.data.length;i+=4){
+   value=(Math.imul(value,1664525)+1013904223)>>>0;
+   image.data[i]=value>>>24;
+   image.data[i+1]=(value>>>16)&255;
+   image.data[i+2]=(value>>>8)&255;
+   image.data[i+3]=255;
+  }
+  ctx.putImageData(image,0,0);
+  return canvas.toDataURL('image/jpeg',0.96).split(',')[1];
+ });
+ const cameraPhoto=Buffer.from(encoded,'base64');
+ assert.ok(cameraPhoto.length>800*1024);
+ const source=Buffer.concat([cameraPhoto,Buffer.alloc(9*1024*1024-cameraPhoto.length)]);
+ await page.locator('#photo-file').setInputFiles({name:'camera.jpg',mimeType:'image/jpeg',buffer:source});
+ const uploads=[];
+ page.on('request',r=>{if(r.method()==='POST'&&r.url().endsWith('/photos'))uploads.push(r.postDataJSON());});
+ const network=await page.context().newCDPSession(page);
+ await network.send('Fetch.enable',{patterns:[{urlPattern:'*/api/records/*/photos',requestStage:'Response'}]});
+ const responsePaused=new Promise(resolve=>network.once('Fetch.requestPaused',resolve));
+ await page.locator('#upload-photo').click();
+ const paused=await responsePaused;
+ assert.equal(paused.responseStatusCode,201);
+ await network.send('Fetch.failRequest',{requestId:paused.requestId,errorReason:'ConnectionReset'});
+ await network.send('Fetch.disable');
+ await page.getByRole('button',{name:'Retry upload',exact:true}).click();
+ await page.locator('#photos img').waitFor();
+ assert.equal(uploads.length,2);
+ assert.equal(uploads[1].uploadId,uploads[0].uploadId);
+ assert.equal(uploads[1].contentBase64,uploads[0].contentBase64);
+ const sent=Buffer.from(uploads[0].contentBase64,'base64');
+ assert.ok(sent.length<=800*1024);
+ const {items}=await (await page.request.get(app.baseUrl+'/api/records?q=PHOTO-COMPRESSED-001')).json();
+ const {record}=await (await page.request.get(app.baseUrl+'/api/records/'+items[0].id)).json();
+ const [photo]=record.photos;
+ assert.equal(record.photos.length,1);
+ assert.equal(photo.mime,'image/jpeg');
+ assert.ok(photo.width<=1920&&photo.width>=1600);
+ assert.ok(Math.abs(photo.width/photo.height-1.5)<0.01);
+ assert.equal(photo.size,sent.length);
+ assert.deepEqual(await (await page.request.get(app.baseUrl+photo.url)).body(),sent);
+ t.diagnostic(`Synthetic source ${source.length} bytes → ${sent.length} bytes, ${photo.width} × ${photo.height}`);
+});
 test('mobile viewport reports actual intermediate upload progress on a limited connection',{timeout:60000},async t=>{
  const {page,login}=await fixture(t);
  await page.setViewportSize({width:390,height:844});

@@ -51,7 +51,7 @@
 - 蓝牙清单由用户配置层追加，原始来源目录、数据库型号与未完成历史不在启动时批量重写。旧未完成记录第一次实际保存才写入新增清单，版本正常递增并保留原始before审计；导出检查明细可显示未检验Bluetooth，但原快照JSON保持原样。
 - 功能检查下方固定Defect remark单文本框；右侧并列Condition & Notes，保留Appearance Notes及预设缺陷、取消Issue Notes显示标签。Defect remark沿用内部issueNotes存储及原报表字段；不会把旧译文冒充缺陷原文。
 - 原Manual translations区及两个译文输入取消；已有translatedAppearanceNotes/translatedIssueNotes继续存储、保存及四表导出，语言切换不覆盖或丢失。
-- Evidence Photos为独立常驻面板，非折叠下拉。缩略图、待选状态及替代文本不显示文件名；源文件名仍作为内部照片元数据和报表证据保留。照片选填、JPEG兼容修复、上传重试、权限及原字节保存不变。
+- Evidence Photos 为独立常驻面板。缩略图、待选状态及替代文本不显示文件名，源文件名仍作内部元数据和报表证据。照片选填，较大的新照片在浏览器内压缩后上传，仅保存压缩图。小图直接上传，历史照片保持原样。重试复用同一压缩结果，权限及文件校验继续适用。
 
 ## 后续确认：备注和照片限定在功能检查列
 

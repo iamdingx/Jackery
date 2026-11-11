@@ -37,7 +37,7 @@ test('v03 Module5 UI: failed upload precise copy, retained file retry, size/form
   await page.locator('#language').click();await page.locator('#language').click();assert.ok((await page.locator('.photo-tools').textContent()).includes('Photo selected'));await page.locator('#upload-photo').click();await page.locator('#photos img').waitFor();assert.equal(await page.locator('#photos img').evaluate(i=>i.complete&&i.naturalWidth>0),true);
   r=(await alex(`/api/records/${r.id}`)).record;assert.equal(r.photos.length,1);
   await page.locator('#photo-file').setInputFiles({name:'invalid.svg',mimeType:'image/svg+xml',buffer:Buffer.from('<svg/>')});await page.locator('#upload-photo').click();await page.getByText('Choose a JPEG or PNG photo.',{exact:true}).waitFor();
-  await page.locator('#photo-file').setInputFiles({name:'large.png',mimeType:'image/png',buffer:Buffer.alloc(8388609)});await page.locator('#upload-photo').click();assert.equal(await page.locator('#photo-error').textContent(),'The photo exceeds 8 MiB. Choose a smaller photo.');assert.equal((await alex(`/api/records/${r.id}`)).record.photos.length,1);
+  await page.locator('#photo-file').setInputFiles({name:'large-invalid.png',mimeType:'image/png',buffer:Buffer.alloc(8388609)});await page.locator('#upload-photo').click();await page.getByText('The photo could not be compressed. Select a readable JPEG or PNG and try again.',{exact:true}).waitFor();assert.equal((await alex(`/api/records/${r.id}`)).record.photos.length,1);
   assert.equal(await page.locator('#complete-record').isDisabled(),true);
   await page.locator('#discard-photo').click();
   assert.equal(await page.locator('#complete-record').isEnabled(),true);
