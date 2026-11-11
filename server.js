@@ -3,7 +3,7 @@ import path from 'node:path';
 import {fileURLToPath} from 'node:url';
 import {existsSync} from 'node:fs';
 import {readFile,writeFile,unlink} from 'node:fs/promises';
-import {randomBytes,timingSafeEqual} from 'node:crypto';
+import {createHash,randomBytes,timingSafeEqual} from 'node:crypto';
 import {openStore,passwordHash,passwordMatches,hashToken,userDto} from './src/store.js';
 import {ApiError,invalid,outcomes,textValue,isoDate,positiveId,validateModel,validateAppearance,validateBom,validateRecord} from './src/domain.js';
 import {validateImage} from './src/images.js';
@@ -175,16 +175,36 @@ export async function startServer({dataDir=path.join(root,'data'),demo=false,por
         if(method==='POST'&&sub==='photos'){
           const input=await body(req);const before=store.record(id);const privileged=user.role==='admin'&&(before.ownerId!==user.id||before.status==='completed');
           if(privileged)textValue(input.reason??'','Photo correction reason',2000,true);else if(before.ownerId!==user.id||before.status==='completed')forbidden();
-          version(input.version,before);if(before.photos.length>=20)invalid('Each record supports at most 20 photos');
+          const uploadId=input.uploadId;
+          if(uploadId!==undefined&&(typeof uploadId!=='string'||!/^[a-f0-9]{32}$/.test(uploadId)))invalid('Invalid photo upload ID');
+          if(uploadId===undefined){version(input.version,before);if(before.photos.length>=20)invalid('Each record supports at most 20 photos');}
           const filename=textValue(input.filename??'','Filename',255,true);if(/[\\/]/.test(filename))invalid('Filename must not contain a path');
           if(typeof input.contentBase64!=='string'||!input.contentBase64.length||input.contentBase64.length%4!==0||!/^[A-Za-z0-9+/]*={0,2}$/.test(input.contentBase64))invalid('Photo content must be valid base64');
           if(input.contentBase64.length>11184812)throw new ApiError(413,'IMAGE_TOO_LARGE','Photo exceeds 8 MiB');
-          const bytes=Buffer.from(input.contentBase64,'base64');if(bytes.toString('base64')!==input.contentBase64)invalid('Photo content must be canonical base64');let info;try{info=validateImage(bytes);}catch(e){throw new ApiError(e.code==='IMAGE_TOO_LARGE'?413:422,e.code??'INVALID_IMAGE',e.message);}
-          const photoId=randomBytes(16).toString('hex'),physicalName=photoId+'.'+info.extension;
+          const bytes=Buffer.from(input.contentBase64,'base64');if(bytes.toString('base64')!==input.contentBase64)invalid('Photo content must be canonical base64');
+          const physicalId=randomBytes(16).toString('hex');
+          const photoId=uploadId===undefined?physicalId:createHash('sha256').update(JSON.stringify([id,user.id,uploadId,filename])).update(bytes).digest('hex').slice(0,32);
+          const existing=before.photos.find(photo=>photo.id===photoId);
+          if(existing)return send(200,{photo:existing,record:before});
+          if(uploadId!==undefined){version(input.version,before);if(before.photos.length>=20)invalid('Each record supports at most 20 photos');}
+          let info;try{info=validateImage(bytes);}catch(e){throw new ApiError(e.code==='IMAGE_TOO_LARGE'?413:422,e.code??'INVALID_IMAGE',e.message);}
+          const physicalName=physicalId+'.'+info.extension;
           const photo={id:photoId,recordId:id,filename,mime:info.mime,size:bytes.length,width:info.width,height:info.height,url:`/api/photos/${photoId}`,uploadedAt:new Date().toISOString(),uploadedBy:user.id};
           const photoPath=path.join(store.dataDir,'photos',physicalName);await writeFile(photoPath,bytes,{flag:'wx',mode:0o600});
-          let record;try{record=store.tx(()=>{const current=store.record(id);version(input.version,current);db.prepare('INSERT INTO photos(id,record_id,data,physical_name) VALUES(?,?,?,?)').run(photoId,id,JSON.stringify(photo),physicalName);const after={...current,photos:[...current.photos,photo],version:current.version+1,updatedAt:new Date().toISOString()};return persistRecord(after,user,'photo_add',input.reason??'',current);});}catch(e){await unlink(photoPath).catch(()=>{});throw e;}
-          return send(201,{photo,record});
+          let result;
+          try{
+            result=store.tx(()=>{
+              const current=store.record(id);
+              const repeated=current.photos.find(photo=>photo.id===photoId);
+              if(repeated)return {status:200,photo:repeated,record:current};
+              version(input.version,current);
+              db.prepare('INSERT INTO photos(id,record_id,data,physical_name) VALUES(?,?,?,?)').run(photoId,id,JSON.stringify(photo),physicalName);
+              const after={...current,photos:[...current.photos,photo],version:current.version+1,updatedAt:new Date().toISOString()};
+              return {status:201,photo,record:persistRecord(after,user,'photo_add',input.reason??'',current)};
+            });
+          }catch(e){await unlink(photoPath).catch(()=>{});throw e;}
+          if(result.status===200)await unlink(photoPath).catch(()=>{});
+          return send(result.status,{photo:result.photo,record:result.record});
         }
       }
       match=route.match(/^\/api\/photos\/([a-f0-9]{32})$/);

@@ -110,7 +110,7 @@ test('v03 sign-out aborts an in-flight SN lookup before another account starts w
 test('v03 custom photo picker exposes English controls and preserves photo selection without showing filenames',{timeout:60000},async t=>{
   const {page}=await fixture(t);await page.locator('#new-record').click();await page.locator('#modelId').selectOption('1');assert.equal(await page.locator('#photo-selection').textContent(),'No photo selected');
   const chooser=page.waitForEvent('filechooser');await page.getByRole('button',{name:'Choose Photo',exact:true}).click();await (await chooser).setFiles({name:'原始 Evidence.png',mimeType:'image/png',buffer:Buffer.from('source bytes')});
-  assert.equal(await page.locator('#photo-selection').textContent(),'Photo selected');await page.locator('#language').click();assert.equal(await page.locator('#language').textContent(),'EN');await page.locator('#language').click();assert.equal(await page.locator('#photo-selection').textContent(),'Photo selected');
+  assert.equal(await page.locator('#photo-selection').textContent(),'Photo selected, pending upload');await page.locator('#language').click();assert.equal(await page.locator('#language').textContent(),'EN');assert.equal(await page.locator('#photo-selection').textContent(),'已选择照片，待上传');await page.locator('#language').click();assert.equal(await page.locator('#photo-selection').textContent(),'Photo selected, pending upload');
 });
 
 test('v03 delayed broad BOM response cannot replace a newer target search',{timeout:60000},async t=>{

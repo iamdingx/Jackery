@@ -40,7 +40,7 @@
 .defect-panel h2,.notes-panel h2{font-size:16px;line-height:24px}
 @media(min-width:801px) and (max-width:1100px){.defect-panel h2,.notes-panel h2{min-height:48px}}
 @media(min-width:1101px) and (min-height:650px){
- .editor-shell .editor-grid{grid-template-columns:minmax(220px,.5fr) minmax(220px,.5fr) minmax(450px,1.35fr);grid-template-rows:minmax(75px,1fr) 130px 92px;grid-template-areas:"checks checks materials" "defect appearance materials" "photos photos materials";gap:6px}
+ .editor-shell .editor-grid{min-height:309px;grid-template-columns:minmax(220px,.5fr) minmax(220px,.5fr) minmax(450px,1.35fr);grid-template-rows:minmax(75px,1fr) 130px 92px;grid-template-areas:"checks checks materials" "defect appearance materials" "photos photos materials";gap:6px}
  .editor-shell .defect-panel,.editor-shell .notes-panel{min-height:0;overflow:auto;padding:6px 8px}
  .editor-shell .defect-panel h2,.editor-shell .notes-panel h2{font-size:14px;line-height:18px}
  .editor-shell .defect-panel textarea,.editor-shell .notes-panel textarea{height:44px;min-height:44px;max-height:44px;font-size:12px;line-height:1.25}
@@ -48,7 +48,7 @@
  .editor-shell .evidence-section{display:grid;grid-template-columns:minmax(0,1fr) 132px;grid-template-rows:auto minmax(0,1fr);grid-template-areas:"heading tools" "gallery tools";gap:3px 8px;padding:6px 8px;overflow:hidden}
  .editor-shell .evidence-section>.panel-head{grid-area:heading;margin:0}.editor-shell .evidence-section h2{font-size:14px;line-height:18px}
  .editor-shell .evidence-section>small{display:none}
- .editor-shell .evidence-section .photo-tools{grid-area:tools;display:flex;flex-direction:column;justify-content:center;gap:3px;margin:0;padding-left:8px;border-left:1px solid var(--border);min-width:0}
+ .editor-shell .evidence-section .photo-tools{grid-area:tools;display:grid;grid-template-columns:minmax(0,1fr);align-content:center;align-items:stretch;gap:3px;margin:0;padding-left:8px;border-left:1px solid var(--border);min-width:0}
  .editor-shell .evidence-section .photo-picker{display:grid;gap:2px;width:100%;min-width:0}
  .editor-shell .evidence-section .photo-picker>label{display:none}
  .editor-shell .evidence-section .photo-tools button{min-height:24px;padding:2px 6px;font-size:11px;width:100%}.editor-shell .evidence-section #photo-selection{font-size:10px;line-height:12px}
@@ -92,3 +92,15 @@
 .ledger-summary{margin-top:12px;overflow-wrap:anywhere}
 .ledger-summary button{margin-top:8px}
 .ledger-reference{overflow-wrap:anywhere;min-width:10ch}
+.photo-feedback:not([hidden]){display:flex;flex-wrap:wrap;align-items:center;gap:3px 8px;min-width:0}
+.photo-feedback progress{width:min(100%,12rem);height:8px;accent-color:var(--green)}
+#photo-error{color:#9c3227;overflow-wrap:anywhere}
+#discard-photo{min-height:24px;padding:2px 6px;font-size:11px}
+@media(min-width:1101px) and (min-height:650px){
+ .editor-shell .evidence-section:has(.photo-feedback:not([hidden])){
+  grid-template-areas:"heading tools" "feedback tools" "gallery tools";
+  grid-template-rows:auto auto minmax(0,1fr);
+  overflow:auto
+ }
+ .editor-shell .photo-feedback{grid-area:feedback;font-size:12px}
+}
