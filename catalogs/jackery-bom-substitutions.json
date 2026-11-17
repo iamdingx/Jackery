@@ -1,0 +1,1454 @@
+{
+  "batchId": "jackery-approved-substitutes-133",
+  "source": {
+    "file": "华宝11款机型核心包装物料-栈板核对(含133栈板)-核对版.xlsx",
+    "sha256": "3aba2932630fd5ba2c3001d83d773352b9239c6ea75d3d8d5117ca8d31ab2acf"
+  },
+  "createMaterials": [
+    {
+      "sku": "07-2100-259061",
+      "descriptionZh": "主板-PCBA",
+      "descriptionEn": "Mainboard PCBA",
+      "unit": "Pcs"
+    },
+    {
+      "sku": "08-1031-160188",
+      "descriptionZh": "脚垫",
+      "descriptionEn": "Foot Pad",
+      "unit": "Pcs"
+    },
+    {
+      "sku": "35-0003-000130",
+      "descriptionZh": "彩盒",
+      "descriptionEn": "Color Box",
+      "unit": "Pcs"
+    },
+    {
+      "sku": "35-0007-000360",
+      "descriptionZh": "彩盒信息标贴",
+      "descriptionEn": "Color Box Information Label",
+      "unit": "Pcs"
+    },
+    {
+      "sku": "35-0007-000372",
+      "descriptionZh": "后标贴",
+      "descriptionEn": "Rear Label",
+      "unit": "Pcs"
+    }
+  ],
+  "renameMaterials": [
+    {
+      "sku": "35-0006-000054",
+      "descriptionZh": "内托上",
+      "descriptionEn": "Upper Insert"
+    },
+    {
+      "sku": "35-0006-000055",
+      "descriptionZh": "内托下",
+      "descriptionEn": "Lower Insert"
+    },
+    {
+      "sku": "35-0012-000015",
+      "descriptionZh": "隔板",
+      "descriptionEn": "Divider"
+    }
+  ],
+  "models": [
+    {
+      "catalogKey": "e1000-default",
+      "productSku": "70-1000-EUO001",
+      "sheet": "E1000",
+      "relationships": [
+        {
+          "originalSku": "07-2100-206010",
+          "sku": "07-2100-206009",
+          "level": 1,
+          "sourceRow": 4
+        },
+        {
+          "originalSku": "06-3001-200225",
+          "sku": "06-3001-200125",
+          "level": 1,
+          "sourceRow": 9
+        },
+        {
+          "originalSku": "08-1630-103043",
+          "sku": "35-0003-000059",
+          "level": 1,
+          "sourceRow": 14
+        },
+        {
+          "originalSku": "08-1500-149331",
+          "sku": "35-0006-000010",
+          "level": 1,
+          "sourceRow": 19
+        },
+        {
+          "originalSku": "08-1500-149332",
+          "sku": "35-0006-000011",
+          "level": 1,
+          "sourceRow": 20
+        },
+        {
+          "originalSku": "08-1700-100489",
+          "sku": "38-0005-000005",
+          "level": 1,
+          "sourceRow": 25
+        }
+      ],
+      "groups": [
+        {
+          "id": "07-2100-206010",
+          "cap": 1,
+          "label": null,
+          "originals": [
+            "07-2100-206010"
+          ],
+          "options": [
+            {
+              "originalSku": "07-2100-206010",
+              "sku": "07-2100-206009",
+              "level": 1
+            }
+          ]
+        },
+        {
+          "id": "06-3001-200225",
+          "cap": 1,
+          "label": null,
+          "originals": [
+            "06-3001-200225"
+          ],
+          "options": [
+            {
+              "originalSku": "06-3001-200225",
+              "sku": "06-3001-200125",
+              "level": 1
+            }
+          ]
+        },
+        {
+          "id": "08-1630-103043",
+          "cap": 1,
+          "label": null,
+          "originals": [
+            "08-1630-103043"
+          ],
+          "options": [
+            {
+              "originalSku": "08-1630-103043",
+              "sku": "35-0003-000059",
+              "level": 1
+            }
+          ]
+        },
+        {
+          "id": "08-1500-149331",
+          "cap": 1,
+          "label": null,
+          "originals": [
+            "08-1500-149331"
+          ],
+          "options": [
+            {
+              "originalSku": "08-1500-149331",
+              "sku": "35-0006-000010",
+              "level": 1
+            }
+          ]
+        },
+        {
+          "id": "08-1500-149332",
+          "cap": 1,
+          "label": null,
+          "originals": [
+            "08-1500-149332"
+          ],
+          "options": [
+            {
+              "originalSku": "08-1500-149332",
+              "sku": "35-0006-000011",
+              "level": 1
+            }
+          ]
+        },
+        {
+          "id": "08-1700-100489",
+          "cap": 1,
+          "label": null,
+          "originals": [
+            "08-1700-100489"
+          ],
+          "options": [
+            {
+              "originalSku": "08-1700-100489",
+              "sku": "38-0005-000005",
+              "level": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "catalogKey": "e1000pro-default",
+      "productSku": "70-1000-DEOR01",
+      "sheet": "E1000pro",
+      "relationships": [
+        {
+          "originalSku": "24-0001-000003",
+          "sku": "07-2100-259061",
+          "level": 1,
+          "sourceRow": 4
+        },
+        {
+          "originalSku": "23-0003-000052",
+          "sku": "06-3001-200217",
+          "level": 1,
+          "sourceRow": 11
+        },
+        {
+          "originalSku": "08-1031-160040",
+          "sku": "08-1031-160188",
+          "level": 1,
+          "sourceRow": 12
+        },
+        {
+          "originalSku": "08-1630-103031",
+          "sku": "35-0003-000115",
+          "level": 1,
+          "sourceRow": 14
+        },
+        {
+          "originalSku": "08-1100-148738",
+          "sku": "35-0007-000247",
+          "level": 1,
+          "sourceRow": 20
+        },
+        {
+          "originalSku": "35-0007-001939",
+          "sku": "35-0007-000246",
+          "level": 1,
+          "sourceRow": 22
+        },
+        {
+          "originalSku": "08-1500-149328",
+          "sku": "35-0006-000015",
+          "level": 1,
+          "sourceRow": 25
+        },
+        {
+          "originalSku": "08-1500-103952",
+          "sku": "35-0006-000016",
+          "level": 1,
+          "sourceRow": 26
+        },
+        {
+          "originalSku": "08-1700-100489",
+          "sku": "38-0005-000005",
+          "level": 1,
+          "sourceRow": 28
+        },
+        {
+          "originalSku": "08-1600-103011",
+          "sku": "35-0001-000037",
+          "level": 1,
+          "sourceRow": 29
+        }
+      ],
+      "groups": [
+        {
+          "id": "24-0001-000003",
+          "cap": 1,
+          "label": null,
+          "originals": [
+            "24-0001-000003"
+          ],
+          "options": [
+            {
+              "originalSku": "24-0001-000003",
+              "sku": "07-2100-259061",
+              "level": 1
+            }
+          ]
+        },
+        {
+          "id": "23-0003-000052",
+          "cap": 1,
+          "label": null,
+          "originals": [
+            "23-0003-000052"
+          ],
+          "options": [
+            {
+              "originalSku": "23-0003-000052",
+              "sku": "06-3001-200217",
+              "level": 1
+            }
+          ]
+        },
+        {
+          "id": "08-1031-160040",
+          "cap": 4,
+          "label": null,
+          "originals": [
+            "08-1031-160040"
+          ],
+          "options": [
+            {
+              "originalSku": "08-1031-160040",
+              "sku": "08-1031-160188",
+              "level": 1
+            }
+          ]
+        },
+        {
+          "id": "08-1630-103031",
+          "cap": 1,
+          "label": null,
+          "originals": [
+            "08-1630-103031"
+          ],
+          "options": [
+            {
+              "originalSku": "08-1630-103031",
+              "sku": "35-0003-000115",
+              "level": 1
+            }
+          ]
+        },
+        {
+          "id": "08-1100-148738",
+          "cap": 1,
+          "label": null,
+          "originals": [
+            "08-1100-148738"
+          ],
+          "options": [
+            {
+              "originalSku": "08-1100-148738",
+              "sku": "35-0007-000247",
+              "level": 1
+            }
+          ]
+        },
+        {
+          "id": "35-0007-001939",
+          "cap": 1,
+          "label": null,
+          "originals": [
+            "35-0007-001939"
+          ],
+          "options": [
+            {
+              "originalSku": "35-0007-001939",
+              "sku": "35-0007-000246",
+              "level": 1
+            }
+          ]
+        },
+        {
+          "id": "08-1500-149328",
+          "cap": 1,
+          "label": null,
+          "originals": [
+            "08-1500-149328"
+          ],
+          "options": [
+            {
+              "originalSku": "08-1500-149328",
+              "sku": "35-0006-000015",
+              "level": 1
+            }
+          ]
+        },
+        {
+          "id": "08-1500-103952",
+          "cap": 1,
+          "label": null,
+          "originals": [
+            "08-1500-103952"
+          ],
+          "options": [
+            {
+              "originalSku": "08-1500-103952",
+              "sku": "35-0006-000016",
+              "level": 1
+            }
+          ]
+        },
+        {
+          "id": "08-1700-100489",
+          "cap": 1,
+          "label": null,
+          "originals": [
+            "08-1700-100489"
+          ],
+          "options": [
+            {
+              "originalSku": "08-1700-100489",
+              "sku": "38-0005-000005",
+              "level": 1
+            }
+          ]
+        },
+        {
+          "id": "08-1600-103011",
+          "cap": 1,
+          "label": null,
+          "originals": [
+            "08-1600-103011"
+          ],
+          "options": [
+            {
+              "originalSku": "08-1600-103011",
+              "sku": "35-0001-000037",
+              "level": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "catalogKey": "e2000pro-default",
+      "productSku": "70-2000-EUOR01",
+      "sheet": "E2000pro",
+      "relationships": [
+        {
+          "originalSku": "23-0003-000042",
+          "sku": "06-3001-200191",
+          "level": 1,
+          "sourceRow": 11
+        },
+        {
+          "originalSku": "08-1700-100489",
+          "sku": "38-0005-000005",
+          "level": 1,
+          "sourceRow": 29
+        }
+      ],
+      "groups": [
+        {
+          "id": "23-0003-000042",
+          "cap": 1,
+          "label": null,
+          "originals": [
+            "23-0003-000042"
+          ],
+          "options": [
+            {
+              "originalSku": "23-0003-000042",
+              "sku": "06-3001-200191",
+              "level": 1
+            }
+          ]
+        },
+        {
+          "id": "08-1700-100489",
+          "cap": 1,
+          "label": null,
+          "originals": [
+            "08-1700-100489"
+          ],
+          "options": [
+            {
+              "originalSku": "08-1700-100489",
+              "sku": "38-0005-000005",
+              "level": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "catalogKey": "e1000v2-original",
+      "productSku": "21-0001-000221",
+      "sheet": "E1000V2 原始版本",
+      "relationships": [
+        {
+          "originalSku": "16-0103-000144",
+          "sku": "35-0003-000271",
+          "level": 1,
+          "sourceRow": 14
+        },
+        {
+          "originalSku": "16-0202-000112",
+          "sku": "16-0202-000001",
+          "level": 1,
+          "sourceRow": 15
+        },
+        {
+          "originalSku": "16-0202-000112",
+          "sku": "35-0006-000090",
+          "level": 2,
+          "gateSku": "16-0202-000001",
+          "sourceRow": 15
+        },
+        {
+          "originalSku": "16-0202-000001",
+          "sku": "35-0006-000090",
+          "level": 1,
+          "sourceRow": 16
+        },
+        {
+          "originalSku": "16-0202-000113",
+          "sku": "16-0202-000002",
+          "level": 1,
+          "sourceRow": 17
+        },
+        {
+          "originalSku": "16-0202-000113",
+          "sku": "35-0006-000091",
+          "level": 2,
+          "gateSku": "16-0202-000002",
+          "sourceRow": 17
+        },
+        {
+          "originalSku": "16-0202-000002",
+          "sku": "35-0006-000091",
+          "level": 1,
+          "sourceRow": 18
+        }
+      ],
+      "groups": [
+        {
+          "id": "16-0103-000144",
+          "cap": 1,
+          "label": null,
+          "originals": [
+            "16-0103-000144"
+          ],
+          "options": [
+            {
+              "originalSku": "16-0103-000144",
+              "sku": "35-0003-000271",
+              "level": 1
+            }
+          ]
+        },
+        {
+          "id": "16-0202-000112",
+          "cap": 4,
+          "label": "top",
+          "originals": [
+            "16-0202-000112",
+            "16-0202-000001"
+          ],
+          "options": [
+            {
+              "originalSku": "16-0202-000112",
+              "sku": "16-0202-000001",
+              "level": 1
+            },
+            {
+              "originalSku": "16-0202-000112",
+              "sku": "35-0006-000090",
+              "level": 2,
+              "gateSku": "16-0202-000001"
+            }
+          ]
+        },
+        {
+          "id": "16-0202-000113",
+          "cap": 4,
+          "label": "bottom",
+          "originals": [
+            "16-0202-000113",
+            "16-0202-000002"
+          ],
+          "options": [
+            {
+              "originalSku": "16-0202-000113",
+              "sku": "16-0202-000002",
+              "level": 1
+            },
+            {
+              "originalSku": "16-0202-000113",
+              "sku": "35-0006-000091",
+              "level": 2,
+              "gateSku": "16-0202-000002"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "catalogKey": "e1000v2-costdown",
+      "productSku": "21-0001-000221",
+      "sheet": "E1000V2 降本版本",
+      "relationships": [
+        {
+          "originalSku": "24-0001-000115",
+          "sku": "24-0001-000037",
+          "level": 1,
+          "sourceRow": 4
+        },
+        {
+          "originalSku": "24-0002-000067",
+          "sku": "24-0002-000037",
+          "level": 1,
+          "sourceRow": 5
+        },
+        {
+          "originalSku": "23-0003-000176",
+          "sku": "23-0003-000147",
+          "level": 1,
+          "sourceRow": 7
+        },
+        {
+          "originalSku": "16-0103-000144",
+          "sku": "35-0003-000271",
+          "level": 1,
+          "sourceRow": 11
+        },
+        {
+          "originalSku": "16-0202-000112",
+          "sku": "35-0006-000090",
+          "level": 1,
+          "sourceRow": 12
+        },
+        {
+          "originalSku": "16-0202-000113",
+          "sku": "35-0006-000091",
+          "level": 1,
+          "sourceRow": 13
+        }
+      ],
+      "groups": [
+        {
+          "id": "24-0001-000115",
+          "cap": 1,
+          "label": null,
+          "originals": [
+            "24-0001-000115"
+          ],
+          "options": [
+            {
+              "originalSku": "24-0001-000115",
+              "sku": "24-0001-000037",
+              "level": 1
+            }
+          ]
+        },
+        {
+          "id": "24-0002-000067",
+          "cap": 1,
+          "label": null,
+          "originals": [
+            "24-0002-000067"
+          ],
+          "options": [
+            {
+              "originalSku": "24-0002-000067",
+              "sku": "24-0002-000037",
+              "level": 1
+            }
+          ]
+        },
+        {
+          "id": "23-0003-000176",
+          "cap": 1,
+          "label": null,
+          "originals": [
+            "23-0003-000176"
+          ],
+          "options": [
+            {
+              "originalSku": "23-0003-000176",
+              "sku": "23-0003-000147",
+              "level": 1
+            }
+          ]
+        },
+        {
+          "id": "16-0103-000144",
+          "cap": 1,
+          "label": null,
+          "originals": [
+            "16-0103-000144"
+          ],
+          "options": [
+            {
+              "originalSku": "16-0103-000144",
+              "sku": "35-0003-000271",
+              "level": 1
+            }
+          ]
+        },
+        {
+          "id": "16-0202-000112",
+          "cap": 4,
+          "label": null,
+          "originals": [
+            "16-0202-000112"
+          ],
+          "options": [
+            {
+              "originalSku": "16-0202-000112",
+              "sku": "35-0006-000090",
+              "level": 1
+            }
+          ]
+        },
+        {
+          "id": "16-0202-000113",
+          "cap": 4,
+          "label": null,
+          "originals": [
+            "16-0202-000113"
+          ],
+          "options": [
+            {
+              "originalSku": "16-0202-000113",
+              "sku": "35-0006-000091",
+              "level": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "catalogKey": "e1000plus-a",
+      "productSku": "21-0001-000029",
+      "sheet": "E1000plus A版本",
+      "relationships": [
+        {
+          "originalSku": "24-0001-000017",
+          "sku": "24-0001-000021",
+          "level": 1,
+          "sourceRow": 4
+        },
+        {
+          "originalSku": "24-0005-000005",
+          "sku": "24-0005-000008",
+          "level": 1,
+          "sourceRow": 5
+        },
+        {
+          "originalSku": "24-0002-000015",
+          "sku": "24-0002-000030",
+          "level": 1,
+          "sourceRow": 7
+        },
+        {
+          "originalSku": "23-0003-000090",
+          "sku": "23-0003-000108",
+          "level": 1,
+          "sourceRow": 9
+        },
+        {
+          "originalSku": "35-0003-000116",
+          "sku": "35-0003-000130",
+          "level": 1,
+          "sourceRow": 12
+        },
+        {
+          "originalSku": "35-0001-000038",
+          "sku": "35-0001-000049",
+          "level": 1,
+          "sourceRow": 13
+        },
+        {
+          "originalSku": "38-0001-000287",
+          "sku": "38-0001-000370",
+          "level": 1,
+          "sourceRow": 15
+        },
+        {
+          "originalSku": "30-0005-000090",
+          "sku": "30-0005-000042",
+          "level": 1,
+          "sourceRow": 18
+        },
+        {
+          "originalSku": "35-0006-000017",
+          "sku": "35-0006-000052",
+          "level": 1,
+          "sourceRow": 19
+        },
+        {
+          "originalSku": "35-0006-000018",
+          "sku": "35-0006-000051",
+          "level": 1,
+          "sourceRow": 20
+        },
+        {
+          "originalSku": "35-0007-000666",
+          "sku": "35-0007-000360",
+          "level": 1,
+          "sourceRow": 22
+        },
+        {
+          "originalSku": "35-0007-000722",
+          "sku": "35-0007-000372",
+          "level": 1,
+          "sourceRow": 23
+        }
+      ],
+      "groups": [
+        {
+          "id": "24-0001-000017",
+          "cap": 1,
+          "label": null,
+          "originals": [
+            "24-0001-000017"
+          ],
+          "options": [
+            {
+              "originalSku": "24-0001-000017",
+              "sku": "24-0001-000021",
+              "level": 1
+            }
+          ]
+        },
+        {
+          "id": "24-0005-000005",
+          "cap": 1,
+          "label": null,
+          "originals": [
+            "24-0005-000005"
+          ],
+          "options": [
+            {
+              "originalSku": "24-0005-000005",
+              "sku": "24-0005-000008",
+              "level": 1
+            }
+          ]
+        },
+        {
+          "id": "24-0002-000015",
+          "cap": 1,
+          "label": null,
+          "originals": [
+            "24-0002-000015"
+          ],
+          "options": [
+            {
+              "originalSku": "24-0002-000015",
+              "sku": "24-0002-000030",
+              "level": 1
+            }
+          ]
+        },
+        {
+          "id": "23-0003-000090",
+          "cap": 1,
+          "label": null,
+          "originals": [
+            "23-0003-000090"
+          ],
+          "options": [
+            {
+              "originalSku": "23-0003-000090",
+              "sku": "23-0003-000108",
+              "level": 1
+            }
+          ]
+        },
+        {
+          "id": "35-0003-000116",
+          "cap": 1,
+          "label": null,
+          "originals": [
+            "35-0003-000116"
+          ],
+          "options": [
+            {
+              "originalSku": "35-0003-000116",
+              "sku": "35-0003-000130",
+              "level": 1
+            }
+          ]
+        },
+        {
+          "id": "35-0001-000038",
+          "cap": 1,
+          "label": null,
+          "originals": [
+            "35-0001-000038"
+          ],
+          "options": [
+            {
+              "originalSku": "35-0001-000038",
+              "sku": "35-0001-000049",
+              "level": 1
+            }
+          ]
+        },
+        {
+          "id": "38-0001-000287",
+          "cap": 1,
+          "label": null,
+          "originals": [
+            "38-0001-000287"
+          ],
+          "options": [
+            {
+              "originalSku": "38-0001-000287",
+              "sku": "38-0001-000370",
+              "level": 1
+            }
+          ]
+        },
+        {
+          "id": "30-0005-000090",
+          "cap": 1,
+          "label": null,
+          "originals": [
+            "30-0005-000090"
+          ],
+          "options": [
+            {
+              "originalSku": "30-0005-000090",
+              "sku": "30-0005-000042",
+              "level": 1
+            }
+          ]
+        },
+        {
+          "id": "35-0006-000017",
+          "cap": 1,
+          "label": null,
+          "originals": [
+            "35-0006-000017"
+          ],
+          "options": [
+            {
+              "originalSku": "35-0006-000017",
+              "sku": "35-0006-000052",
+              "level": 1
+            }
+          ]
+        },
+        {
+          "id": "35-0006-000018",
+          "cap": 1,
+          "label": null,
+          "originals": [
+            "35-0006-000018"
+          ],
+          "options": [
+            {
+              "originalSku": "35-0006-000018",
+              "sku": "35-0006-000051",
+              "level": 1
+            }
+          ]
+        },
+        {
+          "id": "35-0007-000666",
+          "cap": 1,
+          "label": null,
+          "originals": [
+            "35-0007-000666"
+          ],
+          "options": [
+            {
+              "originalSku": "35-0007-000666",
+              "sku": "35-0007-000360",
+              "level": 1
+            }
+          ]
+        },
+        {
+          "id": "35-0007-000722",
+          "cap": 1,
+          "label": null,
+          "originals": [
+            "35-0007-000722"
+          ],
+          "options": [
+            {
+              "originalSku": "35-0007-000722",
+              "sku": "35-0007-000372",
+              "level": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "catalogKey": "e1000plus-b",
+      "productSku": "21-0001-000183",
+      "sheet": "E1000plus B版本",
+      "relationships": [
+        {
+          "originalSku": "30-0005-000090",
+          "sku": "30-0005-000042",
+          "level": 1,
+          "sourceRow": 13
+        },
+        {
+          "originalSku": "35-0003-000264",
+          "sku": "35-0003-000130",
+          "level": 1,
+          "sourceRow": 14
+        }
+      ],
+      "groups": [
+        {
+          "id": "30-0005-000090",
+          "cap": 1,
+          "label": null,
+          "originals": [
+            "30-0005-000090"
+          ],
+          "options": [
+            {
+              "originalSku": "30-0005-000090",
+              "sku": "30-0005-000042",
+              "level": 1
+            }
+          ]
+        },
+        {
+          "id": "35-0003-000264",
+          "cap": 1,
+          "label": null,
+          "originals": [
+            "35-0003-000264"
+          ],
+          "options": [
+            {
+              "originalSku": "35-0003-000264",
+              "sku": "35-0003-000130",
+              "level": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "catalogKey": "e2000v2-original",
+      "productSku": "21-0001-000267",
+      "sheet": "E2000V2 原始版本",
+      "relationships": [
+        {
+          "originalSku": "16-0103-000233",
+          "sku": "35-0003-000268",
+          "level": 1,
+          "sourceRow": 13
+        },
+        {
+          "originalSku": "16-0202-000001",
+          "sku": "35-0006-000129",
+          "level": 1,
+          "sourceRow": 14
+        },
+        {
+          "originalSku": "16-0203-000135",
+          "sku": "35-0001-000062",
+          "level": 1,
+          "sourceRow": 15
+        },
+        {
+          "originalSku": "16-0103-000148",
+          "sku": "35-0003-000268",
+          "level": 1,
+          "sourceRow": 16
+        },
+        {
+          "originalSku": "35-0006-000104",
+          "sku": "35-0006-000130",
+          "level": 1,
+          "sourceRow": 17
+        },
+        {
+          "originalSku": "16-0202-000002",
+          "sku": "35-0006-000130",
+          "level": 1,
+          "sourceRow": 19
+        }
+      ],
+      "groups": [
+        {
+          "id": "16-0103-000148",
+          "cap": 1,
+          "label": "box",
+          "originals": [
+            "16-0103-000233",
+            "16-0103-000148"
+          ],
+          "options": [
+            {
+              "originalSku": "16-0103-000148",
+              "sku": "35-0003-000268",
+              "level": 1
+            }
+          ]
+        },
+        {
+          "id": "16-0202-000001",
+          "cap": 4,
+          "label": null,
+          "originals": [
+            "16-0202-000001"
+          ],
+          "options": [
+            {
+              "originalSku": "16-0202-000001",
+              "sku": "35-0006-000129",
+              "level": 1
+            }
+          ]
+        },
+        {
+          "id": "16-0203-000135",
+          "cap": 1,
+          "label": null,
+          "originals": [
+            "16-0203-000135"
+          ],
+          "options": [
+            {
+              "originalSku": "16-0203-000135",
+              "sku": "35-0001-000062",
+              "level": 1
+            }
+          ]
+        },
+        {
+          "id": "16-0202-000002",
+          "cap": 4,
+          "label": "lower-insert",
+          "originals": [
+            "35-0006-000104",
+            "16-0202-000002"
+          ],
+          "options": [
+            {
+              "originalSku": "16-0202-000002",
+              "sku": "35-0006-000130",
+              "level": 1
+            }
+          ],
+          "individualCaps": {
+            "35-0006-000104": 1
+          }
+        }
+      ]
+    },
+    {
+      "catalogKey": "e2000v2-costdown",
+      "productSku": "21-0001-000267",
+      "sheet": "E2000V2 降本版本",
+      "relationships": [
+        {
+          "originalSku": "24-0008-000071",
+          "sku": "24-0008-000021",
+          "level": 1,
+          "sourceRow": 5
+        },
+        {
+          "originalSku": "16-0103-000233",
+          "sku": "35-0003-000268",
+          "level": 1,
+          "sourceRow": 10
+        },
+        {
+          "originalSku": "16-0203-000135",
+          "sku": "35-0001-000062",
+          "level": 1,
+          "sourceRow": 11
+        },
+        {
+          "originalSku": "16-0202-000001",
+          "sku": "35-0006-000129",
+          "level": 1,
+          "sourceRow": 12
+        },
+        {
+          "originalSku": "16-0202-000002",
+          "sku": "35-0006-000130",
+          "level": 1,
+          "sourceRow": 13
+        }
+      ],
+      "groups": [
+        {
+          "id": "24-0008-000071",
+          "cap": 1,
+          "label": null,
+          "originals": [
+            "24-0008-000071"
+          ],
+          "options": [
+            {
+              "originalSku": "24-0008-000071",
+              "sku": "24-0008-000021",
+              "level": 1
+            }
+          ]
+        },
+        {
+          "id": "16-0103-000233",
+          "cap": 1,
+          "label": null,
+          "originals": [
+            "16-0103-000233"
+          ],
+          "options": [
+            {
+              "originalSku": "16-0103-000233",
+              "sku": "35-0003-000268",
+              "level": 1
+            }
+          ]
+        },
+        {
+          "id": "16-0203-000135",
+          "cap": 1,
+          "label": null,
+          "originals": [
+            "16-0203-000135"
+          ],
+          "options": [
+            {
+              "originalSku": "16-0203-000135",
+              "sku": "35-0001-000062",
+              "level": 1
+            }
+          ]
+        },
+        {
+          "id": "16-0202-000001",
+          "cap": 4,
+          "label": null,
+          "originals": [
+            "16-0202-000001"
+          ],
+          "options": [
+            {
+              "originalSku": "16-0202-000001",
+              "sku": "35-0006-000129",
+              "level": 1
+            }
+          ]
+        },
+        {
+          "id": "16-0202-000002",
+          "cap": 4,
+          "label": null,
+          "originals": [
+            "16-0202-000002"
+          ],
+          "options": [
+            {
+              "originalSku": "16-0202-000002",
+              "sku": "35-0006-000130",
+              "level": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "catalogKey": "e2000plus-a",
+      "productSku": "21-0001-000037",
+      "sheet": "E2000plus A版本",
+      "relationships": [
+        {
+          "originalSku": "23-0003-000015",
+          "sku": "23-0003-000014",
+          "level": 1,
+          "sourceRow": 11
+        },
+        {
+          "originalSku": "30-0005-000090",
+          "sku": "30-0005-000042",
+          "level": 1,
+          "sourceRow": 17
+        },
+        {
+          "originalSku": "35-0003-000109",
+          "sku": "35-0003-000153",
+          "level": 1,
+          "sourceRow": 18
+        },
+        {
+          "originalSku": "35-0003-000109",
+          "sku": "35-0003-000290",
+          "level": 1,
+          "sourceRow": 18
+        },
+        {
+          "originalSku": "35-0001-000033",
+          "sku": "35-0001-000047",
+          "level": 1,
+          "sourceRow": 19
+        },
+        {
+          "originalSku": "35-0012-000002",
+          "sku": "35-0012-000015",
+          "level": 1,
+          "sourceRow": 23
+        },
+        {
+          "originalSku": "35-0006-000001",
+          "sku": "35-0006-000054",
+          "level": 1,
+          "sourceRow": 24
+        },
+        {
+          "originalSku": "35-0006-000001",
+          "sku": "35-0006-000149",
+          "level": 1,
+          "sourceRow": 24
+        },
+        {
+          "originalSku": "35-0006-000002",
+          "sku": "35-0006-000055",
+          "level": 1,
+          "sourceRow": 25
+        },
+        {
+          "originalSku": "35-0006-000002",
+          "sku": "35-0006-000150",
+          "level": 1,
+          "sourceRow": 25
+        }
+      ],
+      "groups": [
+        {
+          "id": "23-0003-000015",
+          "cap": 1,
+          "label": null,
+          "originals": [
+            "23-0003-000015"
+          ],
+          "options": [
+            {
+              "originalSku": "23-0003-000015",
+              "sku": "23-0003-000014",
+              "level": 1
+            }
+          ]
+        },
+        {
+          "id": "30-0005-000090",
+          "cap": 1,
+          "label": null,
+          "originals": [
+            "30-0005-000090"
+          ],
+          "options": [
+            {
+              "originalSku": "30-0005-000090",
+              "sku": "30-0005-000042",
+              "level": 1
+            }
+          ]
+        },
+        {
+          "id": "35-0003-000109",
+          "cap": null,
+          "label": "packaging-kit",
+          "originals": [
+            "35-0003-000109",
+            "35-0001-000033",
+            "35-0012-000002",
+            "35-0006-000001",
+            "35-0006-000002"
+          ],
+          "options": [],
+          "kits": [
+            {
+              "id": "packaging-1",
+              "skus": [
+                "35-0003-000153",
+                "35-0006-000054",
+                "35-0006-000055",
+                "35-0001-000047",
+                "35-0012-000015"
+              ],
+              "parts": [
+                {
+                  "originalSku": "35-0003-000109",
+                  "sku": "35-0003-000153"
+                },
+                {
+                  "originalSku": "35-0006-000001",
+                  "sku": "35-0006-000054"
+                },
+                {
+                  "originalSku": "35-0006-000002",
+                  "sku": "35-0006-000055"
+                },
+                {
+                  "originalSku": "35-0001-000033",
+                  "sku": "35-0001-000047"
+                },
+                {
+                  "originalSku": "35-0012-000002",
+                  "sku": "35-0012-000015"
+                }
+              ]
+            },
+            {
+              "id": "packaging-2",
+              "skus": [
+                "35-0003-000290",
+                "35-0006-000149",
+                "35-0006-000150",
+                "35-0001-000047",
+                "35-0012-000015"
+              ],
+              "parts": [
+                {
+                  "originalSku": "35-0003-000109",
+                  "sku": "35-0003-000290"
+                },
+                {
+                  "originalSku": "35-0006-000001",
+                  "sku": "35-0006-000149"
+                },
+                {
+                  "originalSku": "35-0006-000002",
+                  "sku": "35-0006-000150"
+                },
+                {
+                  "originalSku": "35-0001-000033",
+                  "sku": "35-0001-000047"
+                },
+                {
+                  "originalSku": "35-0012-000002",
+                  "sku": "35-0012-000015"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "catalogKey": "e2000plus-b",
+      "productSku": "21-0001-000184",
+      "sheet": "E2000plus B版本",
+      "relationships": [
+        {
+          "originalSku": "30-0005-000090",
+          "sku": "30-0005-000042",
+          "level": 1,
+          "sourceRow": 19
+        }
+      ],
+      "groups": [
+        {
+          "id": "30-0005-000090",
+          "cap": 1,
+          "label": null,
+          "originals": [
+            "30-0005-000090"
+          ],
+          "options": [
+            {
+              "originalSku": "30-0005-000090",
+              "sku": "30-0005-000042",
+              "level": 1
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

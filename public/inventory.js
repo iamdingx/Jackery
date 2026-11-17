@@ -1,4 +1,5 @@
 import {escapeHtml as e} from './state.js';
+import {displayWorkTime} from './work-time.js';
 import {readStockFile} from './stock-file.js';
 import {materialsZh,renderMaterialPanel} from './materials.js';
 import {ledgerZh,renderInventoryLedger} from './inventory-ledger.js';
@@ -32,14 +33,17 @@ export const inventoryZh={
 
 export function renderInventory({state,shell,api,t,date,partName}){
   const s=state.inventory??={section:'query',query:{q:'',page:1},history:{q:'',sku:'',from:'',to:'',page:1},batches:{open:{},adjust:{}}};
-  const section=s.section,history=section==='history',listing=history||section==='query';
+  const readOnly=state.session.user.role==='customer';
+  const section=readOnly?'query':s.section,history=section==='history',listing=history||section==='query';
+  const stockReadBase=readOnly?'/api/inventory':base;
+  const navigation=readOnly?{query:sections.query}:sections;
   const filters=history?s.history:s.query,batch=s.batches[section];
   const tr=text=>e(t(text));
   const table=(headers,rows)=>`<div class="table-wrap stock-table"><table><thead><tr>${headers.map(text=>`<th>${tr(text)}</th>`).join('')}</tr></thead><tbody>${rows||`<tr><td colspan="${headers.length}" class="empty">${tr('No records found')}</td></tr>`}</tbody></table></div>`;
   const shellId='stock-workspace';
   const byId=id=>document.getElementById(id);
   const stock=n=>`<strong class="${n<0?'danger':'stock-value'}">${e(n)}</strong>`;
-  shell(`<div id="${shellId}" class="inventory-layout"><aside class="panel inventory-nav"><h2>${tr('Material Inventory')}</h2><nav aria-label="${tr('Material Inventory')}">${Object.entries(sections).map(([key,label])=>`<button type="button" data-stock-section="${key}" ${key===section?'aria-current="page"':''}>${tr(label)}</button>`).join('')}</nav></aside><section class="panel inventory-main"><div class="panel-head"><h1>${tr(sections[section])}</h1>${section==='query'?`<a class="button" href="${base}/export?language=${state.lang}">${tr('Export Stock')}</a>`:''}</div><div id="stock-error" class="error-box" role="alert" hidden></div>
+  shell(`<div id="${shellId}" class="inventory-layout"><aside class="panel inventory-nav"><h2>${tr('Material Inventory')}</h2><nav aria-label="${tr('Material Inventory')}">${Object.entries(navigation).map(([key,label])=>`<button type="button" data-stock-section="${key}" ${key===section?'aria-current="page"':''}>${tr(label)}</button>`).join('')}</nav></aside><section class="panel inventory-main"><div class="panel-head"><h1>${tr(sections[section])}</h1>${section==='query'&&!readOnly?`<a class="button" href="${base}/export?language=${state.lang}">${tr('Export Stock')}</a>`:''}</div><div id="stock-error" class="error-box" role="alert" hidden></div>
     ${section==='materials'?'<div id="material-panel"></div>':section==='ledger'?'<div id="ledger-panel"></div>':listing?`<form id="stock-search" class="search-row">
       <label class="grow">${tr(history?'Search SKU, work order, or serial number':'Search part SKU or description')}<input id="stock-q" value="${e(filters.q)}" maxlength="200"></label>
       ${history?`<label>${tr('From')}<input id="stock-from" type="date" value="${e(filters.from)}"></label><label>${tr('To')}<input id="stock-to" type="date" value="${e(filters.to)}"></label>`:''}
@@ -89,8 +93,8 @@ export function renderInventory({state,shell,api,t,date,partName}){
       if(history)return;
       byId('stock-detail').innerHTML=`<h2>${tr('Item Details')}</h2>${item?`<p><strong>${e(item.sku)}</strong></p><p>${partName(item)}</p>
         <dl><dt>${tr('Current Stock')}</dt><dd>${stock(item.quantity)} ${e(item.unit??'')}</dd><dt>${tr('Last Stock Update')}</dt><dd>${e(item.updatedAt?date(item.updatedAt):'—')}</dd></dl>
-        <div class="row"><button id="stock-view-history" type="button">${tr('View Usage History')}</button>
-        <button id="stock-view-ledger" type="button">${tr('View stock changes')}</button></div>`:`<p class="muted">${tr('Select a row to see its details.')}</p>`}`;
+        ${readOnly?'':`<div class="row"><button id="stock-view-history" type="button">${tr('View Usage History')}</button>
+        <button id="stock-view-ledger" type="button">${tr('View stock changes')}</button></div>`}`:`<p class="muted">${tr('Select a row to see its details.')}</p>`}`;
       bind('stock-view-history','click',()=>{s.history={q:'',sku:item.sku,from:'',to:'',page:1};go('history');});
       bind('stock-view-ledger','click',()=>{s.ledger={...ledgerState,mode:'movements',sku:item.sku};go('ledger');});
     }
@@ -101,13 +105,13 @@ export function renderInventory({state,shell,api,t,date,partName}){
       result.textContent=t('Loading inventory…');
       detail();
       let data;
-      try{data=await api(`${base}${history?'/history':''}?${new URLSearchParams(Object.entries(filters).filter(([,v])=>v))}`);}
+      try{data=await api(`${stockReadBase}${history?'/history':''}?${new URLSearchParams(Object.entries(filters).filter(([,v])=>v))}`);}
       catch(error){if(isCurrent()&&request===sequence){result.textContent='';showError(error);}return;}
       if(!isCurrent()||request!==sequence)return;
       const {items,page,pageSize,total}=data;
-      const headers=history?['Part SKU','Part Name','Qty','Work Order','Serial Number','Work Date']:['Part SKU','Part Name','Current Stock','Unit'];
+      const headers=history?['Part SKU','Part Name','Qty','Work Order','Serial Number','Work Time']:['Part SKU','Part Name','Current Stock','Unit'];
       const rows=items.map((item,i)=>history?
-        `<tr><td>${e(item.sku)}</td><td>${partName(item)}</td><td>${e(item.quantity)} ${e(item.unit??'')}</td><td>${e(item.workOrder)}</td><td>${e(item.sn)}</td><td>${e(item.workDate)}</td></tr>`:
+        `<tr><td>${e(item.sku)}</td><td>${partName(item)}</td><td>${e(item.quantity)} ${e(item.unit??'')}</td><td>${e(item.workOrder)}</td><td>${e(item.sn)}</td><td>${e(displayWorkTime(item))}</td></tr>`:
         `<tr><td><button class="record-link" type="button" data-stock-row="${i}">${e(item.sku)}</button></td><td>${partName(item)}</td><td>${stock(item.quantity)}</td><td>${e(item.unit??'')}</td></tr>`).join('');
       result.innerHTML=table(headers,rows)+`<div class="pagination"><small>${e(total)} ${tr('items')} · ${tr('Page')} ${page} / ${Math.max(1,Math.ceil(total/pageSize))}</small><div class="row"><button id="stock-prev" ${page<=1?'disabled':''}>${tr('Previous')}</button><button id="stock-next" ${page*pageSize>=total?'disabled':''}>${tr('Next')}</button></div></div>`;
       result.querySelectorAll('[data-stock-row]').forEach(btn=>btn.addEventListener('click',()=>{s.selected=items[Number(btn.dataset.stockRow)].sku;detail(items[Number(btn.dataset.stockRow)]);}));

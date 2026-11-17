@@ -5,12 +5,63 @@ import path from 'node:path';
 import { chromium } from 'playwright';
 import { startServer } from '../server.js';
 
+test('customer sees only work-order and stock queries in both languages', {timeout:60000}, async t => {
+  await mkdir('tests/.tmp',{recursive:true});
+  const app=await startServer({dataDir:await mkdtemp(path.resolve('tests/.tmp/customer-ui-')),demo:true});
+  t.after(()=>app.close());
+  const browser=await chromium.launch({headless:true,executablePath:'C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe'});
+  t.after(()=>browser.close());
+  const page=await browser.newPage({viewport:{width:1366,height:768}});
+  const errors=[];
+  page.on('pageerror',error=>errors.push(error.message));
+  const byId=id=>page.locator('#'+id);
+  async function login(username,password){
+    await byId('username').fill(username);
+    await byId('password').fill(password);
+    await page.getByRole('button',{name:'Sign in',exact:true}).click();
+    await byId('records-nav').waitFor();
+  }
+  await page.goto(app.baseUrl);
+  await login('admin','JackeryAdmin!2026');
+  await byId('admin-nav').click();
+  await byId('admin-new').click();
+  await byId('admin-username').fill('jackery_customer');
+  await byId('admin-displayName').fill('Jackery Customer');
+  await byId('admin-role').selectOption({label:'Customer'});
+  await byId('admin-password').fill('CustomerReadOnly!2026');
+  await byId('admin-form').getByRole('button',{name:'Save',exact:true}).click();
+  await page.getByText('Jackery Customer',{exact:true}).waitFor();
+  await byId('logout').click();
+  await login('jackery_customer','CustomerReadOnly!2026');
+  assert.deepEqual(await page.locator('header nav button').allTextContents(),['Work Orders','Stock Query']);
+  assert.equal(await page.locator('#new-record,#export-records,#admin-nav,#filter-status option[value=draft]').count(),0);
+  const wfrRow=page.locator('tr').filter({hasText:'DEMO-WFR-001'});
+  await wfrRow.locator('[data-open-record]').click();
+  await byId('view-history').waitFor();
+  assert.ok(await byId('issueNotes').isDisabled());
+  assert.equal(await byId('workTime').getAttribute('readonly'),'');
+  assert.match(await byId('workTime').inputValue(),/^\d{4}-\d{2}-\d{2}$/);
+  assert.equal(await page.locator('#save-record,#complete-record,#open-bom,#view-audit,#start-correction,#choose-photo').count(),0);
+  await byId('view-history').click();
+  await page.locator('[data-history-record]').waitFor();
+  await byId('inventory-nav').click();
+  await page.locator('[data-stock-row]').first().waitFor();
+  assert.deepEqual(await page.locator('[data-stock-section]').allTextContents(),['Stock Query']);
+  assert.equal(await page.locator('#stock-upload,#stock-view-history,#stock-view-ledger,a[href*="/inventory/export"]').count(),0);
+  await byId('language').click();
+  await page.getByRole('heading',{name:'库存查询',exact:true}).waitFor();
+  assert.deepEqual(await page.locator('header nav button').allTextContents(),['工单查询','库存查询']);
+  await byId('records-nav').click();
+  await page.getByRole('heading',{name:'工单查询',exact:true}).waitFor();
+  assert.deepEqual(errors,[]);
+});
+
 test('real browser operator, BOM, WFR, checks, photo, history and admin workflows', {timeout:180000}, async () => {
   await mkdir('tests/.tmp',{recursive:true});
   const dataDir=await mkdtemp(path.resolve('tests/.tmp/frontend-'));
   const app=await startServer({dataDir,demo:true});
   const browser=await chromium.launch({headless:true,executablePath:'C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe'});
-  const page=await browser.newPage({viewport:{width:1680,height:1100}});const errors=[];
+  const page=await browser.newPage({viewport:{width:1680,height:1100},timezoneId:'Asia/Shanghai'});const errors=[];
   page.on('pageerror',e=>errors.push(e.message));page.on('console',m=>{if(m.type()==='error')errors.push(m.text());});
   page.on('dialog',d=>d.accept());
   const byId=id=>page.locator('#'+id);
@@ -18,10 +69,15 @@ test('real browser operator, BOM, WFR, checks, photo, history and admin workflow
   try {
     await page.goto(app.baseUrl);await login('alex','JackeryAlex!2026');
     assert.equal(await page.getByText('DEMO-HISTORY-001',{exact:true}).count(),0,'ordinary list must not expose Blair history');
+    await page.clock.setFixedTime(new Date('2026-11-16T23:03:58Z'));
     await byId('new-record').click();await byId('modelId').selectOption('1');await byId('sn').fill('E2E-UI-001');await byId('modelId').selectOption('1');
+    assert.equal(await byId('workTime').inputValue(),'2026-11-17T00:03');
+    await byId('workTime').fill('2026-11-17T00:27');
     await byId('appearanceNotes').fill('scratch <script>never execute</script>');await byId('issueNotes').fill('AC failure');
     await page.locator('input[name=outcome][value=awp]').check();assert.equal(await byId('complete-record').count(),0);
     await byId('save-record').click();await page.getByText('Saved successfully',{exact:true}).waitFor();
+    await byId('reload-record').click();
+    await page.waitForFunction(()=>document.getElementById('workTime').value==='2026-11-17T00:27');
     await mkdir('artifacts/e2e',{recursive:true});await page.screenshot({path:'artifacts/e2e/editor-en.png',fullPage:true});
     await byId('open-bom').click();await byId('bom-results').locator('input[type=checkbox]:enabled').nth(1).check();
     const firstSku=await byId('bom-pending').locator('[data-pending-sku]').first().textContent();
@@ -54,7 +110,7 @@ test('real browser operator, BOM, WFR, checks, photo, history and admin workflow
     await page.locator('[data-appearance=no_defect]').check();await page.locator('[data-appearance=scratches]').check();assert.equal(await page.locator('[data-appearance=no_defect]').isChecked(),false);
     await byId('complete-record').click();await page.waitForFunction(()=>document.querySelector('#issueNotes')?.disabled&&document.querySelector('.heading')?.textContent.includes('Completed'));
     await byId('history-nav').click();await byId('history-sn').fill('DEMO-HISTORY-001');await byId('history-form').getByRole('button',{name:'Search',exact:true}).click();await page.locator('[data-history-record]').first().click();
-    assert.equal(await byId('issueNotes').isDisabled(),true);await byId('view-audit').click();await byId('audit-dialog').waitFor();await byId('audit-close').click();
+    assert.equal(await byId('issueNotes').isDisabled(),true);assert.equal(await byId('view-audit').count(),0);
     await byId('logout').click();await login('admin','JackeryAdmin!2026');
     await byId('admin-nav').click();await byId('admin-section').selectOption('models');await byId('admin-new').click();
     await byId('admin-nameEn').fill('E2E UI Model');await byId('admin-nameZh').fill('界面测试型号');await byId('admin-checkItems').fill('power|Power on|开机');
@@ -66,6 +122,7 @@ test('real browser operator, BOM, WFR, checks, photo, history and admin workflow
     await byId('admin-section').selectOption('users');await byId('admin-new').click();await byId('admin-username').fill('e2e_operator');await byId('admin-displayName').fill('E2E Operator');await byId('admin-password').fill('E2EOperator!2026');await byId('admin-save').click();await page.getByText('Saved successfully',{exact:true}).waitFor();
     await page.locator('tr').filter({hasText:'e2e_operator'}).getByRole('button',{name:'Edit',exact:true}).click();await byId('admin-active').uncheck();await byId('admin-save').click();await page.getByText('Saved successfully',{exact:true}).waitFor();
     await byId('records-nav').click();await byId('filter-q').fill('E2E-UI-001');await byId('filters').getByRole('button',{name:'Search',exact:true}).click();await page.locator('[data-open-record]').first().click();
+    await byId('view-audit').click();await byId('audit-dialog').waitFor();await byId('audit-close').click();
     await byId('start-correction').click();await byId('correctionReason').fill('E2E verified correction');await byId('issueNotes').fill('Corrected note');await byId('save-correction').click();await page.getByText('Saved successfully',{exact:true}).waitFor();
     await byId('records-nav').click();const downloadPromise=page.waitForEvent('download');await byId('export-records').click();const download=await downloadPromise;assert.match(download.suggestedFilename(),/\.xlsx$/);
     await page.screenshot({path:'artifacts/e2e/admin-records.png',fullPage:true});assert.deepEqual(errors,[],'page and console errors');

@@ -16,6 +16,7 @@ import {loadSourceTranslations,translateModel,translateKnowledge} from './src/so
 import {currentModelChecklist,currentRecordChecklist} from './src/checklists.js';
 import {applyModelSkuMapping} from './src/model-sku.js';
 import {applyE2000PlusAAvailability} from './src/model-availability.js';
+import {modelSubstitutionGroups,substitutionSelection,validateSubstitutionUsage} from './src/bom-substitutions.js';
 import {stockQuantities,inventoryList,usageHistory,previewStockBatch,commitStockBatch,inventoryBatches,inventoryMovements,applyCompletedUsage,exportInventory,stockTemplate} from './src/inventory.js';
 import {materialList,materialTemplate,previewMaterialImport,commitMaterialImport,setMaterialActive,disabledMaterials} from './src/materials.js';
 
@@ -28,7 +29,31 @@ const isObject=value=>value&&typeof value==='object'&&!Array.isArray(value);
 function same(a,b){if(typeof a!=='string'||typeof b!=='string')return false;const x=Buffer.from(a),y=Buffer.from(b);return x.length===y.length&&timingSafeEqual(x,y);}
 function password(value){if(typeof value!=='string'||value.length<10||value.length>128)invalid('Password must contain 10–128 characters');return value;}
 function version(input,current){if(!Number.isSafeInteger(input)||input!==current.version)throw new ApiError(409,'VERSION_CONFLICT','Record changed; reload before saving',{currentVersion:current.version});}
-function readAllowed(user,record,exactSn){if(user.role==='admin'||record.ownerId===user.id)return;if(typeof exactSn==='string'&&exactSn.trim()&&exactSn.trim()===record.sn)return;forbidden('This record is visible only to its owner or through exact-SN history');}
+const userRoles = new Set(['admin','operator','customer']);
+const customerRecordVisible = record => ['completed','wfr'].includes(record.status);
+const customerReadRoutes = new Set(['/api/catalog','/api/records','/api/sn-history','/api/inventory']);
+function customerRouteAllowed(method,route){
+  if(method==='GET')return customerReadRoutes.has(route)||/^\/api\/(records\/\d+|photos\/[a-f0-9]{32})$/.test(route);
+  return (method==='POST'&&['/api/logout','/api/account/password'].includes(route))||(method==='PUT'&&route==='/api/account/language');
+}
+function readAllowed(user,record,exactSn){
+  if(user.role==='customer'){
+    if(!customerRecordVisible(record))forbidden();
+    return;
+  }
+  if(user.role==='admin'||record.ownerId===user.id)return;
+  if(typeof exactSn==='string'&&exactSn.trim()&&exactSn.trim()===record.sn)return;
+  forbidden('This record is visible only to its owner or through exact-SN history');
+}
+function customerRecord(record){
+  const {id,workOrder,sn,modelId,productSku,workDate,workTime,status,outcome,checks,faultCodes,
+    appearanceCodes,appearanceSnapshot,appearanceNotes,issueNotes,scrapReason,materials,photos,updatedAt,version}=record;
+  const {nameEn,nameZh,bomVersion,checkItems}=record.modelSnapshot;
+  return {id,workOrder,sn,modelId,productSku,workDate,workTime,status,outcome,checks:{initial:checks.initial},faultCodes,
+    modelSnapshot:{nameEn,nameZh,bomVersion,checkItems},appearanceCodes,appearanceSnapshot,appearanceNotes,issueNotes,scrapReason,
+    materials:materials.map(({sku,descriptionZh,descriptionEn,unit,quantity,standardQty,substitution})=>({sku,descriptionZh,descriptionEn,unit,quantity,standardQty,...(substitution?{substitution}:{})})),
+    photos:photos.map(({url})=>({url})),updatedAt,version};
+}
 function pagination(params,defaultSize){const page=Number(params.get('page')??1),pageSize=Number(params.get('pageSize')??defaultSize);if(!Number.isSafeInteger(page)||page<1||!Number.isSafeInteger(pageSize)||pageSize<1||pageSize>100)invalid('Invalid pagination; page size must be 1–100');return {page,pageSize};}
 function filteredRecords(store,user,params){
   if(user.role!=='admin'&&params.has('ownerId'))forbidden('Owner filtering is administrator only');
@@ -36,7 +61,8 @@ function filteredRecords(store,user,params){
   const from=params.get('from'),to=params.get('to');if(from)isoDate(from);if(to)isoDate(to);if(from&&to&&from>to)invalid('Date filter is reversed');
   const owner=params.get('ownerId'),model=params.get('modelId');if(owner)positiveId(Number(owner),'Owner ID');if(model)positiveId(Number(model),'Model ID');
   const q=params.get('q')??'';textValue(q,'Search',200);
-  return store.all('records').filter(r=>(user.role==='admin'||r.ownerId===user.id)&&(!owner||r.ownerId===Number(owner))&&(!model||r.modelId===Number(model))&&(!status||r.status===status)&&(!from||r.workDate>=from)&&(!to||r.workDate<=to)&&(!q||r.sn.includes(q)||r.workOrder.includes(q))).sort((a,b)=>b.createdAt.localeCompare(a.createdAt)||b.id-a.id).map(r=>store.record(r.id));
+  const visible = user.role==='customer'?customerRecordVisible:r=>user.role==='admin'||r.ownerId===user.id;
+  return store.all('records').filter(r=>visible(r)&&(!owner||r.ownerId===Number(owner))&&(!model||r.modelId===Number(model))&&(!status||r.status===status)&&(!from||r.workDate>=from)&&(!to||r.workDate<=to)&&(!q||r.sn.includes(q)||r.workOrder.includes(q))).sort((a,b)=>b.createdAt.localeCompare(a.createdAt)||b.id-a.id).map(r=>store.record(r.id));
 }
 async function body(req){
   if(!/^application\/json(?:\s*;\s*charset=utf-8)?$/i.test(req.headers['content-type']??''))throw new ApiError(400,'JSON_CONTENT_TYPE','Content-Type must be application/json');
@@ -107,6 +133,7 @@ export async function startServer({dataDir=path.join(root,'data'),demo=false,por
         if(!same(req.headers['x-csrf-token'],session.csrfToken))throw new ApiError(403,'CSRF','Invalid CSRF token');
       }
       if(route.startsWith('/api/admin/')&&user.role!=='admin')forbidden('Administrator access required');
+      if(user.role==='customer'&&!customerRouteAllowed(method,route))forbidden();
       if(method==='POST'&&route==='/api/logout'){db.prepare('DELETE FROM sessions WHERE token_hash=?').run(session.tokenHash);return send(200,{ok:true},{'Set-Cookie':expireCookie});}
       if(method==='PUT'&&route==='/api/account/language'){
         const input=await body(req);if(!['en','zh'].includes(input.language))invalid('Language must be en or zh');
@@ -120,6 +147,10 @@ export async function startServer({dataDir=path.join(root,'data'),demo=false,por
       }
       if(method==='GET'&&route==='/api/catalog'){
         const inactive=params.get('includeInactive')==='1';if(inactive&&user.role!=='admin')forbidden();
+        if(user.role==='customer'){
+          const models=store.all('models').map(({id,nameEn,nameZh,bomVersion})=>({id,nameEn,nameZh,bomVersion}));
+          return send(200,{models,appearanceOptions:[],outcomes});
+        }
         const c=store.catalog();return send(200,{models:c.models.filter(m=>inactive||m.active).map(m=>currentModelChecklist(translateModel(m,sourceTranslations))),appearanceOptions:c.appearanceOptions.filter(m=>inactive||m.active),outcomes,bomTranslations,sourceTranslations});
       }
       let match=route.match(/^\/api\/models\/(\d+)\/knowledge$/);
@@ -134,16 +165,19 @@ export async function startServer({dataDir=path.join(root,'data'),demo=false,por
         const {page,pageSize}=pagination(params,50),q=params.get('q')??'';textValue(q,'Search',200);const lower=q.toLocaleLowerCase();
         const category=params.get('category')??'all',categories=['core','non_core','packaging'];if(category!=='all'&&!categories.includes(category))invalid('Invalid BOM category');
         const disabled=disabledMaterials(store);
-        const modelItems=store.all('bom').filter(b=>b.modelId===modelId&&(inactive||b.active&&!disabled.has(b.sku))),categoryCounts={all:modelItems.length,core:0,non_core:0,packaging:0,uncategorized:0};
-        for(const item of modelItems)if(!item.allOnly)categoryCounts[categories.includes(item.category)?item.category:'uncategorized']++;
         const stock=stockQuantities(store);
-        const items=modelItems.filter(b=>category==='all'||b.category===category).map(b=>translateBom(b,bomTranslations)).filter(b=>!q||[b.sku,b.descriptionEn,b.descriptionZh].some(value=>(value??'').toLocaleLowerCase().includes(lower))).sort((a,b)=>Number(b.sku===q)-Number(a.sku===q)||a.sku.localeCompare(b.sku)).map(b=>({...b,missingEnglish:!b.descriptionEn?.trim(),stockQuantity:stock.get(b.sku)??0}));
+        const translated=store.all('bom').filter(b=>b.modelId===modelId).map(b=>translateBom(b,bomTranslations));
+        const groups=params.get('substitutions')==='1'&&!inactive?modelSubstitutionGroups(store,modelId):[];
+        const modelItems=groups.length?substitutionSelection(translated,groups,stock,disabled):translated.filter(b=>inactive||b.active&&!b.substituteOnly&&!disabled.has(b.sku)),categoryCounts={all:modelItems.length,core:0,non_core:0,packaging:0,uncategorized:0};
+        for(const item of modelItems)if(!item.allOnly)categoryCounts[categories.includes(item.category)?item.category:'uncategorized']++;
+        const matches=b=>[b.sku,b.descriptionEn,b.descriptionZh].some(value=>(value??'').toLocaleLowerCase().includes(lower));
+        const items=modelItems.filter(b=>category==='all'||b.category===category).filter(b=>!q||matches(b)||b.substitutionGroup?.items.some(matches)||b.substitutionGroup?.kits?.some(k=>k.items.some(matches))).sort((a,b)=>Number(b.sku===q)-Number(a.sku===q)||a.sku.localeCompare(b.sku)).map(b=>({...b,missingEnglish:!b.descriptionEn?.trim(),stockQuantity:stock.get(b.sku)??0}));
         return send(200,{items:items.slice((page-1)*pageSize,page*pageSize),total:items.length,page,pageSize,categoryCounts});
       }
-      if(method==='GET'&&route==='/api/records'){const {page,pageSize}=pagination(params,20),items=filteredRecords(store,user,params);return send(200,{items:items.slice((page-1)*pageSize,page*pageSize),total:items.length,page,pageSize});}
+      if(method==='GET'&&route==='/api/records'){const {page,pageSize}=pagination(params,20),items=filteredRecords(store,user,params);const pageItems=items.slice((page-1)*pageSize,page*pageSize);return send(200,{items:user.role==='customer'?pageItems.map(customerRecord):pageItems,total:items.length,page,pageSize});}
       if(method==='GET'&&route==='/api/sn-history'){
         const sn=textValue(params.get('sn')??'','SN',200,true).trim();
-        const items=store.all('records').filter(r=>r.sn===sn).sort((a,b)=>b.createdAt.localeCompare(a.createdAt)||b.id-a.id).map(r=>{const item=store.record(r.id);if(user.role!=='admin'&&item.ownerId!==user.id)item.photos=item.photos.map(p=>({...p,url:p.url+'?sn='+encodeURIComponent(sn)}));return item;});return send(200,{items});
+        const items=store.all('records').filter(r=>r.sn===sn&&(user.role!=='customer'||customerRecordVisible(r))).sort((a,b)=>b.createdAt.localeCompare(a.createdAt)||b.id-a.id).map(r=>{const item=store.record(r.id);if(user.role==='customer')return customerRecord(item);if(user.role!=='admin'&&item.ownerId!==user.id)item.photos=item.photos.map(p=>({...p,url:p.url+'?sn='+encodeURIComponent(sn)}));return item;});return send(200,{items});
       }
       if(method==='POST'&&route==='/api/records'){
         const input=await body(req);
@@ -157,8 +191,8 @@ export async function startServer({dataDir=path.join(root,'data'),demo=false,por
       match=route.match(/^\/api\/records\/(\d+)(?:\/(audit|corrections|photos))?$/);
       if(match){
         const id=Number(match[1]),sub=match[2];
-        if(method==='GET'&&!sub){const record=store.record(id);readAllowed(user,record,params.get('historySn'));if(record.ownerId!==user.id&&user.role!=='admin')record.photos=record.photos.map(p=>({...p,url:p.url+'?sn='+encodeURIComponent(record.sn)}));return send(200,{record});}
-        if(method==='GET'&&sub==='audit'){const r=store.record(id);readAllowed(user,r,params.get('historySn'));return send(200,{items:store.all('audits').filter(a=>a.recordId===id).sort((a,b)=>b.id-a.id)});}
+        if(method==='GET'&&!sub){const record=store.record(id);readAllowed(user,record,params.get('historySn'));if(user.role==='customer')return send(200,{record:customerRecord(record)});if(record.ownerId!==user.id&&user.role!=='admin')record.photos=record.photos.map(p=>({...p,url:p.url+'?sn='+encodeURIComponent(record.sn)}));return send(200,{record});}
+        if(method==='GET'&&sub==='audit'){if(user.role!=='admin')forbidden();store.record(id);return send(200,{items:store.all('audits').filter(a=>a.recordId===id).sort((a,b)=>b.id-a.id)});}
         if((method==='PUT'&&!sub)||(method==='POST'&&sub==='corrections')){
           const input=await body(req),correction=sub==='corrections';
           const record=store.tx(()=>{
@@ -166,7 +200,12 @@ export async function startServer({dataDir=path.join(root,'data'),demo=false,por
             if(correction){if(user.role!=='admin')forbidden();textValue(input.reason??'','Correction reason',2000,true);}else if(before.ownerId!==user.id||before.status==='completed')forbidden('Only the owner may edit an unfinished record; administrator corrections require a reason');
             version(input.version,before);
             const changes=correction?input.changes:input;if(!isObject(changes))invalid('Changes must be a record input');
-            const after=validateRecord({...changes,...(correction&&before.status==='completed'?{action:'complete'}:{})},before,recordCatalog());
+            const catalog=recordCatalog();
+            const after=validateRecord({...changes,...(correction&&before.status==='completed'?{action:'complete'}:{})},before,catalog);
+            after.materials=validateSubstitutionUsage(after.materials,before.materials??[],{
+              groups:modelSubstitutionGroups(store,after.modelId),stock:stockQuantities(store),
+              blocked:new Set([...catalog.disabledMaterials,...catalog.bom.filter(b=>b.modelId===after.modelId&&!b.active).map(b=>b.sku)]),
+            });
             after.version=before.version+1;after.updatedAt=new Date().toISOString();after.completedAt=after.status==='completed'?(before.completedAt??after.updatedAt):null;
             applyCompletedUsage(store,before,after,user);
             return persistRecord(after,user,correction?'correction':after.status==='completed'?'complete':'save',correction?input.reason.trim():'',before);
@@ -222,7 +261,8 @@ export async function startServer({dataDir=path.join(root,'data'),demo=false,por
         const language=params.get('language')??'en';if(!['en','zh'].includes(language))invalid('Language must be en or zh');
         const records=filteredRecords(store,user,params);const bytes=exportRecords(records,publicBaseUrl??baseUrl,language,{sourceTranslations,bomTranslations});return send(200,bytes,{'Content-Type':'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet','Content-Disposition':`attachment; filename="jackery-${new Date().toISOString().slice(0,10)}.xlsx"`});
       }
-      if(method==='GET'&&['/api/admin/inventory','/api/admin/inventory/history'].includes(route)){
+      if(method==='GET'&&['/api/inventory','/api/admin/inventory','/api/admin/inventory/history'].includes(route)){
+        if(route==='/api/inventory'&&user.role!=='customer'&&user.role!=='admin')forbidden();
         const {page,pageSize}=pagination(params,30);
         const items=route.endsWith('/history')?usageHistory(store,params):inventoryList(store,params.get('q')??'',bomTranslations);
         return send(200,{items:items.slice((page-1)*pageSize,page*pageSize),total:items.length,page,pageSize});
@@ -254,7 +294,7 @@ export async function startServer({dataDir=path.join(root,'data'),demo=false,por
       if(method==='GET'&&route==='/api/admin/users')return send(200,{items:db.prepare('SELECT * FROM users ORDER BY id').all().map(userDto)});
       if(method==='POST'&&route==='/api/admin/users'){
         const input=await body(req),username=textValue(input.username??'','Username',80,true).trim();if(!/^[A-Za-z0-9_.-]+$/.test(username))invalid('Username allows letters, digits, underscore, dot and hyphen');
-        const displayName=textValue(input.displayName??'','Display name',200,true).trim();if(!['admin','operator'].includes(input.role))invalid('Invalid role');
+        const displayName=textValue(input.displayName??'','Display name',200,true).trim();if(!userRoles.has(input.role))invalid('Invalid role');
         const hash=passwordHash(password(input.password));if(db.prepare('SELECT id FROM users WHERE username=?').get(username))invalid('Username already exists');
         const result=db.prepare('INSERT INTO users(username,display_name,role,password_hash) VALUES(?,?,?,?)').run(username,displayName,input.role,hash);return send(201,{user:userDto(db.prepare('SELECT * FROM users WHERE id=?').get(Number(result.lastInsertRowid)))});
       }
@@ -263,7 +303,7 @@ export async function startServer({dataDir=path.join(root,'data'),demo=false,por
         const id=Number(match[1]),row=db.prepare('SELECT * FROM users WHERE id=?').get(id);if(!row)absent('User not found');
         if(method==='PUT'&&!match[2]){
           const input=await body(req),displayName=textValue(input.displayName??row.display_name,'Display name',200,true).trim(),role=input.role??row.role,active=input.active??Boolean(row.active);
-          if(!['admin','operator'].includes(role)||typeof active!=='boolean')invalid('Invalid role or active state');
+          if(!userRoles.has(role)||typeof active!=='boolean')invalid('Invalid role or active state');
           store.tx(()=>{if(row.role==='admin'&&row.active&&(!active||role!=='admin')&&db.prepare("SELECT COUNT(*) AS n FROM users WHERE role='admin' AND active=1").get().n<=1)invalid('Cannot deactivate or demote the last active administrator');db.prepare('UPDATE users SET display_name=?,role=?,active=? WHERE id=?').run(displayName,role,active?1:0,id);if(!active||role!==row.role)db.prepare('DELETE FROM sessions WHERE user_id=?').run(id);});return send(200,{user:userDto(db.prepare('SELECT * FROM users WHERE id=?').get(id))});
         }
         if(method==='POST'&&match[2]){const input=await body(req),hash=passwordHash(password(input.password));store.tx(()=>{db.prepare('UPDATE users SET password_hash=? WHERE id=?').run(hash,id);db.prepare('DELETE FROM sessions WHERE user_id=?').run(id);});return send(200,{ok:true});}

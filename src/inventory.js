@@ -23,7 +23,7 @@ export function usageHistory(store,params){
   return store.all('records').filter(r=>r.status==='completed'&&(!from||r.workDate>=from)&&(!to||r.workDate<=to))
     .sort((a,b)=>b.workDate.localeCompare(a.workDate)||b.id-a.id)
     .flatMap(r=>(r.materials??[]).filter(m=>(!sku||m.sku===sku)&&[m.sku,m.descriptionZh,m.descriptionEn,r.workOrder,r.sn].some(value=>value?.toLowerCase().includes(q)))
-      .map(m=>({sku:m.sku,descriptionZh:m.descriptionZh,descriptionEn:m.descriptionEn,unit:m.unit,quantity:m.quantity,workOrder:r.workOrder,sn:r.sn,workDate:r.workDate})));
+      .map(m=>({sku:m.sku,descriptionZh:m.descriptionZh,descriptionEn:m.descriptionEn,unit:m.unit,quantity:m.quantity,workOrder:r.workOrder,sn:r.sn,workDate:r.workDate,workTime:r.workTime})));
 }
 
 export function previewStockBatch(store,{kind,csv}){

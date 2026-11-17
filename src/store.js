@@ -37,7 +37,12 @@ export function openStore(dataDir,demo){
   const get=(table,id)=>{const row=db.prepare(`SELECT data FROM ${table} WHERE ${table==='appearance'?'code':'id'}=?`).get(id);return row?JSON.parse(row.data):null;};
   const all=table=>db.prepare(`SELECT data FROM ${table}`).all().map(r=>JSON.parse(r.data));
   const put=(table,obj)=>{if(table==='appearance')db.prepare('INSERT INTO appearance(code,data) VALUES(?,?) ON CONFLICT(code) DO UPDATE SET data=excluded.data').run(obj.code,JSON.stringify(obj));else if(table==='bom')db.prepare('INSERT INTO bom(id,model_id,sku,data) VALUES(?,?,?,?) ON CONFLICT(id) DO UPDATE SET model_id=excluded.model_id,sku=excluded.sku,data=excluded.data').run(obj.id,obj.modelId,obj.sku,JSON.stringify(obj));else db.prepare(`INSERT INTO ${table}(id,data) VALUES(?,?) ON CONFLICT(id) DO UPDATE SET data=excluded.data`).run(obj.id,JSON.stringify(obj));};
-  const next=table=>Number(db.prepare(`SELECT COALESCE(MAX(id),0)+1 AS id FROM ${table}`).get().id);
+  const next=table=>{
+    const last=Number(db.prepare(`SELECT COALESCE(MAX(id),0) AS id FROM ${table}`).get().id);
+    if(table!=='records')return last+1;
+    const floor=Number(db.prepare("SELECT value FROM meta WHERE key='records:id-floor'").get()?.value??0);
+    return Math.max(last,floor)+1;
+  };
   if(!mode){
     tx(()=>{
       db.prepare('INSERT INTO meta(key,value) VALUES(?,?)').run('mode',demo?'demo':'production');

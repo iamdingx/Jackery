@@ -4,7 +4,9 @@ import { mkdtempSync, mkdirSync, rmSync, writeFileSync, existsSync } from 'node:
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
 import { inflateRawSync } from 'node:zlib';
+import { DatabaseSync } from 'node:sqlite';
 import { startServer } from '../server.js';
+import { germanWorkTime } from '../public/work-time.js';
 
 const root = path.resolve(fileURLToPath(new URL('..', import.meta.url)));
 const tempRoot = path.join(root, 'tests', '.tmp');
@@ -122,8 +124,93 @@ test('AC-04 WFR resume retains notes, checks and same work order', async t => {
   assert.equal(final.data.record.id, r.id);
   assert.equal(final.data.record.workOrder, r.workOrder);
   assert.equal(final.data.record.issueNotes, 'Waiting for specific board');
-  const audit = await c.req(`/api/records/${r.id}/audit`);
+  const auditPath = `/api/records/${r.id}/audit`;
+  assert.equal((await c.req(auditPath)).status, 403);
+  const blair = await client(app, 'blair', 'JackeryBlair!2026');
+  assert.equal((await blair.req(auditPath+'?historySn=WAIT-AND-RESUME')).status, 403);
+  assert.equal((await fetch(app.baseUrl+auditPath)).status, 401);
+  const admin = await client(app, 'admin', 'JackeryAdmin!2026');
+  const audit = await admin.req(auditPath);
+  assert.equal(audit.status, 200);
   assert.ok(audit.data.items.length >= 2);
+});
+
+test('work order IDs stay above the archived sequence after test records are removed', async t => {
+  const app = await fixture(t), c = await client(app);
+  const database = new DatabaseSync(path.join(app.dir, 'huabao.sqlite'));
+  try {
+    database.prepare('INSERT INTO meta(key,value) VALUES(?,?)').run('records:id-floor','17');
+  } finally {
+    database.close();
+  }
+  const first = await create(c, 'AFTER-ARCHIVE-1');
+  const second = await create(c, 'AFTER-ARCHIVE-2');
+  assert.equal(first.id,18);
+  assert.match(first.workOrder,/-000018$/);
+  assert.equal(second.id,19);
+});
+
+test('Jackery customer reads completed and WFR work and stock without access to drafts or business writes', async t => {
+  const app = await fixture(t);
+  const admin = await client(app,'admin','JackeryAdmin!2026');
+  const alex = await client(app);
+  const sn = 'CUSTOMER-VISIBLE-SN';
+  const draft = await create(alex,sn);
+  const waiting = await create(alex,sn);
+  assert.equal((await alex.req(`/api/records/${waiting.id}`,'PUT',input(waiting,{outcome:'awp'}))).status,200);
+  const finishing = await create(alex,sn);
+  const part = (await admin.req('/api/models/1/bom')).data.items[0];
+  const stockInput = {kind:'receipt',csv:`sku,quantity\n${part.sku},10\n`};
+  const preview = await admin.req('/api/admin/inventory/preview','POST',stockInput);
+  assert.equal(preview.status,200);
+  const imported = await admin.req('/api/admin/inventory/commit','POST',{...stockInput,previewHash:preview.data.previewHash,requestId:'0123456789abcdef0123456789abcdef'});
+  assert.equal(imported.status,200);
+  const image='iVBORw0KGgoAAAANSUhEUgAAAAIAAAADCAIAAAA2iEnWAAAAEUlEQVR4nGP8zwACTGASRgEAFEABBVDVLjgAAAAASUVORK5CYII=';
+  const attach = record => alex.req(`/api/records/${record.id}/photos`,'POST',{version:record.version,filename:'sample.png',contentBase64:image});
+  const draftPhoto = (await attach(draft)).data.photo;
+  const attached = (await attach(finishing)).data;
+  assert.equal((await alex.req(`/api/records/${finishing.id}`,'PUT',input(attached.record,{action:'complete',outcome:'scrap',scrapReason:'Test unit',materials:[{bomId:part.id,quantity:1}]}))).status,200);
+  const created = await admin.req('/api/admin/users','POST',{username:'jackery_customer',displayName:'Jackery Customer',role:'customer',password:'CustomerReadOnly!2026'});
+  assert.equal(created.status,201,created.bytes.toString());
+  const customer = await client(app,'jackery_customer','CustomerReadOnly!2026');
+  const ids = result=>result.data.items.map(row=>row.id).sort((a,b)=>a-b);
+  assert.deepEqual(ids(await customer.req('/api/records?q='+sn)),[waiting.id,finishing.id]);
+  assert.deepEqual(ids(await customer.req('/api/records?q='+sn+'&status=draft')),[]);
+  assert.deepEqual(ids(await customer.req('/api/sn-history?sn='+sn)),[waiting.id,finishing.id]);
+  assert.equal((await customer.req(`/api/records/${draft.id}?historySn=${sn}`)).status,403);
+  const detail = (await customer.req(`/api/records/${finishing.id}`)).data.record;
+  assert.equal(detail.scrapReason,'Test unit');
+  assert.deepEqual(detail.materials.map(({sku,quantity})=>({sku,quantity})),[{sku:part.sku,quantity:1}]);
+  assert.ok(!Object.hasOwn(detail,'ownerId')&&!Object.hasOwn(detail,'faultSnapshot'));
+  assert.equal((await customer.req(detail.photos[0].url)).status,200);
+  assert.equal((await customer.req(draftPhoto.url+'?sn='+sn)).status,403);
+  const stockUrl = '/api/inventory?q='+encodeURIComponent(part.sku);
+  const stock = await customer.req(stockUrl);
+  assert.equal(stock.status,200);
+  assert.ok(stock.data.total>0);
+  assert.ok(stock.data.items.every(item=>Object.hasOwn(item,'quantity')&&Object.hasOwn(item,'updatedAt')));
+  assert.equal(stock.data.items.find(item=>item.sku===part.sku).quantity,9);
+  assert.equal((await alex.req('/api/inventory')).status,403);
+  for(const [method,route] of [
+    ['POST','/api/records'],['PUT',`/api/records/${waiting.id}`],
+    ['POST',`/api/records/${finishing.id}/corrections`],['POST',`/api/records/${waiting.id}/photos`],
+    ['DELETE',attached.photo.url],['GET',`/api/records/${finishing.id}/audit`],
+    ['GET','/api/export'],['GET','/api/admin/inventory/export'],['GET','/api/admin/inventory/history'],
+    ['GET','/api/admin/inventory/movements'],['POST','/api/admin/inventory/preview'],
+    ['POST','/api/admin/inventory/commit'],['POST','/api/admin/materials/import'],['PUT','/api/admin/materials/status']
+  ])assert.equal((await customer.req(route,method,method==='GET'?undefined:{})).status,403,method+' '+route);
+  assert.equal((await customer.req('/api/account/language','PUT',{language:'zh'})).status,200);
+  assert.equal((await admin.req(`/api/admin/users/${created.data.user.id}`,'PUT',{active:false})).status,200);
+  assert.equal((await customer.req('/api/inventory')).status,401);
+  await admin.req('/api/admin/users/2','PUT',{role:'customer'});
+  assert.equal((await alex.req('/api/records')).status,401);
+  const converted = await client(app);
+  assert.equal((await converted.req(`/api/records/${draft.id}`)).status,403);
+  assert.equal((await converted.req(`/api/records/${waiting.id}`,'PUT',{})).status,403);
+  assert.equal((await converted.req(draftPhoto.url)).status,403);
+  assert.deepEqual((await converted.req(stockUrl)).data,stock.data);
+  assert.equal((await admin.req(`/api/records/${waiting.id}`)).data.record.status,'wfr');
+  assert.equal((await admin.req(`/api/records/${draft.id}`)).data.record.photos.length,1);
 });
 
 test('AC-05 only current model BOM items may be consumed', async t => {
@@ -352,6 +439,55 @@ test('REAL fresh production has no fictitious models or records and generates pr
   assert.equal((await fetch(app.baseUrl + '/api/health').then(r => r.json())).demo, false);
   assert.ok(existsSync(path.join(app.dir, 'first-run-accounts.json')), 'Private bootstrap credentials must exist');
   assert.equal((await fetch(app.baseUrl + '/first-run-accounts.json')).status, 404);
+});
+
+test('German work time stores minutes while historical WFR keeps date precision', async t => {
+  assert.equal(germanWorkTime(new Date('2026-01-31T23:05:51Z')), '2026-02-01T00:05');
+  assert.equal(germanWorkTime(new Date('2026-07-31T22:05:51Z')), '2026-08-01T00:05');
+  const app = await fixture(t);
+  const alex = await client(app);
+  const route = '/api/records';
+  const day = '2026-11-17';
+  const old = (await alex.req(route, 'POST', {sn:'TEST-LEGACY-WORK-TIME',modelId:1,workDate:day})).data.record;
+  const wfr = await alex.req(route+'/'+old.id, 'PUT', input(old,{outcome:'awp'}));
+  assert.equal(wfr.status, 200);
+  assert.equal(wfr.data.record.status,'wfr');
+  assert.equal(wfr.data.record.workTime,undefined);
+  assert.equal(wfr.data.record.workDate,day);
+
+  const sn = 'TEST-BERLIN-WORK-TIME';
+  for(const workTime of ['2026-02-30T11:23', day+'T24:00', day+'T23:59:00', day+'T23:59Z']){
+    assert.equal((await alex.req(route, 'POST', {sn,modelId:1,workTime})).status,422);
+  }
+  const workTime = day+'T23:59';
+  const created = await alex.req(route,'POST',{sn,modelId:1,workDate:'2026-11-18',workTime});
+  assert.equal(created.status,201);
+  const current = created.data.record;
+  assert.equal(current.workDate,day);
+  assert.equal(current.workTime,workTime);
+  const currentRoute = route+'/'+current.id;
+  assert.equal((await alex.req(currentRoute,'PUT',input(current,{workTime:''}))).status,422);
+  const updated = await alex.req(currentRoute,'PUT',input(current,{outcome:'awp'}));
+  assert.equal(updated.status,200);
+  assert.equal(updated.data.record.workTime,workTime);
+  assert.equal(updated.data.record.createdAt,current.createdAt);
+  const list = await alex.req(route+'?from='+day+'&to='+day);
+  assert.deepEqual(list.data.items.filter(r=>r.id===old.id||r.id===current.id).map(r=>[r.id,r.workTime]).sort((a,b)=>a[0]-b[0]),[[old.id,undefined],[current.id,workTime]]);
+  assert.equal((await alex.req('/api/sn-history?sn='+sn)).data.items[0].workTime,workTime);
+  for(const [lang,header] of [['en','Work Time (Germany)'],['zh','作业时间（德国）']]){
+    const workbook = zipFiles((await alex.req('/api/export?language='+lang)).bytes);
+    const xml = workbook['xl/worksheets/sheet1.xml'];
+    assert.ok(xml.includes(header));
+    const exportRow = xml.match(/<row[^>]*>.*?<\/row>/g).find(row=>row.includes(old.sn));
+    const headerCell = xml.match(new RegExp('<c r="([A-Z]+)1"[^>]*><is><t[^>]*>'+header.replace(/[()]/g,'\\$&')+'<'));
+    assert.ok(headerCell);
+    assert.ok(!new RegExp('<c r="'+headerCell[1]+'[0-9]+"[^>]*><is><t[^>]*>[0-9]').test(exportRow));
+    assert.ok(xml.includes(day+' 23:59'));
+  }
+
+  const supplemented = await alex.req(route+'/'+old.id,'PUT',input(wfr.data.record,{workTime:day+'T08:15'}));
+  assert.equal(supplemented.status,200);
+  assert.equal(supplemented.data.record.workTime,day+'T08:15');
 });
 
 export { zipFiles };

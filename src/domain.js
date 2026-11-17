@@ -1,4 +1,6 @@
 import {currentModelChecklist} from './checklists.js';
+import {germanWorkTime} from '../public/work-time.js';
+
 export class ApiError extends Error {
   constructor(status,code,message,details){super(message);this.status=status;this.code=code;this.details=details;}
 }
@@ -20,6 +22,12 @@ export function textValue(value,name,max=2000,required=false){
 }
 export function isoDate(value){
   if(typeof value!=='string'||!/^\d{4}-\d{2}-\d{2}$/.test(value)||!Number.isFinite(Date.parse(value+'T00:00:00Z'))||new Date(value+'T00:00:00Z').toISOString().slice(0,10)!==value)invalid('Work date must be a valid ISO date');
+  return value;
+}
+function isoWorkTime(value){
+  if(typeof value!=='string'||!/^\d{4}-\d{2}-\d{2}T(?:[01]\d|2[0-3]):[0-5]\d$/.test(value))
+    invalid('Work time must be a valid date and time to the minute');
+  isoDate(value.slice(0,10));
   return value;
 }
 export function positiveId(value,name='ID') {if(!Number.isSafeInteger(value)||value<1)invalid(`${name} must be a positive integer`);return value;}
@@ -84,7 +92,9 @@ export function validateRecord(input,previous,catalog){
   for(const [field,max] of [['productSku',200],['sourcePallet',200],['storagePallet',200],['appearanceNotes',10000],['issueNotes',10000],['scrapReason',3000]])v[field]=textValue(input[field]??previous[field]??'',field,max);
   for(const field of ['translatedAppearanceNotes','translatedIssueNotes','receivingSku','postSortSku','receivingOrderNo','receivingStatus','productNameVerification','skuVerification','parentRecord','unspecifiedTextField'])v[field]=textValue(input[field]===undefined?previous[field]??'':input[field],field,field.startsWith('translated')?10000:2000);
   for(const [original,translation] of [['appearanceNotes','translatedAppearanceNotes'],['issueNotes','translatedIssueNotes']])if(v[translation].trim()&&!v[original].trim())invalid(`${translation} requires non-empty original ${original}`);
-  v.workDate=isoDate(input.workDate??previous.workDate??new Date().toISOString().slice(0,10));
+  if(input.workTime===''&&previous.workTime)invalid('Enter a work time.');
+  if(input.workTime!==undefined&&input.workTime!==null&&input.workTime!=='')v.workTime=isoWorkTime(input.workTime);
+  v.workDate=v.workTime?.slice(0,10)??isoDate(input.workDate??previous.workDate??germanWorkTime().slice(0,10));
   const outcome=input.outcome===undefined?previous.outcome:input.outcome;
   const definition=outcomes.find(o=>o.code===outcome);
   if(outcome!==null&&outcome!==undefined&&!definition)invalid('Invalid outcome');v.outcome=outcome??null;v.outcomeGroup=definition?.group??null;
@@ -134,7 +144,7 @@ export function validateRecord(input,previous,catalog){
       if(quantity>standardQty)throw new ApiError(422,'BOM_QUANTITY_LIMIT',`Quantity exceeds the BOM standard usage limit of ${standardQty}.`,{bomId:id,sku:bom.sku,standardQty,quantity});
       if(/^pcs?$/i.test(bom.unit)&&!Number.isInteger(quantity))invalid('Piece quantities must be whole integers');
     }
-    return {bomId:id,sku:bom.sku,descriptionEn:bom.descriptionEn,descriptionZh:bom.descriptionZh,unit:bom.unit,quantity,...(controlled?{standardQty,quantityControl:'standard_hard_cap'}:{} )};
+    return {bomId:id,sku:bom.sku,...(current?.substituteOnly?{substituteOnly:true}:{}),...(item.substitution===undefined?{}:{substitution:item.substitution}),descriptionEn:bom.descriptionEn,descriptionZh:bom.descriptionZh,unit:bom.unit,quantity,...(controlled?{standardQty,quantityControl:'standard_hard_cap'}:{} )};
   });
   const action=input.action??'save';if(!['save','complete'].includes(action))invalid('Invalid action');
   if(action==='complete'){
