@@ -301,6 +301,56 @@ test('AC-15 corrections retain before/after/actor/reason and original owner', as
   assert.equal(correction.after.issueNotes, 'Corrected issue text');
 });
 
+test('only a reasoned administrator correction can change the model of a saved record', async t => {
+  const app=await fixture(t), operator=await client(app), admin=await client(app,'admin','JackeryAdmin!2026');
+  const r=await create(operator,'TEST-CORRECT-MODEL');
+  const route='/api/records/'+r.id;
+  const operatorChange=await operator.req(route,'PUT',{version:r.version,modelId:2});
+  assert.equal(operatorChange.status,403);
+  const changes={modelId:2,productSku:'WRONG-SKU',materials:[{bomId:821,quantity:1}],outcome:'awp'};
+  assert.equal((await admin.req(route+'/corrections','POST',{version:r.version,reason:'',changes})).status,422);
+  const stale=await admin.req(route+'/corrections','POST',{version:r.version,reason:'Correct model',changes:{...changes,materials:[{bomId:1,quantity:1}]}});
+  assert.equal(stale.status,422);
+  const result=await admin.req(route+'/corrections','POST',{version:r.version,reason:'Correct model',changes});
+  assert.equal(result.status,200);
+  assert.equal(result.data.record.productSku,'DEMO-PRODUCT-2');
+  assert.equal(result.data.record.status,'wfr');
+  assert.equal(result.data.record.ownerId,r.ownerId);
+  assert.equal(result.data.record.workOrder,r.workOrder);
+  assert.equal(result.data.record.materials[0].sku,'DEMO-B-0001');
+  const revision=(await admin.req(route+'/audit')).data.items[0];
+  assert.equal(revision.before.modelId,1);
+  assert.equal(revision.after.modelId,2);
+});
+
+test('a completed model correction requires new inspection and shifts stock by SKU', async t => {
+  const app=await fixture(t), operator=await client(app), admin=await client(app,'admin','JackeryAdmin!2026');
+  const base='/api/admin/inventory';
+  const model=(await admin.req('/api/catalog')).data.models.find(row=>row.id===2);
+  const modified=await admin.req('/api/admin/models/2','PUT',{...model,checkItems:[...model.checkItems,{code:'b_only',labelEn:'Extra model test',labelZh:'型号专用测试'}]});
+  assert.equal(modified.status,200);
+  const csv='sku,quantity\nDEMO-A-0001,3\nDEMO-B-0001,3';
+  const preview=await admin.req(base+'/preview','POST',{kind:'open',csv});
+  assert.equal(preview.status,200);
+  assert.equal((await admin.req(base+'/commit','POST',{kind:'open',csv,previewHash:preview.data.previewHash,requestId:'a'.repeat(32)})).status,200);
+  const balance=async(model,sku)=>(await operator.req('/api/models/'+model+'/bom?q='+sku)).data.items[0].stockQuantity;
+  const r=await create(operator,'TEST-LOCKED-MODEL');
+  const route='/api/records/'+r.id;
+  const closed=await operator.req(route,'PUT',input(r,{outcome:'rok',action:'complete',checks:{initial:passes(r)},materials:[{bomId:1,quantity:1}]}));
+  assert.equal(closed.status,200);
+  const previous=closed.data.record;
+  const change=checks=>admin.req(route+'/corrections','POST',{version:previous.version,reason:'Correct verified model',
+    changes:{modelId:2,materials:[{bomId:821,quantity:2}],...(checks?{checks}:{})}});
+  assert.deepEqual(await Promise.all([balance(1,'DEMO-A-0001'),balance(2,'DEMO-B-0001')]),[2,3]);
+  assert.equal((await change()).status,422);
+  assert.deepEqual(await Promise.all([balance(1,'DEMO-A-0001'),balance(2,'DEMO-B-0001')]),[2,3]);
+  const corrected=await change({initial:{b_only:'pass'}});
+  assert.equal(corrected.status,200);
+  assert.equal(corrected.data.record.status,'completed');
+  assert.equal(corrected.data.record.completedAt,previous.completedAt);
+  assert.deepEqual(await Promise.all([balance(1,'DEMO-A-0001'),balance(2,'DEMO-B-0001')]),[3,1]);
+});
+
 test('AC-16 four-sheet export is complete, inert and permission scoped', async t => {
   const app = await fixture(t), c = await client(app), other = await client(app, 'blair', 'JackeryBlair!2026');
   const r = await create(c, 'EXPORT-MINE-001');

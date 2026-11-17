@@ -200,9 +200,11 @@ export async function startServer({dataDir=path.join(root,'data'),demo=false,por
             if(correction){if(user.role!=='admin')forbidden();textValue(input.reason??'','Correction reason',2000,true);}else if(before.ownerId!==user.id||before.status==='completed')forbidden('Only the owner may edit an unfinished record; administrator corrections require a reason');
             version(input.version,before);
             const changes=correction?input.changes:input;if(!isObject(changes))invalid('Changes must be a record input');
+            if(!correction&&changes.modelId!==undefined&&changes.modelId!==before.modelId)
+              forbidden('Changing a saved record model requires an administrator correction');
             const catalog=recordCatalog();
             const after=validateRecord({...changes,...(correction&&before.status==='completed'?{action:'complete'}:{})},before,catalog);
-            after.materials=validateSubstitutionUsage(after.materials,before.materials??[],{
+            after.materials=validateSubstitutionUsage(after.materials,after.modelId===before.modelId?(before.materials??[]):[],{
               groups:modelSubstitutionGroups(store,after.modelId),stock:stockQuantities(store),
               blocked:new Set([...catalog.disabledMaterials,...catalog.bom.filter(b=>b.modelId===after.modelId&&!b.active).map(b=>b.sku)]),
             });

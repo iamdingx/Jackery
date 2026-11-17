@@ -1,4 +1,5 @@
 import {currentModelChecklist} from './checklists.js';
+import {carryCheckResults} from '../public/check-results.js';
 import {germanWorkTime} from '../public/work-time.js';
 
 export class ApiError extends Error {
@@ -90,6 +91,7 @@ export function validateRecord(input,previous,catalog){
   const modelChanged=modelId!==previous.modelId;
   v.sn=textValue(input.sn??previous.sn??'','SN',200,true).trim();
   for(const [field,max] of [['productSku',200],['sourcePallet',200],['storagePallet',200],['appearanceNotes',10000],['issueNotes',10000],['scrapReason',3000]])v[field]=textValue(input[field]??previous[field]??'',field,max);
+  if(modelChanged)v.productSku=v.modelSnapshot.productSku??'';
   for(const field of ['translatedAppearanceNotes','translatedIssueNotes','receivingSku','postSortSku','receivingOrderNo','receivingStatus','productNameVerification','skuVerification','parentRecord','unspecifiedTextField'])v[field]=textValue(input[field]===undefined?previous[field]??'':input[field],field,field.startsWith('translated')?10000:2000);
   for(const [original,translation] of [['appearanceNotes','translatedAppearanceNotes'],['issueNotes','translatedIssueNotes']])if(v[translation].trim()&&!v[original].trim())invalid(`${translation} requires non-empty original ${original}`);
   if(input.workTime===''&&previous.workTime)invalid('Enter a work time.');
@@ -115,13 +117,14 @@ export function validateRecord(input,previous,catalog){
   const known=new Set(v.modelSnapshot.checkItems.map(i=>i.code));
   const supplied=input.checks??(modelChanged?{}:previous.checks)??{};
   if(!supplied||typeof supplied!=='object'||Array.isArray(supplied)||Object.keys(supplied).some(k=>!['initial','final'].includes(k)))invalid('Invalid check stages');
+  const retainedChecks=modelChanged?carryCheckResults(previous.modelSnapshot,v.modelSnapshot,previous.checks?.initial):{};
   v.checks={initial:{}};
   // Final tests from older records are immutable historical evidence, not an editable stage.
   if(previous.checks?.final)v.checks.final=structuredClone(previous.checks.final);
   for(const stage of ['initial']){
     const stageInput=supplied[stage]??(!modelChanged?previous.checks?.[stage]:undefined)??{};
     if(typeof stageInput!=='object'||!stageInput||Array.isArray(stageInput)||Object.keys(stageInput).some(k=>!known.has(k)))invalid('Unknown check code');
-    for(const code of known){const state=stageInput[code]??'not_tested';if(!['not_tested','pass','fail'].includes(state))invalid('Invalid check state');v.checks[stage][code]=state;}
+    for(const code of known){const state=stageInput[code]??retainedChecks[code]??'not_tested';if(!['not_tested','pass','fail'].includes(state))invalid('Invalid check state');v.checks[stage][code]=state;}
   }
   const materials=input.materials??(modelChanged?[]:previous.materials)??[];
   if(!Array.isArray(materials)||materials.length>5000)invalid('Materials are invalid');
