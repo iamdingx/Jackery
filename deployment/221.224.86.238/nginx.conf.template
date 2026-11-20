@@ -1,7 +1,7 @@
 # Use only after checking existing server_name and listener ownership.
 server {
     listen 80;
-    server_name 221.224.86.238;
+    server_name 221.224.86.238 huabao.dkmyfamily.com;
     server_tokens off;
     client_max_body_size 16m;
 

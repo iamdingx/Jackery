@@ -72,12 +72,26 @@ async function body(req){
   try{const result=JSON.parse(Buffer.concat(parts).toString('utf8')||'{}');if(!isObject(result))throw new Error();return result;}catch{throw new ApiError(400,'INVALID_JSON','Body must be a JSON object');}
 }
 
-export async function startServer({dataDir=path.join(root,'data'),demo=false,port=0,host='127.0.0.1',publicBaseUrl,catalogPath,translationsPath,sourceTranslationsPath}={}){
+export async function startServer({dataDir=path.join(root,'data'),demo=false,port=0,host='127.0.0.1',publicBaseUrl,legacyPublicOrigin,catalogPath,translationsPath,sourceTranslationsPath}={}){
   const bundledTranslations=path.join(root,'catalogs','jackery-bom-translations.json');
   const bomTranslations=await loadBomTranslations(translationsPath??(existsSync(bundledTranslations)?bundledTranslations:undefined));
   const bundledSourceTranslations=path.join(root,'catalogs','jackery-guidance-translations.json');
   const sourceTranslations=await loadSourceTranslations(sourceTranslationsPath??(existsSync(bundledSourceTranslations)?bundledSourceTranslations:undefined));
-  if(publicBaseUrl){const parsed=new URL(publicBaseUrl);if(!['http:','https:'].includes(parsed.protocol)||parsed.username||parsed.password||parsed.pathname!=='/'||parsed.search||parsed.hash)throw new Error('PUBLIC_BASE_URL must be an HTTP(S) origin');publicBaseUrl=parsed.origin;}
+  function parseOrigin(value,name){
+    if(!value)return undefined;
+    const parsed=new URL(value);
+    if(!['http:','https:'].includes(parsed.protocol)||parsed.username||parsed.password||parsed.pathname!=='/'||parsed.search||parsed.hash)
+      throw new Error(`${name} must be an HTTP(S) origin`);
+    return parsed.origin;
+  }
+  publicBaseUrl=parseOrigin(publicBaseUrl,'PUBLIC_BASE_URL');
+  legacyPublicOrigin=parseOrigin(legacyPublicOrigin,'LEGACY_PUBLIC_ORIGIN');
+  const publicOrigins=new Map();
+  if(legacyPublicOrigin){
+    if(!publicBaseUrl||new URL(legacyPublicOrigin).host===new URL(publicBaseUrl).host)
+      throw new Error('The primary and legacy public origins must use distinct hosts');
+    for(const origin of [publicBaseUrl,legacyPublicOrigin])publicOrigins.set(new URL(origin).host,origin);
+  }
   const store=openStore(path.resolve(dataDir),demo),{db}=store;
   const recordCatalog=()=>{const c=store.catalog();return {...c,disabledMaterials:disabledMaterials(store),models:c.models.map(m=>currentModelChecklist(translateModel(m,sourceTranslations))),bom:c.bom.map(b=>translateBom(b,bomTranslations)),knowledge:c.knowledge.map(k=>translateKnowledge(k,sourceTranslations))};};
   if(catalogPath){try{importJackeryCatalog(store,JSON.parse(await readFile(path.resolve(catalogPath),'utf8')),{deactivateSamples:true});for(const filename of ['jackery-model-sku-20261030.json','jackery-model-sku-20261102.json']){const mapping=path.join(root,'catalogs',filename);if(existsSync(mapping))applyModelSkuMapping(store,JSON.parse(await readFile(mapping,'utf8')));}applyE2000PlusAAvailability(store);}catch(error){db.close();throw error;}}
@@ -109,7 +123,12 @@ export async function startServer({dataDir=path.join(root,'data'),demo=false,por
         res.writeHead(200,{...common,'Content-Type':types[ext],'Content-Security-Policy':"default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; connect-src 'self'; object-src 'none'; base-uri 'none'; frame-ancestors 'none'"});res.end(method==='HEAD'?undefined:bytes);return;
       }
       if(method==='GET'&&route==='/api/health')return send(200,{ok:true,version:'1.0.0',demo});
-      if(!['GET','HEAD'].includes(method)&&req.headers.origin){const expected=publicBaseUrl??`http://${req.headers.host}`;if(req.headers.origin!==expected)throw new ApiError(403,'CSRF','Request origin is not allowed');}
+      const expectedOrigin=legacyPublicOrigin
+        ?publicOrigins.get(req.headers.host?.toLowerCase())
+        :publicBaseUrl??`http://${req.headers.host}`;
+      if(!['GET','HEAD'].includes(method)&&(!expectedOrigin||(req.headers.origin&&req.headers.origin!==expectedOrigin)))
+        throw new ApiError(403,'CSRF','Request origin is not allowed');
+      const cookieSecurity=expectedOrigin?.startsWith('https:')?'; Secure':'';
       const session=auth(req);
       if(method==='GET'&&route==='/api/session')return send(200,sessionDto(session));
       if(method==='POST'&&route==='/api/login'){
@@ -125,7 +144,7 @@ export async function startServer({dataDir=path.join(root,'data'),demo=false,por
         db.prepare('DELETE FROM sessions WHERE expires_at<?').run(now);
         const token=randomBytes(32).toString('hex'),csrfToken=randomBytes(32).toString('hex');
         db.prepare('INSERT INTO sessions(token_hash,user_id,csrf,expires_at) VALUES(?,?,?,?)').run(hashToken(token),user.id,csrfToken,now+24*3600000);
-        return send(200,{user:userDto(user),csrfToken,demo},{'Set-Cookie':`hb_session=${token}; HttpOnly; SameSite=Strict; Path=/; Max-Age=86400${publicBaseUrl?.startsWith('https:')?'; Secure':''}`});
+        return send(200,{user:userDto(user),csrfToken,demo},{'Set-Cookie':`hb_session=${token}; HttpOnly; SameSite=Strict; Path=/; Max-Age=86400${cookieSecurity}`});
       }
       if(!session)throw new ApiError(401,'UNAUTHENTICATED','Please sign in');
       const user=session.user;
@@ -134,7 +153,7 @@ export async function startServer({dataDir=path.join(root,'data'),demo=false,por
       }
       if(route.startsWith('/api/admin/')&&user.role!=='admin')forbidden('Administrator access required');
       if(user.role==='customer'&&!customerRouteAllowed(method,route))forbidden();
-      if(method==='POST'&&route==='/api/logout'){db.prepare('DELETE FROM sessions WHERE token_hash=?').run(session.tokenHash);return send(200,{ok:true},{'Set-Cookie':expireCookie});}
+      if(method==='POST'&&route==='/api/logout'){db.prepare('DELETE FROM sessions WHERE token_hash=?').run(session.tokenHash);return send(200,{ok:true},{'Set-Cookie':expireCookie+cookieSecurity});}
       if(method==='PUT'&&route==='/api/account/language'){
         const input=await body(req);if(!['en','zh'].includes(input.language))invalid('Language must be en or zh');
         db.prepare('UPDATE users SET language=? WHERE id=?').run(input.language,user.id);
@@ -143,7 +162,7 @@ export async function startServer({dataDir=path.join(root,'data'),demo=false,por
       if(method==='POST'&&route==='/api/account/password'){
         const input=await body(req),row=db.prepare('SELECT * FROM users WHERE id=?').get(user.id);
         if(typeof input.currentPassword!=='string'||input.currentPassword.length>128||!passwordMatches(input.currentPassword,row.password_hash))throw new ApiError(403,'INVALID_PASSWORD','Current password is incorrect');
-        const hash=passwordHash(password(input.newPassword));store.tx(()=>{db.prepare('UPDATE users SET password_hash=? WHERE id=?').run(hash,user.id);db.prepare('DELETE FROM sessions WHERE user_id=?').run(user.id);});return send(200,{ok:true},{'Set-Cookie':expireCookie});
+        const hash=passwordHash(password(input.newPassword));store.tx(()=>{db.prepare('UPDATE users SET password_hash=? WHERE id=?').run(hash,user.id);db.prepare('DELETE FROM sessions WHERE user_id=?').run(user.id);});return send(200,{ok:true},{'Set-Cookie':expireCookie+cookieSecurity});
       }
       if(method==='GET'&&route==='/api/catalog'){
         const inactive=params.get('includeInactive')==='1';if(inactive&&user.role!=='admin')forbidden();
@@ -352,7 +371,7 @@ if(process.argv[1]&&path.resolve(process.argv[1])===fileURLToPath(import.meta.ur
   const port=Number(process.env.PORT??4310);if(!Number.isInteger(port)||port<0||port>65535)throw new Error('PORT must be 0–65535');
   const catalogIndex=process.argv.indexOf('--catalog'),bundled=path.join(root,'catalogs','jackery-eu-20261030.json');
   const catalogPath=catalogIndex>=0?process.argv[catalogIndex+1]:(existsSync(bundled)?bundled:undefined);
-  startServer({dataDir:process.env.JACKERY_DATA_DIR??process.env.HB_DATA_DIR??path.join(root,demo?'data-demo':'data'),demo,port,host:process.env.HOST??'127.0.0.1',publicBaseUrl:process.env.PUBLIC_BASE_URL,catalogPath}).then(app=>{
+  startServer({dataDir:process.env.JACKERY_DATA_DIR??process.env.HB_DATA_DIR??path.join(root,demo?'data-demo':'data'),demo,port,host:process.env.HOST??'127.0.0.1',publicBaseUrl:process.env.PUBLIC_BASE_URL,legacyPublicOrigin:process.env.LEGACY_PUBLIC_ORIGIN,catalogPath}).then(app=>{
     console.log(`Jackery V1 ${demo?'TEST':'production'}: ${app.baseUrl}`);
     for(const signal of ['SIGINT','SIGTERM'])process.once(signal,()=>{app.close().then(()=>process.exit(0)).catch(()=>process.exit(1));});
   }).catch(e=>{console.error('Startup failed:',e.message);process.exitCode=1;});
