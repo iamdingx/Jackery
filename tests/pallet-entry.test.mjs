@@ -41,6 +41,22 @@ test('pallet fields follow the work stages and survive WFR, completion and admin
   await page.locator('input[name=outcome][value=scrap]').check();
   await page.locator('#scrapReason').fill('Local test record');
   assert.equal(await destination.inputValue(), '0019-B');
+  const footerControls = ['#storagePallet', '#view-audit', '#save-record', '#complete-record'];
+  for (const language of ['en', 'zh']) {
+    await page.getByLabel(language === 'en' ? 'Completion Pallet No.' : '完成后栈板号', { exact: true }).waitFor();
+    for (const width of [1101, 1366, 1536, 1775]) {
+      await page.setViewportSize({ width, height: 768 });
+      const boxes = await Promise.all(footerControls.map(selector => page.locator(selector).boundingBox()));
+      for (const [index, box] of boxes.entries()) {
+        assert.ok(box.x >= 0 && box.x + box.width <= width, `${language} ${width}px: ${footerControls[index]} stays within the viewport`);
+        assert.ok(Math.abs(box.y + box.height / 2 - boxes[0].y - boxes[0].height / 2) <= 4,
+          `${language} ${width}px: ${footerControls[index]} stays on the pallet row`);
+        if (index) assert.ok(box.x >= boxes[index - 1].x + boxes[index - 1].width, `${footerControls[index]} does not overlap`);
+      }
+    }
+    await page.locator('#language').click();
+  }
+  await page.getByLabel('Completion Pallet No.', { exact: true }).waitFor();
   for (const width of [1366, 900, 390]) {
     await page.setViewportSize({ width, height: 768 });
     assert.ok(await destination.isVisible());
