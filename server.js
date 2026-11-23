@@ -57,12 +57,14 @@ function customerRecord(record){
 function pagination(params,defaultSize){const page=Number(params.get('page')??1),pageSize=Number(params.get('pageSize')??defaultSize);if(!Number.isSafeInteger(page)||page<1||!Number.isSafeInteger(pageSize)||pageSize<1||pageSize>100)invalid('Invalid pagination; page size must be 1–100');return {page,pageSize};}
 function filteredRecords(store,user,params){
   if(user.role!=='admin'&&params.has('ownerId'))forbidden('Owner filtering is administrator only');
+  const followUp=params.get('followUp');
+  if(followUp&&!['awp','needs_analysis'].includes(followUp))invalid('Invalid follow-up filter');
   const status=params.get('status');if(status&&!['draft','wfr','completed'].includes(status))invalid('Invalid status filter');
   const from=params.get('from'),to=params.get('to');if(from)isoDate(from);if(to)isoDate(to);if(from&&to&&from>to)invalid('Date filter is reversed');
   const owner=params.get('ownerId'),model=params.get('modelId');if(owner)positiveId(Number(owner),'Owner ID');if(model)positiveId(Number(model),'Model ID');
   const q=params.get('q')??'';textValue(q,'Search',200);
   const visible = user.role==='customer'?customerRecordVisible:r=>user.role==='admin'||r.ownerId===user.id;
-  return store.all('records').filter(r=>visible(r)&&(!owner||r.ownerId===Number(owner))&&(!model||r.modelId===Number(model))&&(!status||r.status===status)&&(!from||r.workDate>=from)&&(!to||r.workDate<=to)&&(!q||r.sn.includes(q)||r.workOrder.includes(q))).sort((a,b)=>b.createdAt.localeCompare(a.createdAt)||b.id-a.id).map(r=>store.record(r.id));
+  return store.all('records').filter(r=>visible(r)&&(!followUp||(r.status==='wfr'&&r.outcome===followUp))&&(!owner||r.ownerId===Number(owner))&&(!model||r.modelId===Number(model))&&(!status||r.status===status)&&(!from||r.workDate>=from)&&(!to||r.workDate<=to)&&(!q||r.sn.includes(q)||r.workOrder.includes(q))).sort((a,b)=>b.createdAt.localeCompare(a.createdAt)||b.id-a.id).map(r=>store.record(r.id));
 }
 async function body(req){
   if(!/^application\/json(?:\s*;\s*charset=utf-8)?$/i.test(req.headers['content-type']??''))throw new ApiError(400,'JSON_CONTENT_TYPE','Content-Type must be application/json');
@@ -104,7 +106,12 @@ export async function startServer({dataDir=path.join(root,'data'),demo=false,por
     if(!row||!row.active||row.expires_at<Date.now())return null;return {user:userDto(row),csrfToken:row.csrf,tokenHash:row.token_hash};
   }
   function sessionDto(session){return {user:session?.user??null,csrfToken:session?.csrfToken??null,demo};}
-  function persistRecord(record,actor,action,reason,before){store.put('records',record);store.audit(record.id,action,actor,reason,before,record);return record;}
+  function persistRecord(record,actor,action,reason,before,createRequestId){
+    store.put('records',record);
+    const auditId=store.audit(record.id,action,actor,reason,before,record);
+    if(createRequestId!==undefined)store.db.prepare('INSERT INTO record_create_requests(owner_id,request_id,audit_id) VALUES(?,?,?)').run(actor.id,createRequestId,auditId);
+    return record;
+  }
   const server=http.createServer(async(req,res)=>{
     const common={'X-Content-Type-Options':'nosniff','Referrer-Policy':'same-origin','X-Frame-Options':'DENY','Cache-Control':'no-store'};
     function send(status,data,headers={}){if(data?.record)data={...data,record:currentRecordChecklist(data.record)};if(Array.isArray(data?.items))data={...data,items:data.items.map(item=>currentRecordChecklist(item))};res.writeHead(status,{...common,'Content-Type':'application/json; charset=utf-8',...headers});res.end(Buffer.isBuffer(data)?data:JSON.stringify(data));}
@@ -200,12 +207,20 @@ export async function startServer({dataDir=path.join(root,'data'),demo=false,por
       }
       if(method==='POST'&&route==='/api/records'){
         const input=await body(req);
-        const record=store.tx(()=>{
+        const requestId=input.requestId;
+        if(requestId!==undefined&&(typeof requestId!=='string'||!/^[a-f0-9]{32}$/.test(requestId)))invalid('Invalid record creation request ID');
+        const {status,record}=store.tx(()=>{
+          if(requestId!==undefined){
+            const previous=store.db.prepare(`SELECT a.data FROM record_create_requests r JOIN audits a ON a.id=r.audit_id
+              WHERE r.owner_id=? AND r.request_id=?`).get(user.id,requestId);
+            if(previous)return {status:200,record:JSON.parse(previous.data).after};
+          }
           const model=currentModelChecklist(translateModel(store.get('models',positiveId(input.modelId,'Model ID')),sourceTranslations));if(!model?.active||!model.checkItems.length)invalid('Select an active model with a check list');
           const id=store.next('records'),now=new Date().toISOString();
           const validated=validateRecord({...input,outcome:null,appearanceCodes:[],checks:{},materials:[],action:'save'},{modelId:model.id,modelSnapshot:model,productSku:model.productSku},recordCatalog());
-          const r={...validated,id,workOrder:`HB-${now.slice(0,10).replaceAll('-','')}-${String(id).padStart(6,'0')}`,ownerId:user.id,ownerName:user.displayName,photos:[],version:1,createdAt:now,updatedAt:now,completedAt:null};return persistRecord(r,user,'create','',null);
-        });return send(201,{record});
+          const r={...validated,id,workOrder:`HB-${now.slice(0,10).replaceAll('-','')}-${String(id).padStart(6,'0')}`,ownerId:user.id,ownerName:user.displayName,photos:[],version:1,createdAt:now,updatedAt:now,completedAt:null};
+          return {status:201,record:persistRecord(r,user,'create','',null,requestId)};
+        });return send(status,{record});
       }
       match=route.match(/^\/api\/records\/(\d+)(?:\/(audit|corrections|photos))?$/);
       if(match){

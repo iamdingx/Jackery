@@ -22,6 +22,12 @@ export function openStore(dataDir,demo){
     CREATE TABLE IF NOT EXISTS records (id INTEGER PRIMARY KEY,data TEXT NOT NULL);
     CREATE TABLE IF NOT EXISTS photos (id TEXT PRIMARY KEY,record_id INTEGER NOT NULL REFERENCES records(id),data TEXT NOT NULL,physical_name TEXT NOT NULL,removed INTEGER NOT NULL DEFAULT 0);
     CREATE TABLE IF NOT EXISTS audits (id INTEGER PRIMARY KEY,record_id INTEGER NOT NULL REFERENCES records(id),data TEXT NOT NULL);
+    CREATE TABLE IF NOT EXISTS record_create_requests (
+      owner_id INTEGER NOT NULL REFERENCES users(id),
+      request_id TEXT NOT NULL,
+      audit_id INTEGER NOT NULL UNIQUE REFERENCES audits(id) ON DELETE CASCADE,
+      PRIMARY KEY(owner_id,request_id)
+    );
     CREATE TABLE IF NOT EXISTS inventory (sku TEXT PRIMARY KEY, quantity INTEGER NOT NULL, opened_at TEXT NOT NULL, updated_at TEXT NOT NULL);
     CREATE TABLE IF NOT EXISTS inventory_events (id INTEGER PRIMARY KEY,sku TEXT NOT NULL REFERENCES inventory(sku),delta INTEGER NOT NULL,balance INTEGER NOT NULL,kind TEXT NOT NULL,reference TEXT NOT NULL,actor_id INTEGER NOT NULL,created_at TEXT NOT NULL);
     CREATE UNIQUE INDEX IF NOT EXISTS inventory_open_events ON inventory_events(sku) WHERE kind='open';
@@ -69,6 +75,6 @@ export function openStore(dataDir,demo){
   }
   const catalog=()=>({models:all('models'),appearanceOptions:all('appearance'),bom:all('bom'),knowledge:all('model_knowledge')});
   const record=id=>{const r=get('records',id);if(!r)throw new ApiError(404,'NOT_FOUND','Record not found');r.photos=db.prepare('SELECT data FROM photos WHERE record_id=? AND removed=0 ORDER BY rowid').all(id).map(p=>JSON.parse(p.data));return r;};
-  const audit=(recordId,action,actor,reason,before,after)=>{const id=next('audits');db.prepare('INSERT INTO audits(id,record_id,data) VALUES(?,?,?)').run(id,recordId,JSON.stringify({id,recordId,action,actorId:actor.id,actorName:actor.displayName,reason:reason??'',before,after,createdAt:new Date().toISOString()}));};
+  const audit=(recordId,action,actor,reason,before,after)=>{const id=next('audits');db.prepare('INSERT INTO audits(id,record_id,data) VALUES(?,?,?)').run(id,recordId,JSON.stringify({id,recordId,action,actorId:actor.id,actorName:actor.displayName,reason:reason??'',before,after,createdAt:new Date().toISOString()}));return id;};
   return {db,tx,get,all,put,next,catalog,record,audit,dataDir};
 }

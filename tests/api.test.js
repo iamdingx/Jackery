@@ -16,6 +16,46 @@ async function harness(t,demo=true) {
 }
 const passChecks={initial:{ac_output:'pass',dc_output:'pass',charging:'pass'},final:{ac_output:'pass',dc_output:'pass',charging:'pass'}};
 
+test('a retried create acknowledges the same draft once and preserves its original version',async t=>{
+  const h=await harness(t),operator=h.client(),other=h.client(),admin=h.client();
+  await operator.login('alex','JackeryAlex!2026');
+  await other.login('blair','JackeryBlair!2026');
+  await admin.login('admin','JackeryAdmin!2026');
+  const input={sn:'VISIT-RETRY',modelId:1,requestId:'a'.repeat(32)};
+  const create=(client,payload)=>client.req('/api/records','POST',payload);
+  const responses=await Promise.all([create(operator,input),create(operator,input)]);
+  assert.deepEqual(responses.map(r=>r.status).sort(),[200,201]);
+  const original=responses.find(r=>r.status===201).data.record;
+  assert.deepEqual(responses.find(r=>r.status===200).data.record,original);
+  assert.equal((await operator.req('/api/records/'+original.id,'PUT',{version:original.version,action:'save',issueNotes:'Later edit'})).status,200);
+  await h.restart();
+  const retry=await create(operator,{...input,sn:'Changed before retry'});
+  assert.equal(retry.status,200);
+  assert.deepEqual(retry.data.record,original);
+  assert.equal((await operator.req('/api/records/'+original.id,'PUT',{version:retry.data.record.version,action:'save'})).status,409);
+  const audit=await admin.req('/api/records/'+original.id+'/audit');
+  assert.deepEqual(audit.data.items.map(event=>event.action),['save','create']);
+  const independent=await create(operator,{...input,requestId:'b'.repeat(32)});
+  const otherOwner=await create(other,input);
+  assert.deepEqual([independent.status,otherOwner.status],[201,201]);
+  assert.equal(new Set([original.id,independent.data.record.id,otherOwner.data.record.id]).size,3);
+  assert.notEqual(otherOwner.data.record.ownerId,original.ownerId);
+  assert.equal((await admin.req('/api/records?q=VISIT-RETRY')).data.total,3);
+});
+
+test('invalid create keys and failed drafts consume no record or request ID',async t=>{
+  const h=await harness(t),operator=h.client();
+  await operator.login('alex','JackeryAlex!2026');
+  const create=(extra)=>operator.req('/api/records','POST',{sn:'VISIT-VALIDATION',modelId:1,...extra});
+  for(const requestId of ['',null,12,'x'.repeat(33)])assert.equal((await create({requestId})).status,422);
+  const requestId='f'.repeat(32);
+  assert.equal((await create({requestId,modelId:99999})).status,422);
+  assert.equal((await create({requestId})).status,201);
+  assert.equal((await create({})).status,201);
+  assert.equal((await create({})).status,201);
+  assert.equal((await operator.req('/api/records?q=VISIT-VALIDATION')).data.total,3);
+});
+
 test('stock receipts add overlapping SKUs and expose dated batch and per-SKU inventory history',async t=>{
   const h=await harness(t),admin=h.client(),operator=h.client(),base='/api/admin/inventory';
   await admin.login('admin','JackeryAdmin!2026');await operator.login('alex','JackeryAlex!2026');
