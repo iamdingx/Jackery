@@ -36,13 +36,21 @@ function customerRouteAllowed(method,route){
   if(method==='GET')return customerReadRoutes.has(route)||/^\/api\/(records\/\d+|photos\/[a-f0-9]{32})$/.test(route);
   return (method==='POST'&&['/api/logout','/api/account/password'].includes(route))||(method==='PUT'&&route==='/api/account/language');
 }
+const serialKey=sn=>String(sn??'').trim().toUpperCase();
+function requireAvailableSerial(store,sn,exceptId){
+  const key=serialKey(sn);
+  const exists=store.all('records').some(record=>
+    record.id!==exceptId&&record.status!=='completed'&&serialKey(record.sn)===key
+  );
+  if(exists)throw new ApiError(409,'SN_OPEN_WORK_ORDER','This serial number already has an unfinished work order.');
+}
 function readAllowed(user,record,exactSn){
   if(user.role==='customer'){
     if(!customerRecordVisible(record))forbidden();
     return;
   }
   if(user.role==='admin'||record.ownerId===user.id)return;
-  if(typeof exactSn==='string'&&exactSn.trim()&&exactSn.trim()===record.sn)return;
+  if(typeof exactSn==='string'&&exactSn.trim()&&serialKey(exactSn)===serialKey(record.sn))return;
   forbidden('This record is visible only to its owner or through exact-SN history');
 }
 function customerRecord(record){
@@ -203,7 +211,7 @@ export async function startServer({dataDir=path.join(root,'data'),demo=false,por
       if(method==='GET'&&route==='/api/records'){const {page,pageSize}=pagination(params,20),items=filteredRecords(store,user,params);const pageItems=items.slice((page-1)*pageSize,page*pageSize);return send(200,{items:user.role==='customer'?pageItems.map(customerRecord):pageItems,total:items.length,page,pageSize});}
       if(method==='GET'&&route==='/api/sn-history'){
         const sn=textValue(params.get('sn')??'','SN',200,true).trim();
-        const items=store.all('records').filter(r=>r.sn===sn&&(user.role!=='customer'||customerRecordVisible(r))).sort((a,b)=>b.createdAt.localeCompare(a.createdAt)||b.id-a.id).map(r=>{const item=store.record(r.id);if(user.role==='customer')return customerRecord(item);if(user.role!=='admin'&&item.ownerId!==user.id)item.photos=item.photos.map(p=>({...p,url:p.url+'?sn='+encodeURIComponent(sn)}));return item;});return send(200,{items});
+        const items=store.all('records').filter(r=>serialKey(r.sn)===serialKey(sn)&&(user.role!=='customer'||customerRecordVisible(r))).sort((a,b)=>b.createdAt.localeCompare(a.createdAt)||b.id-a.id).map(r=>{const item=store.record(r.id);if(user.role==='customer')return customerRecord(item);if(user.role!=='admin'&&item.ownerId!==user.id)item.photos=item.photos.map(p=>({...p,url:p.url+'?sn='+encodeURIComponent(sn)}));return item;});return send(200,{items});
       }
       if(method==='POST'&&route==='/api/records'){
         const input=await body(req);
@@ -218,6 +226,7 @@ export async function startServer({dataDir=path.join(root,'data'),demo=false,por
           const model=currentModelChecklist(translateModel(store.get('models',positiveId(input.modelId,'Model ID')),sourceTranslations));if(!model?.active||!model.checkItems.length)invalid('Select an active model with a check list');
           const id=store.next('records'),now=new Date().toISOString();
           const validated=validateRecord({...input,outcome:null,appearanceCodes:[],checks:{},materials:[],action:'save'},{modelId:model.id,modelSnapshot:model,productSku:model.productSku},recordCatalog());
+          requireAvailableSerial(store,validated.sn);
           const r={...validated,id,workOrder:`HB-${now.slice(0,10).replaceAll('-','')}-${String(id).padStart(6,'0')}`,ownerId:user.id,ownerName:user.displayName,photos:[],version:1,createdAt:now,updatedAt:now,completedAt:null};
           return {status:201,record:persistRecord(r,user,'create','',null,requestId)};
         });return send(status,{record});
@@ -242,6 +251,7 @@ export async function startServer({dataDir=path.join(root,'data'),demo=false,por
               groups:modelSubstitutionGroups(store,after.modelId),stock:stockQuantities(store),
               blocked:new Set([...catalog.disabledMaterials,...catalog.bom.filter(b=>b.modelId===after.modelId&&!b.active).map(b=>b.sku)]),
             });
+            if(serialKey(after.sn)!==serialKey(before.sn))requireAvailableSerial(store,after.sn,id);
             after.version=before.version+1;after.updatedAt=new Date().toISOString();after.completedAt=after.status==='completed'?(before.completedAt??after.updatedAt):null;
             applyCompletedUsage(store,before,after,user);
             return persistRecord(after,user,correction?'correction':after.status==='completed'?'complete':'save',correction?input.reason.trim():'',before);

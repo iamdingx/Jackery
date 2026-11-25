@@ -105,9 +105,12 @@ test('AC-02 exact SN read-only exception never grants editing or broad search', 
   assert.equal((await alex.req(`/api/records/${r.id}`, 'PUT', input(r, { issueNotes: 'Unauthorized takeover' }))).status, 403);
 });
 
-test('AC-03 repeated SN creates separate work orders without overwriting', async t => {
+test('AC-03 repeated SN creates a separate work order after completion', async t => {
   const app = await fixture(t), c = await client(app);
-  const first = await create(c, 'REPEAT-001'), second = await create(c, 'REPEAT-001');
+  const first = await create(c, 'REPEAT-001');
+  const done = await c.req('/api/records/'+first.id,'PUT',input(first,{action:'complete',outcome:'scrap',scrapReason:'End first visit'}));
+  assert.equal(done.status,200);
+  const second = await create(c, 'REPEAT-001');
   assert.notEqual(first.id, second.id);
   assert.notEqual(first.workOrder, second.workOrder);
   const history = await c.req('/api/sn-history?sn=REPEAT-001');
@@ -155,9 +158,7 @@ test('Jackery customer reads completed and WFR work and stock without access to 
   const admin = await client(app,'admin','JackeryAdmin!2026');
   const alex = await client(app);
   const sn = 'CUSTOMER-VISIBLE-SN';
-  const draft = await create(alex,sn);
-  const waiting = await create(alex,sn);
-  assert.equal((await alex.req(`/api/records/${waiting.id}`,'PUT',input(waiting,{outcome:'awp'}))).status,200);
+  const draft = await create(alex,sn+'-DRAFT');
   const finishing = await create(alex,sn);
   const part = (await admin.req('/api/models/1/bom')).data.items[0];
   const stockInput = {kind:'receipt',csv:`sku,quantity\n${part.sku},10\n`};
@@ -170,13 +171,15 @@ test('Jackery customer reads completed and WFR work and stock without access to 
   const draftPhoto = (await attach(draft)).data.photo;
   const attached = (await attach(finishing)).data;
   assert.equal((await alex.req(`/api/records/${finishing.id}`,'PUT',input(attached.record,{action:'complete',outcome:'scrap',scrapReason:'Test unit',materials:[{bomId:part.id,quantity:1}]}))).status,200);
+  const waiting = await create(alex,sn);
+  assert.equal((await alex.req(`/api/records/${waiting.id}`,'PUT',input(waiting,{outcome:'awp'}))).status,200);
   const created = await admin.req('/api/admin/users','POST',{username:'jackery_customer',displayName:'Jackery Customer',role:'customer',password:'CustomerReadOnly!2026'});
   assert.equal(created.status,201,created.bytes.toString());
   const customer = await client(app,'jackery_customer','CustomerReadOnly!2026');
   const ids = result=>result.data.items.map(row=>row.id).sort((a,b)=>a-b);
-  assert.deepEqual(ids(await customer.req('/api/records?q='+sn)),[waiting.id,finishing.id]);
+  assert.deepEqual(ids(await customer.req('/api/records?q='+sn)),[finishing.id,waiting.id]);
   assert.deepEqual(ids(await customer.req('/api/records?q='+sn+'&status=draft')),[]);
-  assert.deepEqual(ids(await customer.req('/api/sn-history?sn='+sn)),[waiting.id,finishing.id]);
+  assert.deepEqual(ids(await customer.req('/api/sn-history?sn='+sn)),[finishing.id,waiting.id]);
   assert.equal((await customer.req(`/api/records/${draft.id}?historySn=${sn}`)).status,403);
   const detail = (await customer.req(`/api/records/${finishing.id}`)).data.record;
   assert.equal(detail.scrapReason,'Test unit');

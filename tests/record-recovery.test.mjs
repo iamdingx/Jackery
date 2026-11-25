@@ -199,6 +199,8 @@ test('retrying a lost creation response reuses the order and a new same-SN visit
   assert.deepEqual((await orders()).map(order => order.id), [afterLoss[0].id]);
   assert.equal((await api('/api/records/' + afterLoss[0].id)).record.issueNotes, 'Repeatable inspection');
 
+  const first=(await api('/api/records/'+afterLoss[0].id)).record;
+  await api('/api/records/'+first.id,'PUT',{version:first.version,action:'complete',outcome:'scrap',scrapReason:'End first visit'});
   await page.locator('#records-nav').click();
   await enterVisit();
   await page.locator('#save-record').click();

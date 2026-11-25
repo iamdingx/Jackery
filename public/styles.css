@@ -199,3 +199,4 @@
 #audit-dialog .audit-original>summary{cursor:pointer;color:var(--green)}
 #audit-dialog td,#audit-dialog .audit-entry p{white-space:pre-wrap;overflow-wrap:anywhere}
 #audit-dialog td:last-child{font-weight:600}
+#resume-existing-sn[hidden]{display:none}

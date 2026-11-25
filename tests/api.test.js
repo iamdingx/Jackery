@@ -35,12 +35,30 @@ test('a retried create acknowledges the same draft once and preserves its origin
   assert.equal((await operator.req('/api/records/'+original.id,'PUT',{version:retry.data.record.version,action:'save'})).status,409);
   const audit=await admin.req('/api/records/'+original.id+'/audit');
   assert.deepEqual(audit.data.items.map(event=>event.action),['save','create']);
-  const independent=await create(operator,{...input,requestId:'b'.repeat(32)});
-  const otherOwner=await create(other,input);
-  assert.deepEqual([independent.status,otherOwner.status],[201,201]);
-  assert.equal(new Set([original.id,independent.data.record.id,otherOwner.data.record.id]).size,3);
-  assert.notEqual(otherOwner.data.record.ownerId,original.ownerId);
-  assert.equal((await admin.req('/api/records?q=VISIT-RETRY')).data.total,3);
+  const fresh={...input,sn:' visit-retry ',modelId:2,requestId:'b'.repeat(32)};
+  for(const result of await Promise.all([create(operator,fresh),create(other,input),create(admin,input)])){
+    assert.equal(result.status,409);
+    assert.equal(result.data.error.code,'SN_OPEN_WORK_ORDER');
+    assert.equal(result.data.error.details,undefined);
+  }
+  const route='/api/records/'+original.id;
+  let record=(await operator.req(route)).data.record;
+  for(const outcome of ['awp','needs_analysis']){
+    record=(await operator.req(route,'PUT',{version:record.version,action:'save',outcome})).data.record;
+    assert.equal(record.status,'wfr');
+    assert.equal((await create(other,fresh)).status,409);
+  }
+  const spare=(await create(other,{sn:'OTHER-SERIAL',modelId:1})).data.record;
+  const changeHere={version:spare.version,reason:'Serial transcription',changes:{sn:input.sn}};
+  assert.equal((await admin.req('/api/records/'+spare.id+'/corrections','POST',changeHere)).data.error.code,'SN_OPEN_WORK_ORDER');
+  assert.equal((await other.req('/api/records/'+spare.id,'PUT',{version:spare.version,sn:input.sn})).data.error.code,'SN_OPEN_WORK_ORDER');
+  assert.equal((await other.req('/api/records/'+spare.id)).data.record.sn,'OTHER-SERIAL');
+  const done=await operator.req(route,'PUT',{version:record.version,action:'complete',outcome:'scrap',scrapReason:'Test complete'});
+  assert.equal(done.data.record.status,'completed');
+  const next=await Promise.all([create(operator,fresh),create(other,input)]);
+  assert.deepEqual(next.map(item=>item.status).sort(),[201,409]);
+  assert.equal((await create(operator,input)).data.record.id,original.id);
+  assert.equal((await admin.req('/api/sn-history?sn=ViSiT-Retry')).data.items.length,2);
 });
 
 test('invalid create keys and failed drafts consume no record or request ID',async t=>{
@@ -51,9 +69,9 @@ test('invalid create keys and failed drafts consume no record or request ID',asy
   const requestId='f'.repeat(32);
   assert.equal((await create({requestId,modelId:99999})).status,422);
   assert.equal((await create({requestId})).status,201);
-  assert.equal((await create({})).status,201);
-  assert.equal((await create({})).status,201);
-  assert.equal((await operator.req('/api/records?q=VISIT-VALIDATION')).data.total,3);
+  assert.equal((await create({})).data.error.code,'SN_OPEN_WORK_ORDER');
+  assert.equal((await create({})).status,409);
+  assert.equal((await operator.req('/api/records?q=VISIT-VALIDATION')).data.total,1);
 });
 
 test('stock receipts add overlapping SKUs and expose dated batch and per-SKU inventory history',async t=>{

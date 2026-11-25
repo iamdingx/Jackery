@@ -83,6 +83,38 @@ test('v03 exact SN allows a new visit and history resumes only own unfinished re
   await page.locator('#history-results tbody tr').filter({hasNotText:order}).first().locator('[data-history-record]').click();assert.equal(await page.locator('#resume-record').count(),0);assert.equal(await page.locator('#issueNotes').isDisabled(),true);
 });
 
+test('SN lookup blocks a second unfinished visit and offers continuation only to the owner',{timeout:60000},async t=>{
+  const {page,login}=await fixture(t);
+  await page.locator('#new-record').click();
+  await page.locator('#sn').fill('demo-wfr-001');
+  await page.locator('#resume-existing-sn').waitFor();
+  await page.locator('#modelId').selectOption('2');
+  await page.locator('#issueNotes').fill('Keep the unsaved note after duplicate rejection');
+  await page.locator('#save-record').click();
+  await page.locator('#form-error:visible').waitFor();assert.match(await page.locator('#form-error').innerText(),/already has an unfinished work order/);
+  assert.match(await page.locator('#issueNotes').inputValue(),/Keep the unsaved note/);
+  page.once('dialog',dialog=>dialog.accept());
+  await page.locator('#resume-existing-sn').click();
+  await page.waitForFunction(()=>document.querySelector('#workOrder')?.value.endsWith('000002'));
+  assert.equal(await page.locator('#issueNotes').isEnabled(),true);
+  await page.locator('#records-nav').click();
+  await page.locator('#new-record').click();
+  await page.locator('#sn').fill('DEMO-HISTORY-001');
+  await page.waitForFunction(()=>document.querySelector('#sn-history-hint')?.textContent.includes('Previous records found'));
+  assert.equal(await page.locator('#resume-existing-sn').isVisible(),false);
+  page.once('dialog',dialog=>dialog.accept());
+  await page.locator('#logout').click();
+  await login('blair','JackeryBlair!2026');
+  await page.locator('#new-record').click();
+  await page.locator('#sn').fill('DEMO-WFR-001');
+  await page.getByText(/Contact the owner to complete/).waitFor();
+  assert.equal(await page.locator('#resume-existing-sn').isVisible(),false);
+  page.once('dialog',dialog=>dialog.accept());
+  await page.locator('#view-history').click();
+  await page.locator('#history-results [data-history-record]').click();
+  assert.equal(await page.locator('#issueNotes').isDisabled(),true);
+});
+
 test('v03 rapid SN input and logout cancel history lookup and finish the final language save',{timeout:60000},async t=>{
   const {page,login}=await fixture(t);const lateHistory=[],consoleErrors=[];let signingOut=false;
   page.on('request',request=>{if(request.url().endsWith('/api/logout'))signingOut=true;if(signingOut&&request.url().includes('/api/sn-history?'))lateHistory.push(request.url());});
